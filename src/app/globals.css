@@ -1,26 +1,251 @@
 @import "tailwindcss";
 
 :root {
+  --primary: #003366;
+  --primary-dark: #001a33;
+  --primary-light: #0a4a7a;
+  --mak-green: #0b3d2e;
+  --accent-gold: #d4a017;
+  --accent-gold-soft: #f7e9c2;
+  --accent-cyan: #5ec8e8;
+  --accent-cyan-soft: #e8f7fc;
+  --accent-green: #2ea44f;
+  --accent-green-soft: #e8f8ee;
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #f7f8fa;
+  --foreground: #1a1a1a;
+  --muted: #5c6770;
+  --border: #e5e7eb;
 }
 
 @theme inline {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-mak-green: var(--mak-green);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-gold-soft: var(--accent-gold-soft);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-cyan-soft: var(--accent-cyan-soft);
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-soft: var(--accent-green-soft);
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-source-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
 }
+
+::selection {
+  background: color-mix(in srgb, var(--accent-gold) 40%, white);
+  color: var(--primary-dark);
+}
+
+.font-display {
+  font-family: var(--font-source-serif), Georgia, serif;
+}
+
+.hero-overlay-bar {
+  background: linear-gradient(90deg, transparent, rgba(0, 26, 51, 0.55));
+}
+
+.mak-gold-rule {
+  height: 6px;
+  background: var(--accent-gold);
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.nav-active-bar {
+  background: linear-gradient(90deg, #000 0%, #fcdc04 50%, #d90000 100%);
+}
+
+/* Makerere-style Join / Visit / Give CTA row */
+.cta-style-one {
+  position: relative;
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+}
+
+/* ISBAT-style header logo diagonal white wedge */
+.header-logo-cell {
+  position: relative;
+}
+
+.header-logo-cell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 48px;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  z-index: 0;
+}
+
+/* ISBAT-style pulsing play button */
+.playbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  color: inherit;
+}
+
+.playbtn:hover,
+.playbtn:focus-visible {
+  transform: translateX(2px);
+}
+
+.playbtn .play-icon {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.playbtn .play-icon .circle {
+  position: absolute;
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: 2px solid #ab0319;
+  opacity: 0.6;
+}
+
+.playbtn .play-icon .circle.c1 {
+  width: 56px;
+  height: 56px;
+  animation: pb-pulse 1.9s ease-out infinite;
+}
+
+.playbtn .play-icon .circle.c2 {
+  width: 64px;
+  height: 64px;
+  left: -4px;
+  top: -4px;
+  animation: pb-pulse 2.3s ease-out infinite;
+}
+
+.playbtn .play-icon .circle.c3 {
+  width: 72px;
+  height: 72px;
+  left: -8px;
+  top: -8px;
+  animation: pb-pulse 2.9s ease-out infinite;
+}
+
+.playbtn .play-spot {
+  position: absolute;
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ab0319;
+}
+
+.playbtn svg.play-triangle {
+  width: 28px;
+  height: 28px;
+  display: block;
+  z-index: 3;
+  margin-left: 3px;
+}
+
+.playbtn .play-text {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: 0.95rem;
+  max-width: 16rem;
+}
+
+@keyframes pb-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.65;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+/* Grace High–style fixed campus wallpaper behind bottom content */
+.campus-wallpaper {
+  background-color: var(--primary-dark);
+  background-image: url("/images/campus-wallpaper.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* KIU-style footer: deep navy field + soft dotted texture */
+.kiu-footer {
+  background-color: #001428;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 92%, #000a14),
+      #001428
+    );
+  background-size: 18px 18px, auto;
+  background-position: 0 0, 0 0;
+}
+
+.kiu-footer-rule {
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--primary-light), var(--accent-cyan));
+}
+
+@media (max-width: 767px) {
+  .campus-wallpaper {
+    background-attachment: scroll;
+  }
+
+  .playbtn .play-text {
+    font-size: 0.85rem;
+    max-width: 11rem;
+  }
+
+  .header-logo-cell::after {
+    width: 32px;
+  }
+}
+

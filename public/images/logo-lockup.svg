@@ -1,0 +1,52 @@
+<svg width="300" height="78" viewBox="0 0 300 78" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mable School of Nursing and Midwifery">
+  <defs>
+    <linearGradient id="sun" x1="39" y1="14" x2="39" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD54A"/>
+      <stop offset="1" stop-color="#F0A020"/>
+    </linearGradient>
+    <clipPath id="disc">
+      <circle cx="39" cy="34" r="21"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer ring -->
+  <circle cx="39" cy="34" r="28.5" fill="#6EC6E6"/>
+  <circle cx="39" cy="34" r="28.5" stroke="#FFFFFF" stroke-width="1.25"/>
+  <circle cx="39" cy="34" r="21.5" fill="#FFFFFF"/>
+
+  <g clip-path="url(#disc)">
+    <rect x="17" y="12" width="44" height="24" fill="#EAF7FF"/>
+    <!-- Sun rays -->
+    <g stroke="#F5C518" stroke-width="1.35" stroke-linecap="round">
+      <path d="M39 15.2v3"/>
+      <path d="M31.2 18.2l2 2"/>
+      <path d="M46.8 18.2l-2 2"/>
+      <path d="M27.8 25.5h3"/>
+      <path d="M47.2 25.5h3"/>
+    </g>
+    <circle cx="39" cy="26.5" r="5" fill="url(#sun)"/>
+    <!-- Hills -->
+    <path d="M18 36c7-9 13-11 21-11s14 2 21 11v3H18v-3z" fill="#2EA44F"/>
+    <path d="M18 39h42v24H18z" fill="#FFFFFF"/>
+    <!-- Cross divider -->
+    <path d="M39 36v27M18 49.5h42" stroke="#2EA44F" stroke-width="1.6"/>
+    <!-- Dove -->
+    <path d="M24.5 54c3.5-5 8.5-6.5 12-3.5 2-3.5 6.5-4.5 9.5-.8-3.2.6-5.8 2.8-7.2 5.2-2.2-.2-6.2.8-14.3-1z" fill="#8B6B4A"/>
+    <path d="M27 55c3.2-.8 6.5.2 9 2.4" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round"/>
+    <!-- Nurse -->
+    <circle cx="50.5" cy="51.2" r="3.4" fill="#C9A27A"/>
+    <path d="M46.8 49.2h7.4v1.7c0 .9-.8 1.5-1.6 1.5h-4.2c-.9 0-1.6-.6-1.6-1.5v-1.7z" fill="#FFFFFF"/>
+    <path d="M45.8 56c1.4-2.6 3.4-3.8 4.7-3.8s3.3 1.2 4.7 3.8V66h-9.4V56z" fill="#2EA44F"/>
+    <path d="M46.6 56.8h7.8v1.35h-7.8z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Motto ribbon -->
+  <path d="M12 64.5c3-2.2 10-3.4 27-3.4s24 1.2 27 3.4c-3 2.2-10 3.4-27 3.4s-24-1.2-27-3.4z" fill="#003366"/>
+  <path d="M12 64.5c3-2.2 10-3.4 27-3.4s24 1.2 27 3.4" stroke="#FFFFFF" stroke-width="0.55" opacity=".55"/>
+  <text x="39" y="66.9" text-anchor="middle" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="4.4" font-weight="700" letter-spacing=".35">WITH GOD WE LOVE AND SERVE</text>
+
+  <!-- Crisp wordmark -->
+  <text x="80" y="30" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="700" letter-spacing="1.8">MBALE SCHOOL OF</text>
+  <text x="80" y="50" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="14.5" font-weight="700" letter-spacing="1.1">NURSING &amp; MIDWIFERY</text>
+  <text x="80" y="66" fill="#F0C419" font-family="Arial, Helvetica, sans-serif" font-size="8" font-weight="700" letter-spacing="2">MBSNM</text>
+</svg>
