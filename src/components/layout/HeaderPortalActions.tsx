@@ -43,6 +43,7 @@ export function HeaderPortalActions({
         Student Portal
       </Link>
       <MicrosoftSignInButton
+        surface="header"
         size="compact"
         className={layout === "stacked" ? "w-full" : "shrink-0 whitespace-nowrap"}
         onError={handleMicrosoftError}

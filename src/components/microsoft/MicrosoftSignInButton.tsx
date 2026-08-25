@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 import { isMicrosoftClientConfigured } from "@/lib/microsoft/config";
 import { loginWithMicrosoftRedirect } from "@/lib/microsoft/msal-browser";
 
@@ -22,12 +23,15 @@ type MicrosoftSignInButtonProps = {
   className?: string;
   /** Compact label for header/toolbar placement */
   size?: "default" | "compact";
+  /** Light = white page backgrounds; header = navy/dark navigation bars */
+  surface?: "light" | "header";
 };
 
 export function MicrosoftSignInButton({
   onError,
   className,
   size = "default",
+  surface = "light",
 }: MicrosoftSignInButtonProps) {
   const [busy, setBusy] = useState(false);
   const configured = isMicrosoftClientConfigured();
@@ -55,13 +59,18 @@ export function MicrosoftSignInButton({
 
   const compact = size === "compact";
   const label = compact ? "Microsoft 365" : "Sign in with Microsoft School Account";
+  const onDarkSurface = surface === "header";
 
   return (
     <Button
       type="button"
-      variant="navy"
+      variant={onDarkSurface ? "ghost" : "navy"}
       size={compact ? "sm" : "md"}
-      className={className}
+      className={cn(
+        onDarkSurface &&
+          "border border-white/75 bg-white text-primary shadow-sm hover:border-white hover:bg-brand-sky-soft",
+        className,
+      )}
       disabled={busy}
       onClick={() => void handleClick()}
       ariaLabel="Sign in with Microsoft School Account"
