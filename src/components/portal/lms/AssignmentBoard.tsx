@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { Clock, Loader2, Upload, X } from "lucide-react";
 import type { AssignmentRow } from "@/services/portal/lms";
 import { SubmissionStatusBadge } from "@/components/portal/StatusBadge";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 type AssignmentBoardProps = {
@@ -89,11 +90,12 @@ export function AssignmentBoard({ assignments, busyId, onSubmit }: AssignmentBoa
                   </span>
 
                   {row.canSubmit ? (
-                    <button
+                    <Button
                       type="button"
+                      variant="primary"
+                      size="sm"
                       disabled={busy}
                       onClick={() => openSubmit(row)}
-                      className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:opacity-50 focus-ring"
                     >
                       {busy ? (
                         <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -101,7 +103,7 @@ export function AssignmentBoard({ assignments, busyId, onSubmit }: AssignmentBoa
                         <Upload className="h-4 w-4" aria-hidden />
                       )}
                       {row.submission.status === "submitted" ? "Resubmit" : "Submit"}
-                    </button>
+                    </Button>
                   ) : (
                     <span className="text-xs font-semibold text-accent-green">Graded</span>
                   )}
@@ -167,17 +169,18 @@ export function AssignmentBoard({ assignments, busyId, onSubmit }: AssignmentBoa
               >
                 Cancel
               </button>
-              <button
+              <Button
                 type="button"
+                variant="primary"
+                size="sm"
                 disabled={!fileName || busyId === active.assignment.id}
                 onClick={() => void handleConfirm()}
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-dark disabled:opacity-50 focus-ring"
               >
                 {busyId === active.assignment.id ? (
                   <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                 ) : null}
                 Upload & submit
-              </button>
+              </Button>
             </div>
           </div>
         </div>

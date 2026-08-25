@@ -51,8 +51,8 @@ export default function FeesPage() {
           Fee payments
         </h1>
         <p className="mt-1 max-w-2xl text-sm text-muted">
-          View your semester ledger, pay via MTN or Airtel Money (or bank), and download mock
-          receipts from your transaction history.
+          View your semester ledger, pay by bank transfer, and download mock receipts from your
+          transaction history.
         </p>
       </div>
 

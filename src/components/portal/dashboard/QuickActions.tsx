@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BookOpen, CalendarDays, CreditCard } from "lucide-react";
+import { DataCard } from "@/components/ui/DataCard";
 
 const actions = [
   {
@@ -12,7 +13,7 @@ const actions = [
   {
     href: "/portal/fees",
     label: "Pay fees",
-    description: "Mobile money or bank payment mock",
+    description: "Bank transfer payment",
     Icon: CreditCard,
     ready: true,
   },
@@ -27,9 +28,8 @@ const actions = [
 
 export function QuickActions() {
   return (
-    <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
-      <h2 className="text-sm font-bold uppercase tracking-wider text-primary">Quick actions</h2>
-      <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+    <DataCard title="Quick actions">
+      <ul className="grid gap-3 sm:grid-cols-3">
         {actions.map(({ href, label, description, Icon, ready }) => (
           <li key={label}>
             {ready ? (
@@ -54,6 +54,6 @@ export function QuickActions() {
           </li>
         ))}
       </ul>
-    </div>
+    </DataCard>
   );
 }

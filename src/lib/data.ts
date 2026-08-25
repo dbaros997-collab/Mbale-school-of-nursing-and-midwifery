@@ -1,18 +1,84 @@
 export const SCHOOL = {
-  name: "Mable School of Nursing and Midwifery",
+  name: "Mbale School of Nursing and Midwifery",
   shortName: "MBSNM",
-  motto: "With GOD We Love and Serve",
-  tagline: "We train the real health professionals. Join us today.",
+  motto: "In God We Love and Serve",
+  tagline: "We train the real health professionals.",
   foundedBy: "Global Revival Evangelistic Ministries (GREM)",
-  phone: "+256 700 000 000",
+  phone: "+256 779 400 773",
+  /** Primary WhatsApp / click-to-chat line */
+  whatsapp: "+256 779 400 773",
+  phoneAlt: "+256 787 167 575",
   email: "info@mbsnm.org",
   admissionsEmail: "admissions@mbsnm.org",
-  address: "Mbale City, Eastern Uganda",
-  postal: "P. O. Box Mbale, Uganda",
-  website: "https://mbsnm.org",
+  address: "Malere, behind the Forest Road, Mbale — Uganda",
+  postal: "P. O. Box — Mbale, Uganda",
+  /** This new site is the official web home */
+  website: "/",
+  youtube: "https://www.youtube.com/channel/UC-YnxFTZ5-atVFZCGGZ91PQ",
   registration:
-    "Registered with the Ministry of Education and Sports, Republic of Uganda. Accredited by the Uganda Nurses and Midwives Council (UNMC) and the National Council for Higher Education (NCHE).",
+    "Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
+  aboutStory:
+    "Christians from GREM started MBSNM when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
 } as const;
+
+/** Public Gulu University (GU) portal & website information */
+export const GULU_UNIVERSITY = {
+  name: "Gulu University",
+  shortName: "GU",
+  motto: "For Community Transformation",
+  website: "https://gu.ac.ug/",
+  studentPortal: "https://myportal.gu.ac.ug/",
+  applicationPortal: "https://apply.gu.ac.ug/",
+  helpdesk: "https://helpme.gu.ac.ug/",
+  poweredBy: "HEMIS Consortium",
+  about:
+    "Gulu University is a public university in Northern Uganda focused on community transformation — including health sciences through its Faculty of Medicine, which trains human resources for rural-based health facilities.",
+  portalIntro:
+    "The GU student portal (myportal.gu.ac.ug) is the official HEMIS online account for enrolled students. Sign in to manage registration, fees, results, and other academic records.",
+  portalServices: [
+    {
+      title: "Course registration",
+      detail: "Register for semester modules and confirm your study load online.",
+    },
+    {
+      title: "Fees & payments",
+      detail: "View fee balances, payment history, and complete university fee transactions.",
+    },
+    {
+      title: "Results & transcripts",
+      detail: "Check semester results and request academic transcripts when available.",
+    },
+    {
+      title: "Admission & enrollment",
+      detail: "View admission status, acceptance details, and complete freshers enrollment steps.",
+    },
+    {
+      title: "Academic calendar",
+      detail: "Access timetables, registration deadlines, and key dates for the academic year.",
+    },
+    {
+      title: "Student profile",
+      detail: "Update contact details and manage your portal account settings.",
+    },
+  ],
+  signInSteps: [
+    "Visit the student portal at myportal.gu.ac.ug.",
+    "Enter your username and password, then click Sign In.",
+    "New students should follow the freshers enrollment guide published on gu.ac.ug before first login.",
+    "If you forgot your password, click Forgot your Password — a reset link (OTP) is sent to your registered email.",
+  ],
+  admissionNote:
+    "Admitted students are published on the official Gulu University website (gu.ac.ug) and through other university communication channels.",
+  freshersGuide:
+    "Gulu University publishes step-by-step guides for enrollment, payment, and registration at the start of each academic year — check the Notice Board on gu.ac.ug.",
+} as const;
+
+/** WhatsApp click-to-chat URL (wa.me) */
+export function schoolWhatsAppUrl(message?: string) {
+  const digits = SCHOOL.whatsapp.replace(/\D/g, "");
+  const base = `https://wa.me/${digits}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
 
 export const mainNav = [
   {
@@ -20,18 +86,39 @@ export const mainNav = [
     href: "/#about",
     columns: [
       {
-        title: "About MBSNM",
+        title: "Know Us",
         links: [
           { label: "Our Story", href: "/#about" },
           { label: "Mission & Vision", href: "/#vision-mission" },
-          { label: "Accreditation", href: "/contact" },
-          { label: "Leadership", href: "/#about" },
           { label: "Core Values", href: "/#vision-mission" },
+          { label: "Accreditation", href: "/contact" },
+          { label: "Gulu University Portal", href: "/university-portal" },
+          { label: "Contact Address", href: "/contact" },
+        ],
+      },
+      {
+        title: "Governance",
+        links: [
+          { label: "Leadership", href: "/#about" },
+          { label: "Founded by GREM", href: "/#about" },
+          { label: "Campus Life @ MBSNM", href: "/#about" },
+        ],
+      },
+      {
+        title: "Campus",
+        links: [
+          { label: "Visit Campus", href: "/contact" },
+          { label: "Mbale City Campus", href: "/contact" },
+          { label: "Clinical Training Sites", href: "/#spotlight" },
         ],
       },
     ],
-    blurb:
-      "Started by Christians of GREM to train compassionate health professionals who love and serve their communities.",
+    featured: {
+      eyebrow: "Discover MBSNM",
+      title: "Nursing and midwifery training rooted in faith and service.",
+      href: "/#about",
+      cta: "Explore",
+    },
   },
   {
     label: "Programs",
@@ -40,102 +127,212 @@ export const mainNav = [
       {
         title: "Nursing",
         links: [
-          { label: "Diploma in Nursing", href: "/academics#diploma-nursing-direct" },
-          { label: "Certificate in Nursing", href: "/academics" },
-          { label: "Nursing Extension", href: "/academics" },
+          { label: "Diploma in Nursing (Direct)", href: "/academics#diploma-nursing-direct" },
+          { label: "Diploma in Nursing (Extension)", href: "/academics#diploma-nursing-extension" },
+          { label: "Certificate in Nursing", href: "/academics#certificate-nursing" },
         ],
       },
       {
         title: "Midwifery",
         links: [
-          { label: "Diploma in Midwifery", href: "/academics#diploma-midwifery-direct" },
-          { label: "Certificate in Midwifery", href: "/academics" },
-          { label: "Midwifery Extension", href: "/academics" },
+          { label: "Diploma in Midwifery (Direct)", href: "/academics#diploma-midwifery-direct" },
+          { label: "Diploma in Midwifery (Extension)", href: "/academics#diploma-midwifery-extension" },
+          { label: "Certificate in Midwifery", href: "/academics#certificate-midwifery" },
+        ],
+      },
+      {
+        title: "Catalogue",
+        links: [
+          { label: "All Programmes", href: "/academics" },
+          { label: "How to Apply", href: "/admissions" },
+          { label: "Entry Requirements", href: "/admissions" },
         ],
       },
     ],
-    blurb:
-      "With nursing and midwifery programmes that set a standard of clinical excellence, we learn by serving at MBSNM.",
+    featured: {
+      eyebrow: "Admissions Open",
+      title: "Find the programme that fits you, then apply for the next intake.",
+      href: "/academics",
+      cta: "Explore",
+    },
   },
   {
     label: "MBSNM Online",
-    href: "/portal",
-  },
-  {
-    label: "Research & Innovation",
-    href: "/#spotlight",
+    href: "/portal/dashboard",
     columns: [
       {
-        title: "Campus & Clinical",
+        title: "Learning",
         links: [
-          { label: "Clinical Excellence", href: "/#spotlight" },
-          { label: "Facilities", href: "/#spotlight" },
-          { label: "Campus News", href: "/#campus-news" },
-          { label: "Events", href: "/#events" },
+          { label: "Student Portal", href: "/portal/dashboard" },
+          { label: "LMS Hub", href: "/portal/lms" },
+          { label: "Timetable", href: "/portal/timetable" },
+        ],
+      },
+      {
+        title: "Student Services",
+        links: [
+          { label: "Registration", href: "/portal/registration" },
+          { label: "Fees & Payments", href: "/portal/fees" },
+          { label: "Documents", href: "/portal/documents" },
+          { label: "Notices", href: "/portal/notices" },
+          { label: "Gulu University Portal", href: "/university-portal" },
         ],
       },
     ],
-    blurb:
-      "Explore graduation moments, clinical partnerships, and the learning environment that shapes MBSNM graduates.",
-  },
-  {
-    label: "Alumni",
-    href: "/#voices",
+    featured: {
+      eyebrow: "e-Learning",
+      title: "Fees, registration, and learning tools — all in one place.",
+      href: "/portal/dashboard",
+      cta: "Open Portal",
+    },
   },
   {
     label: "Career",
     href: "/admissions",
+    columns: [
+      {
+        title: "Admissions",
+        links: [
+          { label: "How to Apply", href: "/admissions" },
+          { label: "Online Application", href: "/admissions#apply" },
+          { label: "Entry Requirements", href: "/admissions" },
+          { label: "Fees & Payments", href: "/admissions" },
+        ],
+      },
+      {
+        title: "Opportunities",
+        links: [
+          { label: "Jobs & Careers", href: "/admissions" },
+          { label: "Alumni Network", href: "/alumni" },
+          { label: "Campus News", href: "/#campus-news" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Join MBSNM",
+      title: "Take the first step toward nursing or midwifery practice.",
+      href: "/admissions#apply",
+      cta: "Apply Now",
+    },
+  },
+  {
+    label: "My MBSNM",
+    href: "/portal/dashboard",
+    emphasize: true,
+    columns: [
+      {
+        title: "Students",
+        links: [
+          { label: "Dashboard", href: "/portal/dashboard" },
+          { label: "Activate Account", href: "/portal/activate" },
+          { label: "Profile", href: "/portal/profile" },
+          { label: "LMS Hub", href: "/portal/lms" },
+        ],
+      },
+      {
+        title: "Staff",
+        links: [
+          { label: "Admin Dashboard", href: "/admin" },
+          { label: "Getting in Touch", href: "/contact" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Student Portal",
+      title: "Sign in for fees, registration, and your classes.",
+      href: "/portal/dashboard",
+      cta: "Sign In",
+    },
   },
 ] as const;
 
 export const quickLinks = [
-  { label: "Student Portal", href: "/portal" },
+  { label: "Student Portal", href: "/portal/dashboard" },
+  { label: "Gulu University Portal", href: "/university-portal" },
+  { label: "Activate Account", href: "/portal/activate" },
   { label: "Application Portal", href: "/admissions#apply" },
+  { label: "Track Application", href: "/admissions/track" },
   { label: "Courses & Programs", href: "/academics" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Official Website", href: "https://mbsnm.org" },
+  { label: "Official Website", href: "/" },
 ] as const;
 
 export const heroSlides = [
   {
     id: "1",
     image: "/images/graduation-march.jpg",
-    title: "Empowering Healers of Tomorrow",
+    title: "We train the real health professionals",
     description:
-      "We equip nurses and midwives with the knowledge, skills, and confidence to serve communities with compassion and excellence.",
+      "Certificate and Diploma programmes in nursing and midwifery. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
     cta: "Apply Now",
     href: "/admissions",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
     alt: "Graduating students marching in Mbale town",
   },
   {
     id: "2",
     image: "/images/graduates.jpg",
-    title: "Where Learning Creates Possibilities",
+    title: "Learning that leads to real work",
     description:
-      "A space where clinical training opens new opportunities and transforms potential into professional achievement.",
+      "You will spend time in skills labs and on hospital wards — not just in class. That is how we prepare you for the work ahead.",
     cta: "Apply Now",
     href: "/admissions",
-    alt: "Graduating class of Mable School of Nursing and Midwifery",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
+    alt: "Graduating class of Mbale School of Nursing and Midwifery",
   },
   {
     id: "3",
     image: "/images/front-offices.jpg",
-    title: "Hands-on Clinical Excellence",
+    title: "Hands-on from the start",
     description:
-      "Industry-relevant nursing and midwifery programmes designed for outcome-based learning and real hospital practice.",
+      "Classroom teaching and clinical placements at Mbale Referral Hospital and partner sites. You practise skills where care actually happens.",
     cta: "Apply Now",
     href: "/admissions",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
     alt: "Front offices and campus facilities at MBSNM",
   },
   {
     id: "4",
     image: "/images/admin-block.jpg",
-    title: "With GOD We Love and Serve",
+    title: "In God We Love and Serve",
     description:
-      "Faith-centered training that raises trusted health professionals ready for the current job market.",
+      "We are a Christian school. We train nurses and midwives to care for people with skill, integrity, and compassion.",
     cta: "Apply Now",
     href: "/admissions",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
     alt: "Administration block and campus facilities",
+  },
+] as const;
+
+/** KIU-style quick highlight boxes under the hero */
+export const heroQuickBoxes = [
+  {
+    id: "accredited",
+    title: "Recognised programmes",
+    description:
+      "Our programmes meet UNMC and NCHE standards — the accreditation employers and councils expect.",
+    href: "/academics",
+    icon: "GraduationCap",
+  },
+  {
+    id: "clinical",
+    title: "Real hospital placements",
+    description:
+      "You practise in wards at Mbale Referral Hospital and other approved sites — not just in simulation.",
+    href: "/admissions",
+    icon: "Hospital",
+  },
+  {
+    id: "labs",
+    title: "Skills labs on campus",
+    description:
+      "Learn procedures safely in our labs before you care for patients on the ward.",
+    href: "/academics",
+    icon: "FlaskConical",
   },
 ] as const;
 
@@ -155,18 +352,19 @@ export const discoveryTopics: Record<string, { value: string; label: string; hre
     { value: "housing", label: "Student Housing", href: "/admissions" },
   ],
   continuing: [
-    { value: "portal", label: "Student Portal", href: "/portal" },
+    { value: "portal", label: "Student Portal", href: "/portal/dashboard" },
+    { value: "gu-portal", label: "Gulu University Portal", href: "/university-portal" },
     { value: "timetable", label: "Timetables", href: "/portal" },
     { value: "fees", label: "Fee Balances", href: "/portal" },
     { value: "placement", label: "Clinical Placement", href: "/academics" },
   ],
   staff: [
-    { value: "admin", label: "Admin Dashboard", href: "/portal" },
+    { value: "admin", label: "Admin Dashboard", href: "/admin" },
     { value: "contact", label: "Getting in Touch", href: "/contact" },
     { value: "news", label: "Announcements", href: "/#campus-news" },
   ],
   alumni: [
-    { value: "stories", label: "Alumni Stories", href: "/#voices" },
+    { value: "network", label: "Alumni Network", href: "/alumni" },
     { value: "news", label: "Campus News", href: "/#campus-news" },
     { value: "contact", label: "Stay Connected", href: "/contact" },
   ],
@@ -182,7 +380,7 @@ export const programs = [
     id: "diploma-nursing-direct",
     title: "Diploma in Nursing (Direct)",
     category: "Nursing",
-    duration: "3 years",
+    duration: "2 years",
     level: "Diploma",
     summary:
       "Comprehensive direct-entry nursing training covering clinical care, pharmacology, community health, and professional ethics.",
@@ -243,7 +441,7 @@ export const programs = [
     id: "diploma-midwifery-direct",
     title: "Diploma in Midwifery (Direct)",
     category: "Midwifery",
-    duration: "3 years",
+    duration: "2 years",
     level: "Diploma",
     summary:
       "Direct-entry midwifery program preparing students for safe motherhood, antenatal, delivery, and postnatal care.",
@@ -301,14 +499,39 @@ export const programs = [
   },
 ] as const;
 
+export const applicationIntakes = [
+  {
+    id: "june-2026",
+    label: "June 2026 Intake",
+    shortLabel: "June 2026",
+    orientationDate: "2026-06-15",
+    open: true,
+  },
+  {
+    id: "july-2026",
+    label: "July 2026 Intake",
+    shortLabel: "July 2026",
+    orientationDate: "2026-07-15",
+    open: true,
+  },
+] as const;
+
+/** e.g. "June & July 2026" for open intakes */
+export function openIntakesLabel(separator = " & ") {
+  return applicationIntakes
+    .filter((i) => i.open)
+    .map((i) => i.shortLabel)
+    .join(separator);
+}
+
 export const newsItems = [
   {
     id: "1",
-    title: "July 2026 Intake Now Open — Apply Early",
+    title: "June & July 2026 Intakes Now Open — Apply Early",
     date: "2026-06-01",
     category: "Admissions",
     excerpt:
-      "We are accepting applications for the July 2026 intake across nursing and midwifery programs. Apply early to secure your place.",
+      "We are accepting applications for the June and July 2026 intakes across nursing and midwifery programs. Apply early to secure your place.",
     image: "/images/graduation-day.jpg",
     featured: true,
   },
@@ -357,10 +580,19 @@ export const newsItems = [
 export const events = [
   {
     id: "1",
+    title: "June 2026 Intake Orientation",
+    date: "2026-06-15",
+    location: "Main Hall, MBSNM Campus",
+    mode: "Physical",
+    image: "/images/graduates.jpg",
+  },
+  {
+    id: "1b",
     title: "July 2026 Intake Orientation",
     date: "2026-07-15",
     location: "Main Hall, MBSNM Campus",
     mode: "Physical",
+    image: "/images/graduates.jpg",
   },
   {
     id: "2",
@@ -368,6 +600,7 @@ export const events = [
     date: "2026-08-05",
     location: "Skills Laboratory & Computer Lab",
     mode: "Physical",
+    image: "/images/equipment.jpg",
   },
   {
     id: "3",
@@ -375,6 +608,7 @@ export const events = [
     date: "2026-06-20",
     location: "Hybrid (Campus & Online)",
     mode: "Hybrid (Physical & Virtual)",
+    image: "/images/front-offices.jpg",
   },
   {
     id: "4",
@@ -382,6 +616,7 @@ export const events = [
     date: "2026-09-12",
     location: "Campus Chapel & Partner Clinics",
     mode: "Physical",
+    image: "/images/activity-1.jpg",
   },
 ] as const;
 
@@ -412,7 +647,7 @@ export const spotlightArticles = [
     category: "Life",
     title: "Campus Celebrations & Student Activities",
     image: "/images/dancers.jpg",
-    href: "/#voices",
+    href: "/#campus-news",
   },
   {
     id: "5",
@@ -430,55 +665,24 @@ export const spotlightArticles = [
   },
 ] as const;
 
-export const testimonials = [
-  {
-    id: "1",
-    name: "Nagudi Sarah",
-    role: "Student",
-    quote:
-      "The clinical placements have provided invaluable hands-on experience, preparing me for the workforce. We are connected to Mbale Referral Hospital, where we have a lot of practicals.",
-  },
-  {
-    id: "2",
-    name: "Emokori Salinas",
-    role: "Student",
-    quote:
-      "Mable School of Nursing and Midwifery laid the foundation for my successful nursing career. The skilled faculty and hands-on training prepared me for the challenges of the profession.",
-  },
-  {
-    id: "3",
-    name: "Lokwii Perry",
-    role: "Alumnus",
-    quote:
-      "The school's emphasis on compassion and patient-centered care has made me a confident and empathetic nurse. Join the school to gain valuable knowledge that will market you worldwide.",
-  },
-  {
-    id: "4",
-    name: "Luanda Jenny",
-    role: "Alumna",
-    quote:
-      "I'm grateful for the supportive learning environment and experienced instructors who guide us in achieving our dreams. The guidance has helped me excel.",
-  },
-] as const;
-
 export const visionMission = [
   {
     title: "Our Vision",
-    text: "Become the most trusted destination for quality nursing and midwifery education in Eastern Uganda — raising health professionals who love and serve with integrity.",
+    text: "To build a reputable Christian health institution committed to improving the lives of communities by providing quality health services in the region.",
     image: "/images/icons/vision.png",
     imageAlt: "Telescope illustration representing vision",
     reverse: false,
   },
   {
     title: "Our Mission",
-    text: "Provide an enabling training and clinical environment that equips nurses and midwives with professional knowledge, hands-on excellence, and compassionate patient care.",
+    text: "To train competent, compassionate nurses and midwives through hands-on clinical practice, rigorous academics and Christian values — serving the poor, the young and the elderly of Eastern Uganda.",
     image: "/images/icons/mission.png",
     imageAlt: "Target illustration representing mission",
     reverse: true,
   },
   {
     title: "Our Philosophy",
-    text: "Transforming minds and hearts to heal communities — with God we love and serve through healthcare ministry.",
+    text: "In God We Love and Serve — faith-centered training that raises trusted health professionals ready to heal communities with integrity and compassion.",
     image: "/images/icons/philosophy.png",
     imageAlt: "Hand holding books illustration representing philosophy",
     reverse: false,
@@ -488,19 +692,23 @@ export const visionMission = [
 export const coreValues = [
   {
     title: "Compassion",
-    description: "We serve patients and communities with dignity, empathy, and Christ-centered love.",
+    description: "Patient-centred care, always.",
   },
   {
-    title: "Excellence",
-    description: "We pursue academic rigor, clinical competence, and continuous professional growth.",
+    title: "Competence",
+    description: "Clinical skill proven in practice.",
+  },
+  {
+    title: "Faith",
+    description: "Service rooted in Christian conviction.",
+  },
+  {
+    title: "Community",
+    description: "Health for the poor, young and elderly.",
   },
   {
     title: "Integrity",
-    description: "We uphold honesty, accountability, and ethical standards in every learning space.",
-  },
-  {
-    title: "Service",
-    description: "We equip nurses and midwives to love and serve God through healthcare ministry.",
+    description: "Honest, accountable professionals.",
   },
 ] as const;
 
@@ -508,52 +716,95 @@ export const faqs = [
   {
     question: "When is the next intake?",
     answer:
-      "Applications are open for the July 2026 intake. Early submission is encouraged as spaces are limited.",
+      "We are accepting applications for the June and July 2026 intakes. Apply early — places fill up.",
   },
   {
     question: "How much is tuition?",
     answer:
-      "Tuition varies by program (certificate vs diploma, direct vs extension). Contact admissions@mbsnm.org for the current fee structure and payment schedule.",
+      "Fees depend on your programme (certificate or diploma, direct or extension). Email admissions@mbsnm.org and we will send you the current fee list.",
   },
   {
     question: "Is accommodation available?",
     answer:
-      "Limited on-campus and affiliated accommodation options may be available. Prospective students should inquire during application so placements can be planned early.",
+      "We have limited places on campus and with partner hosts. Ask during your application so we can help you plan ahead.",
   },
   {
     question: "Where do students do clinical placements?",
     answer:
-      "Students gain practical experience through partnerships including Mbale Referral Hospital and other approved clinical training sites.",
+      "You will train at Mbale Referral Hospital and other approved sites. That is where you learn to care for real patients.",
   },
   {
-    question: "What documents are required to apply?",
+    question: "What documents do I need to apply?",
     answer:
-      "National ID or passport, academic transcripts/certificates, passport photo, medical fitness certificate, and any professional licenses for extension applicants.",
+      "Bring your national ID or passport, academic certificates, a passport photo, and a medical fitness letter. Extension applicants also need a valid practising licence.",
+  },
+  {
+    question: "Is there an application fee?",
+    answer:
+      "Yes. The fee is UGX 20,000 and is not refundable. Pay by bank transfer using the account on the application form, then enter your reference number to finish.",
+  },
+  {
+    question: "How does eligibility screening work?",
+    answer:
+      "After you pay, we check your UCE grades against the programme requirements. If you qualify, you receive a reference number and your file goes to admissions for review. If something does not match, you can update your results or call us for help.",
+  },
+  {
+    question: "How do I track my application?",
+    answer:
+      "Use your reference number (for example MBSNM/APP/2026/1234) on the Track Application page. You will see whether your file is pending, qualified, or unsuccessful.",
   },
 ] as const;
 
-export const applicationSteps = [
+/** Scrolling updates shown in the site-wide status bar */
+export const statusBarUpdates = [
   {
-    step: 1,
-    title: "Choose your program",
-    detail: "Review entry requirements and select nursing or midwifery pathways.",
+    id: "intake",
+    text: "June & July 2026 intakes are open — apply now",
+    href: "/admissions#apply",
   },
   {
-    step: 2,
-    title: "Prepare documents",
-    detail: "Gather academic results, ID, photo, and medical clearance.",
+    id: "fee",
+    text: "Application fee: UGX 20,000 by bank transfer (non-refundable)",
+    href: "/admissions#apply",
   },
   {
-    step: 3,
-    title: "Submit online application",
-    detail: "Complete the form, upload documents, and confirm your preferred course.",
+    id: "interview",
+    text: "Qualified applicants move to interview — track your status online",
+    href: "/admissions/track",
   },
   {
-    step: 4,
-    title: "Await review & interview",
-    detail: "Admissions will contact shortlisted applicants with next steps.",
+    id: "accreditation",
+    text: "Registered with the Ministry of Education and Sports · Accredited by UNMC & NCHE",
+    href: "/academics",
+  },
+  {
+    id: "clinical",
+    text: "Clinical training at Mbale Referral Hospital and partner sites",
+    href: "/academics",
+  },
+  {
+    id: "contact",
+    text: "Questions? admissions@mbsnm.org · +256 779 400 773",
+    href: "/contact",
+  },
+  {
+    id: "gu-portal",
+    text: "Gulu University students — sign in at myportal.gu.ac.ug",
+    href: "/university-portal",
   },
 ] as const;
+
+/** Non-refundable fee required before an online application can be submitted */
+export const APPLICATION_FEE_UGX = 20_000;
+
+/** Bank account for application fee payments */
+export const APPLICATION_BANK_ACCOUNT = {
+  bankName: "Stanbic Bank Uganda",
+  accountName: "Mbale School of Nursing and Midwifery",
+  accountNumber: "9030012345678",
+  branch: "Mbale Branch",
+  swiftCode: "SBICUGKX",
+} as const;
 
 export type ApplicationPayload = {
   fullName: string;
@@ -561,9 +812,49 @@ export type ApplicationPayload = {
   phone: string;
   gender: string;
   dateOfBirth: string;
+  intakeId: string;
   programId: string;
   educationLevel: string;
   message: string;
   documentsLabel: string;
+  academicResults: {
+    uceIndexNumber: string;
+    englishGrade: string;
+    mathematicsGrade: string;
+    biologyGrade: string;
+    totalPasses: string;
+    certificateLicenseRef: string;
+  };
+  paymentConfirmed: boolean;
+  /** Applicant confirmed the non-refundable fee policy before paying */
+  feePolicyAcknowledged: boolean;
+  paymentMethod: "bank" | "";
+  paymentReference: string;
+  transactionReference: string;
+  /** Auto-send email (and optional SMS) after eligibility check */
+  sendNotifications: boolean;
+  notifySms: boolean;
 };
 
+export const applicationSteps = [
+  {
+    step: 1,
+    title: "Choose your programme",
+    detail: "Read the entry requirements and pick nursing or midwifery.",
+  },
+  {
+    step: 2,
+    title: "Gather your documents",
+    detail: "Results, ID, photo, and medical fitness letter.",
+  },
+  {
+    step: 3,
+    title: "Apply and pay the fee",
+    detail: "Fill in the form, pay UGX 20,000 by bank transfer, and get instant feedback on your grades.",
+  },
+  {
+    step: 4,
+    title: "Wait for the next step",
+    detail: "If you qualify, admissions will contact you about review and interview.",
+  },
+] as const;

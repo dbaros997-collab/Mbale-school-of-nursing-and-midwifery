@@ -1,6 +1,6 @@
-import { Clock } from "lucide-react";
 import type { DeadlineItem } from "@/lib/portal/schema";
 import { SubmissionStatusBadge } from "@/components/portal/StatusBadge";
+import { DataCard } from "@/components/ui/DataCard";
 
 function formatDue(iso: string) {
   const d = new Date(iso);
@@ -24,18 +24,11 @@ function daysLeft(iso: string) {
 
 export function DeadlineList({ items }: { items: DeadlineItem[] }) {
   return (
-    <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
-      <div className="flex items-center gap-2">
-        <Clock className="h-4 w-4 text-primary" aria-hidden />
-        <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
-          Upcoming deadlines
-        </h2>
-      </div>
-
+    <DataCard title="Upcoming deadlines">
       {items.length === 0 ? (
-        <p className="mt-4 text-sm text-muted">No upcoming assignments.</p>
+        <p className="text-sm text-muted">No upcoming assignments.</p>
       ) : (
-        <ul className="mt-4 divide-y divide-border">
+        <ul className="divide-y divide-border">
           {items.map((item) => (
             <li key={item.id} className="flex flex-wrap items-start justify-between gap-3 py-3">
               <div className="min-w-0">
@@ -50,6 +43,6 @@ export function DeadlineList({ items }: { items: DeadlineItem[] }) {
           ))}
         </ul>
       )}
-    </div>
+    </DataCard>
   );
 }

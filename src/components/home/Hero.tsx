@@ -3,121 +3,236 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { heroSlides } from "@/lib/data";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  ChevronLeft,
+  ChevronRight,
+  FlaskConical,
+  GraduationCap,
+  Hospital,
+} from "lucide-react";
+import { heroQuickBoxes, heroSlides } from "@/lib/data";
+import { cn } from "@/lib/utils";
+
+const quickIconMap = {
+  GraduationCap,
+  Hospital,
+  FlaskConical,
+} as const;
+
+const quickIconStyles = [
+  "accent-chip-sky",
+  "accent-chip-green",
+  "accent-chip-gold",
+] as const;
 
 export function Hero() {
   const [index, setIndex] = useState(0);
+  const [ready, setReady] = useState(false);
+  const reduceMotion = useReducedMotion();
   const slide = heroSlides[index];
+  const animateSlides = ready && !reduceMotion;
 
   useEffect(() => {
+    setReady(true);
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % heroSlides.length);
     }, 6500);
     return () => clearInterval(id);
   }, []);
 
+  const go = (next: number) => {
+    setIndex((next + heroSlides.length) % heroSlides.length);
+  };
+
   return (
-    <section className="relative bg-white">
-      {/* Full-bleed rounded hero — header overlays the top of this photo */}
-      <div className="relative mx-3 mt-3 min-h-[560px] overflow-hidden rounded-t-[28px] bg-primary-dark text-white sm:mx-4 sm:mt-4 sm:min-h-[600px] sm:rounded-t-[44px] lg:mx-5 lg:mt-5 lg:min-h-[640px] lg:rounded-t-[60px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0.4, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0"
-          >
+    <section
+      className="homepage-slider relative overflow-hidden bg-primary-dark"
+      aria-label="Featured announcements"
+    >
+      <div className="relative aspect-[3/4] min-h-[20rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[26rem] md:aspect-[1920/830] md:min-h-[28rem] lg:min-h-[32rem]">
+        {animateSlides ? (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
+                quality={70}
+              />
+            </motion.div>
+          </AnimatePresence>
+        ) : (
+          <div className="absolute inset-0">
             <Image
-              src={slide.image}
-              alt={slide.alt}
+              src={heroSlides[0].image}
+              alt={heroSlides[0].alt}
               fill
               priority
               className="object-cover"
-              sizes="100vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
+              quality={70}
             />
-            {/* Soft top shade so header menu stays readable */}
-            <div
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/45 to-transparent"
-            />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        )}
 
-        <div className="relative z-10 flex min-h-[560px] items-center px-4 pb-24 pt-32 sm:min-h-[600px] sm:px-8 sm:pt-36 lg:min-h-[640px] lg:px-14 lg:pt-40">
-          <div className="relative w-full max-w-xl overflow-hidden rounded-sm sm:max-w-2xl">
-            {/* See-through wash — photo shows through; text stays solid */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-black/25 backdrop-blur-[2px]"
-            />
-            <motion.div
-              key={`copy-${slide.id}`}
-              initial={{ opacity: 0, y: 48 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="relative p-6 sm:p-10 lg:p-12"
-            >
-              <h1 className="text-3xl font-bold leading-tight tracking-tight text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">
-                {slide.title}
-              </h1>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.5)] sm:text-base lg:text-lg">
-                {slide.description}
-              </p>
-              <Link
-                href={slide.href}
-                className="mt-7 inline-flex bg-[#002868] px-10 py-[18px] text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#001a4d] focus-ring"
+        <div
+          aria-hidden
+          className="hero-sky--overlay absolute inset-0 z-[1]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] opacity-[0.14]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at 18px 18px, rgba(255, 255, 255, 0.14) 0 2px, transparent 3px),
+              linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 42px),
+              linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 36px)
+            `,
+            backgroundSize: "84px 84px, 42px 42px, 36px 36px",
+          }}
+        />
+
+        <div className="absolute inset-0 z-[2] flex items-end md:items-center">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-[11rem] sm:px-6 sm:pb-24 sm:pt-[11.5rem] lg:px-8 lg:pb-28 lg:pt-[12.5rem]">
+            {animateSlides ? (
+              <motion.div
+                key={`copy-${slide.id}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-[44rem] text-white"
               >
-                {slide.cta}
-              </Link>
-
-              <div className="mt-6">
-                <Link
-                  href="/contact"
-                  className="playbtn text-white"
-                  aria-label="Campus tour information"
-                >
-                  <span className="play-icon" aria-hidden>
-                    <span className="circle c3" />
-                    <span className="circle c2" />
-                    <span className="circle c1" />
-                    <span className="play-spot">
-                      <svg className="play-triangle" viewBox="0 0 24 24" aria-hidden>
-                        <path d="M8 5v14l11-7z" fill="#ffffff" />
-                      </svg>
-                    </span>
-                  </span>
-                  <span className="play-text [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]">
-                    MBSNM Campus Tour: Visit Our Learning Facilities
-                  </span>
-                </Link>
+                <HeroCopy slide={slide} />
+              </motion.div>
+            ) : (
+              <div className="max-w-[44rem] text-white">
+                <HeroCopy slide={heroSlides[0]} />
               </div>
-            </motion.div>
+            )}
           </div>
         </div>
 
+        <button
+          type="button"
+          aria-label="Previous slide"
+          className="absolute left-2 top-1/2 z-[3] hidden -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring md:inline-flex lg:left-4"
+          onClick={() => go(index - 1)}
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          type="button"
+          aria-label="Next slide"
+          className="absolute right-2 top-1/2 z-[3] hidden -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring md:inline-flex lg:right-4"
+          onClick={() => go(index + 1)}
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+
         <div
-          className="absolute inset-x-0 bottom-8 z-10 flex justify-center gap-2.5 sm:bottom-10"
+          className="absolute inset-x-0 bottom-5 z-[3] sm:bottom-6"
           role="tablist"
           aria-label="Hero slides"
         >
-          {heroSlides.map((s, i) => (
-            <button
-              key={s.id}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Slide ${i + 1}`}
-              className={`h-3 w-3 rounded-full border-2 border-white transition ${
-                i === index ? "bg-white opacity-100" : "bg-white/40 opacity-70 hover:opacity-100"
-              }`}
-              onClick={() => setIndex(i)}
-            />
-          ))}
+          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start gap-2.5">
+            {heroSlides.map((s, i) => (
+              <button
+                key={s.id}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Slide ${i + 1}`}
+                className={cn(
+                  "h-2.5 w-2.5 rounded-full transition",
+                  i === index
+                    ? "scale-110 bg-brand-yellow"
+                    : "bg-white/60 hover:bg-white/85",
+                )}
+                onClick={() => setIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="relative z-10 -mt-11 px-4 sm:-mt-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid overflow-hidden rounded-2xl content-panel lg:grid-cols-3">
+            {heroQuickBoxes.map((box, i) => {
+              const Icon = quickIconMap[box.icon];
+              return (
+                <Link
+                  key={box.id}
+                  href={box.href}
+                  className={cn(
+                    "flex items-start gap-3.5 px-5 py-5 transition hover:bg-surface focus-ring sm:gap-4 sm:px-6 sm:py-6",
+                    i < heroQuickBoxes.length - 1 && "border-b border-border lg:border-b-0 lg:border-r",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
+                      quickIconStyles[i],
+                    )}
+                  >
+                    <Icon className="h-6 w-6" aria-hidden />
+                  </span>
+                  <span className="min-w-0">
+                    <strong className="block text-[17px] font-bold leading-snug text-primary">
+                      {box.title}
+                    </strong>
+                    <small className="mt-1 block text-[15px] leading-snug text-muted">
+                      {box.description}
+                    </small>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function HeroCopy({
+  slide,
+}: {
+  slide: (typeof heroSlides)[number];
+}) {
+  return (
+    <>
+      <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-extrabold leading-display tracking-tight text-white">
+        {slide.title}
+      </h1>
+      <p className="mt-4 max-w-[40rem] text-sm leading-body text-white/90 sm:mt-5 sm:text-[1.02rem]">
+        {slide.description}
+      </p>
+      <div className="mt-6 flex w-full flex-col gap-3 sm:mt-7 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
+        <Link
+          href={slide.href}
+          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-5 py-3 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-6 sm:py-[15px] sm:text-lg"
+        >
+          {slide.cta}
+        </Link>
+        <Link
+          href={slide.secondaryHref}
+          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border-2 border-white/80 bg-transparent px-5 py-3 text-sm font-bold leading-none text-white transition hover:bg-white hover:text-primary focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-6 sm:py-[15px] sm:text-lg"
+        >
+          {slide.secondaryCta}
+        </Link>
+      </div>
+    </>
   );
 }

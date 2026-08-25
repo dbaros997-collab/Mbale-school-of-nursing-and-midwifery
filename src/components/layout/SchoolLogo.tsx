@@ -3,21 +3,35 @@ import { cn } from "@/lib/utils";
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
+  /** Kept for call sites; SVG renders crisply on all surfaces. */
+  surface?: "dark" | "light";
 };
 
-export function SchoolLogo({ className, variant = "header" }: SchoolLogoProps) {
+const LOCKUP = {
+  src: "/images/logo-lockup.png",
+  width: 520,
+  height: 130,
+} as const;
+
+/** Official MBSNM horizontal lockup — crest + wordmark. */
+export function SchoolLogo({
+  className,
+  variant = "header",
+}: SchoolLogoProps) {
   const compact = variant === "compact";
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/images/logo-transparent-hd.png"
-      alt="Mable School of Nursing and Midwifery"
-      width={compact ? 140 : 180}
-      height={compact ? 99 : 127}
+      src={LOCKUP.src}
+      alt="Mbale School of Nursing and Midwifery"
+      width={compact ? 320 : LOCKUP.width}
+      height={compact ? 80 : LOCKUP.height}
       className={cn(
-        "w-auto object-contain object-left",
-        compact ? "h-[52px]" : "h-[64px] sm:h-[72px]",
+        "block h-auto w-auto object-contain object-left",
+        compact
+          ? "h-[64px] w-[260px] sm:h-[72px] sm:w-[300px]"
+          : "h-[84px] w-[min(340px,90vw)] sm:h-[96px] sm:w-[400px] md:h-[108px] md:w-[460px] lg:h-[118px] lg:w-[520px]",
         className,
       )}
       decoding="async"

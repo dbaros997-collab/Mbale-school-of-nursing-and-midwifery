@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_CATALOG,
   MOCK_ENROLLMENTS,
@@ -10,8 +11,6 @@ import {
 } from "@/lib/portal/mock-store";
 import { MAX_CREDIT_LOAD, MIN_CREDIT_LOAD } from "@/lib/portal/constants";
 import type { CourseUnit, RegistrationStatus, SemesterRegistration } from "@/lib/portal/schema";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type UnitEligibility = {
   unit: CourseUnit;
@@ -180,7 +179,7 @@ function bundle(studentId: string): RegistrationBundle {
 export async function getRegistrationBundle(
   studentId = MOCK_PROFILE.id,
 ): Promise<RegistrationBundle> {
-  await delay(280);
+  await mockDelay(280);
   return bundle(studentId);
 }
 
@@ -189,7 +188,7 @@ export async function toggleRegistrationUnit(
   unitId: string,
   studentId = MOCK_PROFILE.id,
 ): Promise<RegistrationBundle> {
-  await delay(180);
+  await mockDelay(180);
 
   if (mockRegistration.status === "submitted" || mockRegistration.status === "approved") {
     return bundle(studentId);
@@ -226,7 +225,7 @@ export async function toggleRegistrationUnit(
 export async function submitRegistration(
   studentId = MOCK_PROFILE.id,
 ): Promise<{ ok: boolean; message: string; bundle: RegistrationBundle }> {
-  await delay(500);
+  await mockDelay(500);
 
   const current = bundle(studentId);
   if (!current.canSubmit) {
@@ -255,7 +254,7 @@ export async function submitRegistration(
 export async function reopenRegistrationDraft(
   studentId = MOCK_PROFILE.id,
 ): Promise<RegistrationBundle> {
-  await delay(200);
+  await mockDelay(200);
   resetMockRegistration();
   return bundle(studentId);
 }

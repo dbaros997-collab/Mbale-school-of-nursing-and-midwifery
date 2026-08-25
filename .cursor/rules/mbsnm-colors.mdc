@@ -1,0 +1,36 @@
+---
+description: MBSNM brand colour proportions, accessibility, and UI surfaces
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# MBSNM colour system
+
+## Proportions (visual weight across a page)
+
+| Share | Name | Hex | Use |
+|------:|------|-----|-----|
+| 40% | Mbale Navy | `#16357F` | Header, footer, hero overlays, primary buttons, navy panels |
+| 28% | Ivory | `#F4FAFB` | Page background, cards, open space |
+| 16% | Service Green | `#198F34` | CTAs, success states, accent bands |
+| 11% | Sky Blue | `#B5D9E5` | Callouts, chips, soft highlights (not `#B509E5`) |
+| spare | Sunrise Gold | `#E8A317` | Eyebrows, icons, focus rings, hover emphasis — **never body text** |
+
+Gold is accent-only. Do not use gold for paragraphs, form labels, or muted copy.
+
+## Accessibility (WCAG AA)
+
+- Normal text: **4.5:1** minimum contrast against its background.
+- Large text (≥18px regular or ≥14px bold): **3:1** minimum.
+- Prefer `--foreground` on ivory; use `--muted` only for secondary copy (token is AA-safe on ivory).
+- On navy panels: use white, ivory, or sky blue for text — not gold for readable copy.
+
+## UI components
+
+- **Buttons**: pill shape (`rounded-full` / `.btn-pill` / `Button` component).
+- **Callouts**: sky background with a **navy left edge marker** — use `.callout-sky` or `Callout` component.
+- Avoid large gold section bands; keep `.section-gold` / `.section-warm` rare.
+
+## Tokens
+
+Defined in `src/app/globals.css`: `--primary` (navy), `--brand-ivory`, `--brand-green`, `--brand-sky`, `--brand-yellow`.

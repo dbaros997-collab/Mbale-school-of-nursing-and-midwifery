@@ -1,26 +1,35 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Lora, Work_Sans } from "next/font/google";
+import { AppProviders } from "@/components/providers/AppProviders";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  display: "swap",
 });
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {
-    default: "Welcome | Mable School of Nursing and Midwifery",
-    template: "%s | Mable School of Nursing and Midwifery",
+    default: "Welcome | Mbale School of Nursing and Midwifery",
+    template: "%s | Mbale School of Nursing and Midwifery",
   },
   description:
-    "Mable School of Nursing and Midwifery — With GOD We Love and Serve. Accredited nursing and midwifery training in Eastern Uganda.",
+    "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE. In God We Love and Serve.",
 };
 
 export default function RootLayout({
@@ -31,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${sourceSerif.variable} h-full antialiased`}
+      className={`${workSans.variable} ${lora.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <a
@@ -40,7 +49,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        {children}
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

@@ -1,0 +1,31 @@
+---
+description: MBSNM digital UI — navy header, sky hero, green CTAs, structured cards, tint scales
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# MBSNM digital UI
+
+## Page shell
+
+1. **Navy header row** — `header-navy-row` / `bg-primary` for site nav, portal topbar, admin topbar, and page banner breadcrumb strip.
+2. **Sky hero** — `hero-sky` for homepage hero and inner page banners (ivory/sky wash, navy display type).
+3. **Ivory content** — `site-shell` / `--background` for main page body.
+
+## Actions
+
+- **Primary actions** — Service Green `#198F34` via `Button variant="primary"` or `variant="green"`.
+- **Structural / secondary** — `variant="navy"`, `secondary` (sky), or `ghost`.
+- Pill shape only (`rounded-full` / `.btn-pill`).
+
+## Cards & panels
+
+- Marketing/content: `.content-panel` or `DataCard`.
+- Portal/admin metrics: `DataCard` with optional `header` slot.
+- Info callouts: `Callout` / `.callout-sky` (sky fill + navy left marker).
+
+## Tables & charts
+
+- Wrap tables in `DataTable` / `.data-table-shell` — sky-tint header, ivory/navy zebra rows from brand tints only.
+- Charts: use `--chart-1` … `--chart-5` or `CHART_TINTS` in `src/lib/brand/tints.ts` — no invented hues.
+- Status red may appear on errors/danger only; not in chart series.

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Heart, Eye, Target } from "lucide-react";
 import { coreValues, SCHOOL } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 
 export function AboutSnapshot() {
   return (
@@ -17,7 +18,7 @@ export function AboutSnapshot() {
           transition={{ duration: 0.55 }}
           className="relative"
         >
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
             <Image
               src="/images/admin-block.jpg"
               alt="Administration block and learning facilities at the campus"
@@ -27,8 +28,8 @@ export function AboutSnapshot() {
             />
           </div>
           <div className="absolute -bottom-5 left-5 right-5 rounded-xl bg-primary px-4 py-3 text-sm text-white shadow-lg sm:left-8 sm:right-auto sm:max-w-xs">
-            <p className="font-semibold text-accent-cyan">Our motto</p>
-            <p className="mt-0.5">{SCHOOL.motto}</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-brand-sky">Our motto</p>
+            <p className="mt-0.5 font-display leading-display">{SCHOOL.motto}</p>
           </div>
         </motion.div>
 
@@ -62,13 +63,18 @@ export function AboutSnapshot() {
                 title: "Faith",
                 text: "Anchor training in compassionate, God-honoring patient care.",
               },
-            ].map(({ icon: Icon, title, text }) => (
-              <div key={title} className="rounded-xl border border-border bg-white p-4">
-                <Icon className="mb-2 h-5 w-5 text-accent-green" aria-hidden />
+            ].map(({ icon: Icon, title, text }, i) => {
+              const chip = ["accent-chip-green", "accent-chip-sky", "accent-chip-gold"][i];
+              return (
+              <div key={title} className="rounded-xl content-panel p-4">
+                <span className={cn("mb-2 inline-flex h-9 w-9 items-center justify-center rounded-lg", chip)}>
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
                 <h3 className="text-sm font-bold text-primary">{title}</h3>
                 <p className="mt-1 text-xs leading-relaxed text-muted">{text}</p>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-8">

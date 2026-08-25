@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Megaphone } from "lucide-react";
+import { SharePointNoticesSection } from "@/components/microsoft/SharePointNoticesSection";
 import { getNoticesBundle, type NoticesBundle } from "@/services/portal/notices";
 import { StatusBadge } from "@/components/portal/StatusBadge";
 
@@ -34,7 +35,7 @@ export default function NoticesPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="mx-auto max-w-5xl space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
@@ -44,7 +45,8 @@ export default function NoticesPage() {
             Notice board
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-muted">
-            Institutional circulars and announcements from the school administration.
+            Institutional circulars from the school administration and live SharePoint notices
+            for nursing and midwifery students.
           </p>
         </div>
         <Link
@@ -55,53 +57,64 @@ export default function NoticesPage() {
         </Link>
       </div>
 
-      {loading || !data ? (
-        <div className="h-96 animate-pulse rounded-xl border border-border bg-white" />
-      ) : (
-        <>
-          {data.headline ? (
-            <div className="overflow-hidden rounded-xl border border-primary/20 bg-primary text-white shadow-sm">
-              <div className="flex items-center gap-2 border-b border-white/15 px-5 py-3">
-                <Megaphone className="h-4 w-4 text-accent-cyan" aria-hidden />
-                <p className="text-xs font-bold uppercase tracking-wider text-accent-cyan">
-                  Latest circular
-                </p>
-              </div>
-              <div className="px-5 py-5">
-                <h2 className="text-xl font-bold">{data.headline.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-white/85">{data.headline.body}</p>
-                <p className="mt-3 text-xs text-white/60">
-                  Posted {formatPublished(data.headline.publishedAt)}
-                </p>
-              </div>
-            </div>
-          ) : null}
+      <SharePointNoticesSection />
 
-          <div className="rounded-xl border border-border bg-white shadow-sm">
-            <div className="border-b border-border px-5 py-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
-                All announcements
-              </h2>
-            </div>
-            <ul className="divide-y divide-border">
-              {data.announcements.map((item) => (
-                <li key={item.id} className="px-5 py-4">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-bold text-primary">{item.title}</h3>
-                    <StatusBadge tone={item.audience === "all" ? "neutral" : "info"}>
-                      {item.audience}
-                    </StatusBadge>
-                  </div>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
-                  <p className="mt-2 text-[11px] font-medium uppercase tracking-wide text-muted">
-                    {formatPublished(item.publishedAt)}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-lg font-extrabold text-primary">Portal announcements</h2>
+          <p className="mt-1 text-sm text-muted">
+            Updates published directly through the MBSNM student portal.
+          </p>
+        </div>
+
+        {loading || !data ? (
+          <div className="h-64 animate-pulse rounded-xl border border-border bg-white" />
+        ) : (
+          <>
+            {data.headline ? (
+              <div className="overflow-hidden rounded-xl border border-primary/20 bg-primary text-white shadow-sm">
+                <div className="flex items-center gap-2 border-b border-white/15 px-5 py-3">
+                  <Megaphone className="h-4 w-4 text-accent-cyan" aria-hidden />
+                  <p className="text-xs font-bold uppercase tracking-wider text-accent-cyan">
+                    Latest portal circular
                   </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
+                </div>
+                <div className="px-5 py-5">
+                  <h3 className="text-xl font-bold">{data.headline.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/85">{data.headline.body}</p>
+                  <p className="mt-3 text-xs text-white/60">
+                    Posted {formatPublished(data.headline.publishedAt)}
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
+            <div className="rounded-xl border border-border bg-white shadow-sm">
+              <div className="border-b border-border px-5 py-4">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
+                  All portal announcements
+                </h3>
+              </div>
+              <ul className="divide-y divide-border">
+                {data.announcements.map((item) => (
+                  <li key={item.id} className="px-5 py-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="font-bold text-primary">{item.title}</h4>
+                      <StatusBadge tone={item.audience === "all" ? "neutral" : "info"}>
+                        {item.audience}
+                      </StatusBadge>
+                    </div>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
+                    <p className="mt-2 text-[11px] font-medium uppercase tracking-wide text-muted">
+                      {formatPublished(item.publishedAt)}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

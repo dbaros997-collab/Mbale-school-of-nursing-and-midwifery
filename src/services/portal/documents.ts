@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_PROFILE,
   addMockDocumentRequest,
@@ -6,8 +7,6 @@ import {
 } from "@/lib/portal/mock-store";
 import type { DocumentRequest, DocumentRequestStatus } from "@/lib/portal/schema";
 import { DOCUMENT_STATUS_LABELS } from "@/lib/portal/constants";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type DocumentType = DocumentRequest["type"];
 
@@ -25,7 +24,7 @@ export type DocumentsBundle = {
 export async function getDocumentsBundle(
   studentId = MOCK_PROFILE.id,
 ): Promise<DocumentsBundle> {
-  await delay(220);
+  await mockDelay(220);
   return {
     requests: mockDocumentRequests
       .filter((r) => r.studentId === studentId)
@@ -41,7 +40,7 @@ export async function requestDocument(
   type: DocumentType,
   studentId = MOCK_PROFILE.id,
 ): Promise<{ ok: boolean; message: string; bundle: DocumentsBundle }> {
-  await delay(500);
+  await mockDelay(500);
 
   const openSame = mockDocumentRequests.find(
     (r) =>
@@ -93,7 +92,7 @@ export async function markDocumentDownloaded(
   blob?: Blob;
   bundle: DocumentsBundle;
 }> {
-  await delay(350);
+  await mockDelay(350);
   const row = mockDocumentRequests.find((r) => r.id === id && r.studentId === studentId);
   if (!row) {
     return {
@@ -116,14 +115,16 @@ export async function markDocumentDownloaded(
   const fileName = `${label.replace(/[^\w\s-]/g, "").trim()}.txt`;
   const blob = new Blob(
     [
-      "MBSNM Registry — Official Document (Mock)",
-      "========================================",
-      `Student: ${MOCK_PROFILE.fullName} (${MOCK_PROFILE.studentNumber})`,
-      `Document: ${label}`,
-      `Issued: ${row.readyAt ?? new Date().toISOString()}`,
-      "",
-      "This is a simulated downloadable document for portal demonstration.",
-    ].join("\n"),
+      [
+        "MBSNM Registry — Official Document (Mock)",
+        "========================================",
+        `Student: ${MOCK_PROFILE.fullName} (${MOCK_PROFILE.studentNumber})`,
+        `Document: ${label}`,
+        `Issued: ${row.readyAt ?? new Date().toISOString()}`,
+        "",
+        "This is a simulated downloadable document for portal demonstration.",
+      ].join("\n"),
+    ],
     { type: "text/plain" },
   );
 

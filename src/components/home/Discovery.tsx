@@ -12,8 +12,8 @@ const ctaItems = [
     title: "About",
     href: "/#about",
     image: "/images/admin-block.jpg",
-    color: "#FBCA54",
-    textColor: "#292929",
+    color: "var(--brand-yellow)",
+    textColor: "var(--primary-dark)",
     reverse: false,
     offset: "ml-0 sm:ml-3",
     from: "left" as const,
@@ -22,7 +22,7 @@ const ctaItems = [
     title: "Programs",
     href: "/academics",
     image: "/images/graduates.jpg",
-    color: "#068644",
+    color: "var(--brand-green)",
     textColor: "#ffffff",
     reverse: true,
     offset: "ml-0 sm:ml-8 lg:ml-12",
@@ -30,40 +30,20 @@ const ctaItems = [
   },
   {
     title: "MBSNM Online",
-    href: "/portal",
+    href: "/portal/dashboard",
     image: "/images/computer-lab.jpg",
-    color: "#002868",
+    color: "var(--primary)",
     textColor: "#ffffff",
     reverse: false,
     offset: "mr-0 sm:mr-8 lg:mr-12",
     from: "left" as const,
   },
   {
-    title: "Research & Innovation",
-    href: "/#spotlight",
-    image: "/images/equipment.jpg",
-    color: "#C10E0E",
-    textColor: "#ffffff",
-    reverse: true,
-    offset: "ml-0 sm:ml-8 lg:ml-12",
-    from: "right" as const,
-  },
-  {
-    title: "Alumni",
-    href: "/#voices",
-    image: "/images/graduation-day.jpg",
-    color: "#FBCA54",
-    textColor: "#292929",
-    reverse: false,
-    offset: "ml-0 sm:ml-3",
-    from: "left" as const,
-  },
-  {
     title: "Career",
     href: "/admissions",
     image: "/images/front-offices.jpg",
-    color: "#068644",
-    textColor: "#ffffff",
+    color: "var(--brand-sky)",
+    textColor: "var(--primary-dark)",
     reverse: true,
     offset: "mr-0 sm:mr-8 lg:mr-12",
     from: "right" as const,
@@ -83,15 +63,16 @@ export function Discovery() {
 
   return (
     <section className="relative z-10 mt-0 bg-transparent">
+      <div className="brand-tricolor-rule" aria-hidden />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-t-[28px] bg-white px-4 pb-12 pt-8 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] sm:px-6 lg:px-10">
+        <div className="overflow-hidden rounded-t-[28px] content-panel px-4 pb-12 pt-8 shadow-[0_-8px_30px_rgba(22,53,127,0.06)] sm:px-6 lg:px-10">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
             {/* Left: content discovery (Makerere col-lg-8) */}
             <div className="lg:col-span-7">
-              <div className="relative mb-6 max-w-xl rounded-sm bg-[#1f2937] px-4 py-3 text-sm text-white">
+              <div className="relative mb-6 max-w-xl rounded-sm bg-primary px-4 py-3 text-sm text-white">
                 Use the choices below to gain immediate access to the resources you require. Example: I
                 am a/an prospective student seeking related information on admission.
-                <span className="absolute -bottom-2 left-8 h-0 w-0 border-l-[8px] border-r-[8px] border-t-[10px] border-l-transparent border-r-transparent border-t-[#1f2937]" />
+                <span className="absolute -bottom-2 left-8 h-0 w-0 border-l-[8px] border-r-[8px] border-t-[10px] border-l-transparent border-r-transparent border-t-primary" />
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
@@ -136,7 +117,7 @@ export function Discovery() {
                 <button
                   type="button"
                   onClick={onShow}
-                  className="rounded-sm bg-[#111827] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black focus-ring"
+                  className="rounded-sm bg-brand-green px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-green-dark focus-ring"
                 >
                   Show me the information
                 </button>
@@ -151,7 +132,7 @@ export function Discovery() {
               </p>
             </div>
 
-            {/* Right: About / Programs / Online / Research / Alumni / Career */}
+            {/* Right: About / Programs / Online / Career */}
             <div className="flex flex-col justify-center gap-1 lg:col-span-5">
               {ctaItems.map((item, index) => (
                 <CtaPill key={item.title} item={item} index={index} />
@@ -178,7 +159,7 @@ function CtaPill({
       className={cn("cta-style-one", item.offset)}
       initial={{ opacity: 0, x: xFrom }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={{ once: false, margin: "-40px" }}
       transition={{
         duration: 0.65,
         delay: index * 0.12,
@@ -221,4 +202,4 @@ function CtaPill({
 }
 
 const selectClass =
-  "w-full rounded-sm border border-border bg-white px-3 py-3 text-sm outline-none focus:border-[#068644] focus:ring-2 focus:ring-[#068644]/25";
+  "w-full rounded-sm border border-border bg-panel px-3 py-3 text-sm outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/25";

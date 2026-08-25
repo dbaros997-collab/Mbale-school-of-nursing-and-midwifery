@@ -1,11 +1,10 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_PROFILE,
   MOCK_PROGRAM,
   updateMockProfile,
 } from "@/lib/portal/mock-store";
 import type { NextOfKin, StudentProfile } from "@/lib/portal/schema";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type ProfileBundle = {
   profile: StudentProfile;
@@ -21,11 +20,13 @@ export type ProfileUpdateInput = {
 
 /** Ready for GET /api/portal/profile */
 export async function getProfileBundle(): Promise<ProfileBundle> {
-  await delay(200);
+  await mockDelay(200);
   return {
     profile: {
       ...MOCK_PROFILE,
       nextOfKin: { ...MOCK_PROFILE.nextOfKin },
+      emergencyContact: { ...MOCK_PROFILE.emergencyContact },
+      medicalInfo: { ...MOCK_PROFILE.medicalInfo },
     },
     programTitle: MOCK_PROGRAM.title,
   };
@@ -35,7 +36,7 @@ export async function getProfileBundle(): Promise<ProfileBundle> {
 export async function saveProfile(
   input: ProfileUpdateInput,
 ): Promise<{ ok: boolean; message: string; bundle: ProfileBundle }> {
-  await delay(450);
+  await mockDelay(450);
 
   if (!input.phone.trim() || !input.email.trim() || !input.address.trim()) {
     return {

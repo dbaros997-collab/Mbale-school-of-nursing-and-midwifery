@@ -13,18 +13,18 @@ const stats = [
 
 export function CampusHighlight() {
   return (
-    <section className="bg-white py-16 sm:py-20" aria-labelledby="campus-heading">
+    <section className="section-sky py-16 sm:py-20" aria-labelledby="campus-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative aspect-[5/4] overflow-hidden rounded-2xl"
+            className="relative aspect-[5/4] overflow-hidden rounded-3xl"
           >
             <Image
               src="/images/front-offices.jpg"
-              alt="Modern front offices at Mable School of Nursing and Midwifery"
+              alt="Modern front offices at Mbale School of Nursing and Midwifery"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

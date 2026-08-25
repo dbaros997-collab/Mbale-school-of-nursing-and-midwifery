@@ -1,59 +1,75 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { spotlightArticles } from "@/lib/data";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function SpotlightGrid() {
-  return (
-    <section id="spotlight" className="scroll-mt-24 bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">
-              Campus & Clinical Excellence
-            </h2>
-            <p className="mt-2 text-muted">
-              Articles about training, facilities & community impact at MBSNM |{" "}
-              <Link href="/academics" className="font-semibold text-primary hover:underline">
-                More articles
-              </Link>
-            </p>
-          </div>
-        </div>
+  const stories = spotlightArticles.slice(0, 2);
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {spotlightArticles.map((article) => (
-            <article
-              key={article.id}
-              className="group overflow-hidden rounded-xl border border-border bg-surface"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
+  return (
+    <section id="spotlight" className="scroll-mt-24 section-green py-12 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ScrollReveal direction="up">
+          <SectionHeading
+            eyebrow="Excellence"
+            title="Campus & Clinical Excellence"
+            description="Articles about training, facilities & community impact at MBSNM"
+            align="center"
+          />
+        </ScrollReveal>
+
+        <div className="mt-10 grid gap-4 sm:gap-5 md:grid-cols-2">
+          {stories.map((article, i) => (
+            <ScrollReveal key={article.id} direction="right" delay={i * 0.12}>
+              <Link
+                href={article.href}
+                className="group relative block aspect-[16/11] min-h-[260px] overflow-hidden rounded-3xl focus-ring sm:min-h-[320px]"
+              >
                 <Image
                   src={article.image}
                   alt=""
                   fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition duration-700 group-hover:scale-[1.04]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-              </div>
-              <div className="p-4">
-                <span className="text-xs font-bold uppercase tracking-wide text-accent-gold">
-                  {article.category}
-                </span>
-                <h3 className="mt-2 font-display text-lg font-semibold leading-snug text-primary">
-                  <Link href={article.href} className="hover:underline">
-                    {article.title}
-                  </Link>
-                </h3>
-                <Link
-                  href={article.href}
-                  className="mt-3 inline-block text-sm font-semibold text-primary/80 hover:text-accent-gold"
-                >
-                  Continue Reading
-                </Link>
-              </div>
-            </article>
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
+                />
+
+                <div className="absolute inset-x-0 bottom-0 z-[1] flex items-end justify-between gap-4 p-5 sm:p-7 lg:p-8">
+                  <div className="min-w-0 pr-2">
+                    <p className="text-sm font-medium uppercase tracking-wide text-white/90">
+                      {article.category}
+                    </p>
+                    <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-white sm:text-2xl lg:text-[1.65rem]">
+                      {article.title}
+                    </h3>
+                  </div>
+                  <span
+                    aria-hidden
+                    className="mb-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center text-white transition group-hover:scale-110"
+                  >
+                    <Plus className="h-7 w-7 stroke-[1.5]" />
+                  </span>
+                </div>
+              </Link>
+            </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal direction="up" delay={0.15}>
+          <div className="mt-8 text-center">
+            <Link
+              href="/academics"
+              className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              More articles
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

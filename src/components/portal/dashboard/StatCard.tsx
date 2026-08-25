@@ -11,7 +11,7 @@ type StatCardProps = {
 
 export function StatCard({ label, value, hint, Icon, tone = "default" }: StatCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-white p-4 shadow-sm sm:p-5">
+    <div className="data-card p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted">{label}</p>

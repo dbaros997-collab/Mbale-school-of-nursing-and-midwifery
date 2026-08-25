@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_ANNOUNCEMENTS,
   MOCK_ASSIGNMENTS,
@@ -10,15 +11,13 @@ import {
 } from "@/lib/portal/mock-store";
 import type { DashboardSummary, DeadlineItem } from "@/lib/portal/schema";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 /**
  * Mock dashboard service — ready for GET /api/portal/dashboard
  */
 export async function getDashboardSummary(
   studentId = MOCK_PROFILE.id,
 ): Promise<DashboardSummary> {
-  await delay(350);
+  await mockDelay(350);
 
   const unitMap = Object.fromEntries(MOCK_UNITS.map((u) => [u.id, u]));
   const submissionByAssignment = Object.fromEntries(

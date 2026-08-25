@@ -8,19 +8,20 @@ import {
   CreditCard,
   FileText,
   FolderOpen,
-  GraduationCap,
   LayoutDashboard,
+  LogOut,
   Megaphone,
+  Pill,
   User,
   X,
 } from "lucide-react";
 import { PORTAL_NAV } from "@/lib/portal/constants";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
+import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { cn } from "@/lib/utils";
 
 const iconMap = {
   LayoutDashboard,
-  GraduationCap,
   BookOpen,
   CreditCard,
   FolderOpen,
@@ -28,37 +29,40 @@ const iconMap = {
   Megaphone,
   User,
   FileText,
+  Pill,
 } as const;
 
 type PortalSidebarProps = {
   open: boolean;
   onClose: () => void;
+  onLogout: () => void;
 };
 
-export function PortalSidebar({ open, onClose }: PortalSidebarProps) {
+export function PortalSidebar({ open, onClose, onLogout }: PortalSidebarProps) {
   const pathname = usePathname();
 
   return (
     <>
-      <div
-        className={cn(
-          "fixed inset-0 z-40 bg-primary-dark/40 transition-opacity lg:hidden",
-          open ? "opacity-100" : "pointer-events-none opacity-0",
-        )}
-        aria-hidden={!open}
-        onClick={onClose}
-      />
+      {open ? (
+        <div
+          className="fixed inset-0 z-40 bg-primary-dark/40 lg:hidden"
+          aria-hidden
+          onClick={onClose}
+        />
+      ) : null}
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-primary-dark text-white transition-transform lg:static lg:z-auto lg:translate-x-0",
-          open ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-primary-dark text-white transition-transform lg:static lg:z-auto lg:translate-x-0 lg:pointer-events-auto",
+          open
+            ? "translate-x-0 pointer-events-auto"
+            : "-translate-x-full pointer-events-none lg:pointer-events-auto",
         )}
-        aria-label="Portal navigation"
+        aria-label="Student portal navigation"
       >
         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-4">
           <Link href="/" className="flex min-w-0 items-center gap-2" onClick={onClose}>
-            <SchoolLogo variant="compact" className="!h-9 !w-auto shrink-0" />
+            <SchoolLogo variant="compact" className="!h-[60px] !w-[240px] shrink-0" />
             <div className="min-w-0">
               <p className="truncate text-sm font-bold">MBSNM Portal</p>
               <p className="truncate text-[11px] text-white/60">Student workspace</p>
@@ -78,7 +82,8 @@ export function PortalSidebar({ open, onClose }: PortalSidebarProps) {
           <ul className="space-y-1">
             {PORTAL_NAV.map((item) => {
               const Icon = iconMap[item.icon];
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const active =
+                pathname === item.href || pathname.startsWith(`${item.href}/`);
 
               if (!item.ready) {
                 return (
@@ -121,8 +126,19 @@ export function PortalSidebar({ open, onClose }: PortalSidebarProps) {
           </ul>
         </nav>
 
-        <div className="border-t border-white/10 px-4 py-3 text-xs text-white/50">
-          Module 1 foundation · Mock session
+        <div className="space-y-1 border-t border-white/10 p-3">
+          <BackToWebsite variant="sidebar" onClick={onClose} />
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onLogout();
+            }}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold text-white/85 transition hover:bg-white/10 focus-ring"
+          >
+            <LogOut className="h-4 w-4 shrink-0" aria-hidden />
+            Log out
+          </button>
         </div>
       </aside>
     </>

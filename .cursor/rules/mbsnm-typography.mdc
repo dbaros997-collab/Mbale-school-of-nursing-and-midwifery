@@ -1,0 +1,34 @@
+---
+description: MBSNM typography — Lora for display, Work Sans for body and UI
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# MBSNM typography
+
+Strictly use the MBSNM typography system.
+
+## Display, headings, and pull quotes — Lora
+
+- Font: **Lora** (`font-display` or semantic `h1`–`h6`, `blockquote`, `.pull-quote`).
+- **Sentence case** in copy — not ALL CAPS for headings (eyebrows/labels in Work Sans may stay uppercase when they are UI chrome, not display titles).
+- Line height: **1.15–1.25** (tight). Prefer `leading-display` / `leading-tight` / `leading-snug`.
+
+## Body, UI, forms, and signage — Work Sans
+
+- Font: **Work Sans** (`font-sans`, default on `body`).
+- **Left-aligned only** — never `text-justify` on prose, forms, or signage.
+- Line height: **1.4–1.5**. Prefer `leading-body` / `leading-normal` / `leading-relaxed`.
+
+## Fallbacks (web fonts unavailable)
+
+| Role | Primary | Fallback | Never use |
+|------|---------|----------|-----------|
+| Display / serif | Lora | Georgia | Times New Roman |
+| Body / sans | Work Sans | Arial | Calibri, Comic Sans |
+
+## Implementation
+
+- Fonts load in `src/app/layout.tsx` via `next/font/google`.
+- Base stacks and line heights live in `src/app/globals.css` (`@theme` + element defaults).
+- Do not add forbidden fonts to SVG `font-family`, CSS stacks, or `@font-face` fallbacks.

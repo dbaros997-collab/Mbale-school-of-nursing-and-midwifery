@@ -1,21 +1,47 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #003366;
-  --primary-dark: #001a33;
-  --primary-light: #0a4a7a;
-  --mak-green: #0b3d2e;
-  --accent-gold: #d4a017;
-  --accent-gold-soft: #f7e9c2;
-  --accent-cyan: #5ec8e8;
-  --accent-cyan-soft: #e8f7fc;
-  --accent-green: #2ea44f;
-  --accent-green-soft: #e8f8ee;
-  --background: #ffffff;
-  --surface: #f7f8fa;
-  --foreground: #1a1a1a;
-  --muted: #5c6770;
-  --border: #e5e7eb;
+  /* MBSNM brand palette — guidelines v1.0 */
+  /* Proportions: 40% navy · 28% ivory · 16% green · 11% sky · gold sparingly */
+  --brand-navy: #16357f;
+  --brand-ivory: #f4fafb;
+  --primary: var(--brand-navy);
+  --primary-dark: #0e2456;
+  --primary-light: #1c428f;
+  --brand-sky: #b5d9e5;
+  --brand-sky-soft: #dceef5;
+  --brand-green: #198f34;
+  --brand-green-soft: #e8f5ea;
+  --brand-green-dark: #15782c;
+  --brand-yellow: #e8a317;
+  --brand-yellow-soft: #fdf4e3;
+  --brand-yellow-dark: #c98d0f;
+  --mak-green: #198f34;
+
+  /* Semantic aliases (used across components) */
+  --accent-gold: var(--brand-yellow);
+  --accent-gold-soft: var(--brand-yellow-soft);
+  --accent-cyan: var(--brand-sky);
+  --accent-cyan-soft: var(--brand-sky-soft);
+  --accent-green: var(--brand-green);
+  --accent-green-soft: var(--brand-green-soft);
+
+  --background: var(--brand-ivory);
+  --surface: #eef5f7;
+  --panel: #ffffff;
+  --foreground: #10212b;
+  /* AA-safe on ivory (#F4FAFB) — ≥4.5:1 */
+  --muted: #566570;
+  --border: #d8e4e8;
+
+  /* Fixed chrome — keep header offset in sync with SiteStatusBar */
+  --site-status-bar-height: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-status-bar-height: 4rem;
+  }
 }
 
 @theme inline {
@@ -29,13 +55,23 @@
   --color-accent-cyan-soft: var(--accent-cyan-soft);
   --color-accent-green: var(--accent-green);
   --color-accent-green-soft: var(--accent-green-soft);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-sky-soft: var(--brand-sky-soft);
+  --color-brand-ivory: var(--brand-ivory);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-yellow-dark: var(--brand-yellow-dark);
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-panel: var(--panel);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-plus-jakarta);
-  --font-display: var(--font-source-serif);
+  --font-sans: var(--font-work-sans), Arial, sans-serif;
+  --font-display: var(--font-lora), Georgia, serif;
+  --leading-display: 1.2;
+  --leading-body: 1.45;
 }
 
 * {
@@ -44,39 +80,375 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+  font-family: var(--font-sans);
+  line-height: var(--leading-body);
+  text-align: left;
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* MBSNM typography — display & headings (Lora, tight leading) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  line-height: var(--leading-display);
+}
+
+blockquote,
+.pull-quote {
+  font-family: var(--font-display);
+  line-height: var(--leading-display);
+}
+
+/* MBSNM typography — body, UI, forms, signage (Work Sans, left-aligned) */
+p,
+li,
+td,
+th,
+dd,
+dt,
+label,
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  text-align: left;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+/* Keep Next.js fill images covering their containers */
+img[data-nimg="fill"] {
+  height: 100% !important;
+  max-width: none;
+}
+
+/* Show content before animation JS hydrates */
+html:not(.js-ready) main [style*="opacity: 0"],
+html:not(.js-ready) main [style*="opacity:0"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Soft brand wash — ivory base, restrained sky/green, minimal gold */
+.site-shell {
+  background:
+    radial-gradient(ellipse 90% 60% at 0% 0%, color-mix(in srgb, var(--brand-sky) 11%, transparent), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 100% 8%, color-mix(in srgb, var(--brand-green) 16%, transparent), transparent 45%),
+    radial-gradient(ellipse 80% 55% at 50% 100%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 50%),
+    linear-gradient(180deg, var(--brand-ivory) 0%, var(--surface) 280px, var(--background) 520px);
+}
+
+/* Section bands — cycle sky → green → gold across the page */
+.section-surface,
+.section-sky {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--brand-sky-soft) 85%, white) 0%,
+    color-mix(in srgb, var(--brand-sky) 8%, var(--surface)) 100%
+  );
+}
+
+.section-muted,
+.section-green {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--brand-green-soft) 75%, var(--surface)) 0%,
+    color-mix(in srgb, var(--brand-green) 6%, var(--background)) 100%
+  );
+}
+
+.section-gold,
+.section-warm {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--brand-yellow-soft) 55%, var(--brand-ivory)) 0%,
+    color-mix(in srgb, var(--brand-yellow) 3%, var(--background)) 100%
+  );
+}
+
+.section-primary-soft {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--primary) 6%, var(--surface)) 0%,
+    color-mix(in srgb, var(--brand-sky-soft) 40%, var(--background)) 100%
+  );
+}
+
+.section-atmosphere {
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 20%, color-mix(in srgb, var(--brand-sky) 11%, transparent), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 90% 30%, color-mix(in srgb, var(--brand-green) 16%, transparent), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 90%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 45%),
+    var(--background);
+}
+
+.content-panel {
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, var(--brand-sky));
+  box-shadow:
+    0 12px 36px color-mix(in srgb, var(--primary) 8%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--brand-sky) 25%, white);
+}
+
+/* Colored icon / chip backgrounds */
+.accent-chip-sky {
+  background: color-mix(in srgb, var(--brand-sky-soft) 90%, white);
+  color: var(--primary);
+}
+
+.accent-chip-green {
+  background: color-mix(in srgb, var(--brand-green-soft) 90%, white);
+  color: var(--brand-green-dark);
+}
+
+.accent-chip-gold {
+  background: color-mix(in srgb, var(--brand-yellow-soft) 92%, white);
+  color: var(--primary-dark);
+}
+
+.accent-chip-primary {
+  background: color-mix(in srgb, var(--primary) 12%, white);
+  color: var(--primary);
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent-gold) 40%, white);
+  background: color-mix(in srgb, var(--brand-yellow) 45%, white);
   color: var(--primary-dark);
 }
 
 .font-display {
-  font-family: var(--font-source-serif), Georgia, serif;
+  font-family: var(--font-display);
+  line-height: var(--leading-display);
+}
+
+.leading-display {
+  line-height: var(--leading-display);
+}
+
+.leading-body {
+  line-height: var(--leading-body);
+}
+
+/* ── MBSNM digital UI ───────────────────────────────────── */
+
+/* Approved tint scales (tables & charts — primary hues only) */
+:root {
+  --tint-navy-50: #eef2f9;
+  --tint-navy-100: #d4dff0;
+  --tint-navy-200: #a9bfe1;
+  --tint-sky-50: #f4fafb;
+  --tint-sky-100: #dceef5;
+  --tint-sky-200: #b5d9e5;
+  --tint-sky-300: #8ec4d5;
+  --tint-green-50: #e8f5ea;
+  --tint-green-100: #c5e6cb;
+  --tint-green-200: #9dd4a8;
+  --chart-1: var(--primary);
+  --chart-2: var(--brand-green);
+  --chart-3: var(--tint-sky-300);
+  --chart-4: var(--primary-light);
+  --chart-5: var(--brand-green-dark);
+}
+
+/* Navy header row */
+.header-navy-row {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.header-bar-accent-navy::after,
+.header-bar-accent-tricolor::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.header-bar-accent-navy::after {
+  height: 3px;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.header-bar-accent-tricolor::after {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--brand-green) 50%,
+    var(--brand-yellow) 100%
+  );
+}
+
+/* Sky hero section */
+.hero-sky {
+  background: linear-gradient(
+    165deg,
+    var(--tint-sky-100) 0%,
+    var(--brand-ivory) 45%,
+    color-mix(in srgb, var(--brand-sky) 28%, var(--brand-ivory)) 100%
+  );
+  color: var(--foreground);
+}
+
+.hero-sky--overlay {
+  position: relative;
+}
+
+.hero-sky--overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--brand-sky) 78%, var(--brand-ivory)) 0%,
+    color-mix(in srgb, var(--brand-sky) 55%, transparent) 48%,
+    color-mix(in srgb, var(--primary) 38%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
+/* Structured data card */
+.data-card {
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--brand-sky) 45%, var(--border));
+  border-radius: 0.75rem;
+  box-shadow:
+    0 8px 28px color-mix(in srgb, var(--primary) 7%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--brand-sky) 30%, white);
+}
+
+.data-card__body {
+  background: var(--panel);
+}
+
+/* Data table — approved tint scales */
+.data-table-shell {
+  border: 1px solid color-mix(in srgb, var(--brand-sky) 40%, var(--border));
+  background: var(--panel);
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+.data-table-head {
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-sky) 50%, var(--border));
+  background: var(--tint-sky-100);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.data-table-head th {
+  padding: 0.75rem 1rem;
+}
+
+.data-table-body tr:nth-child(even) {
+  background: var(--tint-navy-50);
+}
+
+.data-table-body tr:hover {
+  background: var(--tint-sky-50);
+}
+
+.data-table-body td {
+  padding: 0.75rem 1rem;
+}
+
+/* MBSNM UI — pill buttons */
+.btn-pill {
+  border-radius: 9999px;
+}
+
+/* MBSNM UI — sky callout with navy edge marker */
+.callout-sky {
+  background: color-mix(in srgb, var(--brand-sky) 38%, var(--brand-ivory));
+  border: 1px solid color-mix(in srgb, var(--brand-sky) 50%, var(--border));
+  border-left: 4px solid var(--primary);
+  border-radius: 0.75rem;
+  color: var(--foreground);
+}
+
+/* Gold accent — eyebrows, icons, emphasis only (not body copy) */
+.text-emphasis-gold {
+  color: var(--brand-yellow-dark);
 }
 
 .hero-overlay-bar {
-  background: linear-gradient(90deg, transparent, rgba(0, 26, 51, 0.55));
+  background: linear-gradient(90deg, transparent, rgba(14, 36, 86, 0.55));
 }
 
 .mak-gold-rule {
-  height: 6px;
-  background: var(--accent-gold);
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--brand-green) 50%,
+    var(--brand-yellow) 100%
+  );
+}
+
+.brand-tricolor-rule {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--brand-green) 50%,
+    var(--brand-yellow) 100%
+  );
+}
+
+.brand-panel {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 94%, black) 0%,
+    color-mix(in srgb, var(--primary-light) 88%, var(--brand-green)) 100%
+  );
+}
+
+.brand-gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--brand-sky) 0%,
+    var(--brand-green) 55%,
+    var(--brand-yellow) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .focus-ring:focus-visible {
-  outline: 2px solid var(--accent-gold);
+  outline: 2px solid var(--brand-yellow);
   outline-offset: 2px;
 }
 
 .nav-active-bar {
-  background: linear-gradient(90deg, #000 0%, #fcdc04 50%, #d90000 100%);
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--brand-green) 50%,
+    var(--brand-yellow) 100%
+  );
 }
 
 /* Makerere-style Join / Visit / Give CTA row */
@@ -85,23 +457,6 @@ body {
   display: block;
   margin: 10px 0;
   width: 100%;
-}
-
-/* ISBAT-style header logo diagonal white wedge */
-.header-logo-cell {
-  position: relative;
-}
-
-.header-logo-cell::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  width: 48px;
-  background: #fff;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  z-index: 0;
 }
 
 /* ISBAT-style pulsing play button */
@@ -136,7 +491,7 @@ body {
   border-radius: 50%;
   box-sizing: border-box;
   pointer-events: none;
-  border: 2px solid #ab0319;
+  border: 2px solid var(--brand-green);
   opacity: 0.6;
 }
 
@@ -171,7 +526,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ab0319;
+  background: var(--brand-green);
 }
 
 .playbtn svg.play-triangle {
@@ -205,47 +560,79 @@ body {
   }
 }
 
-/* Grace High–style fixed campus wallpaper behind bottom content */
+/* Campus watermark band — clips a fixed photo so it stays put while content scrolls */
 .campus-wallpaper {
+  position: relative;
   background-color: var(--primary-dark);
-  background-image: url("/images/campus-wallpaper.png");
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* Clips the fixed media to this section only */
+  clip-path: inset(0);
 }
 
-/* KIU-style footer: deep navy field + soft dotted texture */
-.kiu-footer {
-  background-color: #001428;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--primary) 92%, #000a14),
-      #001428
-    );
-  background-size: 18px 18px, auto;
-  background-position: 0 0, 0 0;
-}
-
-.kiu-footer-rule {
-  height: 6px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--primary-light), var(--accent-cyan));
+.campus-wallpaper__media {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 767px) {
-  .campus-wallpaper {
-    background-attachment: scroll;
+  /* iOS often mishandles fixed layers — fall back to a static cover */
+  .campus-wallpaper__media {
+    position: absolute;
   }
 
   .playbtn .play-text {
     font-size: 0.85rem;
     max-width: 11rem;
   }
+}
 
-  .header-logo-cell::after {
-    width: 32px;
+/* KIU-style footer: deep navy field + soft dotted texture */
+.kiu-footer {
+  background-color: var(--primary-dark);
+  background-image:
+    radial-gradient(rgba(181, 217, 229, 0.12) 1px, transparent 1px),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 92%, #000814),
+      var(--primary-dark)
+    );
+  background-size: 18px 18px, auto;
+  background-position: 0 0, 0 0;
+}
+
+.kiu-footer-rule {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--brand-sky) 0%,
+    var(--brand-green) 50%,
+    var(--brand-yellow) 100%
+  );
+}
+
+/* Site-wide scrolling status bar */
+@keyframes site-status-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.site-status-marquee {
+  animation: site-status-marquee 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-status-marquee {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.75rem;
+    gap: 0.5rem 1rem;
   }
 }
 

@@ -1,0 +1,20 @@
+---
+description: MBSNM brand tone of voice for all public-facing copy
+globs: src/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# MBSNM tone of voice
+
+Write like a mentor, not a bureaucrat.
+
+- **Warm** — direct, encouraging, human. Address the reader as “you” where it fits.
+- **Clear** — short sentences. Plain English. No applicant jargon (avoid “stakeholders”, “leverage”, “pathway”, “outcome-based”).
+- **Assured** — state accreditation and facts plainly. No boasting or superlatives (“leading”, “world-class”, “premier”).
+- **Faithful** — Christian conviction is part of who we are; never preachy or heavy-handed.
+
+**Motto:** use **In God We Love and Serve** where a motto belongs (footers, about, admissions closings, signatures). Do not use “With GOD”.
+
+**Accreditation line (when needed):** Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.
+
+**Avoid:** long paragraphs, duplicated adjectives, generic university marketing, passive voice where active is clearer.

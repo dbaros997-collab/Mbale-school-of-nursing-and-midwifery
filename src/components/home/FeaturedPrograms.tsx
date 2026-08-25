@@ -12,7 +12,7 @@ export function FeaturedPrograms() {
   const featured = programs.slice(0, 3);
 
   return (
-    <section className="bg-white py-16 sm:py-20" aria-labelledby="programs-heading">
+    <section className="section-gold py-16 sm:py-20" aria-labelledby="programs-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
@@ -34,7 +34,7 @@ export function FeaturedPrograms() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="group overflow-hidden rounded-2xl border border-border bg-surface"
+              className="group overflow-hidden rounded-3xl border border-border bg-surface"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-primary/10">
                 <Image

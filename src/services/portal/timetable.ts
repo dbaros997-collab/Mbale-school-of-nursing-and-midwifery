@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   CURRENT_SEMESTER,
   MOCK_EXAMS,
@@ -6,8 +7,6 @@ import {
   MOCK_UNITS,
 } from "@/lib/portal/mock-store";
 import type { ExamSlot, TimetableSlot } from "@/lib/portal/schema";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const WEEK_DAYS = [
   "Monday",
@@ -18,7 +17,7 @@ export const WEEK_DAYS = [
   "Saturday",
 ] as const;
 
-export type TimetableSlotRow = TimetableSlot & {
+export type TimetableSlotView = TimetableSlot & {
   courseCode: string;
   courseTitle: string;
 };
@@ -43,7 +42,7 @@ function unitLookup() {
 export async function getTimetableBundle(
   studentId = MOCK_PROFILE.id,
 ): Promise<TimetableBundle> {
-  await delay(280);
+  await mockDelay(280);
   const units = unitLookup();
 
   const weekSlots: TimetableSlotView[] = MOCK_TIMETABLE.filter(

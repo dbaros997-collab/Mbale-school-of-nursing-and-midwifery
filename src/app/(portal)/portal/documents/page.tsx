@@ -11,6 +11,7 @@ import {
   type DocumentsBundle,
 } from "@/services/portal/documents";
 import { DocumentStatusBadge } from "@/components/portal/StatusBadge";
+import { Button } from "@/components/ui/Button";
 
 const TYPES: DocumentType[] = ["testimonial", "recommendation", "admission_letter"];
 
@@ -123,18 +124,14 @@ export default function DocumentsPage() {
             </button>
           ))}
         </div>
-        <button
-          type="submit"
-          disabled={busy}
-          className="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark disabled:opacity-50 focus-ring"
-        >
+        <Button type="submit" variant="primary" disabled={busy} className="mt-4">
           {busy ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
           ) : (
             <FilePlus2 className="h-4 w-4" aria-hidden />
           )}
           Submit request
-        </button>
+        </Button>
       </form>
 
       <div className="rounded-xl border border-border bg-white shadow-sm">

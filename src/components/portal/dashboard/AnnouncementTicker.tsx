@@ -1,26 +1,27 @@
 import Link from "next/link";
 import { Megaphone } from "lucide-react";
 import type { Announcement } from "@/lib/portal/schema";
+import { DataCard } from "@/components/ui/DataCard";
 
 export function AnnouncementTicker({ items }: { items: Announcement[] }) {
   return (
-    <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <Megaphone className="h-4 w-4 text-primary" aria-hidden />
-          <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
+    <DataCard
+      title={
+        <span className="flex w-full items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-2">
+            <Megaphone className="h-4 w-4" aria-hidden />
             Notice board
-          </h2>
-        </div>
-        <Link
-          href="/portal/notices"
-          className="text-xs font-semibold text-primary underline-offset-2 hover:underline"
-        >
-          View all
-        </Link>
-      </div>
-
-      <ul className="mt-4 space-y-3">
+          </span>
+          <Link
+            href="/portal/notices"
+            className="text-xs font-semibold text-brand-sky underline-offset-2 hover:underline"
+          >
+            View all
+          </Link>
+        </span>
+      }
+    >
+      <ul className="space-y-3">
         {items.slice(0, 3).map((item) => (
           <li
             key={item.id}
@@ -38,6 +39,6 @@ export function AnnouncementTicker({ items }: { items: Announcement[] }) {
           </li>
         ))}
       </ul>
-    </div>
+    </DataCard>
   );
 }

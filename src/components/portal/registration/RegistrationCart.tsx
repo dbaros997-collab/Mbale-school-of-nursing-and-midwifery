@@ -4,6 +4,7 @@ import { BookOpenCheck, Loader2, RotateCcw, Send } from "lucide-react";
 import type { CourseUnit, SemesterRegistration } from "@/lib/portal/schema";
 import { REGISTRATION_STATUS_LABELS } from "@/lib/portal/constants";
 import { RegistrationStatusBadge } from "@/components/portal/StatusBadge";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 type RegistrationCartProps = {
@@ -130,11 +131,12 @@ export function RegistrationCart({
 
       <div className="mt-5 space-y-2">
         {!locked ? (
-          <button
+          <Button
             type="button"
+            variant="primary"
             disabled={!canSubmit || busy}
             onClick={onSubmit}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-bold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 focus-ring"
+            className="w-full"
           >
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -142,7 +144,7 @@ export function RegistrationCart({
               <Send className="h-4 w-4" aria-hidden />
             )}
             Submit for approval
-          </button>
+          </Button>
         ) : (
           <button
             type="button"

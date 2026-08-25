@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 type ButtonProps = {
   href?: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "green";
+  variant?: "primary" | "navy" | "secondary" | "outline" | "ghost" | "green";
   size?: "sm" | "md" | "lg";
   className?: string;
   type?: "button" | "submit" | "reset";
@@ -14,17 +14,18 @@ type ButtonProps = {
 };
 
 const variants = {
-  primary: "bg-primary text-white hover:bg-primary-dark shadow-sm",
-  secondary: "bg-accent-cyan text-primary-dark hover:bg-sky-300",
-  outline: "border-2 border-white/80 text-white hover:bg-white/10",
-  ghost: "bg-white text-primary hover:bg-accent-cyan-soft border border-border",
-  green: "bg-accent-green text-white hover:bg-emerald-600 shadow-sm",
+  primary: "bg-brand-green text-white hover:bg-brand-green-dark shadow-sm",
+  green: "bg-brand-green text-white hover:bg-brand-green-dark shadow-sm",
+  navy: "bg-primary text-white hover:bg-primary-dark shadow-sm",
+  secondary: "bg-brand-sky text-primary hover:bg-brand-sky-soft shadow-sm",
+  outline: "border-2 border-primary/30 text-primary hover:bg-brand-sky-soft bg-transparent",
+  ghost: "bg-panel text-primary hover:bg-brand-sky-soft border border-border",
 };
 
 const sizes = {
-  sm: "px-3.5 py-2 text-sm",
+  sm: "px-4 py-2 text-sm",
   md: "px-5 py-2.5 text-sm",
-  lg: "px-6 py-3.5 text-base",
+  lg: "px-6 py-3 text-base",
 };
 
 export function Button({
@@ -39,7 +40,7 @@ export function Button({
   ariaLabel,
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-200 focus-ring disabled:opacity-60 disabled:pointer-events-none",
+    "btn-pill inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-ring disabled:opacity-60 disabled:pointer-events-none",
     variants[variant],
     sizes[size],
     className,

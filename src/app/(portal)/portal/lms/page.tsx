@@ -6,10 +6,13 @@ import {
   submitAssignment,
   type LmsBundle,
 } from "@/services/portal/lms";
-import { MaterialsList } from "@/components/portal/lms/MaterialsList";
+import { CurriculumDocumentViewer } from "@/components/microsoft/CurriculumDocumentViewer";
+import { useAuth } from "@/contexts/AuthContext";
 import { AssignmentBoard } from "@/components/portal/lms/AssignmentBoard";
+import { MaterialsList } from "@/components/portal/lms/MaterialsList";
 
 export default function LmsPage() {
+  const { authProvider } = useAuth();
   const [data, setData] = useState<LmsBundle | null>(null);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -76,6 +79,10 @@ export default function LmsPage() {
           />
         </div>
       )}
+
+      {authProvider === "microsoft" ? (
+        <CurriculumDocumentViewer />
+      ) : null}
     </div>
   );
 }

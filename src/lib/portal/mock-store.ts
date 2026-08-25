@@ -1,4 +1,6 @@
 import type {
+  AdminProfile,
+  AdminStudentRecord,
   Announcement,
   Assignment,
   AssignmentSubmission,
@@ -11,6 +13,7 @@ import type {
   Grade,
   DocumentRequest,
   Payment,
+  PendingActivation,
   Program,
   SemesterRegistration,
   Session,
@@ -18,6 +21,7 @@ import type {
   TimetableSlot,
   User,
 } from "./schema";
+import { registerStudentRegistrySync } from "./student-registry";
 
 export const REGISTRATION_SEMESTER = "Semester 2, 2025/26";
 export const CURRENT_SEMESTER = "Semester 1, 2025/26";
@@ -197,15 +201,19 @@ export const MOCK_UNITS: CourseUnit[] = MOCK_CATALOG.filter((u) =>
 export const MOCK_USER: User = {
   id: "user-sarah",
   email: "nagudi.sarah@student.mbsnm.org",
-  passwordHash: "mock-hash",
+  passwordHash: "mock-hash:Student@2026",
   role: "student",
   createdAt: "2024-08-01T08:00:00.000Z",
+  accountActivated: true,
+  mustChangePassword: false,
 };
 
 export const MOCK_PROFILE: StudentProfile = {
   id: "stu-sarah",
   userId: "user-sarah",
   studentNumber: "MBSNM/NS/2024/018",
+  tempRegistrationNumber: null,
+  admissionLetterRef: "ADM-MBSNM-2024-018",
   fullName: "Nagudi Sarah",
   programId: "prog-dn",
   phone: "+256 700 123 456",
@@ -217,22 +225,64 @@ export const MOCK_PROFILE: StudentProfile = {
     phone: "+256 772 987 654",
     email: "peter.nagudi@email.com",
   },
+  emergencyContact: {
+    name: "Nagudi Mary",
+    relationship: "Mother",
+    phone: "+256 701 555 221",
+  },
+  medicalInfo: {
+    bloodGroup: "O+",
+    allergies: "None known",
+    chronicConditions: "None",
+    disabilities: "None",
+    doctorName: "Dr. Okello James",
+    doctorPhone: "+256 750 111 222",
+  },
   creditsCompleted: 48,
   creditsRequired: 120,
   cumulativeGpa: 3.42,
   semesterGpa: 3.55,
 };
 
+/** Demo first-time students — use any row on the activation wizard */
+export { MOCK_PENDING_ACTIVATION } from "./student-registry";
+
+export function applyActiveStudentSession(user: User, profile: StudentProfile) {
+  Object.assign(MOCK_USER, user);
+  Object.assign(MOCK_PROFILE, {
+    ...profile,
+    nextOfKin: { ...profile.nextOfKin },
+    emergencyContact: { ...profile.emergencyContact },
+    medicalInfo: { ...profile.medicalInfo },
+  });
+}
+
+registerStudentRegistrySync(applyActiveStudentSession);
+
 export function updateMockProfile(
   patch: Partial<Omit<StudentProfile, "id" | "userId" | "studentNumber" | "programId">> & {
     nextOfKin?: Partial<StudentProfile["nextOfKin"]>;
+    emergencyContact?: Partial<StudentProfile["emergencyContact"]>;
+    medicalInfo?: Partial<StudentProfile["medicalInfo"]>;
   },
 ) {
   if (patch.nextOfKin) {
     Object.assign(MOCK_PROFILE.nextOfKin, patch.nextOfKin);
   }
-  const { nextOfKin: _kin, ...rest } = patch;
+  if (patch.emergencyContact) {
+    Object.assign(MOCK_PROFILE.emergencyContact, patch.emergencyContact);
+  }
+  if (patch.medicalInfo) {
+    Object.assign(MOCK_PROFILE.medicalInfo, patch.medicalInfo);
+  }
+  const { nextOfKin: _kin, emergencyContact: _em, medicalInfo: _med, ...rest } = patch;
   Object.assign(MOCK_PROFILE, rest);
+}
+
+export function setMockUserPassword(passwordHash: string) {
+  MOCK_USER.passwordHash = passwordHash;
+  MOCK_USER.mustChangePassword = false;
+  MOCK_USER.accountActivated = true;
 }
 
 export const MOCK_GRADES: Grade[] = [
@@ -421,6 +471,7 @@ export const MOCK_INVOICE = mockInvoice;
 
 export function setMockInvoice(next: FeeInvoice) {
   Object.assign(mockInvoice, next);
+  syncAdminStudentFeesFromInvoice();
 }
 
 export const MOCK_FEE_LINES: FeeLineItem[] = [
@@ -465,6 +516,10 @@ export let mockPayments: Payment[] = [
 
 export function addMockPayment(payment: Payment) {
   mockPayments = [payment, ...mockPayments];
+  // Keep admin ledger in sync when the demo student pays from the student portal
+  if (!mockAdminPayments.some((p) => p.id === payment.id)) {
+    mockAdminPayments = [payment, ...mockAdminPayments];
+  }
 }
 
 export const MOCK_MATERIALS: CourseMaterial[] = [
@@ -755,7 +810,7 @@ export const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
     id: "ann-1",
     title: "Orientation materials",
-    body: "July 2026 intake orientation materials are available at the registry.",
+    body: "June and July 2026 intake orientation materials are available at the registry.",
     publishedAt: "2026-08-08T08:00:00.000Z",
     audience: "students",
   },
@@ -790,8 +845,281 @@ export const MOCK_ANNOUNCEMENTS: Announcement[] = [
   {
     id: "ann-6",
     title: "Fee payment reminder",
-    body: "Students with outstanding balances should clear fees before exam cards are issued. Pay via the Fees portal (MTN / Airtel / bank).",
+    body: "Students with outstanding balances should clear fees before exam cards are issued. Pay via the Fees portal by bank transfer.",
     publishedAt: "2026-08-11T08:30:00.000Z",
     audience: "students",
   },
 ];
+
+/* ─── Admin control panel seed data ─── */
+
+export const MOCK_ADMIN_USER: User = {
+  id: "user-admin",
+  email: "registry@mbsnm.org",
+  passwordHash: "mock-admin-hash",
+  role: "admin",
+  createdAt: "2023-01-10T08:00:00.000Z",
+  accountActivated: true,
+  mustChangePassword: false,
+};
+
+export const MOCK_ADMIN_SESSION: Session = {
+  id: "sess-admin",
+  userId: "user-admin",
+  role: "admin",
+  token: "mock-jwt.admin.registry",
+  expiresAt: "2027-01-01T00:00:00.000Z",
+};
+
+export const MOCK_ADMIN_PROFILE: AdminProfile = {
+  id: "adm-1",
+  userId: "user-admin",
+  fullName: "Namukasa Rebecca",
+  title: "Academic Registrar",
+  email: "registry@mbsnm.org",
+  phone: "+256 454 123 400",
+};
+
+/** Mutable multi-student registry for the admin dashboard */
+export let mockAdminStudents: AdminStudentRecord[] = [
+  {
+    id: "stu-sarah",
+    userId: "user-sarah",
+    studentNumber: "MBSNM/NS/2024/018",
+    fullName: "Nagudi Sarah",
+    email: "nagudi.sarah@student.mbsnm.org",
+    phone: "+256 700 123 456",
+    programId: "prog-dn",
+    address: "Mbale Municipality, Eastern Uganda",
+    accountStatus: "active",
+    feeBalance: 450_000,
+    feeTotalPaid: 1_000_000,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 5,
+    cumulativeGpa: 3.42,
+    registeredAt: "2024-08-01T08:00:00.000Z",
+  },
+  {
+    id: "stu-okello",
+    userId: "user-okello",
+    studentNumber: "MBSNM/NS/2024/021",
+    fullName: "Okello Brian",
+    email: "okello.brian@student.mbsnm.org",
+    phone: "+256 772 441 902",
+    programId: "prog-dn",
+    address: "Soroti City, Eastern Uganda",
+    accountStatus: "active",
+    feeBalance: 0,
+    feeTotalPaid: 1_450_000,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 5,
+    cumulativeGpa: 3.18,
+    registeredAt: "2024-08-02T09:30:00.000Z",
+  },
+  {
+    id: "stu-nakato",
+    userId: "user-nakato",
+    studentNumber: "MBSNM/NS/2025/007",
+    fullName: "Nakato Esther",
+    email: "nakato.esther@student.mbsnm.org",
+    phone: "+256 705 662 118",
+    programId: "prog-dn",
+    address: "Jinja City, Eastern Uganda",
+    accountStatus: "active",
+    feeBalance: 720_000,
+    feeTotalPaid: 730_000,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 4,
+    cumulativeGpa: 3.65,
+    registeredAt: "2025-01-15T10:00:00.000Z",
+  },
+  {
+    id: "stu-waiswa",
+    userId: "user-waiswa",
+    studentNumber: "MBSNM/NS/2025/014",
+    fullName: "Waiswa Daniel",
+    email: "waiswa.daniel@student.mbsnm.org",
+    phone: "+256 781 334 055",
+    programId: "prog-dn",
+    address: "Iganga Town, Eastern Uganda",
+    accountStatus: "active",
+    feeBalance: 200_000,
+    feeTotalPaid: 1_250_000,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 5,
+    cumulativeGpa: 2.95,
+    registeredAt: "2025-01-18T11:20:00.000Z",
+  },
+  {
+    id: "stu-auma",
+    userId: "user-auma",
+    studentNumber: "MBSNM/NS/2026/042",
+    fullName: "Auma Grace",
+    email: "auma.grace@student.mbsnm.org",
+    phone: "+256 704 888 301",
+    programId: "prog-dn",
+    address: "Pending — activation incomplete",
+    accountStatus: "pending_approval",
+    feeBalance: 1_450_000,
+    feeTotalPaid: 0,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 0,
+    cumulativeGpa: 0,
+    registeredAt: "2026-07-28T14:00:00.000Z",
+  },
+  {
+    id: "stu-mukisa",
+    userId: "user-mukisa",
+    studentNumber: "MBSNM/NS/2026/051",
+    fullName: "Mukisa Joan",
+    email: "mukisa.joan@student.mbsnm.org",
+    phone: "+256 759 210 447",
+    programId: "prog-dn",
+    address: "Pending — awaiting registry approval",
+    accountStatus: "pending_approval",
+    feeBalance: 1_450_000,
+    feeTotalPaid: 0,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 0,
+    cumulativeGpa: 0,
+    registeredAt: "2026-08-05T09:45:00.000Z",
+  },
+  {
+    id: "stu-kato",
+    userId: "user-kato",
+    studentNumber: "MBSNM/NS/2023/009",
+    fullName: "Kato Isaac",
+    email: "kato.isaac@student.mbsnm.org",
+    phone: "+256 700 998 221",
+    programId: "prog-dn",
+    address: "Tororo Municipality",
+    accountStatus: "inactive",
+    feeBalance: 0,
+    feeTotalPaid: 1_450_000,
+    feeTotalBilled: 1_450_000,
+    enrolledUnits: 0,
+    cumulativeGpa: 3.01,
+    registeredAt: "2023-08-10T08:00:00.000Z",
+  },
+];
+
+/** Admin-recorded payments across the student body (includes Sarah's live ledger) */
+export let mockAdminPayments: Payment[] = [
+  {
+    id: "apay-1",
+    invoiceId: "inv-okello-2025-1",
+    studentId: "stu-okello",
+    amount: 1_450_000,
+    method: "bank",
+    reference: "BNK-CENT-441902",
+    status: "completed",
+    paidAt: "2025-09-01T10:00:00.000Z",
+  },
+  {
+    id: "apay-2",
+    invoiceId: "inv-nakato-2025-1",
+    studentId: "stu-nakato",
+    amount: 730_000,
+    method: "mtn",
+    reference: "MTN-20260112-66211",
+    status: "completed",
+    paidAt: "2026-01-12T15:20:00.000Z",
+  },
+  {
+    id: "apay-3",
+    invoiceId: "inv-waiswa-2025-1",
+    studentId: "stu-waiswa",
+    amount: 800_000,
+    method: "airtel",
+    reference: "AIR-20260203-33405",
+    status: "completed",
+    paidAt: "2026-02-03T11:05:00.000Z",
+  },
+  {
+    id: "apay-4",
+    invoiceId: "inv-waiswa-2025-1",
+    studentId: "stu-waiswa",
+    amount: 450_000,
+    method: "bank",
+    reference: "BNK-STANBIC-990114",
+    status: "completed",
+    paidAt: "2026-06-18T09:40:00.000Z",
+  },
+];
+
+export function syncAdminStudentFeesFromInvoice() {
+  const row = mockAdminStudents.find((s) => s.id === mockInvoice.studentId);
+  if (!row) return;
+  row.feeBalance = mockInvoice.balance;
+  row.feeTotalPaid = mockInvoice.totalPaid;
+  row.feeTotalBilled = mockInvoice.totalBilled;
+}
+
+export function approveAdminStudent(studentId: string): AdminStudentRecord | null {
+  const row = mockAdminStudents.find((s) => s.id === studentId);
+  if (!row || row.accountStatus !== "pending_approval") return null;
+  row.accountStatus = "active";
+  return { ...row };
+}
+
+export function updateAdminStudentFees(
+  studentId: string,
+  patch: { feeTotalPaid: number; feeBalance: number; feeTotalBilled?: number },
+) {
+  const row = mockAdminStudents.find((s) => s.id === studentId);
+  if (!row) return null;
+  row.feeTotalPaid = patch.feeTotalPaid;
+  row.feeBalance = patch.feeBalance;
+  if (patch.feeTotalBilled !== undefined) {
+    row.feeTotalBilled = patch.feeTotalBilled;
+  }
+  if (studentId === mockInvoice.studentId) {
+    setMockInvoice({
+      ...mockInvoice,
+      totalPaid: patch.feeTotalPaid,
+      balance: patch.feeBalance,
+      totalBilled: patch.feeTotalBilled ?? mockInvoice.totalBilled,
+    });
+  }
+  return { ...row };
+}
+
+export function addAdminPayment(payment: Payment) {
+  mockAdminPayments = [payment, ...mockAdminPayments];
+  if (payment.studentId === MOCK_PROFILE.id) {
+    addMockPayment(payment);
+  }
+}
+
+export function addMockAnnouncement(announcement: Announcement) {
+  MOCK_ANNOUNCEMENTS.unshift(announcement);
+}
+
+export function updateMockTimetableSlot(
+  id: string,
+  patch: Partial<Omit<TimetableSlot, "id" | "studentId">>,
+): TimetableSlot | null {
+  const slot = MOCK_TIMETABLE.find((s) => s.id === id);
+  if (!slot) return null;
+  Object.assign(slot, patch);
+  return { ...slot };
+}
+
+export function addMockTimetableSlot(slot: TimetableSlot) {
+  MOCK_TIMETABLE.push(slot);
+}
+
+export function removeMockTimetableSlot(id: string): boolean {
+  const idx = MOCK_TIMETABLE.findIndex((s) => s.id === id);
+  if (idx < 0) return false;
+  MOCK_TIMETABLE.splice(idx, 1);
+  return true;
+}
+
+export function addMockMaterial(material: CourseMaterial) {
+  MOCK_MATERIALS.unshift(material);
+}
+
+export function addMockCatalogUnit(unit: CourseUnit) {
+  MOCK_CATALOG.push(unit);
+}

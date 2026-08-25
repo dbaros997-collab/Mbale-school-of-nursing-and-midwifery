@@ -17,7 +17,7 @@ export default function AcademicsPage() {
         image="/images/computer-lab.jpg"
       />
 
-      <section className="bg-surface py-14">
+      <section className="section-sky py-14">
         <div className="mx-auto max-w-7xl space-y-10 px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Course catalogue"
@@ -30,10 +30,10 @@ export default function AcademicsPage() {
               <article
                 key={program.id}
                 id={program.id}
-                className="scroll-mt-28 overflow-hidden rounded-2xl border border-border bg-white"
+                className="scroll-mt-28 overflow-hidden rounded-3xl content-panel"
               >
                 <div className="grid lg:grid-cols-[280px_1fr]">
-                  <div className="relative min-h-[200px] bg-surface">
+                  <div className="relative min-h-[200px] overflow-hidden bg-surface lg:rounded-l-3xl">
                     <Image
                       src={program.image}
                       alt=""

@@ -1,5 +1,7 @@
 /** Portal schema models — TypeScript shapes mirroring future DB tables. */
 
+import type { ApplicationRecord } from "@/lib/admissions/types";
+
 export type Role = "student" | "lecturer" | "admin";
 
 export type PaymentMethod = "mtn" | "airtel" | "bank";
@@ -18,6 +20,8 @@ export type User = {
   passwordHash: string;
   role: Role;
   createdAt: string;
+  accountActivated: boolean;
+  mustChangePassword: boolean;
 };
 
 export type Session = {
@@ -175,20 +179,51 @@ export type NextOfKin = {
   email: string;
 };
 
+export type EmergencyContact = {
+  name: string;
+  relationship: string;
+  phone: string;
+};
+
+export type MedicalInfo = {
+  bloodGroup: string;
+  allergies: string;
+  chronicConditions: string;
+  disabilities: string;
+  doctorName: string;
+  doctorPhone: string;
+};
+
 export type StudentProfile = {
   id: string;
   userId: string;
   studentNumber: string;
+  /** Temporary registration number issued at admission (cleared after activation) */
+  tempRegistrationNumber: string | null;
+  admissionLetterRef: string;
   fullName: string;
   programId: string;
   phone: string;
   email: string;
   address: string;
   nextOfKin: NextOfKin;
+  emergencyContact: EmergencyContact;
+  medicalInfo: MedicalInfo;
   creditsCompleted: number;
   creditsRequired: number;
   cumulativeGpa: number;
   semesterGpa: number;
+};
+
+/** Pending first-time activation candidate (admissions → portal) */
+export type PendingActivation = {
+  tempRegistrationNumber: string;
+  admissionLetterRef: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  programId: string;
+  studentNumber: string;
 };
 
 export type DocumentRequest = {
@@ -218,4 +253,47 @@ export type DashboardSummary = {
   enrolledUnits: number;
   upcomingDeadlines: DeadlineItem[];
   announcements: Announcement[];
+};
+
+/** Staff profile for admin control panel */
+export type AdminProfile = {
+  id: string;
+  userId: string;
+  fullName: string;
+  title: string;
+  email: string;
+  phone: string;
+};
+
+export type StudentAccountStatus = "active" | "pending_approval" | "inactive";
+
+/** Admin-facing student roster row (multi-student mock registry) */
+export type AdminStudentRecord = {
+  id: string;
+  userId: string;
+  studentNumber: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  programId: string;
+  address: string;
+  accountStatus: StudentAccountStatus;
+  feeBalance: number;
+  feeTotalPaid: number;
+  feeTotalBilled: number;
+  enrolledUnits: number;
+  cumulativeGpa: number;
+  registeredAt: string;
+};
+
+export type AdminOverviewSummary = {
+  activeStudents: number;
+  pendingApprovals: number;
+  pendingApplications: number;
+  totalFeeCollections: number;
+  activeCourses: number;
+  outstandingBalances: number;
+  recentPayments: Payment[];
+  pendingStudents: AdminStudentRecord[];
+  pendingApplicationQueue: ApplicationRecord[];
 };

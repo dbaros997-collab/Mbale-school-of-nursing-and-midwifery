@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Megaphone } from "lucide-react";
-import { newsItems } from "@/lib/data";
+import { newsItems, openIntakesLabel, SCHOOL } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 function formatDate(iso: string) {
@@ -15,12 +15,12 @@ function formatDate(iso: string) {
 
 export function NewsAnnouncements() {
   return (
-    <section className="bg-primary py-16 text-white sm:py-20" aria-labelledby="news-heading">
+    <section className="brand-panel py-16 text-white sm:py-20" aria-labelledby="news-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Updates"
           title="News & announcements"
-          description="Intake notices, campus events, and academic updates from MBSNM."
+          description="Intake dates, campus news, and updates from the school."
           light
         />
 
@@ -29,15 +29,15 @@ export function NewsAnnouncements() {
           role="status"
           aria-live="polite"
         >
-          <Megaphone className="h-4 w-4 shrink-0 text-accent-cyan" aria-hidden />
+          <Megaphone className="h-4 w-4 shrink-0 text-brand-yellow" aria-hidden />
           <div className="relative min-w-0 flex-1 overflow-hidden">
             <motion.p
               className="whitespace-nowrap font-medium text-white/90"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
             >
-              We are accepting applications for July 2026 Intake — Apply now · Recognized by UNMC & NCHE · Clinical placements at Mbale Referral Hospital ·{" "}
-              We are accepting applications for July 2026 Intake — Apply now ·
+              {openIntakesLabel(" & ")} intakes are open — apply now · {SCHOOL.registration} · Placements at Mbale Referral Hospital ·{" "}
+              {openIntakesLabel(" & ")} intakes are open — apply now ·
             </motion.p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export function NewsAnnouncements() {
               className="rounded-2xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm"
             >
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-md bg-accent-green/20 px-2 py-0.5 font-semibold text-accent-cyan">
+                <span className="rounded-md bg-brand-green/25 px-2 py-0.5 font-semibold text-brand-sky">
                   {item.category}
                 </span>
                 <time dateTime={item.date} className="text-white/60">

@@ -1,5 +1,7 @@
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteStatusBar } from "@/components/layout/SiteStatusBar";
+import { MarketingFooter } from "@/components/layout/Footer";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 
 export default function MarketingLayout({
   children,
@@ -8,11 +10,15 @@ export default function MarketingLayout({
 }) {
   return (
     <>
+      <SiteStatusBar />
       <Header />
-      <main id="main-content" className="flex-1">
-        {children}
-      </main>
-      <Footer />
+      <div className="site-shell flex min-w-0 flex-1 flex-col overflow-x-hidden">
+        <main id="main-content" className="min-w-0 flex-1 overflow-x-hidden">
+          {children}
+        </main>
+        <MarketingFooter />
+      </div>
+      <WhatsAppFloat />
     </>
   );
 }

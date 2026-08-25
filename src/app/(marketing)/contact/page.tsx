@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   CheckCircle2,
-  ExternalLink,
   Globe,
   Mail,
   MapPin,
   Phone,
   Share2,
 } from "lucide-react";
-import { SCHOOL } from "@/lib/data";
+import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { PageBanner } from "@/components/ui/PageBanner";
+import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -36,19 +37,27 @@ export default function ContactPage() {
         image="/images/front-offices.jpg"
       />
 
-      <section className="bg-surface py-14">
+      <section className="section-surface py-14">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <SectionHeading
               eyebrow="Get in touch"
               title="Contact details"
-              description="Prefer email or phone? Use the channels below or send a message through the form."
+              description="Prefer email, phone, or WhatsApp? Use the channels below or send a message through the form."
             />
 
             <ul className="mt-8 space-y-4">
               {[
                 { icon: MapPin, label: "Address", value: SCHOOL.address },
                 { icon: Phone, label: "Helpline", value: SCHOOL.phone, href: `tel:${SCHOOL.phone.replace(/\s/g, "")}` },
+                {
+                  icon: WhatsAppIcon,
+                  label: "WhatsApp",
+                  value: SCHOOL.whatsapp,
+                  href: schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`),
+                  external: true,
+                  accent: true,
+                },
                 { icon: Mail, label: "General email", value: SCHOOL.email, href: `mailto:${SCHOOL.email}` },
                 {
                   icon: Mail,
@@ -56,15 +65,27 @@ export default function ContactPage() {
                   value: SCHOOL.admissionsEmail,
                   href: `mailto:${SCHOOL.admissionsEmail}`,
                 },
-              ].map(({ icon: Icon, label, value, href }) => (
-                <li key={label} className="flex gap-3 rounded-xl border border-border bg-white p-4">
-                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-green-soft text-accent-green">
+              ].map(({ icon: Icon, label, value, href, external, accent }) => (
+                <li key={label} className="flex gap-3 rounded-xl content-panel p-4">
+                  <span
+                    className={
+                      accent
+                        ? "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]"
+                        : "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-green-soft text-accent-green"
+                    }
+                  >
                     <Icon className="h-5 w-5" aria-hidden />
                   </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-muted">{label}</p>
                     {href ? (
-                      <a href={href} className="font-semibold text-primary hover:underline">
+                      <a
+                        href={href}
+                        className="font-semibold text-primary hover:underline"
+                        {...(external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                      >
                         {value}
                       </a>
                     ) : (
@@ -76,25 +97,34 @@ export default function ContactPage() {
             </ul>
 
             <div className="mt-6 flex gap-3">
-              {[
-                { Icon: Globe, label: "Website" },
-                { Icon: Share2, label: "Social media" },
-                { Icon: ExternalLink, label: "Official site" },
-              ].map(({ Icon, label }) => (
-                <a
-                  key={label}
-                  href={SCHOOL.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white transition hover:bg-accent-green focus-ring"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
+              <Link
+                href="/"
+                aria-label="Website"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white transition hover:bg-accent-green focus-ring"
+              >
+                <Globe className="h-4 w-4" />
+              </Link>
+              <a
+                href={SCHOOL.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white transition hover:bg-accent-green focus-ring"
+              >
+                <Share2 className="h-4 w-4" />
+              </a>
+              <a
+                href={schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white transition hover:bg-[#1ebe57] focus-ring"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+              </a>
             </div>
 
-            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-white">
+            <div className="mt-8 overflow-hidden rounded-3xl content-panel">
               <div className="border-b border-border px-4 py-3">
                 <h3 className="font-bold text-primary">Campus map</h3>
                 <p className="text-xs text-muted">Map placeholder — embed Google Maps when coordinates are confirmed</p>
@@ -102,7 +132,7 @@ export default function ContactPage() {
               <div
                 className="relative flex aspect-[16/10] items-center justify-center bg-[linear-gradient(135deg,#e8f7fc_0%,#f8fafc_50%,#e8f8ee_100%)]"
                 role="img"
-                aria-label="Map placeholder for Mable School of Nursing and Midwifery campus location"
+                aria-label="Map placeholder for Mbale School of Nursing and Midwifery campus location"
               >
                 <div className="text-center">
                   <MapPin className="mx-auto h-10 w-10 text-primary" aria-hidden />
@@ -114,7 +144,7 @@ export default function ContactPage() {
           </div>
 
           <div>
-            <div className="rounded-2xl border border-border bg-white p-6 sm:p-8">
+            <div className="rounded-2xl content-panel p-6 sm:p-8">
               <h2 className="text-2xl font-extrabold text-primary">Send a message</h2>
               <p className="mt-1 text-sm text-muted">We typically respond within 1–2 business days.</p>
 
@@ -167,4 +197,4 @@ export default function ContactPage() {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm outline-none transition focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/30";
+  "w-full rounded-lg border border-border bg-panel px-3 py-2.5 text-sm outline-none transition focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/30";

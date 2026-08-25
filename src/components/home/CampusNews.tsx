@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { newsItems } from "@/lib/data";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-UG", {
+  return new Date(iso).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -11,72 +14,73 @@ function formatDate(iso: string) {
 }
 
 export function CampusNews() {
-  const featured = newsItems.filter((n) => n.featured).slice(0, 2);
-  const side = newsItems.filter((n) => !n.featured).slice(0, 3);
+  const stories = newsItems.filter((n) => n.featured).slice(0, 2);
 
   return (
-    <section id="campus-news" className="scroll-mt-24 bg-white py-12 sm:py-16">
+    <section id="campus-news" className="scroll-mt-24 section-gold py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">
-              Happening around Campus
-            </h2>
-            <p className="mt-2 max-w-2xl text-muted">
-              Stories about people, training, opportunities across the MBSNM community
-            </p>
-          </div>
-          <Link
-            href="/admissions"
-            className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
-          >
-            View more stories from MBSNM
-          </Link>
-        </div>
+        <ScrollReveal direction="up">
+          <SectionHeading
+            eyebrow="Campus life"
+            title="What happens at campus"
+            description="Stories about people, training, opportunities across the MBSNM community"
+            align="center"
+          />
+        </ScrollReveal>
 
-        <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr]">
-          <div className="space-y-8">
-            {featured.map((item) => (
-              <article key={item.id} className="grid gap-4 sm:grid-cols-[220px_1fr]">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg sm:aspect-auto sm:min-h-[150px]">
-                  <Image src={item.image} alt="" fill className="object-cover" sizes="220px" />
-                </div>
-                <div>
-                  <time dateTime={item.date} className="text-xs font-semibold uppercase tracking-wide text-muted">
-                    {formatDate(item.date)}
-                  </time>
-                  <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-primary">
-                    <Link href="/admissions" className="hover:text-primary-light">
+        <div className="mt-10 grid gap-4 sm:gap-5 md:grid-cols-2">
+          {stories.map((item, i) => (
+            <ScrollReveal key={item.id} direction="right" delay={i * 0.12}>
+              <Link
+                href="/admissions"
+                className="group relative block aspect-[16/11] min-h-[260px] overflow-hidden rounded-3xl focus-ring sm:min-h-[320px]"
+              >
+                <Image
+                  src={item.image}
+                  alt=""
+                  fill
+                  className="object-cover transition duration-700 group-hover:scale-[1.04]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
+                />
+
+                <div className="absolute inset-x-0 bottom-0 z-[1] flex items-end justify-between gap-4 p-5 sm:p-7 lg:p-8">
+                  <div className="min-w-0 pr-2">
+                    <time
+                      dateTime={item.date}
+                      className="text-sm font-medium text-white/90"
+                    >
+                      {formatDate(item.date)}
+                    </time>
+                    <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-white sm:text-2xl lg:text-[1.65rem]">
                       {item.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{item.excerpt}</p>
+                    </h3>
+                  </div>
+                  <span
+                    aria-hidden
+                    className="mb-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center text-white transition group-hover:scale-110"
+                  >
+                    <Plus className="h-7 w-7 stroke-[1.5]" />
+                  </span>
                 </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="space-y-5 border-t border-border pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-            {side.map((item) => (
-              <article key={item.id} className="border-b border-border pb-5 last:border-0">
-                <span className="text-xs font-bold uppercase tracking-wide text-accent-gold">
-                  {item.category}
-                </span>
-                <h3 className="mt-1 font-display text-lg font-semibold text-primary">
-                  <Link href="/academics" className="hover:underline">
-                    {item.title}
-                  </Link>
-                </h3>
-                <Link
-                  href="/academics"
-                  className="mt-2 inline-block text-sm font-semibold text-primary/80 hover:text-accent-gold"
-                >
-                  Continue Reading
-                </Link>
-              </article>
-            ))}
-          </div>
+              </Link>
+            </ScrollReveal>
+          ))}
         </div>
+
+        <ScrollReveal direction="up" delay={0.15}>
+          <div className="mt-8 text-center">
+            <Link
+              href="/admissions"
+              className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              View more stories from MBSNM
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

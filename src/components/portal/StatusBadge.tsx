@@ -2,11 +2,16 @@ import { cn } from "@/lib/utils";
 import type {
   DocumentRequestStatus,
   RegistrationStatus,
+  StudentAccountStatus,
   SubmissionStatus,
 } from "@/lib/portal/schema";
+import type { ApplicationTrackingStatus, QualificationStatus, InterviewStatus } from "@/lib/admissions/types";
+import { TRACKING_STATUS_LABELS } from "@/lib/admissions/tracking";
+import { INTERVIEW_STATUS_LABELS, interviewStatusTone } from "@/lib/admissions/interview";
 import {
   DOCUMENT_STATUS_LABELS,
   REGISTRATION_STATUS_LABELS,
+  STUDENT_ACCOUNT_STATUS_LABELS,
   SUBMISSION_STATUS_LABELS,
 } from "@/lib/portal/constants";
 
@@ -81,6 +86,62 @@ export function DocumentStatusBadge({ status }: { status: DocumentRequestStatus 
   return (
     <StatusBadge tone={documentTone(status)}>
       {DOCUMENT_STATUS_LABELS[status]}
+    </StatusBadge>
+  );
+}
+
+export function accountStatusTone(status: StudentAccountStatus): BadgeTone {
+  if (status === "active") return "success";
+  if (status === "pending_approval") return "warning";
+  return "neutral";
+}
+
+export function AccountStatusBadge({ status }: { status: StudentAccountStatus }) {
+  return (
+    <StatusBadge tone={accountStatusTone(status)}>
+      {STUDENT_ACCOUNT_STATUS_LABELS[status]}
+    </StatusBadge>
+  );
+}
+
+export function qualificationStatusTone(status: QualificationStatus): BadgeTone {
+  if (status === "qualified") return "success";
+  if (status === "manual_review") return "warning";
+  return "danger";
+}
+
+const QUALIFICATION_STATUS_LABELS: Record<QualificationStatus, string> = {
+  qualified: "Auto-qualified",
+  manual_review: "Manual review",
+  not_qualified: "Not qualified",
+};
+
+export function QualificationStatusBadge({ status }: { status: QualificationStatus }) {
+  return (
+    <StatusBadge tone={qualificationStatusTone(status)}>
+      {QUALIFICATION_STATUS_LABELS[status]}
+    </StatusBadge>
+  );
+}
+
+export function TrackingStatusBadge({ status }: { status: ApplicationTrackingStatus }) {
+  return (
+    <StatusBadge tone={trackingStatusTone(status)}>
+      {TRACKING_STATUS_LABELS[status]}
+    </StatusBadge>
+  );
+}
+
+function trackingStatusTone(status: ApplicationTrackingStatus): BadgeTone {
+  if (status === "qualified") return "success";
+  if (status === "rejected" || status === "unsuccessful_fee_processed") return "danger";
+  return "warning";
+}
+
+export function InterviewStatusBadge({ status }: { status: InterviewStatus }) {
+  return (
+    <StatusBadge tone={interviewStatusTone(status)}>
+      {INTERVIEW_STATUS_LABELS[status]}
     </StatusBadge>
   );
 }

@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_ASSIGNMENTS,
   MOCK_MATERIALS,
@@ -13,8 +14,6 @@ import type {
   CourseUnit,
   SubmissionStatus,
 } from "@/lib/portal/schema";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type MaterialRow = CourseMaterial & {
   courseCode: string;
@@ -113,7 +112,7 @@ function buildBundle(studentId: string): LmsBundle {
 
 /** Ready for GET /api/portal/lms */
 export async function getLmsBundle(studentId = MOCK_PROFILE.id): Promise<LmsBundle> {
-  await delay(280);
+  await mockDelay(280);
   return buildBundle(studentId);
 }
 
@@ -124,7 +123,7 @@ export async function downloadMaterial(materialId: string): Promise<{
   blob?: Blob;
   message: string;
 }> {
-  await delay(200);
+  await mockDelay(200);
   const material = MOCK_MATERIALS.find((m) => m.id === materialId);
   if (!material) {
     return { ok: false, message: "Material not found." };
@@ -156,7 +155,7 @@ export async function submitAssignment(
   fileName: string,
   studentId = MOCK_PROFILE.id,
 ): Promise<{ ok: boolean; message: string; bundle: LmsBundle }> {
-  await delay(550);
+  await mockDelay(550);
 
   const assignment = MOCK_ASSIGNMENTS.find((a) => a.id === assignmentId);
   if (!assignment) {

@@ -1,3 +1,4 @@
+import { mockDelay } from "@/lib/mock-delay";
 import {
   MOCK_FEE_LINES,
   MOCK_PROFILE,
@@ -12,8 +13,6 @@ import type {
   Payment,
   PaymentMethod,
 } from "@/lib/portal/schema";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type FeesBundle = {
   invoice: FeeInvoice;
@@ -43,7 +42,7 @@ function snapshot(): FeesBundle {
 
 /** Ready for GET /api/portal/fees */
 export async function getFeesBundle(): Promise<FeesBundle> {
-  await delay(280);
+  await mockDelay(280);
   return snapshot();
 }
 
@@ -53,11 +52,11 @@ export type PayFeesInput = {
   phoneOrAccount: string;
 };
 
-/** Ready for POST /api/portal/fees/pay (MTN / Airtel / bank mock gateway) */
+/** Ready for POST /api/portal/fees/pay (bank transfer mock gateway) */
 export async function payFees(
   input: PayFeesInput,
 ): Promise<{ ok: boolean; message: string; payment?: Payment; bundle: FeesBundle }> {
-  await delay(700);
+  await mockDelay(700);
 
   const amount = Math.round(input.amount);
   if (!Number.isFinite(amount) || amount <= 0) {
@@ -73,10 +72,7 @@ export async function payFees(
   if (!input.phoneOrAccount.trim()) {
     return {
       ok: false,
-      message:
-        input.method === "bank"
-          ? "Enter the bank account or transfer reference."
-          : "Enter the Mobile Money phone number.",
+      message: "Enter the bank transfer reference.",
       bundle: snapshot(),
     };
   }

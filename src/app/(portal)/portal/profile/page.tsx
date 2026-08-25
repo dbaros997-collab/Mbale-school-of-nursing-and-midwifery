@@ -8,6 +8,7 @@ import {
   type ProfileBundle,
 } from "@/services/portal/profile";
 import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/Button";
 
 export default function ProfilePage() {
   const { refreshProfile } = useAuth();
@@ -194,14 +195,10 @@ export default function ProfilePage() {
             </div>
           </fieldset>
 
-          <button
-            type="submit"
-            disabled={busy}
-            className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-white transition hover:bg-primary-dark disabled:opacity-50 focus-ring"
-          >
+          <Button type="submit" variant="primary" disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
             Save changes
-          </button>
+          </Button>
         </form>
       )}
     </div>
