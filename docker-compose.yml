@@ -1,4 +1,5 @@
 # Local / Coolify reference — not required when deploying via Coolify UI
+# Set Coolify → Source → Branch to: master
 services:
   abale-school:
     build:
