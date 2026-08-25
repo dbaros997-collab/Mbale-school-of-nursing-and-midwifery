@@ -158,12 +158,12 @@ export const mainNav = [
   },
   {
     label: "MBSNM Online",
-    href: "/portal/dashboard",
+    href: "/portal",
     columns: [
       {
         title: "Learning",
         links: [
-          { label: "Student Portal", href: "/portal/dashboard" },
+          { label: "Student Portal", href: "/portal" },
           { label: "LMS Hub", href: "/portal/lms" },
           { label: "Timetable", href: "/portal/timetable" },
         ],
@@ -182,7 +182,7 @@ export const mainNav = [
     featured: {
       eyebrow: "e-Learning",
       title: "Fees, registration, and learning tools — all in one place.",
-      href: "/portal/dashboard",
+      href: "/portal",
       cta: "Open Portal",
     },
   },
@@ -217,7 +217,7 @@ export const mainNav = [
   },
   {
     label: "My MBSNM",
-    href: "/portal/dashboard",
+    href: "/portal",
     emphasize: true,
     columns: [
       {
@@ -240,8 +240,9 @@ export const mainNav = [
     featured: {
       eyebrow: "Student Portal",
       title: "Sign in for fees, registration, and your classes.",
-      href: "/portal/dashboard",
+      href: "/portal",
       cta: "Sign In",
+      microsoftSignIn: true,
     },
   },
 ] as const;
@@ -266,8 +267,8 @@ export const heroSlides = [
       "Certificate and Diploma programmes in nursing and midwifery. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
     cta: "Apply Now",
     href: "/admissions",
-    secondaryCta: "View Programmes",
-    secondaryHref: "/academics",
+    secondaryCta: "Student Portal",
+    secondaryHref: "/portal",
     alt: "Graduating students marching in Mbale town",
   },
   {
@@ -310,6 +311,14 @@ export const heroSlides = [
 
 /** KIU-style quick highlight boxes under the hero */
 export const heroQuickBoxes = [
+  {
+    id: "portal",
+    title: "Student Portal",
+    description:
+      "Fees, registration, LMS, and notices — sign in with Microsoft 365 or your student account.",
+    href: "/portal",
+    icon: "Monitor",
+  },
   {
     id: "accredited",
     title: "Recognised programmes",

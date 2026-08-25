@@ -10,6 +10,7 @@ import {
   FlaskConical,
   GraduationCap,
   Hospital,
+  Monitor,
 } from "lucide-react";
 import { heroQuickBoxes, heroSlides } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -18,9 +19,11 @@ const quickIconMap = {
   GraduationCap,
   Hospital,
   FlaskConical,
+  Monitor,
 } as const;
 
 const quickIconStyles = [
+  "accent-chip-green",
   "accent-chip-sky",
   "accent-chip-green",
   "accent-chip-gold",
@@ -168,7 +171,7 @@ export function Hero() {
 
       <div className="relative z-10 -mt-11 px-4 sm:-mt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid overflow-hidden rounded-2xl content-panel lg:grid-cols-3">
+          <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-4">
             {heroQuickBoxes.map((box, i) => {
               const Icon = quickIconMap[box.icon];
               return (
@@ -177,7 +180,7 @@ export function Hero() {
                   href={box.href}
                   className={cn(
                     "flex items-start gap-3.5 px-5 py-5 transition hover:bg-surface focus-ring sm:gap-4 sm:px-6 sm:py-6",
-                    i < heroQuickBoxes.length - 1 && "border-b border-border lg:border-b-0 lg:border-r",
+                    i < heroQuickBoxes.length - 1 && "border-b border-border sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:[&:nth-child(4)]:border-r-0",
                   )}
                 >
                   <span

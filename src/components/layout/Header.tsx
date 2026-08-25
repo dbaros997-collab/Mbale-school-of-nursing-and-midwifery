@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { mainNav, SCHOOL } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
+import { HeaderPortalActions } from "@/components/layout/HeaderPortalActions";
 
 type NavItem = (typeof mainNav)[number];
 
@@ -162,6 +163,10 @@ export function Header() {
             })}
           </nav>
 
+          <div className="hidden md:flex">
+            <HeaderPortalActions glassHome={glassHome} />
+          </div>
+
           <button
             type="button"
             className="ml-2 inline-flex rounded border border-white/50 p-2 text-white sm:hidden focus-ring"
@@ -202,6 +207,12 @@ export function Header() {
             className="overflow-hidden border-t border-white/15 bg-primary/95 backdrop-blur-md sm:hidden"
           >
             <nav className="space-y-1 px-4 py-3" aria-label="Mobile">
+              <div className="mb-3 rounded-lg border border-white/15 bg-white/5 px-3 py-3">
+                <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
+                  Student access
+                </p>
+                <HeaderPortalActions glassHome layout="stacked" onNavigate={() => setOpen(false)} />
+              </div>
               {mainNav.map((item) => {
                 const hasMega = "columns" in item && !!item.columns;
                 const expanded = mobileSection === item.label;
@@ -341,13 +352,17 @@ function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void
                 {featured.eyebrow}
               </p>
               <h4 className="relative mt-3 text-lg font-bold leading-snug">{featured.title}</h4>
-              <Link
-                href={featured.href}
-                className="btn-pill relative mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white transition hover:bg-brand-green-dark focus-ring"
-                onClick={onNavigate}
-              >
-                {featured.cta}
-              </Link>
+              {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
+                <HeaderPortalActions layout="stacked" onNavigate={onNavigate} />
+              ) : (
+                <Link
+                  href={featured.href}
+                  className="btn-pill relative mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white transition hover:bg-brand-green-dark focus-ring"
+                  onClick={onNavigate}
+                >
+                  {featured.cta}
+                </Link>
+              )}
             </div>
           ) : null}
         </div>

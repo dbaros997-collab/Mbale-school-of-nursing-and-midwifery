@@ -20,9 +20,15 @@ function MicrosoftLogo({ className }: { className?: string }) {
 type MicrosoftSignInButtonProps = {
   onError?: (message: string) => void;
   className?: string;
+  /** Compact label for header/toolbar placement */
+  size?: "default" | "compact";
 };
 
-export function MicrosoftSignInButton({ onError, className }: MicrosoftSignInButtonProps) {
+export function MicrosoftSignInButton({
+  onError,
+  className,
+  size = "default",
+}: MicrosoftSignInButtonProps) {
   const [busy, setBusy] = useState(false);
   const configured = isMicrosoftClientConfigured();
 
@@ -47,21 +53,25 @@ export function MicrosoftSignInButton({ onError, className }: MicrosoftSignInBut
     }
   }
 
+  const compact = size === "compact";
+  const label = compact ? "Microsoft 365" : "Sign in with Microsoft School Account";
+
   return (
     <Button
       type="button"
       variant="navy"
+      size={compact ? "sm" : "md"}
       className={className}
       disabled={busy}
       onClick={() => void handleClick()}
       ariaLabel="Sign in with Microsoft School Account"
     >
       {busy ? (
-        <Loader2 className="h-5 w-5 animate-spin" aria-hidden />
+        <Loader2 className={compact ? "h-4 w-4 animate-spin" : "h-5 w-5 animate-spin"} aria-hidden />
       ) : (
-        <MicrosoftLogo className="h-5 w-5" />
+        <MicrosoftLogo className={compact ? "h-4 w-4" : "h-5 w-5"} />
       )}
-      Sign in with Microsoft School Account
+      {label}
     </Button>
   );
 }

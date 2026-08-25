@@ -30,7 +30,7 @@ const ctaItems = [
   },
   {
     title: "MBSNM Online",
-    href: "/portal/dashboard",
+    href: "/portal",
     image: "/images/computer-lab.jpg",
     color: "var(--primary)",
     textColor: "#ffffff",
