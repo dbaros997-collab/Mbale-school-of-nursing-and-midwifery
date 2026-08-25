@@ -2,7 +2,7 @@
 # Use when Coolify build pack is "Nixpacks" instead of Dockerfile.
 # Docs: https://coolify.io/docs/applications/build-packs/nixpacks
 # Coolify deploy branch: master
-# Redeploy trigger: 2026-08-25T14:05+03:00
+# Redeploy trigger: 2026-08-25T15:33+03:00
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"
