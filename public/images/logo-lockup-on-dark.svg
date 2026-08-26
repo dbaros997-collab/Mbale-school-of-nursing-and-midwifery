@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="Mbale School of Nursing and Midwifery">
   <defs>
-    <linearGradient id="sunGlow" x1="100" y1="52" x2="100" y2="82" gradientUnits="userSpaceOnUse">
+    <linearGradient id="sunGlowDark" x1="100" y1="52" x2="100" y2="82" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#F5C842"/>
       <stop offset="100%" stop-color="#E8A317"/>
     </linearGradient>
-    <clipPath id="crestInner">
+    <clipPath id="crestInnerDark">
       <circle cx="100" cy="96" r="60"/>
     </clipPath>
-    <path id="crestTopArc" d="M 36 96 A 64 64 0 0 1 164 96" fill="none"/>
-    <path id="crestBottomArc" d="M 164 134 A 64 64 0 0 1 36 134" fill="none"/>
+    <path id="crestTopArcDark" d="M 36 96 A 64 64 0 0 1 164 96" fill="none"/>
+    <path id="crestBottomArcDark" d="M 164 134 A 64 64 0 0 1 36 134" fill="none"/>
   </defs>
 
   <!-- ===== CREST (LEFT) ===== -->
@@ -17,13 +17,13 @@
     <circle cx="100" cy="96" r="64" fill="#FFFFFF" stroke="#16357F" stroke-width="1.5"/>
 
     <text fill="#10212B" font-family="Georgia, serif" font-size="14" font-weight="700" letter-spacing="0.35">
-      <textPath href="#crestTopArc" startOffset="50%" text-anchor="middle">Mbale School of Nursing</textPath>
+      <textPath href="#crestTopArcDark" startOffset="50%" text-anchor="middle">Mbale School of Nursing</textPath>
     </text>
     <text fill="#10212B" font-family="Georgia, serif" font-size="14" font-weight="700" letter-spacing="0.35">
-      <textPath href="#crestBottomArc" startOffset="50%" text-anchor="middle">And Midwifery</textPath>
+      <textPath href="#crestBottomArcDark" startOffset="50%" text-anchor="middle">And Midwifery</textPath>
     </text>
 
-    <g clip-path="url(#crestInner)">
+    <g clip-path="url(#crestInnerDark)">
       <rect x="40" y="36" width="120" height="50" fill="#F4FAFB"/>
       <g stroke="#E8A317" stroke-width="2.2" stroke-linecap="round">
         <line x1="100" y1="40" x2="100" y2="47"/>
@@ -32,7 +32,7 @@
         <line x1="72" y1="54" x2="77" y2="56"/>
         <line x1="128" y1="54" x2="123" y2="56"/>
       </g>
-      <circle cx="100" cy="60" r="11" fill="url(#sunGlow)"/>
+      <circle cx="100" cy="60" r="11" fill="url(#sunGlowDark)"/>
       <path d="M40 86 C58 68, 78 66, 100 72 C122 66, 142 68, 160 86 L160 96 L40 96 Z" fill="#198F34"/>
       <path d="M40 96 H160 M100 86 V156" stroke="#198F34" stroke-width="2.2"/>
       <rect x="40" y="96" width="120" height="60" fill="#FFFFFF"/>
@@ -56,10 +56,10 @@
     <text x="100" y="179" text-anchor="middle" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="0.55">With GOD We Love and Serve</text>
   </g>
 
-  <!-- ===== WORDMARK (RIGHT) ===== -->
+  <!-- ===== WORDMARK (RIGHT)  light text for navy/hero backgrounds ===== -->
   <g id="wordmark" transform="translate(248 0)">
     <text x="0" y="96" fill="#198F34" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800" letter-spacing="3.2">MBALE SCHOOL OF</text>
-    <text x="0" y="166" fill="#16357F" font-family="Georgia, serif" font-size="64" font-weight="700">Nursing &amp;</text>
-    <text x="0" y="236" fill="#16357F" font-family="Georgia, serif" font-size="64" font-weight="700">Midwifery</text>
+    <text x="0" y="166" fill="#F4FAFB" font-family="Georgia, serif" font-size="64" font-weight="700">Nursing &amp;</text>
+    <text x="0" y="236" fill="#F4FAFB" font-family="Georgia, serif" font-size="64" font-weight="700">Midwifery</text>
   </g>
 </svg>

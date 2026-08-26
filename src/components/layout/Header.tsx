@@ -104,7 +104,7 @@ export function Header() {
           )}
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo />
+          <SchoolLogo surface="dark" />
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-0 bg-transparent px-2 sm:px-4 lg:px-6">

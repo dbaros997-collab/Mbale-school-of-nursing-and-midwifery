@@ -3,30 +3,43 @@ import { cn } from "@/lib/utils";
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
-  /** Kept for call sites; SVG renders crisply on all surfaces. */
+  /** Dark = transparent lockup for navy/hero headers; light = brand colors on ivory panels. */
   surface?: "dark" | "light";
 };
 
-const LOCKUP = {
-  src: "/images/logo-lockup.png",
-  width: 520,
-  height: 130,
+const LOCKUPS = {
+  header: {
+    light: "/images/logo-lockup.svg",
+    dark: "/images/logo-lockup-on-dark.svg",
+  },
+  compact: {
+    light: "/images/logo-lockup-primary.svg",
+    dark: "/images/logo-lockup-primary.svg",
+  },
+} as const;
+
+const SIZES = {
+  header: { width: 520, height: 130 },
+  compact: { width: 320, height: 80 },
 } as const;
 
 /** Official MBSNM horizontal lockup — crest + wordmark. */
 export function SchoolLogo({
   className,
   variant = "header",
+  surface = "light",
 }: SchoolLogoProps) {
   const compact = variant === "compact";
+  const { width, height } = SIZES[variant];
+  const src = LOCKUPS[variant][surface];
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={LOCKUP.src}
+      src={src}
       alt="Mbale School of Nursing and Midwifery"
-      width={compact ? 320 : LOCKUP.width}
-      height={compact ? 80 : LOCKUP.height}
+      width={width}
+      height={height}
       className={cn(
         "block h-auto w-auto object-contain object-left",
         compact
