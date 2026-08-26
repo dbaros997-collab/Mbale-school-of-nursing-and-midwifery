@@ -13,17 +13,22 @@ const LOCKUP = {
   height: 130,
 } as const;
 
+/** Baked at build time — busts browser cache when a new image deploys. */
+const LOGO_CACHE_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "png-lockup";
+
 /** Official MBSNM horizontal lockup — crest + wordmark. */
 export function SchoolLogo({
   className,
   variant = "header",
 }: SchoolLogoProps) {
   const compact = variant === "compact";
+  const src = `${LOCKUP.src}?v=${LOGO_CACHE_VERSION}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={LOCKUP.src}
+      src={src}
       alt="Mbale School of Nursing and Midwifery"
       width={compact ? 320 : LOCKUP.width}
       height={compact ? 80 : LOCKUP.height}
