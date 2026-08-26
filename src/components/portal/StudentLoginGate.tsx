@@ -52,22 +52,48 @@ export function StudentLoginGate() {
           Student Portal
         </h1>
         <p className="mt-2 text-center text-sm text-muted">
-          Welcome back. Sign in with your Microsoft school account, or use your student number
-          and activation password.
+          Welcome back. Sign in with Microsoft 365, or use your student number and activation
+          password.
         </p>
 
-        <div className="mt-8 space-y-4">
-          <MicrosoftSignInButton className="w-full" onError={setError} />
-
-          <div className="relative py-1">
-            <div className="absolute inset-0 flex items-center" aria-hidden>
-              <div className="w-full border-t border-border" />
-            </div>
-            <p className="relative mx-auto w-fit bg-white px-3 text-xs font-semibold uppercase tracking-wider text-muted">
-              Or sign in with password
-            </p>
+        <section
+          className="mt-8 rounded-xl border border-border bg-surface/50 p-4"
+          aria-label="Microsoft 365 sign-in"
+        >
+          <p className="text-center text-xs font-bold uppercase tracking-wider text-primary">
+            Recommended for MBSNM students
+          </p>
+          <p className="mt-1 text-center text-xs text-muted">
+            Use your official <span className="font-semibold text-primary">@student.mbsnm.org</span>{" "}
+            school account
+          </p>
+          <div className="mt-4">
+            <MicrosoftSignInButton
+              surface="portal"
+              size="lg"
+              className="w-full"
+              onError={setError}
+            />
           </div>
+        </section>
+
+        <div className="relative my-6 py-1">
+          <div className="absolute inset-0 flex items-center" aria-hidden>
+            <div className="w-full border-t border-border" />
+          </div>
+          <p className="relative mx-auto w-fit bg-white px-3 text-xs font-semibold uppercase tracking-wider text-muted">
+            Or sign in with password
+          </p>
         </div>
+
+        {error ? (
+          <p
+            role="alert"
+            className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
+          >
+            {error}
+          </p>
+        ) : null}
 
         <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
           <div>
@@ -100,25 +126,14 @@ export function StudentLoginGate() {
             />
           </div>
 
-          {error ? (
-            <p
-              role="alert"
-              className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
-            >
-              {error}
-            </p>
-          ) : null}
-
           <Button type="submit" variant="green" className="w-full" disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
           </Button>
         </form>
 
         <p className="mt-4 rounded-lg bg-surface px-3 py-2 text-xs text-muted">
-          Official MBSNM students can also use{" "}
-          <span className="font-semibold text-primary">Sign in with Microsoft School Account</span>{" "}
-          with an <span className="font-semibold text-primary">@student.mbsnm.org</span> email or
-          membership in the approved Azure AD student group.
+          Microsoft 365 sign-in uses your school Azure AD account. Password sign-in works for
+          activated portal accounts.
           <br />
           <span className="mt-1 inline-block">
             Example (continuing student): {STUDENT_DEMO_CREDENTIALS.studentNumber} or{" "}
