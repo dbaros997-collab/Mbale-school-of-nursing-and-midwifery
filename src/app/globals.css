@@ -9,22 +9,31 @@
 :root {
   /* MBSNM brand palette — guidelines v1.0 */
   /* Proportions: 40% navy · 28% ivory · 16% green · 11% sky · gold sparingly */
-  --brand-navy: #16357f;
-  --brand-ivory: #f4fafb;
-  --primary: var(--brand-navy);
-  --primary-dark: #0e2456;
-  --primary-light: #1c428f;
-  --brand-sky: #b5d9e5;
-  --brand-sky-soft: #dceef5;
-  --brand-green: #198f34;
-  --brand-green-soft: #e8f5ea;
-  --brand-green-dark: #15782c;
-  --brand-yellow: #e8a317;
-  --brand-yellow-soft: #fdf4e3;
-  --brand-yellow-dark: #c98d0f;
-  --mak-green: #198f34;
+
+  /* Core brand */
+  --brand-navy: #16357f; /* header/nav, primary headings, footer */
+  --brand-green: #198f34; /* primary CTAs, active states, section accents */
+  --brand-sky: #b5d9e5; /* hero panels, section dividers, card backgrounds */
+  --brand-yellow: #e8a317; /* badges & icons only — never body text or large fills */
+  --brand-ivory: #f4fafb; /* main page background */
+
+  /* Supporting neutrals */
+  --brand-ink: #10212b; /* body text */
+  --brand-slate: #7a8a93; /* secondary/muted text, captions */
+  --brand-mist: #d8e4e8; /* subtle borders, dividers */
+  --brand-deep-navy: #0e2456; /* hover states, darker navy accent */
 
   /* Semantic aliases (used across components) */
+  --primary: var(--brand-navy);
+  --primary-dark: var(--brand-deep-navy);
+  --primary-light: #1c428f;
+  --brand-sky-soft: #dceef5;
+  --brand-green-soft: #e8f5ea;
+  --brand-green-dark: #15782c;
+  --brand-yellow-soft: #fdf4e3;
+  --brand-yellow-dark: #c98d0f;
+  --mak-green: var(--brand-green);
+
   --accent-gold: var(--brand-yellow);
   --accent-gold-soft: var(--brand-yellow-soft);
   --accent-cyan: var(--brand-sky);
@@ -35,22 +44,23 @@
   --background: var(--brand-ivory);
   --surface: #eef5f7;
   --panel: #ffffff;
-  --foreground: #10212b;
-  /* AA-safe on ivory (#F4FAFB) — ≥4.5:1 */
-  --muted: #566570;
-  --border: #d8e4e8;
+  --foreground: var(--brand-ink);
+  --muted: var(--brand-slate);
+  --border: var(--brand-mist);
 
   /* Bundled via @fontsource — no Google Fonts fetch during Docker/Coolify build */
   --font-work-sans: "Work Sans", Arial, sans-serif;
   --font-lora: "Lora", Georgia, serif;
 
-  /* Fixed chrome — keep header offset in sync with SiteStatusBar */
+  /* Fixed chrome — keep header offset in sync with SiteStatusBar + Header */
   --site-status-bar-height: 3.5rem;
+  --site-header-height: 4rem;
 }
 
 @media (min-width: 640px) {
   :root {
     --site-status-bar-height: 4rem;
+    --site-header-height: 4.5rem;
   }
 }
 
@@ -72,6 +82,10 @@
   --color-brand-green-dark: var(--brand-green-dark);
   --color-brand-yellow: var(--brand-yellow);
   --color-brand-yellow-dark: var(--brand-yellow-dark);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-slate: var(--brand-slate);
+  --color-brand-mist: var(--brand-mist);
+  --color-brand-deep-navy: var(--brand-deep-navy);
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-panel: var(--panel);

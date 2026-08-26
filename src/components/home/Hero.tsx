@@ -51,7 +51,7 @@ export function Hero() {
   return (
     <section
       className="homepage-slider relative overflow-hidden bg-primary-dark"
-      aria-label="Featured announcements"
+      aria-label="Homepage hero"
     >
       <div className="relative aspect-[3/4] min-h-[20rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[26rem] md:aspect-[1920/830] md:min-h-[28rem] lg:min-h-[32rem]">
         {animateSlides ? (
@@ -93,21 +93,9 @@ export function Hero() {
           aria-hidden
           className="hero-sky--overlay absolute inset-0 z-[1]"
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] opacity-[0.14]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 18px 18px, rgba(255, 255, 255, 0.14) 0 2px, transparent 3px),
-              linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 42px),
-              linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 36px)
-            `,
-            backgroundSize: "84px 84px, 42px 42px, 36px 36px",
-          }}
-        />
 
         <div className="absolute inset-0 z-[2] flex items-end md:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-[11rem] sm:px-6 sm:pb-24 sm:pt-[11.5rem] lg:px-8 lg:pb-28 lg:pt-[12.5rem]">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pb-24 lg:px-8 lg:pb-28">
             {animateSlides ? (
               <motion.div
                 key={`copy-${slide.id}`}

@@ -12,7 +12,7 @@ export default function MarketingLayout({
     <>
       <SiteStatusBar />
       <Header />
-      <div className="site-shell flex min-w-0 flex-1 flex-col overflow-x-hidden">
+      <div className="site-shell flex min-w-0 flex-1 flex-col overflow-x-hidden pt-[calc(var(--site-status-bar-height)+var(--site-header-height))]">
         <main id="main-content" className="min-w-0 flex-1 overflow-x-hidden">
           {children}
         </main>
