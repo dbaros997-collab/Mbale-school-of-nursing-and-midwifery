@@ -1,5 +1,8 @@
 import { cn } from "@/lib/utils";
 
+/** Bump when logo SVG assets change — busts CDN/browser cache on deploy. */
+const LOGO_ASSET_VERSION = "20260826";
+
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
@@ -31,7 +34,7 @@ export function SchoolLogo({
 }: SchoolLogoProps) {
   const compact = variant === "compact";
   const { width, height } = SIZES[variant];
-  const src = LOCKUPS[variant][surface];
+  const src = `${LOCKUPS[variant][surface]}?v=${LOGO_ASSET_VERSION}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

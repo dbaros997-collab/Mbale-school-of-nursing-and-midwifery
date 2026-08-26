@@ -11,7 +11,8 @@
     "build": "next build --webpack",
     "postbuild": "node scripts/prepare-standalone.mjs",
     "start": "node scripts/start-standalone.mjs",
-    "lint": "eslint"
+    "lint": "eslint",
+    "push:live": "node scripts/push-live.mjs"
   },
   "dependencies": {
     "@azure/msal-browser": "^5.19.0",

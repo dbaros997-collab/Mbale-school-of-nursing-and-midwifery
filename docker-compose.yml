@@ -1,5 +1,6 @@
 # Local / Coolify reference — not required when deploying via Coolify UI
-# Set Coolify → Source → Branch to: main
+# Coolify → Source → Branch: main  (never master)
+# After committing: npm run push:live
 services:
   abale-school:
     build:
