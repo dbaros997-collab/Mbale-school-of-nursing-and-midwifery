@@ -2,8 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  productionBrowserSourceMaps: false,
   typescript: {
     ignoreBuildErrors: true,
+  },
+  experimental: {
+    // Keep static generation sequential on small Coolify VPS builds.
+    cpus: 1,
   },
   env: {
     MICROSOFT_CLIENT_ID: process.env.MICROSOFT_CLIENT_ID,

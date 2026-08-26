@@ -1,6 +1,7 @@
 # Coolify: Build Pack = Dockerfile. Source branch MUST be: main
 # Deploy: commit on main, then run: npm run push:live
-# Redeploy trigger: 2026-08-26T16:20+03:00
+# Redeploy trigger: 2026-08-26T16:30+03:00
+# Prefer GHCR pre-built image — see .github/workflows/publish-image.yml
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"

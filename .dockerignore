@@ -20,3 +20,21 @@ cloudflared.exe
 *.mp4
 *.mov
 scripts/install-autostart.ps1
+
+# Unused duplicate logo assets — site uses logo-lockup.png only
+public/images/logo-transparent-hd.png
+public/images/logo-hd.png
+public/images/logo-clear.png
+public/images/logo-clear.jpg
+public/images/logo-transparent.png
+public/images/logo-official.png
+public/images/logo.jpg
+public/images/cropped-Logo-*
+public/images/dancers.jpg
+public/images/guest-honour.jpg
+public/images/campus-night.jpg
+public/images/campus-wallpaper.png
+public/images/activity-*.jpg
+public/images/give.jpg
+public/images/join.jpg
+public/images/visit.jpg

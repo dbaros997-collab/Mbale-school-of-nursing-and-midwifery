@@ -23,10 +23,12 @@ ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV CI=true
-ENV NODE_OPTIONS=--max-old-space-size=1536
+ENV NODE_OPTIONS=--max-old-space-size=768
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build \
+RUN echo "=== MBSNM build start $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" \
+  && npm run build \
+  && echo "=== MBSNM build done $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" \
   && test -f .next/standalone/server.js \
   || (echo "ERROR: standalone server.js missing after build" && exit 1)
 
