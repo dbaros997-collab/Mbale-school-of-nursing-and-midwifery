@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Megaphone } from "lucide-react";
 import { statusBarUpdates } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -16,30 +15,13 @@ export function SiteStatusBar() {
       className={cn(
         "site-status-bar fixed inset-x-0 top-0 z-[70] flex h-[var(--site-status-bar-height)] items-stretch border-b text-white transition-colors duration-300",
         isHome
-          ? "border-white/20 bg-transparent"
+          ? "border-white/20 bg-black/25 backdrop-blur-sm"
           : "border-white/10 bg-primary shadow-[0_2px_12px_rgba(22,53,127,0.25)]",
       )}
       role="region"
-      aria-label="School updates"
+      aria-label="School status"
     >
-      <div
-        className={cn(
-          "flex shrink-0 items-center gap-2 border-r border-white/15 px-4 text-xs font-bold uppercase tracking-[0.14em] sm:gap-2.5 sm:px-5 sm:text-sm",
-          isHome ? "bg-brand-green/90 backdrop-blur-sm" : "bg-brand-green",
-        )}
-        aria-hidden
-      >
-        <Megaphone className="h-4 w-4 text-brand-yellow sm:h-5 sm:w-5" />
-        <span>Updates</span>
-      </div>
-
-      <div
-        className={cn(
-          "relative min-w-0 flex-1 overflow-hidden",
-          isHome ? "bg-black/25 backdrop-blur-sm" : "bg-primary",
-        )}
-        aria-live="polite"
-      >
+      <div className="relative min-w-0 flex-1 overflow-hidden" aria-live="polite">
         <div className="site-status-marquee flex h-full w-max max-w-none items-center">
           {track.map((item, index) => (
             <span
