@@ -1,4 +1,5 @@
 # Coolify: prefer Build Pack = Dockerfile (recommended).
+# Redeploy trigger: 2026-08-26T14:52+03:00
 # If you must use Nixpacks, these settings match package.json + .npmrc.
 
 [variables]
