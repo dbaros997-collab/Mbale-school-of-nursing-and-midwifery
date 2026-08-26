@@ -2,6 +2,7 @@
 # Prefer Coolify build pack: Dockerfile (see repo Dockerfile).
 # Docs: https://coolify.io/docs/applications/build-packs/nixpacks
 # Coolify deploy branch: main
+# Redeploy trigger: 2026-08-26T13:45+03:00 — Microsoft 365 + Docker build fixes
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"
