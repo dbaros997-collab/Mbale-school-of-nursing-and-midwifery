@@ -1,5 +1,5 @@
 # Build the Docker image on GitHub (7 GB RAM) and push to GHCR.
-# Coolify should pull this image instead of building on the VPS — see scripts/push-live.mjs output.
+# Coolify uses the root Dockerfile (pull-only FROM GHCR) — no next build on the VPS.
 name: Publish Docker image
 
 on:
@@ -29,6 +29,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: Dockerfile.build
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/mbale-school:latest
@@ -41,6 +42,23 @@ jobs:
             NEXT_PUBLIC_SUPABASE_URL=${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
             NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
+      - name: Make GHCR package public (Coolify pull without registry login)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for url in \
+            "https://api.github.com/orgs/${{ github.repository_owner }}/packages/container/mbale-school/visibility" \
+            "https://api.github.com/user/packages/container/mbale-school/visibility"
+          do
+            curl -fsS -X PATCH \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "${url}" \
+              -d '{"visibility":"public"}' && break
+          done
+
       - name: Trigger Coolify redeploy
         if: success()
         continue-on-error: true
@@ -49,7 +67,7 @@ jobs:
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
         run: |
           if [ -z "$COOLIFY_WEBHOOK" ]; then
-            echo "COOLIFY_WEBHOOK not set — skip auto-deploy (add repo secret to enable)."
+            echo "COOLIFY_WEBHOOK not set — redeploy manually in Coolify after this workflow finishes."
             exit 0
           fi
           curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
