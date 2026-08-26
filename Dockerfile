@@ -6,7 +6,7 @@ RUN apk add --no-cache libc6-compat ca-certificates
 WORKDIR /app
 
 FROM base AS deps
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci --include=dev
 
 FROM base AS builder
@@ -15,8 +15,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# 1536MB fits 2GB VPS; raise via Coolify build env if your server has more RAM
-ENV NODE_OPTIONS=--max-old-space-size=1536
+ENV CI=true
+# 1024MB for 1–2GB Coolify VPS; increase in Coolify build env if you have 4GB+ RAM
+ENV NODE_OPTIONS=--max-old-space-size=1024
 # NEXT_PUBLIC_* vars must be passed as Docker build-args from Coolify if set at build time
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID

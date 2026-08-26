@@ -14,7 +14,7 @@ HOSTNAME = "0.0.0.0"
 cmds = ["npm ci --include=dev"]
 
 [phases.build]
-cmds = ["NODE_OPTIONS=--max-old-space-size=1536 npm run build"]
+cmds = ["NODE_OPTIONS=--max-old-space-size=1024 npm run build"]
 
 [start]
 cmd = "NODE_ENV=production HOSTNAME=0.0.0.0 npm run start"

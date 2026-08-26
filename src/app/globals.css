@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@import "@fontsource/work-sans/latin-400.css";
+@import "@fontsource/work-sans/latin-600.css";
+@import "@fontsource/work-sans/latin-700.css";
+@import "@fontsource/lora/latin-400.css";
+@import "@fontsource/lora/latin-600.css";
+@import "@fontsource/lora/latin-700.css";
 
 :root {
   /* MBSNM brand palette — guidelines v1.0 */
@@ -33,6 +39,10 @@
   /* AA-safe on ivory (#F4FAFB) — ≥4.5:1 */
   --muted: #566570;
   --border: #d8e4e8;
+
+  /* Bundled via @fontsource — no Google Fonts fetch during Docker/Coolify build */
+  --font-work-sans: "Work Sans", Arial, sans-serif;
+  --font-lora: "Lora", Georgia, serif;
 
   /* Fixed chrome — keep header offset in sync with SiteStatusBar */
   --site-status-bar-height: 3.5rem;
