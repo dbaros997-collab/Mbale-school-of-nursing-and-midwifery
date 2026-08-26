@@ -100,10 +100,11 @@ export function Header() {
           href="/"
           className={cn(
             "group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5",
+            glassHome && "drop-shadow-[0_2px_14px_rgba(0,0,0,0.55)]",
           )}
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo surface="dark" />
+          <SchoolLogo />
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-0 bg-transparent px-2 sm:px-4 lg:px-6">
