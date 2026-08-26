@@ -40,3 +40,18 @@ jobs:
             NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
             NEXT_PUBLIC_SUPABASE_URL=${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
             NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Trigger Coolify redeploy
+        if: success()
+        continue-on-error: true
+        env:
+          COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          if [ -z "$COOLIFY_WEBHOOK" ]; then
+            echo "COOLIFY_WEBHOOK not set — skip auto-deploy (add repo secret to enable)."
+            exit 0
+          fi
+          curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
+            ${COOLIFY_TOKEN:+ -H "Authorization: Bearer ${COOLIFY_TOKEN}"}
+          echo "Coolify redeploy triggered."

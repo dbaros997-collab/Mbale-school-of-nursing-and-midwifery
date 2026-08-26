@@ -2,16 +2,28 @@
  * Push the current commit to origin/main — the branch Coolify deploys.
  * Run after committing: npm run push:live
  *
- * IMPORTANT — Coolify setup (do once):
- * 1. Coolify → Keys & Tokens → add GitHub Container Registry (ghcr.io)
- *    Username: your GitHub username
- *    Password: GitHub PAT with read:packages
- * 2. Coolify → your app → General → set Build Pack to "Docker Image"
- * 3. Image: ghcr.io/dbaros997-collab/mbale-school:latest
- * 4. Health check path: /api/health
+ * DEPLOY PIPELINE (set up once in Coolify — stops VPS build hangs forever):
  *
- * GitHub Actions builds the image (fast, 7 GB RAM). Coolify only pulls it —
- * no more stuck "Building docker image" on the VPS.
+ * 1. Cancel any stuck deployment in Coolify.
+ *
+ * 2. GitHub → repo → Settings → Secrets → add (optional, enables auto-redeploy):
+ *      COOLIFY_WEBHOOK  = Deploy webhook URL from Coolify app → Webhooks
+ *      COOLIFY_TOKEN    = Coolify API token with deploy permission
+ *
+ * 3. GitHub → repo → Packages → mbale-school → Package settings → Change visibility → Public
+ *    (Or add ghcr.io credentials in Coolify → Keys & Tokens with a PAT that has read:packages)
+ *
+ * 4. Coolify → your app → General:
+ *      Build Pack: Docker Compose  (NOT Dockerfile — that rebuilds on the VPS and hangs)
+ *      Docker Compose file: compose.yaml
+ *      Enable "Always pull latest image"
+ *
+ * 5. Coolify → Health check (if not inherited from compose.yaml):
+ *      Path: /api/health   Port: 3000
+ *
+ * After setup, every `npm run push:live`:
+ *   GitHub Actions builds the image (~5 min, 7 GB RAM) → pushes to GHCR →
+ *   Coolify pulls the image (~30 s). No more "Building docker image" on the VPS.
  */
 import { execSync } from "node:child_process";
 
@@ -40,11 +52,11 @@ execSync("git push origin main", { stdio: "inherit" });
 console.log(`
 Done.
 
-Next steps:
-  1. GitHub → Actions → wait for "Publish Docker image" to finish (~5 min)
-  2. Coolify → Redeploy (or it auto-deploys if webhook is set)
+Next:
+  1. GitHub → Actions → wait for "Publish Docker image" (~5 min)
+  2. Coolify redeploys automatically if COOLIFY_WEBHOOK is set; otherwise click Redeploy
   3. Hard refresh the site: Ctrl+Shift+R
 
-If Coolify still builds on the VPS and hangs, switch to Docker Image deploy:
-  Image: ghcr.io/dbaros997-collab/mbale-school:latest
+If Coolify still says "Building docker image", switch Build Pack to Docker Compose
+and point it at compose.yaml (pull-only — no VPS build).
 `);

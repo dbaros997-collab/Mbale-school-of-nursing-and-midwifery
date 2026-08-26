@@ -1,14 +1,31 @@
-# Optional Coolify build pack: Docker Compose
-# Coolify → Build Pack: Docker Compose → use this file
+# Coolify production — pull pre-built image from GHCR (no VPS build).
+# GitHub Actions builds on push to main; Coolify only pulls (~30s).
+#
+# One-time Coolify setup:
+#   Build Pack → Docker Compose → use this file (compose.yaml)
+#   Enable "Always pull latest image"
+#   Add ghcr.io registry credentials (GitHub PAT with read:packages)
+#   Or make the package public: github.com/dbaros997-collab → Packages → mbale-school → Public
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/dbaros997-collab/mbale-school:latest
+    pull_policy: always
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: production
       PORT: 3000
       HOSTNAME: 0.0.0.0
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 45s
     restart: unless-stopped
