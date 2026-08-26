@@ -2,7 +2,7 @@
 # https://coolify.io/docs/applications/build-packs/dockerfile
 
 FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat ca-certificates
 WORKDIR /app
 
 FROM base AS deps
@@ -15,8 +15,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# Raise Node heap for `next build` on small Coolify/VPS instances (build stage only)
-ENV NODE_OPTIONS=--max-old-space-size=3072
+# 1536MB fits 2GB VPS; raise via Coolify build env if your server has more RAM
+ENV NODE_OPTIONS=--max-old-space-size=1536
 # NEXT_PUBLIC_* vars must be passed as Docker build-args from Coolify if set at build time
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID
@@ -50,8 +50,5 @@ COPY --from=builder --chown=nextjs:nodejs /app/scripts/start-standalone.mjs ./sc
 
 USER nextjs
 EXPOSE 3000
-
-HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-  CMD node -e "fetch('http://127.0.0.1:3000').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", "scripts/start-standalone.mjs"]
