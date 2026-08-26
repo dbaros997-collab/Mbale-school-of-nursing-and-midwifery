@@ -1,48 +1,32 @@
 import { cn } from "@/lib/utils";
 
-/** Bump when logo SVG assets change — busts CDN/browser cache on deploy. */
-const LOGO_ASSET_VERSION = "20260826";
-
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
-  /** Dark = transparent lockup for navy/hero headers; light = brand colors on ivory panels. */
+  /** Kept for call sites; PNG lockup renders on all surfaces. */
   surface?: "dark" | "light";
 };
 
-const LOCKUPS = {
-  header: {
-    light: "/images/logo-lockup.svg",
-    dark: "/images/logo-lockup-on-dark.svg",
-  },
-  compact: {
-    light: "/images/logo-lockup-primary.svg",
-    dark: "/images/logo-lockup-primary.svg",
-  },
-} as const;
-
-const SIZES = {
-  header: { width: 520, height: 130 },
-  compact: { width: 320, height: 80 },
+const LOCKUP = {
+  src: "/images/logo-lockup.png",
+  width: 520,
+  height: 130,
 } as const;
 
 /** Official MBSNM horizontal lockup — crest + wordmark. */
 export function SchoolLogo({
   className,
   variant = "header",
-  surface = "light",
 }: SchoolLogoProps) {
   const compact = variant === "compact";
-  const { width, height } = SIZES[variant];
-  const src = `${LOCKUPS[variant][surface]}?v=${LOGO_ASSET_VERSION}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={LOCKUP.src}
       alt="Mbale School of Nursing and Midwifery"
-      width={width}
-      height={height}
+      width={compact ? 320 : LOCKUP.width}
+      height={compact ? 80 : LOCKUP.height}
       className={cn(
         "block h-auto w-auto object-contain object-left",
         compact
