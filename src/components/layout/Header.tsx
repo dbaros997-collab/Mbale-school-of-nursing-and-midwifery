@@ -91,8 +91,8 @@ export function Header() {
             ? "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)] backdrop-blur-md"
             : glassHome
               ? scrolled || open
-                ? "border-b border-white/15 bg-black/20 backdrop-blur-md"
-                : "bg-transparent"
+                ? "border-b border-white/15 bg-black/35 backdrop-blur-md"
+                : "bg-gradient-to-b from-black/50 via-black/20 to-transparent"
               : "header-navy-row header-bar-accent-navy",
         )}
       >
@@ -100,11 +100,10 @@ export function Header() {
           href="/"
           className={cn(
             "group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5",
-            glassHome && "drop-shadow-[0_2px_14px_rgba(0,0,0,0.55)]",
           )}
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo />
+          <SchoolLogo surface="dark" />
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-0 bg-transparent px-2 sm:px-4 lg:px-6">

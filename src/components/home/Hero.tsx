@@ -50,7 +50,7 @@ export function Hero() {
 
   return (
     <section
-      className="homepage-slider relative overflow-hidden bg-primary-dark"
+      className="homepage-slider relative -mt-[calc(var(--site-status-bar-height)+var(--site-header-height))] overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
       <div className="relative aspect-[3/4] min-h-[20rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[26rem] md:aspect-[1920/830] md:min-h-[28rem] lg:min-h-[32rem]">
@@ -94,7 +94,7 @@ export function Hero() {
           className="hero-sky--overlay absolute inset-0 z-[1]"
         />
 
-        <div className="absolute inset-0 z-[2] flex items-end md:items-center">
+        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] md:items-center">
           <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pb-24 lg:px-8 lg:pb-28">
             {animateSlides ? (
               <motion.div

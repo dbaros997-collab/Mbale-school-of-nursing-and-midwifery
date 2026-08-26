@@ -64,6 +64,12 @@
   }
 }
 
+@media (min-width: 1024px) {
+  :root {
+    --site-header-height: 5rem;
+  }
+}
+
 @theme inline {
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);

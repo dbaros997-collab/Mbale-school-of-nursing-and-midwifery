@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="Mbale School of Nursing and Midwifery">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Mbale School of Nursing and Midwifery">
   <defs>
     <linearGradient id="sunGlowDark" x1="100" y1="52" x2="100" y2="82" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#F5C842"/>
@@ -56,7 +56,7 @@
     <text x="100" y="179" text-anchor="middle" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="0.55">With GOD We Love and Serve</text>
   </g>
 
-  <!-- ===== WORDMARK (RIGHT)  light text for navy/hero backgrounds ===== -->
+  <!-- ===== WORDMARK (RIGHT) — light text for navy/hero backgrounds ===== -->
   <g id="wordmark" transform="translate(248 0)">
     <text x="0" y="96" fill="#198F34" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800" letter-spacing="3.2">MBALE SCHOOL OF</text>
     <text x="0" y="166" fill="#F4FAFB" font-family="Georgia, serif" font-size="64" font-weight="700">Nursing &amp;</text>
