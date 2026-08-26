@@ -1,20 +1,19 @@
 # Coolify / Nixpacks — abale-school (Next.js 16 standalone)
-# Use when Coolify build pack is "Nixpacks" instead of Dockerfile.
+# Prefer Coolify build pack: Dockerfile (see repo Dockerfile).
 # Docs: https://coolify.io/docs/applications/build-packs/nixpacks
-# Coolify deploy branch: master
-# Redeploy trigger: 2026-08-25T15:33+03:00
+# Coolify deploy branch: main
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"
 PORT = "3000"
 HOSTNAME = "0.0.0.0"
-NODE_ENV = "production"
 
 [phases.install]
-cmds = ["npm ci"]
+# Coolify often sets NODE_ENV=production globally — include devDeps needed for next build
+cmds = ["npm ci --include=dev"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["NODE_OPTIONS=--max-old-space-size=3072 npm run build"]
 
 [start]
 cmd = "npm run start"

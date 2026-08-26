@@ -7,7 +7,7 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 FROM base AS builder
 WORKDIR /app
@@ -15,6 +15,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+# Raise Node heap for `next build` on small Coolify/VPS instances (build stage only)
+ENV NODE_OPTIONS=--max-old-space-size=3072
 # NEXT_PUBLIC_* vars must be passed as Docker build-args from Coolify if set at build time
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID
