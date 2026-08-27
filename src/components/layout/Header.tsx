@@ -161,7 +161,7 @@ export function Header() {
           </nav>
 
           <div className="hidden md:flex">
-            <HeaderPortalActions glassHome={glassHome} />
+            <HeaderPortalActions glassHome={glassHome} showPortalLink={!isHome} />
           </div>
 
           <button
@@ -208,7 +208,11 @@ export function Header() {
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
                   Student access
                 </p>
-                <HeaderPortalActions glassHome layout="stacked" onNavigate={() => setOpen(false)} />
+                <HeaderPortalActions
+                  layout="stacked"
+                  showPortalLink={!isHome}
+                  onNavigate={() => setOpen(false)}
+                />
               </div>
               {mainNav.map((item) => {
                 const hasMega = "columns" in item && !!item.columns;

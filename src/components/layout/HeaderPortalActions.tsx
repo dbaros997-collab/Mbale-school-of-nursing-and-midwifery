@@ -10,12 +10,15 @@ type HeaderPortalActionsProps = {
   glassHome?: boolean;
   /** Stack vertically inside mega-menu featured panels */
   layout?: "inline" | "stacked";
+  /** Hide the Student Portal link (homepage header shows Microsoft 365 only) */
+  showPortalLink?: boolean;
   onNavigate?: () => void;
 };
 
 export function HeaderPortalActions({
   glassHome = false,
   layout = "inline",
+  showPortalLink = true,
   onNavigate,
 }: HeaderPortalActionsProps) {
   const portalLinkClass = cn(
@@ -38,10 +41,12 @@ export function HeaderPortalActions({
           : "ml-2 flex shrink-0 items-center gap-2 lg:ml-3 lg:gap-2.5",
       )}
     >
-      <Link href="/portal" className={portalLinkClass} onClick={onNavigate}>
-        <LogIn className="h-4 w-4 shrink-0" aria-hidden />
-        Student Portal
-      </Link>
+      {showPortalLink ? (
+        <Link href="/portal" className={portalLinkClass} onClick={onNavigate}>
+          <LogIn className="h-4 w-4 shrink-0" aria-hidden />
+          Student Portal
+        </Link>
+      ) : null}
       <MicrosoftSignInButton
         surface="header"
         size="compact"
