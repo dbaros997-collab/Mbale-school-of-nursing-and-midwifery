@@ -1,9 +1,8 @@
-# Coolify production — build from Dockerfile (ships the git commit you deploy).
+# Coolify production — pull pre-built image from GHCR (no VPS build).
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/dbaros997-collab/mbale-school:latest
+    pull_policy: always
     ports:
       - "3000:3000"
     environment:

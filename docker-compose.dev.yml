@@ -1,9 +1,9 @@
-# Local development — build from source. Production/Coolify uses Dockerfile in repo root.
+# Local development — build from source.
 services:
   abale-school:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.build
     ports:
       - "3000:3000"
     environment:
