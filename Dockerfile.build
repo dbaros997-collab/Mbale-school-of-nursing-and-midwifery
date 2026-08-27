@@ -8,13 +8,14 @@ RUN npm ci --include=dev --no-audit --no-fund
 
 FROM base AS builder
 WORKDIR /app
+ARG SOURCE_COMMIT=unknown
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID
 ARG NEXT_PUBLIC_AZURE_REDIRECT_URI
 ARG NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
-ARG NEXT_PUBLIC_LOGO_VERSION=png
+ARG NEXT_PUBLIC_LOGO_VERSION=${SOURCE_COMMIT}
 ENV NEXT_PUBLIC_AZURE_CLIENT_ID=$NEXT_PUBLIC_AZURE_CLIENT_ID
 ENV NEXT_PUBLIC_AZURE_TENANT_ID=$NEXT_PUBLIC_AZURE_TENANT_ID
 ENV NEXT_PUBLIC_AZURE_REDIRECT_URI=$NEXT_PUBLIC_AZURE_REDIRECT_URI
@@ -27,7 +28,7 @@ ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=768
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN echo "=== MBSNM build start $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" \
+RUN echo "=== MBSNM build ${SOURCE_COMMIT} start $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" \
   && npm run build \
   && echo "=== MBSNM build done $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" \
   && test -f .next/standalone/server.js \

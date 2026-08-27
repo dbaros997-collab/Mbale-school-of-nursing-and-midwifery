@@ -2,13 +2,8 @@
  * Push the current commit to origin/main — the branch Coolify deploys.
  * Run after committing: npm run push:live
  *
- * DEPLOY PIPELINE:
- *   1. push:live → GitHub Actions builds Dockerfile.build (~5 min)
- *   2. Actions pushes ghcr.io/.../mbale-school:<sha> and :latest
- *   3. Coolify redeploys that commit (Dockerfile pulls by SOURCE_COMMIT)
- *
- * IMPORTANT: Redeploy in Coolify only AFTER Actions shows green — not on git push alone.
- * Optional: GitHub repo Secrets → COOLIFY_WEBHOOK (+ COOLIFY_TOKEN) for auto-redeploy.
+ * DEPLOY: Coolify builds the root Dockerfile from your git commit (~5–6 min).
+ * Verify at /api/health — "build" should match your commit SHA after deploy.
  */
 import { execSync } from "node:child_process";
 
@@ -38,9 +33,10 @@ execSync("git push origin main", { stdio: "inherit" });
 console.log(`
 Done.
 
-  1. GitHub → Actions → wait for "Publish Docker image" (~5 min)
-  2. Coolify → Redeploy commit ${sha} (pulls ghcr.io/.../mbale-school:${sha})
-  3. Hard refresh: Ctrl+Shift+R
+  1. Coolify → Deployments — wait for build to finish (~5–6 min)
+  2. Logs should show "MBSNM build ${sha} start" then "build done"
+  3. Check https://YOUR-SITE/api/health — build should be "${sha}" or full SHA
+  4. Hard refresh: Ctrl+Shift+R
 
-Do not redeploy in Coolify until step 1 finishes — otherwise Coolify serves a stale cached image.
+Cancel any quick 30-second deploy — that was a stale cached image, not a real build.
 `);
