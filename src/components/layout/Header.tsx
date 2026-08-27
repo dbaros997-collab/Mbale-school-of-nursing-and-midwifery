@@ -101,7 +101,10 @@ export function Header() {
           className="group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5"
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo className="header-logo-blend" />
+          <SchoolLogo
+            surface={glassHome ? "dark" : "light"}
+            className={glassHome ? undefined : "header-logo-blend"}
+          />
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-0 bg-transparent px-2 sm:px-4 lg:px-6">
