@@ -1,9 +1,9 @@
-# Coolify / production — pull pre-built image (no VPS build).
-# Local dev: docker compose -f docker-compose.dev.yml up --build
+# Coolify / production — build from Dockerfile (same commit Coolify deploys).
 services:
   abale-school:
-    image: ghcr.io/dbaros997-collab/mbale-school:latest
-    pull_policy: always
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:

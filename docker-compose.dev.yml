@@ -1,9 +1,9 @@
-# Local development — build from source. Production/Coolify uses compose.yaml (GHCR pull).
+# Local development — build from source. Production/Coolify uses Dockerfile in repo root.
 services:
   abale-school:
     build:
       context: .
-      dockerfile: Dockerfile.build
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
