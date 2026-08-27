@@ -1,0 +1,28 @@
+# Redeploy Coolify AFTER the Docker image exists on GHCR.
+# Without this, Coolify's git webhook often redeploys before Actions finishes building.
+name: Redeploy Coolify
+
+on:
+  workflow_run:
+    workflows: ["Publish Docker image"]
+    types: [completed]
+
+jobs:
+  redeploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify redeploy
+        env:
+          COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          echo "Image ready for commit ${SHA}"
+          if [ -z "$COOLIFY_WEBHOOK" ]; then
+            echo "::warning::COOLIFY_WEBHOOK secret is not set. Redeploy commit ${SHA} manually in Coolify after each push."
+            exit 0
+          fi
+          curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
+            ${COOLIFY_TOKEN:+ -H "Authorization: Bearer ${COOLIFY_TOKEN}"}
+          echo "Coolify redeploy triggered for ${SHA}"

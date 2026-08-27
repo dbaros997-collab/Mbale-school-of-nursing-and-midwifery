@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
-# Coolify injects SOURCE_COMMIT (full git SHA) on each deploy.
+# Coolify may inject SOURCE_COMMIT (git SHA). Falls back to :latest from GHCR.
 ARG SOURCE_COMMIT=latest
 FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
-# Pull-only — full build runs on GitHub Actions (Dockerfile.build).
-# Redeploy in Coolify only AFTER Actions "Publish Docker image" succeeds for this commit.
+# Image is built on GitHub Actions (Dockerfile.build). Redeploy only after Actions succeeds.
