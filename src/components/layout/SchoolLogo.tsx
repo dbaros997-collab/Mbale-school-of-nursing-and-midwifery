@@ -9,8 +9,8 @@ type SchoolLogoProps = {
 
 const LOCKUP = {
   src: "/images/logo-lockup.png",
-  width: 520,
-  height: 130,
+  width: 1024,
+  height: 1012,
 } as const;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
@@ -35,8 +35,8 @@ export function SchoolLogo({
       className={cn(
         "block h-auto w-auto object-contain object-left",
         compact
-          ? "h-[64px] w-[260px] sm:h-[72px] sm:w-[300px]"
-          : "h-[84px] w-[min(340px,90vw)] sm:h-[96px] sm:w-[400px] md:h-[108px] md:w-[460px] lg:h-[118px] lg:w-[520px]",
+          ? "h-[64px] w-auto max-w-[320px]"
+          : "h-[72px] w-auto sm:h-[80px] md:h-[88px] lg:h-[96px]",
         className,
       )}
       decoding="async"

@@ -99,7 +99,7 @@ export function Header() {
           className="group relative z-10 flex shrink-0 items-center bg-transparent px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5"
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo className="header-logo-blend" />
+          <SchoolLogo />
         </Link>
 
         <div
