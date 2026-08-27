@@ -54,19 +54,19 @@
 
   /* Fixed chrome — keep header offset in sync with SiteStatusBar + Header */
   --site-status-bar-height: 3.5rem;
-  --site-header-height: 5.25rem;
+  --site-header-height: 4rem;
 }
 
 @media (min-width: 640px) {
   :root {
     --site-status-bar-height: 4rem;
-    --site-header-height: 6rem;
+    --site-header-height: 4.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --site-header-height: 7.5rem;
+    --site-header-height: 5rem;
   }
 }
 

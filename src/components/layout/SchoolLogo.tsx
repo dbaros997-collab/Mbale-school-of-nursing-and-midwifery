@@ -3,28 +3,20 @@ import { cn } from "@/lib/utils";
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
-  /** Kept for call sites; official PNG lockup renders on all surfaces. */
+  /** Kept for call sites; SVG lockup on all surfaces. */
   surface?: "dark" | "light";
 };
 
 const LOCKUP = {
-  src: "/images/logo-lockup.png",
-  width: 920,
-  height: 1010,
-  /** Visible artwork band within the PNG (measured from the asset). */
-  artWidthRatio: 0.9,
-  artHeightRatio: 0.36,
+  /** Transparent horizontal lockup — correct aspect ratio, no white matte. */
+  src: "/images/logo-lockup.svg",
+  width: 1200,
+  height: 300,
 } as const;
-
-/** Crop frame aspect — maps display box to the lockup, not the full square PNG. */
-const LOCKUP_ASPECT = `${1000}/${Math.round(
-  ((1000 * LOCKUP.height) / LOCKUP.width) *
-    (LOCKUP.artHeightRatio / LOCKUP.artWidthRatio),
-)}`;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "png-lockup";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "svg-lockup";
 
 /** Official MBSNM horizontal lockup — crest + wordmark. */
 export function SchoolLogo({
@@ -33,29 +25,22 @@ export function SchoolLogo({
 }: SchoolLogoProps) {
   const compact = variant === "compact";
   const src = `${LOCKUP.src}?v=${LOGO_CACHE_VERSION}`;
-  const imgWidthPct = `${(100 / LOCKUP.artWidthRatio).toFixed(3)}%`;
 
   return (
-    <span
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt="Mbale School of Nursing and Midwifery"
+      width={compact ? 320 : LOCKUP.width}
+      height={compact ? 80 : LOCKUP.height}
       className={cn(
-        "inline-block shrink-0 overflow-hidden",
+        "block h-auto w-auto shrink-0 object-contain object-left",
         compact
-          ? "w-[220px] sm:w-[260px]"
-          : "w-[min(88vw,280px)] sm:w-[360px] md:w-[420px] lg:w-[480px]",
+          ? "h-[52px] w-auto max-w-[240px] sm:h-[56px] sm:max-w-[280px]"
+          : "h-[56px] w-auto max-w-[min(88vw,300px)] sm:h-[64px] sm:max-w-[340px] md:h-[72px] md:max-w-[380px] lg:h-[80px] lg:max-w-[420px]",
         className,
       )}
-      style={{ aspectRatio: LOCKUP_ASPECT }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt="Mbale School of Nursing and Midwifery"
-        width={LOCKUP.width}
-        height={LOCKUP.height}
-        className="block h-auto max-w-none object-left-top"
-        style={{ width: imgWidthPct }}
-        decoding="async"
-      />
-    </span>
+      decoding="async"
+    />
   );
 }

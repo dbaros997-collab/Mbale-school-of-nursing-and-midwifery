@@ -86,31 +86,28 @@ export function Header() {
     >
       <div
         className={cn(
-          "relative flex w-full items-stretch transition-all duration-300",
+          "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
           showNavyHeader
             ? "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
             : glassHome
-              ? "bg-transparent"
+              ? scrolled || open
+                ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
+                : "bg-gradient-to-b from-black/55 via-black/25 to-transparent"
               : "header-navy-row header-bar-accent-navy",
         )}
       >
         <Link
           href="/"
-          className="group relative z-10 flex shrink-0 items-center overflow-visible bg-transparent px-1 py-0 focus-ring sm:px-3 sm:py-0.5 lg:pl-5 lg:pr-4"
+          className={cn(
+            "group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 lg:pl-6 lg:pr-4",
+            glassHome && "drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]",
+          )}
           aria-label={SCHOOL.name}
         >
           <SchoolLogo />
         </Link>
 
-        <div
-          className={cn(
-            "flex min-w-0 flex-1 items-center justify-end gap-0 px-2 sm:px-4 lg:px-6",
-            glassHome &&
-              (scrolled || open
-                ? "border-b border-white/15 bg-black/35"
-                : "bg-gradient-to-b from-black/50 via-black/20 to-transparent"),
-          )}
-        >
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-0 px-2 sm:px-4 lg:px-6">
           <nav
             className="hidden flex-wrap items-center justify-end sm:flex"
             aria-label="main navigation"
