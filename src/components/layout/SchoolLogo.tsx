@@ -10,13 +10,13 @@ type SchoolLogoProps = {
 const LOCKUP = {
   /** Official crest emblem — circular badge with motto banner. */
   src: "/images/logo-lockup.png",
-  width: 462,
-  height: 478,
+  width: 714,
+  height: 622,
 } as const;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-tight";
 
 /** Official MBSNM crest emblem. */
 export function SchoolLogo({
@@ -36,8 +36,8 @@ export function SchoolLogo({
       className={cn(
         "block h-auto w-auto shrink-0 object-contain object-left",
         compact
-          ? "h-[72px] w-auto max-w-[76px] sm:h-[80px] sm:max-w-[84px]"
-          : "h-[80px] w-auto max-w-[84px] sm:h-[92px] sm:max-w-[96px] md:h-[104px] md:max-w-[108px] lg:h-[116px] lg:max-w-[120px]",
+          ? "h-[72px] w-auto max-w-[83px] sm:h-[80px] sm:max-w-[92px]"
+          : "h-[80px] w-auto max-w-[92px] sm:h-[92px] sm:max-w-[106px] md:h-[104px] md:max-w-[119px] lg:h-[116px] lg:max-w-[133px]",
         className,
       )}
       decoding="async"
