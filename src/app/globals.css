@@ -329,9 +329,10 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
-/* Knock out opaque white PNG matte on dark headers — logo file unchanged. */
+/* Knock out opaque white PNG matte — logo asset unchanged. */
 .header-logo-blend {
   mix-blend-mode: multiply;
+  background: transparent;
 }
 
 /* Sky hero section */

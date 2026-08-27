@@ -3,13 +3,12 @@ import { cn } from "@/lib/utils";
 type SchoolLogoProps = {
   className?: string;
   variant?: "header" | "compact";
-  /** dark = transparent SVG on hero/dark overlays; light = PNG lockup elsewhere. */
+  /** Kept for call sites; official PNG lockup renders on all surfaces. */
   surface?: "dark" | "light";
 };
 
 const LOCKUP = {
-  png: "/images/logo-lockup.png",
-  svg: "/images/logo-lockup.svg",
+  src: "/images/logo-lockup.png",
   width: 520,
   height: 130,
 } as const;
@@ -22,11 +21,9 @@ const LOGO_CACHE_VERSION =
 export function SchoolLogo({
   className,
   variant = "header",
-  surface = "light",
 }: SchoolLogoProps) {
   const compact = variant === "compact";
-  const lockupSrc = surface === "dark" ? LOCKUP.svg : LOCKUP.png;
-  const src = `${lockupSrc}?v=${LOGO_CACHE_VERSION}`;
+  const src = `${LOCKUP.src}?v=${LOGO_CACHE_VERSION}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
