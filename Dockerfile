@@ -1,4 +1,6 @@
-FROM ghcr.io/dbaros997-collab/mbale-school:latest
-# Coolify pull-only — keep FROM on line 1 (Coolify injects build args after this line).
-# Full Next.js build runs on GitHub Actions via Dockerfile.build, NOT on the VPS.
-# If deploy fails: wait for Actions "Publish Docker image" to finish, then Redeploy.
+# syntax=docker/dockerfile:1
+# Coolify injects SOURCE_COMMIT (full git SHA) on each deploy.
+ARG SOURCE_COMMIT=latest
+FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
+# Pull-only — full build runs on GitHub Actions (Dockerfile.build).
+# Redeploy in Coolify only AFTER Actions "Publish Docker image" succeeds for this commit.

@@ -71,10 +71,15 @@ jobs:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
         run: |
+          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}"
+          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:latest"
           if [ -z "$COOLIFY_WEBHOOK" ]; then
-            echo "COOLIFY_WEBHOOK not set — redeploy manually in Coolify after this workflow finishes."
+            echo ""
+            echo "COOLIFY_WEBHOOK not set."
+            echo "After this workflow finishes, redeploy commit ${{ github.sha }} in Coolify"
+            echo "so it pulls ghcr.io/.../mbale-school:${{ github.sha }} (not a cached :latest)."
             exit 0
           fi
           curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
             ${COOLIFY_TOKEN:+ -H "Authorization: Bearer ${COOLIFY_TOKEN}"}
-          echo "Coolify redeploy triggered."
+          echo "Coolify redeploy triggered for ${{ github.sha }}."
