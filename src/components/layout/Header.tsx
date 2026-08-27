@@ -98,13 +98,18 @@ export function Header() {
       >
         <Link
           href="/"
-          className={cn(
-            "group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5",
-            "[&_img]:mix-blend-multiply",
-          )}
+          className="group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 sm:py-2.5 lg:pl-6 lg:pr-5"
           aria-label={SCHOOL.name}
         >
-          <SchoolLogo />
+          <span
+            className={cn(
+              "inline-flex items-center",
+              showNavyHeader && "bg-primary",
+              glassHome && "rounded-sm bg-black/45",
+            )}
+          >
+            <SchoolLogo className="header-logo-blend" />
+          </span>
         </Link>
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-0 bg-transparent px-2 sm:px-4 lg:px-6">

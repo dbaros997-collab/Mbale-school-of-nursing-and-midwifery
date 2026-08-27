@@ -329,6 +329,11 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
+/* Knock out opaque white PNG matte on dark headers — logo file unchanged. */
+.header-logo-blend {
+  mix-blend-mode: darken;
+}
+
 /* Sky hero section */
 .hero-sky {
   background: linear-gradient(

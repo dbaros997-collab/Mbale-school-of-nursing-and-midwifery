@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
-# Coolify pull-only — pins to the commit SHA built on GitHub Actions (falls back to latest).
-ARG SOURCE_COMMIT=latest
-FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
+FROM ghcr.io/dbaros997-collab/mbale-school:latest
+# Coolify pull-only — keep FROM on line 1. Image built on GitHub Actions (Dockerfile.build).
+# Redeploy in Coolify after Actions finishes so :latest is refreshed.
