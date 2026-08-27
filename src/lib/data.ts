@@ -215,36 +215,6 @@ export const mainNav = [
       cta: "Apply Now",
     },
   },
-  {
-    label: "My MBSNM",
-    href: "/portal",
-    emphasize: true,
-    columns: [
-      {
-        title: "Students",
-        links: [
-          { label: "Dashboard", href: "/portal/dashboard" },
-          { label: "Activate Account", href: "/portal/activate" },
-          { label: "Profile", href: "/portal/profile" },
-          { label: "LMS Hub", href: "/portal/lms" },
-        ],
-      },
-      {
-        title: "Staff",
-        links: [
-          { label: "Admin Dashboard", href: "/admin" },
-          { label: "Getting in Touch", href: "/contact" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "Student Portal",
-      title: "Sign in for fees, registration, and your classes.",
-      href: "/portal",
-      cta: "Sign In",
-      microsoftSignIn: true,
-    },
-  },
 ] as const;
 
 export const quickLinks = [
