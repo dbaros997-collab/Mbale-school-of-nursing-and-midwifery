@@ -96,7 +96,7 @@ export function Header() {
       >
         <Link
           href="/"
-          className="group relative z-10 flex shrink-0 items-center bg-transparent px-2 py-1 focus-ring sm:px-4 sm:py-1.5 lg:pl-6 lg:pr-5"
+          className="group relative z-10 flex shrink-0 items-center overflow-visible bg-transparent px-1 py-0 focus-ring sm:px-3 sm:py-0.5 lg:pl-5 lg:pr-4"
           aria-label={SCHOOL.name}
         >
           <SchoolLogo />

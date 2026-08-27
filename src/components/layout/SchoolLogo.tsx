@@ -9,13 +9,18 @@ type SchoolLogoProps = {
 
 const LOCKUP = {
   src: "/images/logo-lockup.png",
-  /** Native PNG — horizontal lockup sits in the top band; empty space below is cropped. */
   width: 920,
   height: 1010,
-  cropHeight: 400,
+  /** Visible artwork band within the PNG (measured from the asset). */
+  artWidthRatio: 0.9,
+  artHeightRatio: 0.36,
 } as const;
 
-const LOCKUP_ASPECT = `${LOCKUP.width}/${LOCKUP.cropHeight}`;
+/** Crop frame aspect — maps display box to the lockup, not the full square PNG. */
+const LOCKUP_ASPECT = `${1000}/${Math.round(
+  ((1000 * LOCKUP.height) / LOCKUP.width) *
+    (LOCKUP.artHeightRatio / LOCKUP.artWidthRatio),
+)}`;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
@@ -28,14 +33,15 @@ export function SchoolLogo({
 }: SchoolLogoProps) {
   const compact = variant === "compact";
   const src = `${LOCKUP.src}?v=${LOGO_CACHE_VERSION}`;
+  const imgWidthPct = `${(100 / LOCKUP.artWidthRatio).toFixed(3)}%`;
 
   return (
     <span
       className={cn(
         "inline-block shrink-0 overflow-hidden",
         compact
-          ? "w-[240px] sm:w-[280px]"
-          : "w-[min(92vw,320px)] sm:w-[400px] md:w-[460px] lg:w-[520px]",
+          ? "w-[260px] sm:w-[300px]"
+          : "w-[min(94vw,400px)] sm:w-[520px] md:w-[620px] lg:w-[720px]",
         className,
       )}
       style={{ aspectRatio: LOCKUP_ASPECT }}
@@ -46,7 +52,8 @@ export function SchoolLogo({
         alt="Mbale School of Nursing and Midwifery"
         width={LOCKUP.width}
         height={LOCKUP.height}
-        className="h-full w-full object-cover object-left-top"
+        className="block h-auto max-w-none object-left-top"
+        style={{ width: imgWidthPct }}
         decoding="async"
       />
     </span>
