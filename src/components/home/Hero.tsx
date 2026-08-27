@@ -53,7 +53,7 @@ export function Hero() {
       className="homepage-slider relative -mt-[calc(var(--site-status-bar-height)+var(--site-header-height))] overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      <div className="relative aspect-[3/4] min-h-[20rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[26rem] md:aspect-[1920/830] md:min-h-[28rem] lg:min-h-[32rem]">
+      <div className="relative aspect-[3/4] min-h-[22rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[28rem] md:aspect-[1920/830] md:min-h-[30rem] lg:min-h-[34rem] xl:min-h-[36rem]">
         {animateSlides ? (
           <AnimatePresence mode="wait">
             <motion.div
@@ -94,20 +94,20 @@ export function Hero() {
           className="hero-sky--overlay absolute inset-0 z-[1]"
         />
 
-        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] md:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pb-24 lg:px-8 lg:pb-28">
+        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height)+0.5rem)] sm:items-center sm:pt-[calc(var(--site-status-bar-height)+var(--site-header-height))]">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-28 pt-8 sm:px-6 sm:pb-32 sm:pt-10 lg:px-8 lg:pb-36 lg:pt-12">
             {animateSlides ? (
               <motion.div
                 key={`copy-${slide.id}`}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-[44rem] text-white"
+                className="max-w-[min(100%,52rem)] text-white"
               >
                 <HeroCopy slide={slide} />
               </motion.div>
             ) : (
-              <div className="max-w-[44rem] text-white">
+              <div className="max-w-[min(100%,52rem)] text-white">
                 <HeroCopy slide={heroSlides[0]} />
               </div>
             )}
@@ -204,13 +204,13 @@ function HeroCopy({
 }) {
   return (
     <>
-      <h1 className="font-display text-[clamp(1.75rem,7vw,4.5rem)] font-extrabold leading-display tracking-tight text-white">
+      <h1 className="font-display text-[clamp(1.875rem,4.5vw+0.25rem,3.75rem)] font-extrabold leading-[1.14] tracking-tight text-white">
         {slide.title}
       </h1>
-      <p className="mt-4 max-w-[40rem] text-sm leading-body text-white/90 sm:mt-5 sm:text-[1.02rem]">
+      <p className="mt-5 max-w-[48rem] text-[0.9375rem] leading-[1.65] text-white/90 sm:mt-6 sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg lg:leading-[1.75]">
         {slide.description}
       </p>
-      <div className="mt-6 flex w-full flex-col gap-3 sm:mt-7 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
+      <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
         <Link
           href={slide.href}
           className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-5 py-3 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-6 sm:py-[15px] sm:text-lg"
