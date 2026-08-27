@@ -36,8 +36,8 @@ export function SchoolLogo({
       className={cn(
         "block h-auto w-auto shrink-0 object-contain object-left",
         compact
-          ? "h-[52px] w-auto max-w-[56px] sm:h-[56px] sm:max-w-[60px]"
-          : "h-[56px] w-auto max-w-[58px] sm:h-[64px] sm:max-w-[66px] md:h-[72px] md:max-w-[74px] lg:h-[80px] lg:max-w-[82px]",
+          ? "h-[72px] w-auto max-w-[76px] sm:h-[80px] sm:max-w-[84px]"
+          : "h-[80px] w-auto max-w-[84px] sm:h-[92px] sm:max-w-[96px] md:h-[104px] md:max-w-[108px] lg:h-[116px] lg:max-w-[120px]",
         className,
       )}
       decoding="async"

@@ -56,7 +56,7 @@ export function AdminSidebar({ open, onClose, onLogout }: AdminSidebarProps) {
       >
         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-4">
           <Link href="/" className="flex min-w-0 items-center gap-2" onClick={onClose}>
-            <SchoolLogo variant="compact" className="!h-[60px] !w-[62px] shrink-0" />
+            <SchoolLogo variant="compact" className="!h-[84px] !w-[88px] shrink-0" />
             <div className="min-w-0">
               <p className="truncate text-sm font-bold">MBSNM Admin</p>
               <p className="truncate text-[11px] text-white/60">Staff control panel</p>

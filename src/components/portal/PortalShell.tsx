@@ -14,7 +14,7 @@ function StaffBlockedOnStudentPortal() {
   return (
     <div className="flex min-h-full items-center justify-center bg-surface px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm text-center">
-        <SchoolLogo surface="light" variant="header" className="mx-auto !h-[96px] !w-[98px]" />
+        <SchoolLogo surface="light" variant="header" className="mx-auto !h-[160px] !w-[166px]" />
         <h1 className="mt-6 font-display text-2xl font-semibold text-primary">
           Student portal only
         </h1>
