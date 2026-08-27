@@ -40,8 +40,8 @@ export function SchoolLogo({
       className={cn(
         "inline-block shrink-0 overflow-hidden",
         compact
-          ? "w-[260px] sm:w-[300px]"
-          : "w-[min(94vw,400px)] sm:w-[520px] md:w-[620px] lg:w-[720px]",
+          ? "w-[220px] sm:w-[260px]"
+          : "w-[min(88vw,280px)] sm:w-[360px] md:w-[420px] lg:w-[480px]",
         className,
       )}
       style={{ aspectRatio: LOCKUP_ASPECT }}
