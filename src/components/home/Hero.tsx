@@ -53,7 +53,7 @@ export function Hero() {
       className="homepage-slider relative -mt-[calc(var(--site-status-bar-height)+var(--site-header-height))] overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      <div className="relative aspect-[3/4] min-h-[22rem] w-full overflow-hidden sm:aspect-[4/5] sm:min-h-[28rem] md:aspect-[1920/830] md:min-h-[30rem] lg:min-h-[34rem] xl:min-h-[36rem]">
+      <div className="relative aspect-[3/2] w-full overflow-hidden">
         {animateSlides ? (
           <AnimatePresence mode="wait">
             <motion.div
@@ -69,9 +69,9 @@ export function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
-                quality={70}
+                className="object-contain object-center"
+                sizes="100vw"
+                quality={80}
               />
             </motion.div>
           </AnimatePresence>
@@ -82,20 +82,20 @@ export function Hero() {
               alt={heroSlides[0].alt}
               fill
               priority
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
-              quality={70}
+              className="object-contain object-center"
+              sizes="100vw"
+              quality={80}
             />
           </div>
         )}
 
         <div
           aria-hidden
-          className="hero-sky--overlay absolute inset-0 z-[1]"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-primary/85 via-primary/30 to-primary/10"
         />
 
-        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height)+0.5rem)] sm:items-center sm:pt-[calc(var(--site-status-bar-height)+var(--site-header-height))]">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-28 pt-8 sm:px-6 sm:pb-32 sm:pt-10 lg:px-8 lg:pb-36 lg:pt-12">
+        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:items-center">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-4 sm:px-6 sm:pb-24 lg:px-8 lg:pb-28">
             {animateSlides ? (
               <motion.div
                 key={`copy-${slide.id}`}
@@ -157,7 +157,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 -mt-11 px-4 sm:-mt-12 sm:px-6 lg:px-8">
+      <div className="relative z-10 -mt-14 px-4 sm:-mt-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-4">
             {heroQuickBoxes.map((box, i) => {
