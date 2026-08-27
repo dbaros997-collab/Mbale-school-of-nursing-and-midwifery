@@ -50,10 +50,10 @@ export function Hero() {
 
   return (
     <section
-      className="homepage-slider relative -mt-[calc(var(--site-status-bar-height)+var(--site-header-height))] overflow-hidden bg-primary-dark"
+      className="homepage-slider relative overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      <div className="relative aspect-[3/2] w-full overflow-hidden">
+      <div className="relative min-h-[calc(100svh-var(--site-status-bar-height))] w-full sm:min-h-[calc(100svh-var(--site-status-bar-height)-2rem)] lg:min-h-[38rem]">
         {animateSlides ? (
           <AnimatePresence mode="wait">
             <motion.div
@@ -69,9 +69,9 @@ export function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
-                className="object-contain object-center"
+                className="object-cover object-center"
                 sizes="100vw"
-                quality={80}
+                quality={85}
               />
             </motion.div>
           </AnimatePresence>
@@ -82,20 +82,20 @@ export function Hero() {
               alt={heroSlides[0].alt}
               fill
               priority
-              className="object-contain object-center"
+              className="object-cover object-center"
               sizes="100vw"
-              quality={80}
+              quality={85}
             />
           </div>
         )}
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-primary/85 via-primary/30 to-primary/10"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/65 via-black/25 to-black/5"
         />
 
         <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-20 pt-4 sm:px-6 sm:pb-24 lg:px-8 lg:pb-28">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
             {animateSlides ? (
               <motion.div
                 key={`copy-${slide.id}`}
