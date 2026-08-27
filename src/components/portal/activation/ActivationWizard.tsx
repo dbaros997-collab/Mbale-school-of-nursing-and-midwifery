@@ -113,7 +113,7 @@ export function ActivationWizard() {
   return (
     <div className="mx-auto w-full max-w-3xl">
       <div className="mb-6 flex flex-col items-center text-center sm:mb-8">
-        <SchoolLogo surface="light" variant="compact" className="mx-auto !h-[72px] !w-[280px]" />
+        <SchoolLogo surface="light" variant="compact" className="mx-auto !h-[72px] !w-[74px]" />
         <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
           First-time student activation
         </p>
