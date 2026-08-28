@@ -52,7 +52,7 @@ export function VisionMission() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div
-              className="absolute inset-0 bg-[linear-gradient(135deg,rgba(21,120,44,0.92)_0%,rgba(25,143,52,0.88)_100%)]"
+              className="absolute inset-0 bg-[linear-gradient(135deg,rgba(14,36,86,0.92)_0%,rgba(22,53,127,0.88)_100%)]"
               aria-hidden
             />
             <div className="relative z-10 flex h-full flex-col justify-center px-8 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
@@ -80,7 +80,7 @@ export function VisionMission() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col justify-center bg-white px-8 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16"
           >
-            <h3 className="font-display text-3xl font-semibold text-brand-green sm:text-4xl">
+            <h3 className="font-display text-3xl font-semibold text-primary sm:text-4xl">
               Our Core Values
             </h3>
             <ul className="mt-8 space-y-5 sm:space-y-6">
@@ -96,11 +96,11 @@ export function VisionMission() {
                     className="flex items-center gap-4 sm:gap-5"
                   >
                     <Icon
-                      className="h-7 w-7 shrink-0 text-brand-green sm:h-8 sm:w-8"
+                      className="h-7 w-7 shrink-0 text-primary sm:h-8 sm:w-8"
                       strokeWidth={1.5}
                       aria-hidden
                     />
-                    <span className="text-base font-bold text-brand-green sm:text-lg">
+                    <span className="text-base font-bold text-primary sm:text-lg">
                       {value.title}
                     </span>
                   </motion.li>
