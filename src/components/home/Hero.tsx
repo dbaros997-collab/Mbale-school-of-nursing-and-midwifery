@@ -28,12 +28,6 @@ const quickIconStyles = [
   "accent-chip-gold",
 ] as const;
 
-/** KIU-style srcset: mobile + desktop WebP at fixed banner ratio. */
-function heroSrcSet(src: string) {
-  const mobile = src.replace(/\.webp$/, "-1280.webp");
-  return `${mobile} 1280w, ${src} 1920w`;
-}
-
 export function Hero() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -49,9 +43,10 @@ export function Hero() {
 
   useEffect(() => {
     for (const s of heroSlides) {
-      const img = new window.Image();
-      img.src = s.image;
-      img.srcset = heroSrcSet(s.image);
+      const sharp = new window.Image();
+      sharp.src = s.imageSharp;
+      const bg = new window.Image();
+      bg.src = s.image;
     }
   }, []);
 
@@ -66,24 +61,37 @@ export function Hero() {
     >
       <div className="homepage-slider__frame relative w-full">
         {heroSlides.map((s, i) => (
-          <img
+          <div
             key={s.id}
-            src={s.image}
-            srcSet={heroSrcSet(s.image)}
-            sizes="100vw"
-            alt={i === index ? s.alt : ""}
-            aria-hidden={i !== index}
-            width={1920}
-            height={830}
-            decoding="async"
-            draggable={false}
-            fetchPriority={i === 0 ? "high" : "auto"}
-            loading={i === 0 ? "eager" : "lazy"}
             className={cn(
-              "homepage-slider__photo absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-in-out",
-              i === index ? "opacity-100" : "opacity-0",
+              "absolute inset-0 transition-opacity duration-700 ease-in-out",
+              i === index ? "opacity-100" : "pointer-events-none opacity-0",
             )}
-          />
+            aria-hidden={i !== index}
+          >
+            <img
+              src={s.image}
+              alt=""
+              width={1920}
+              height={830}
+              decoding="async"
+              draggable={false}
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
+              className="homepage-slider__photo-bg absolute inset-0 h-full w-full object-cover object-center"
+            />
+            <img
+              src={s.imageSharp}
+              alt={i === index ? s.alt : ""}
+              width={1024}
+              height={443}
+              decoding="async"
+              draggable={false}
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
+              className="homepage-slider__photo-sharp absolute inset-0 z-[1] h-full w-full"
+            />
+          </div>
         ))}
 
         <div className="homepage-slider__overlay" aria-hidden />
