@@ -1,4 +1,4 @@
-# Coolify — build from Dockerfile (ships the git commit you deploy).
+# Coolify — pulls pre-built GHCR image (see root Dockerfile). No VPS build.
 services:
   web:
     build:

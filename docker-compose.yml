@@ -1,4 +1,4 @@
-# Production — build from Dockerfile (same commit Coolify deploys).
+# Production — Coolify pulls pre-built GHCR image (root Dockerfile).
 services:
   abale-school:
     build:

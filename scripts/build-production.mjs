@@ -21,7 +21,7 @@ const result = spawnSync(
       ...process.env,
       NEXT_TELEMETRY_DISABLED: "1",
       CI: "true",
-      NODE_OPTIONS: process.env.NODE_OPTIONS ?? "--max-old-space-size=768",
+      NODE_OPTIONS: process.env.NODE_OPTIONS ?? "--max-old-space-size=1024",
     },
   },
 );
