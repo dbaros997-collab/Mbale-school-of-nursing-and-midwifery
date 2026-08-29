@@ -69,9 +69,9 @@ export function Hero() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
+                unoptimized
                 className="object-cover object-center"
                 sizes="100vw"
-                quality={92}
               />
             </motion.div>
           </AnimatePresence>
@@ -82,16 +82,16 @@ export function Hero() {
               alt={heroSlides[0].alt}
               fill
               priority
+              unoptimized
               className="object-cover object-center"
               sizes="100vw"
-              quality={92}
             />
           </div>
         )}
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/55 via-black/20 to-transparent"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/40 via-black/15 to-transparent"
         />
 
         <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:items-center">
