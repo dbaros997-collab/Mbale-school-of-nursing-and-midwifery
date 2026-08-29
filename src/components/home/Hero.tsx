@@ -40,6 +40,66 @@ function heroWebp(jpgPath: string) {
   return heroAsset(jpgPath.replace(/\.jpg$/, ".webp"));
 }
 
+function HeroSlideImage({
+  slide,
+  index,
+  activeIndex,
+  priority,
+}: {
+  slide: (typeof heroSlides)[number];
+  index: number;
+  activeIndex: number;
+  priority: boolean;
+}) {
+  const active = index === activeIndex;
+
+  return (
+    <picture>
+      <source srcSet={heroWebp(slide.image)} type="image/webp" />
+      <img
+        src={heroAsset(slide.image)}
+        alt={active ? slide.alt : ""}
+        width={1920}
+        height={830}
+        decoding="async"
+        draggable={false}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        className="homepage-slider__photo block h-full w-full object-cover object-center"
+      />
+    </picture>
+  );
+}
+
+function HeroDots({
+  index,
+  onSelect,
+  className,
+}: {
+  index: number;
+  onSelect: (i: number) => void;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex items-center gap-2", className)} role="tablist" aria-label="Hero slides">
+      {heroSlides.map((s, i) => (
+        <button
+          key={s.id}
+          type="button"
+          role="tab"
+          aria-selected={i === index}
+          aria-label={`Slide ${i + 1}`}
+          className={cn(
+            "h-1 w-9 rounded-full transition",
+            i === index ? "bg-brand-yellow" : "bg-white/60 hover:bg-white/85",
+          )}
+          onClick={() => onSelect(i)}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function Hero() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -66,12 +126,57 @@ export function Hero() {
     setIndex((next + heroSlides.length) % heroSlides.length);
   };
 
+  const copyBlock = animateCopy ? (
+    <motion.div
+      key={`copy-${slide.id}`}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="max-w-[min(100%,52rem)] text-white"
+    >
+      <HeroCopy slide={slide} />
+    </motion.div>
+  ) : (
+    <div className="max-w-[min(100%,52rem)] text-white">
+      <HeroCopy slide={slide} />
+    </div>
+  );
+
   return (
     <section
       className="homepage-slider relative overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      <div className="homepage-slider__frame relative w-full">
+      {/* Mobile / small tablet: photo on top, copy below — no overlay crop */}
+      <div className="pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] md:hidden">
+        <div className="homepage-slider__mobile-photo relative w-full overflow-hidden bg-primary-dark">
+          {heroSlides.map((s, i) => (
+            <div
+              key={s.id}
+              className={cn(
+                "absolute inset-0 transition-opacity duration-700 ease-in-out",
+                i === index ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
+              aria-hidden={i !== index}
+            >
+              <HeroSlideImage
+                slide={s}
+                index={i}
+                activeIndex={index}
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="px-4 pb-8 pt-6">
+          {copyBlock}
+          <HeroDots index={index} onSelect={setIndex} className="mt-6" />
+        </div>
+      </div>
+
+      {/* Desktop: full-width banner with overlay copy */}
+      <div className="homepage-slider__frame relative hidden w-full md:block">
         {heroSlides.map((s, i) => (
           <div
             key={s.id}
@@ -81,56 +186,27 @@ export function Hero() {
             )}
             aria-hidden={i !== index}
           >
-            <picture>
-              <source
-                srcSet={heroWebp(s.image)}
-                type="image/webp"
-              />
-              <img
-                src={heroAsset(s.image)}
-                alt={i === index ? s.alt : ""}
-                width={1920}
-                height={830}
-                decoding="async"
-                draggable={false}
-                loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "auto"}
-                className={cn(
-                  "homepage-slider__photo absolute object-cover",
-                  "inset-x-0 top-0 h-[clamp(10.5rem,46vw,13.5rem)] w-full object-[center_35%]",
-                  "sm:inset-0 sm:h-full sm:object-center",
-                )}
-              />
-            </picture>
+            <HeroSlideImage
+              slide={s}
+              index={i}
+              activeIndex={index}
+              priority={i === 0}
+            />
           </div>
         ))}
 
         <div className="homepage-slider__overlay" aria-hidden />
 
-        <div className="homepage-slider__content absolute inset-0 flex items-end sm:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-[calc(var(--site-status-bar-height)+var(--site-header-height)+0.5rem)] sm:px-6 sm:pb-20 sm:pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] lg:px-8 lg:pb-24">
-            {animateCopy ? (
-              <motion.div
-                key={`copy-${slide.id}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-[min(100%,52rem)] text-white"
-              >
-                <HeroCopy slide={slide} />
-              </motion.div>
-            ) : (
-              <div className="max-w-[min(100%,52rem)] text-white">
-                <HeroCopy slide={slide} />
-              </div>
-            )}
+        <div className="homepage-slider__content absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-7xl px-6 pb-20 pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] lg:px-8 lg:pb-24">
+            {copyBlock}
           </div>
         </div>
 
         <button
           type="button"
           aria-label="Previous slide"
-          className="absolute left-2 top-1/2 z-[3] hidden -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring md:inline-flex lg:left-4"
+          className="absolute left-2 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring lg:left-4"
           onClick={() => go(index - 1)}
         >
           <ChevronLeft className="h-6 w-6" />
@@ -138,37 +214,20 @@ export function Hero() {
         <button
           type="button"
           aria-label="Next slide"
-          className="absolute right-2 top-1/2 z-[3] hidden -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring md:inline-flex lg:right-4"
+          className="absolute right-2 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring lg:right-4"
           onClick={() => go(index + 1)}
         >
           <ChevronRight className="h-6 w-6" />
         </button>
 
-        <div
-          className="absolute inset-x-0 bottom-5 z-[3] sm:bottom-6"
-          role="tablist"
-          aria-label="Hero slides"
-        >
-          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start gap-2">
-            {heroSlides.map((s, i) => (
-              <button
-                key={s.id}
-                type="button"
-                role="tab"
-                aria-selected={i === index}
-                aria-label={`Slide ${i + 1}`}
-                className={cn(
-                  "h-1 w-9 rounded-full transition",
-                  i === index ? "bg-brand-yellow" : "bg-white/60 hover:bg-white/85",
-                )}
-                onClick={() => setIndex(i)}
-              />
-            ))}
+        <div className="absolute inset-x-0 bottom-6 z-[3]" role="presentation">
+          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start">
+            <HeroDots index={index} onSelect={setIndex} />
           </div>
         </div>
       </div>
 
-      <div className="relative z-10 -mt-14 px-4 sm:-mt-16 sm:px-6 lg:px-8">
+      <div className="relative z-10 px-4 md:-mt-16 md:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-4">
             {heroQuickBoxes.map((box, i) => {

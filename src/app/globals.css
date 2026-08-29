@@ -342,6 +342,12 @@ html:not(.js-ready) main [style*="opacity:0"] {
   width: 100%;
 }
 
+/* Mobile: match banner photo ratio so the full width is visible without heavy zoom */
+.homepage-slider__mobile-photo {
+  aspect-ratio: 1920 / 830;
+  width: 100%;
+}
+
 .homepage-slider__photo {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -365,27 +371,9 @@ html:not(.js-ready) main [style*="opacity:0"] {
   z-index: 3;
 }
 
-@media (max-width: 768px) {
-  .homepage-slider__frame {
-    aspect-ratio: auto;
-    min-height: 26rem;
-  }
-
-  .homepage-slider__overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(14, 36, 86, 0.2) 0%,
-      rgba(14, 36, 86, 0.45) clamp(8rem, 40vw, 11rem),
-      rgba(14, 36, 86, 0.88) clamp(11rem, 52vw, 14rem),
-      rgba(22, 53, 127, 0.96) 100%
-    );
-  }
-}
-
 @media (min-width: 769px) and (max-width: 1024px) {
   .homepage-slider__frame {
     aspect-ratio: 16 / 9;
-    min-height: unset;
   }
 
   .homepage-slider__photo {
