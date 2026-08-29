@@ -17,13 +17,39 @@ function discoveryAsset(path: string) {
 const ctaItems = [
   {
     title: "About",
-    href: "/#about",
     image: "/images/discovery/discovery-about.jpg",
     color: "var(--brand-yellow)",
     textColor: "var(--primary-dark)",
     reverse: false,
     offset: "ml-0 sm:ml-3",
     from: "left" as const,
+  },
+  {
+    title: "Programs",
+    image: "/images/discovery/discovery-programs.jpg",
+    color: "var(--brand-green)",
+    textColor: "#ffffff",
+    reverse: true,
+    offset: "ml-0 sm:ml-8 lg:ml-12",
+    from: "right" as const,
+  },
+  {
+    title: "MBSNM Online",
+    image: "/images/discovery/discovery-online.jpg",
+    color: "var(--primary)",
+    textColor: "#ffffff",
+    reverse: false,
+    offset: "mr-0 sm:mr-8 lg:mr-12",
+    from: "left" as const,
+  },
+  {
+    title: "Career",
+    image: "/images/discovery/discovery-career.jpg",
+    color: "var(--brand-sky)",
+    textColor: "var(--primary-dark)",
+    reverse: true,
+    offset: "mr-0 sm:mr-8 lg:mr-12",
+    from: "right" as const,
   },
 ];
 
@@ -109,7 +135,7 @@ export function Discovery() {
               </p>
             </div>
 
-            {/* Right: About */}
+            {/* Right: About / Programs / Online / Career (visual only) */}
             <div className="flex flex-col justify-center gap-1 lg:col-span-5">
               {ctaItems.map((item, index) => (
                 <CtaPill key={item.title} item={item} index={index} />
@@ -143,37 +169,33 @@ function CtaPill({
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      <Link
-        href={item.href}
+      <div
         className={cn(
-          "group relative flex h-[88px] w-full overflow-hidden rounded-[80px] sm:h-[96px]",
+          "relative flex h-[88px] w-full overflow-hidden rounded-[80px] sm:h-[96px]",
           item.reverse && "flex-row-reverse",
         )}
-        aria-label={item.title}
       >
         {/* Full-bleed photo */}
         <span
-          className="absolute inset-0 z-0 rounded-[80px] bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]"
+          className="absolute inset-0 z-0 rounded-[80px] bg-cover bg-center"
           style={{ backgroundImage: `url('${discoveryAsset(item.image)}')` }}
           aria-hidden
         />
         <span className="absolute inset-0 z-0 rounded-[80px] bg-black/10" aria-hidden />
 
         {/* Colored label capsule — wider for longer titles */}
-        <motion.span
-          className="relative z-10 flex h-full w-[150px] min-w-[150px] items-center justify-center rounded-[80px] px-2 text-center transition-all duration-300 ease-in-out group-hover:w-[200px] group-hover:opacity-90 sm:w-[170px] sm:min-w-[170px]"
+        <span
+          className="relative z-10 flex h-full w-[150px] min-w-[150px] items-center justify-center rounded-[80px] px-2 text-center sm:w-[170px] sm:min-w-[170px]"
           style={{ backgroundColor: item.color, color: item.textColor }}
-          whileHover={{ x: item.reverse ? -6 : 6 }}
-          transition={{ type: "spring", stiffness: 260, damping: 22 }}
         >
           <span className="text-base font-medium leading-tight tracking-tight sm:text-lg">
             {item.title}
           </span>
-        </motion.span>
+        </span>
 
         {/* Spacer so the colored pill sits left/right while image shows beside it */}
         <span className="relative z-10 flex-1" aria-hidden />
-      </Link>
+      </div>
     </motion.div>
   );
 }
