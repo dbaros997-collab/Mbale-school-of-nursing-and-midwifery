@@ -1,5 +1,4 @@
-# syntax=docker/dockerfile:1.4
-# Coolify fallback when configured for Dockerfile (not compose) deployments.
-# Prefer docker-compose.yml — it pulls the GHCR image directly without a local build step.
+# Coolify production — pulls the pre-built image from GitHub Actions (GHCR).
+# Coolify passes SOURCE_COMMIT as a build arg; defaults to latest.
 ARG SOURCE_COMMIT=latest
-FROM --pull=always ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
+FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
