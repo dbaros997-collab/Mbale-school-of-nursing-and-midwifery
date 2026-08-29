@@ -4,7 +4,7 @@ import { ApplyBand } from "@/components/home/ApplyBand";
 import { Footer } from "@/components/layout/Footer";
 
 /**
- * Admin-block watermark stays fixed in the viewport.
+ * Campus aerial photo stays fixed in the viewport.
  * About + Apply + Footer (Contact Us) scroll over it.
  */
 export function CampusWallpaperBand({ children }: { children?: React.ReactNode }) {
@@ -12,7 +12,7 @@ export function CampusWallpaperBand({ children }: { children?: React.ReactNode }
     <div className="campus-wallpaper relative">
       <div className="campus-wallpaper__media" aria-hidden>
         <Image
-          src="/images/admin-block.jpg"
+          src="/images/campus-wallpaper.jpg"
           alt=""
           fill
           className="object-cover object-center"
