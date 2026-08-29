@@ -26,16 +26,6 @@ const ctaItems = [
     from: "left" as const,
   },
   {
-    title: "Programs",
-    href: "/academics",
-    image: "/images/discovery/discovery-programs.jpg",
-    color: "var(--brand-green)",
-    textColor: "#ffffff",
-    reverse: true,
-    offset: "ml-0 sm:ml-8 lg:ml-12",
-    from: "right" as const,
-  },
-  {
     title: "MBSNM Online",
     href: "/portal",
     image: "/images/discovery/discovery-online.jpg",
@@ -44,16 +34,6 @@ const ctaItems = [
     reverse: false,
     offset: "mr-0 sm:mr-8 lg:mr-12",
     from: "left" as const,
-  },
-  {
-    title: "Career",
-    href: "/admissions",
-    image: "/images/discovery/discovery-career.jpg",
-    color: "var(--brand-sky)",
-    textColor: "var(--primary-dark)",
-    reverse: true,
-    offset: "mr-0 sm:mr-8 lg:mr-12",
-    from: "right" as const,
   },
 ];
 
@@ -139,7 +119,7 @@ export function Discovery() {
               </p>
             </div>
 
-            {/* Right: About / Programs / Online / Career */}
+            {/* Right: About / MBSNM Online */}
             <div className="flex flex-col justify-center gap-1 lg:col-span-5">
               {ctaItems.map((item, index) => (
                 <CtaPill key={item.title} item={item} index={index} />

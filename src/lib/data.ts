@@ -121,42 +121,6 @@ export const mainNav = [
     },
   },
   {
-    label: "Programs",
-    href: "/academics",
-    columns: [
-      {
-        title: "Nursing",
-        links: [
-          { label: "Diploma in Nursing (Direct)", href: "/academics#diploma-nursing-direct" },
-          { label: "Diploma in Nursing (Extension)", href: "/academics#diploma-nursing-extension" },
-          { label: "Certificate in Nursing", href: "/academics#certificate-nursing" },
-        ],
-      },
-      {
-        title: "Midwifery",
-        links: [
-          { label: "Diploma in Midwifery (Direct)", href: "/academics#diploma-midwifery-direct" },
-          { label: "Diploma in Midwifery (Extension)", href: "/academics#diploma-midwifery-extension" },
-          { label: "Certificate in Midwifery", href: "/academics#certificate-midwifery" },
-        ],
-      },
-      {
-        title: "Catalogue",
-        links: [
-          { label: "All Programmes", href: "/academics" },
-          { label: "How to Apply", href: "/admissions" },
-          { label: "Entry Requirements", href: "/admissions" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "Admissions Open",
-      title: "Find the programme that fits you, then apply for the next intake.",
-      href: "/academics",
-      cta: "Explore",
-    },
-  },
-  {
     label: "MBSNM Online",
     href: "/portal",
     columns: [
@@ -184,35 +148,6 @@ export const mainNav = [
       title: "Fees, registration, and learning tools — all in one place.",
       href: "/portal",
       cta: "Open Portal",
-    },
-  },
-  {
-    label: "Career",
-    href: "/admissions",
-    columns: [
-      {
-        title: "Admissions",
-        links: [
-          { label: "How to Apply", href: "/admissions" },
-          { label: "Online Application", href: "/admissions#apply" },
-          { label: "Entry Requirements", href: "/admissions" },
-          { label: "Fees & Payments", href: "/admissions" },
-        ],
-      },
-      {
-        title: "Opportunities",
-        links: [
-          { label: "Jobs & Careers", href: "/admissions" },
-          { label: "Alumni Network", href: "/alumni" },
-          { label: "Campus News", href: "/#campus-news" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "Join MBSNM",
-      title: "Take the first step toward nursing or midwifery practice.",
-      href: "/admissions#apply",
-      cta: "Apply Now",
     },
   },
 ] as const;
