@@ -5,6 +5,13 @@ import { motion } from "framer-motion";
 import { SCHOOL } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
+const LEARNING_PILLARS_IMAGE = {
+  jpg: "/images/learning-pillars-clinical.jpg",
+  webp: "/images/learning-pillars-clinical.webp",
+  width: 960,
+  height: 1280,
+} as const;
+
 const CAMPUS_VIDEO_URL = "https://youtu.be/L0XIzMuBm5g";
 
 const pillars = [
@@ -111,14 +118,20 @@ export function LearningPillars() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="relative"
         >
-          <div className="relative aspect-[3/4] overflow-hidden rounded-3xl sm:aspect-[4/5] lg:aspect-[3/4]">
-            <Image
-              src="/images/clinical-infant-care-training.png"
-              alt="Midwifery students observing infant care practice on a training mannequin"
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+          <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-primary-dark/5 sm:aspect-[4/5] lg:aspect-[3/4]">
+            <picture>
+              <source srcSet={LEARNING_PILLARS_IMAGE.webp} type="image/webp" />
+              <img
+                src={LEARNING_PILLARS_IMAGE.jpg}
+                alt="Midwifery students observing infant care practice on a training mannequin"
+                width={LEARNING_PILLARS_IMAGE.width}
+                height={LEARNING_PILLARS_IMAGE.height}
+                decoding="async"
+                loading="lazy"
+                draggable={false}
+                className="h-full w-full object-cover object-[center_42%]"
+              />
+            </picture>
           </div>
           <div className="mt-4 flex justify-center lg:mt-5">
             <a
