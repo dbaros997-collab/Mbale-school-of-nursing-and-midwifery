@@ -1,41 +1,42 @@
 /**
- * Re-encode hero photos as high-quality 1920px-wide JPEGs for sharp full-width display.
+ * KIU-style hero assets: 1920×830 WebP (desktop) + 1280×554 WebP (mobile).
+ * Fixed banner ratio keeps photos sharp — no full-viewport stretch.
  */
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
 const heroDir = path.join(process.cwd(), "public/images/hero");
-const targetWidth = 1920;
+const DESKTOP = { width: 1920, height: 830 };
+const MOBILE = { width: 1280, height: 554 };
 
-const files = fs.readdirSync(heroDir).filter((f) => /\.(png|jpe?g)$/i.test(f));
+const sources = fs
+  .readdirSync(heroDir)
+  .filter((f) => /\.(jpe?g|webp)$/i.test(f) && !f.includes("-1280"));
 
-for (const file of files) {
+for (const file of sources) {
   const input = path.join(heroDir, file);
-  const base = file.replace(/\.(png|jpe?g)$/i, "");
-  const output = path.join(heroDir, `${base}.jpg`);
+  const base = file.replace(/\.(jpe?g|webp)$/i, "");
+  const desktopOut = path.join(heroDir, `${base}.webp`);
+  const mobileOut = path.join(heroDir, `${base}-1280.webp`);
 
-  const meta = await sharp(input).metadata();
-  const pipeline = sharp(input).rotate();
+  const pipeline = (width, height, out) =>
+    sharp(input)
+      .rotate()
+      .resize(width, height, { fit: "cover", position: "centre", kernel: sharp.kernel.lanczos3 })
+      .sharpen({ sigma: 0.6, m1: 0.45, m2: 0.25 })
+      .webp({ quality: 88, effort: 4 })
+      .toFile(out);
 
-  if ((meta.width ?? 0) < targetWidth) {
-    pipeline.resize(targetWidth, null, {
-      fit: "inside",
-      withoutEnlargement: false,
-      kernel: sharp.kernel.lanczos3,
-    });
-  }
+  await pipeline(DESKTOP.width, DESKTOP.height, desktopOut);
+  await pipeline(MOBILE.width, MOBILE.height, mobileOut);
 
-  await pipeline
-    .sharpen({ sigma: 0.8, m1: 0.5, m2: 0.3 })
-    .jpeg({ quality: 92, mozjpeg: true, chromaSubsampling: "4:4:4" })
-    .toFile(output);
+  const desktopKb = (fs.statSync(desktopOut).size / 1024).toFixed(0);
+  const mobileKb = (fs.statSync(mobileOut).size / 1024).toFixed(0);
+  console.log(`${base}.webp → ${DESKTOP.width}x${DESKTOP.height} (${desktopKb} KB)`);
+  console.log(`${base}-1280.webp → ${MOBILE.width}x${MOBILE.height} (${mobileKb} KB)`);
 
-  const outMeta = await sharp(output).metadata();
-  const kb = (fs.statSync(output).size / 1024).toFixed(0);
-  console.log(`${base}.jpg → ${outMeta.width}x${outMeta.height} (${kb} KB)`);
-
-  if (file !== `${base}.jpg`) {
+  if (!file.endsWith(".webp")) {
     fs.unlinkSync(input);
   }
 }

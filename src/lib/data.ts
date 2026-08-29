@@ -231,7 +231,7 @@ export const quickLinks = [
 export const heroSlides = [
   {
     id: "1",
-    image: "/images/hero/hero-campus-aerial-wide.jpg",
+    image: "/images/hero/hero-campus-aerial-wide.webp",
     title: "We train the real health professionals",
     description:
       "Certificate and Diploma programmes in nursing and midwifery. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
@@ -243,7 +243,7 @@ export const heroSlides = [
   },
   {
     id: "2",
-    image: "/images/hero/hero-campus-mountains.jpg",
+    image: "/images/hero/hero-campus-mountains.webp",
     title: "A campus built for learning",
     description:
       "Modern teaching blocks, skills labs, and open grounds — set against the hills of Eastern Uganda.",
@@ -255,7 +255,7 @@ export const heroSlides = [
   },
   {
     id: "3",
-    image: "/images/hero/hero-campus-building.jpg",
+    image: "/images/hero/hero-campus-building.webp",
     title: "Learning that leads to real work",
     description:
       "You will spend time in skills labs and on hospital wards — not just in class. That is how we prepare you for the work ahead.",
@@ -267,7 +267,7 @@ export const heroSlides = [
   },
   {
     id: "4",
-    image: "/images/hero/hero-students-celebration.jpg",
+    image: "/images/hero/hero-students-celebration.webp",
     title: "Celebrating every milestone",
     description:
       "Our graduates step out with confidence — trained to serve communities across Eastern Uganda and beyond.",
@@ -279,7 +279,7 @@ export const heroSlides = [
   },
   {
     id: "5",
-    image: "/images/hero/hero-clinical-training.jpg",
+    image: "/images/hero/hero-clinical-training.webp",
     title: "Hands-on from the start",
     description:
       "Classroom teaching and clinical placements at Mbale Referral Hospital and partner sites. You practise skills where care actually happens.",

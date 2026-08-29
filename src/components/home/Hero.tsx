@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -29,19 +28,31 @@ const quickIconStyles = [
   "accent-chip-gold",
 ] as const;
 
+/** KIU-style srcset: mobile + desktop WebP at fixed banner ratio. */
+function heroSrcSet(src: string) {
+  const mobile = src.replace(/\.webp$/, "-1280.webp");
+  return `${mobile} 1280w, ${src} 1920w`;
+}
+
 export function Hero() {
   const [index, setIndex] = useState(0);
-  const [ready, setReady] = useState(false);
   const reduceMotion = useReducedMotion();
   const slide = heroSlides[index];
-  const animateSlides = ready && !reduceMotion;
+  const animateCopy = !reduceMotion;
 
   useEffect(() => {
-    setReady(true);
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % heroSlides.length);
     }, 6500);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    for (const s of heroSlides) {
+      const img = new window.Image();
+      img.src = s.image;
+      img.srcset = heroSrcSet(s.image);
+    }
   }, []);
 
   const go = (next: number) => {
@@ -53,50 +64,33 @@ export function Hero() {
       className="homepage-slider relative overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      <div className="relative min-h-[calc(100svh-var(--site-status-bar-height))] w-full sm:min-h-[calc(100svh-var(--site-status-bar-height)-2rem)] lg:min-h-[38rem]">
-        {animateSlides ? (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slide.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.45 }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={slide.image}
-                alt={slide.alt}
-                fill
-                priority={index === 0}
-                unoptimized
-                className="object-cover object-center"
-                sizes="100vw"
-              />
-            </motion.div>
-          </AnimatePresence>
-        ) : (
-          <div className="absolute inset-0">
-            <Image
-              src={heroSlides[0].image}
-              alt={heroSlides[0].alt}
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          </div>
-        )}
+      <div className="homepage-slider__frame relative w-full">
+        {heroSlides.map((s, i) => (
+          <img
+            key={s.id}
+            src={s.image}
+            srcSet={heroSrcSet(s.image)}
+            sizes="100vw"
+            alt={i === index ? s.alt : ""}
+            aria-hidden={i !== index}
+            width={1920}
+            height={830}
+            decoding="async"
+            draggable={false}
+            fetchPriority={i === 0 ? "high" : "auto"}
+            loading={i === 0 ? "eager" : "lazy"}
+            className={cn(
+              "homepage-slider__photo absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-in-out",
+              i === index ? "opacity-100" : "opacity-0",
+            )}
+          />
+        ))}
 
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/40 via-black/15 to-transparent"
-        />
+        <div className="homepage-slider__overlay" aria-hidden />
 
-        <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
-            {animateSlides ? (
+        <div className="homepage-slider__content absolute inset-0 flex items-end sm:items-center">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
+            {animateCopy ? (
               <motion.div
                 key={`copy-${slide.id}`}
                 initial={{ opacity: 0, y: 16 }}
@@ -108,7 +102,7 @@ export function Hero() {
               </motion.div>
             ) : (
               <div className="max-w-[min(100%,52rem)] text-white">
-                <HeroCopy slide={heroSlides[0]} />
+                <HeroCopy slide={slide} />
               </div>
             )}
           </div>
@@ -136,7 +130,7 @@ export function Hero() {
           role="tablist"
           aria-label="Hero slides"
         >
-          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start gap-2.5">
+          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start gap-2">
             {heroSlides.map((s, i) => (
               <button
                 key={s.id}
@@ -145,10 +139,8 @@ export function Hero() {
                 aria-selected={i === index}
                 aria-label={`Slide ${i + 1}`}
                 className={cn(
-                  "h-2.5 w-2.5 rounded-full transition",
-                  i === index
-                    ? "scale-110 bg-brand-yellow"
-                    : "bg-white/60 hover:bg-white/85",
+                  "h-1 w-9 rounded-full transition",
+                  i === index ? "bg-brand-yellow" : "bg-white/60 hover:bg-white/85",
                 )}
                 onClick={() => setIndex(i)}
               />
@@ -168,7 +160,8 @@ export function Hero() {
                   href={box.href}
                   className={cn(
                     "flex items-start gap-3.5 px-5 py-5 transition hover:bg-surface focus-ring sm:gap-4 sm:px-6 sm:py-6",
-                    i < heroQuickBoxes.length - 1 && "border-b border-border sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:[&:nth-child(4)]:border-r-0",
+                    i < heroQuickBoxes.length - 1 &&
+                      "border-b border-border sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:[&:nth-child(4)]:border-r-0",
                   )}
                 >
                   <span

@@ -329,6 +329,50 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
+/* KIU-style homepage hero slider — fixed 1920/830 ratio for sharp banner photos */
+.homepage-slider {
+  position: relative;
+  overflow: hidden;
+  background: var(--primary-dark);
+}
+
+.homepage-slider__frame {
+  position: relative;
+  aspect-ratio: 1920 / 830;
+  width: 100%;
+}
+
+.homepage-slider__photo {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.homepage-slider__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(14, 36, 86, 0.94) 0%,
+    rgba(22, 53, 127, 0.8) 42%,
+    rgba(22, 53, 127, 0.14) 62%,
+    rgba(22, 53, 127, 0.08) 100%
+  );
+}
+
+.homepage-slider__content {
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .homepage-slider__frame {
+    aspect-ratio: 4 / 5;
+    min-height: 32rem;
+  }
+}
+
 /* Sky hero section */
 .hero-sky {
   background: linear-gradient(
