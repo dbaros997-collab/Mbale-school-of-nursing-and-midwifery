@@ -12,6 +12,26 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for GHCR image
+        env:
+          SHA: ${{ github.event.workflow_run.head_sha }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          token="$(curl -fsS "https://ghcr.io/token?service=ghcr.io&scope=repository:${OWNER}/mbale-school:pull" | jq -r .token)"
+          for attempt in $(seq 1 18); do
+            status="$(curl -s -o /dev/null -w '%{http_code}' \
+              -H "Authorization: Bearer ${token}" \
+              "https://ghcr.io/v2/${OWNER}/mbale-school/manifests/${SHA}")"
+            if [ "${status}" = "200" ]; then
+              echo "GHCR image ready: ghcr.io/${OWNER}/mbale-school:${SHA}"
+              exit 0
+            fi
+            echo "Waiting for GHCR image (${attempt}/18, HTTP ${status})..."
+            sleep 10
+          done
+          echo "::error::Timed out waiting for ghcr.io/${OWNER}/mbale-school:${SHA}"
+          exit 1
+
       - name: Trigger Coolify redeploy
         env:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}

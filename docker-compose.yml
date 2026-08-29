@@ -1,12 +1,8 @@
-# Production — Coolify pulls pre-built GHCR image (root Dockerfile).
+# Production — Coolify pulls the pre-built GHCR image (no build on the VPS).
 services:
   abale-school:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      pull_policy: always
-      args:
-        SOURCE_COMMIT: ${SOURCE_COMMIT:-latest}
+    image: ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT:-latest}
+    pull_policy: always
     ports:
       - "3000:3000"
     environment:
