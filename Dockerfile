@@ -1,6 +1,5 @@
-# Coolify production — pulls the pre-built image from GitHub Actions.
-# No `next build` on the VPS (avoids out-of-memory failures on small servers).
-#
-# GitHub Actions builds with Dockerfile.build and pushes to GHCR.
-# Redeploy Coolify after Actions finishes so :latest includes your commit.
-FROM ghcr.io/dbaros997-collab/mbale-school:latest
+# Coolify production — pulls the pre-built image from GitHub Actions (GHCR).
+# SOURCE_COMMIT must match the git SHA (Coolify sets this automatically).
+# Using :latest alone can serve a stale cached image on the VPS.
+ARG SOURCE_COMMIT=latest
+FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}

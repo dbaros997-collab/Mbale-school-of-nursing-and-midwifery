@@ -28,6 +28,18 @@ const quickIconStyles = [
   "accent-chip-gold",
 ] as const;
 
+/** Bust CDN/browser cache when a new build deploys. */
+const HERO_ASSET_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v2";
+
+function heroAsset(path: string) {
+  return `${path}?v=${HERO_ASSET_VERSION}`;
+}
+
+function heroWebp(jpgPath: string) {
+  return heroAsset(jpgPath.replace(/\.jpg$/, ".webp"));
+}
+
 export function Hero() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -46,7 +58,7 @@ export function Hero() {
       const img = new window.Image();
       img.src = heroWebp(s.image);
       const fallback = new window.Image();
-      fallback.src = s.image;
+      fallback.src = heroAsset(s.image);
     }
   }, []);
 
@@ -75,7 +87,7 @@ export function Hero() {
                 type="image/webp"
               />
               <img
-                src={s.image}
+                src={heroAsset(s.image)}
                 alt={i === index ? s.alt : ""}
                 width={1920}
                 height={830}
@@ -191,10 +203,6 @@ export function Hero() {
       </div>
     </section>
   );
-}
-
-function heroWebp(jpgPath: string) {
-  return jpgPath.replace(/\.jpg$/, ".webp");
 }
 
 function HeroCopy({
