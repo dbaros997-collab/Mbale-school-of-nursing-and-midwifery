@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 # Coolify builds this Dockerfile from your git commit — always ships the code you pushed.
 # Expect ~5–6 min on deploy (next build). GitHub Actions uses the same file for GHCR backups.
 RUN apk add --no-cache libc6-compat ca-certificates
