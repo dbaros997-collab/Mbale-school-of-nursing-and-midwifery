@@ -113,10 +113,10 @@ export function LearningPillars() {
         >
           <div className="relative aspect-[3/4] overflow-hidden rounded-3xl sm:aspect-[4/5] lg:aspect-[3/4]">
             <Image
-              src="/images/graduates.jpg"
-              alt="Students and graduates at Mbale School of Nursing and Midwifery"
+              src="/images/clinical-infant-care-training.png"
+              alt="Midwifery students observing infant care practice on a training mannequin"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
