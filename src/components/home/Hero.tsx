@@ -148,7 +148,7 @@ export function Hero() {
       aria-label="Homepage hero"
     >
       {/* Mobile / small tablet: photo on top, copy below — no overlay crop */}
-      <div className="pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] md:hidden">
+      <div className="md:hidden">
         <div className="homepage-slider__mobile-photo relative w-full overflow-hidden bg-primary-dark">
           {heroSlides.map((s, i) => (
             <div
