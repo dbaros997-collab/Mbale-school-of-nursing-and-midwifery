@@ -46,3 +46,4 @@ jobs:
           curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
             ${COOLIFY_TOKEN:+ -H "Authorization: Bearer ${COOLIFY_TOKEN}"}
           echo "Coolify redeploy triggered for ${SHA}"
+          echo "Expect /api/health build=${SHA} after deploy completes."

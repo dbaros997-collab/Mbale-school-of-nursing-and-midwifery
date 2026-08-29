@@ -1,4 +1,7 @@
-# Coolify production — pulls the pre-built image from GitHub Actions (GHCR).
-# Coolify passes SOURCE_COMMIT as a build arg; defaults to latest.
+# Coolify — pull the pre-built GHCR image (built by GitHub Actions on every push to main).
+# Always use :latest so Coolify never serves a stale commit-tagged cache on the VPS.
 ARG SOURCE_COMMIT=latest
-FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
+FROM ghcr.io/dbaros997-collab/mbale-school:latest
+ARG SOURCE_COMMIT
+# Changing layer busts Docker cache so Coolify recreates the container each deploy.
+RUN echo "deploy-${SOURCE_COMMIT}" > /tmp/.deploy-marker

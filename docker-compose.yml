@@ -1,7 +1,7 @@
 # Production — Coolify pulls the pre-built GHCR image (no build on the VPS).
 services:
   abale-school:
-    image: ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT:-latest}
+    image: ghcr.io/dbaros997-collab/mbale-school:latest
     pull_policy: always
     ports:
       - "3000:3000"
