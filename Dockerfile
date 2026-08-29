@@ -1,5 +1,5 @@
+# syntax=docker/dockerfile:1.4
 # Coolify production — pulls the pre-built image from GitHub Actions (GHCR).
-# SOURCE_COMMIT must match the git SHA (Coolify sets this automatically).
-# Using :latest alone can serve a stale cached image on the VPS.
+# --pull=always prevents the VPS from serving a stale cached :latest layer.
 ARG SOURCE_COMMIT=latest
-FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
+FROM --pull=always ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}

@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      pull_policy: always
       args:
         SOURCE_COMMIT: ${SOURCE_COMMIT:-latest}
     ports:
