@@ -7,11 +7,18 @@ import { motion } from "framer-motion";
 import { discoveryRoles, discoveryTopics } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
+const DISCOVERY_ASSET_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "discovery-v1";
+
+function discoveryAsset(path: string) {
+  return `${path}?v=${DISCOVERY_ASSET_VERSION}`;
+}
+
 const ctaItems = [
   {
     title: "About",
     href: "/#about",
-    image: "/images/admin-block.jpg",
+    image: "/images/discovery/discovery-about.jpg",
     color: "var(--brand-yellow)",
     textColor: "var(--primary-dark)",
     reverse: false,
@@ -21,7 +28,7 @@ const ctaItems = [
   {
     title: "Programs",
     href: "/academics",
-    image: "/images/graduates.jpg",
+    image: "/images/discovery/discovery-programs.jpg",
     color: "var(--brand-green)",
     textColor: "#ffffff",
     reverse: true,
@@ -31,7 +38,7 @@ const ctaItems = [
   {
     title: "MBSNM Online",
     href: "/portal",
-    image: "/images/computer-lab.jpg",
+    image: "/images/discovery/discovery-online.jpg",
     color: "var(--primary)",
     textColor: "#ffffff",
     reverse: false,
@@ -41,7 +48,7 @@ const ctaItems = [
   {
     title: "Career",
     href: "/admissions",
-    image: "/images/front-offices.jpg",
+    image: "/images/discovery/discovery-career.jpg",
     color: "var(--brand-sky)",
     textColor: "var(--primary-dark)",
     reverse: true,
@@ -177,7 +184,7 @@ function CtaPill({
         {/* Full-bleed photo */}
         <span
           className="absolute inset-0 z-0 rounded-[80px] bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]"
-          style={{ backgroundImage: `url('${item.image}')` }}
+          style={{ backgroundImage: `url('${discoveryAsset(item.image)}')` }}
           aria-hidden
         />
         <span className="absolute inset-0 z-0 rounded-[80px] bg-black/10" aria-hidden />
