@@ -95,7 +95,11 @@ export function Hero() {
                 draggable={false}
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : "auto"}
-                className="homepage-slider__photo absolute inset-0 h-full w-full object-cover object-center"
+                className={cn(
+                  "homepage-slider__photo absolute object-cover",
+                  "inset-x-0 top-0 h-[clamp(10.5rem,46vw,13.5rem)] w-full object-[center_35%]",
+                  "sm:inset-0 sm:h-full sm:object-center",
+                )}
               />
             </picture>
           </div>
@@ -104,7 +108,7 @@ export function Hero() {
         <div className="homepage-slider__overlay" aria-hidden />
 
         <div className="homepage-slider__content absolute inset-0 flex items-end sm:items-center">
-          <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-[calc(var(--site-status-bar-height)+var(--site-header-height)+0.5rem)] sm:px-6 sm:pb-20 sm:pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] lg:px-8 lg:pb-24">
             {animateCopy ? (
               <motion.div
                 key={`copy-${slide.id}`}

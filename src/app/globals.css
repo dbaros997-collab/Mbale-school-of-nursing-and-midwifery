@@ -367,8 +367,29 @@ html:not(.js-ready) main [style*="opacity:0"] {
 
 @media (max-width: 768px) {
   .homepage-slider__frame {
-    aspect-ratio: 4 / 5;
-    min-height: 32rem;
+    aspect-ratio: auto;
+    min-height: 26rem;
+  }
+
+  .homepage-slider__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(14, 36, 86, 0.2) 0%,
+      rgba(14, 36, 86, 0.45) clamp(8rem, 40vw, 11rem),
+      rgba(14, 36, 86, 0.88) clamp(11rem, 52vw, 14rem),
+      rgba(22, 53, 127, 0.96) 100%
+    );
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .homepage-slider__frame {
+    aspect-ratio: 16 / 9;
+    min-height: unset;
+  }
+
+  .homepage-slider__photo {
+    object-position: center 30%;
   }
 }
 
