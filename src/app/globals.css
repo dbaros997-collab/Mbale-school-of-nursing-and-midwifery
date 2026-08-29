@@ -699,6 +699,16 @@ html:not(.js-ready) main [style*="opacity:0"] {
 }
 
 /* Site-wide scrolling status bar */
+.site-status-bar--glass {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
 @keyframes site-status-marquee {
   from {
     transform: translateX(0);
