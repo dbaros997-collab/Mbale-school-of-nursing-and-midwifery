@@ -71,7 +71,7 @@ export function Hero() {
                 priority={index === 0}
                 className="object-cover object-center"
                 sizes="100vw"
-                quality={85}
+                quality={92}
               />
             </motion.div>
           </AnimatePresence>
@@ -84,14 +84,14 @@ export function Hero() {
               priority
               className="object-cover object-center"
               sizes="100vw"
-              quality={85}
+              quality={92}
             />
           </div>
         )}
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/65 via-black/25 to-black/5"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/55 via-black/20 to-transparent"
         />
 
         <div className="absolute inset-0 z-[2] flex items-end pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] sm:items-center">

@@ -231,7 +231,7 @@ export const quickLinks = [
 export const heroSlides = [
   {
     id: "1",
-    image: "/images/graduation-march.jpg",
+    image: "/images/hero/hero-campus-aerial-wide.png",
     title: "We train the real health professionals",
     description:
       "Certificate and Diploma programmes in nursing and midwifery. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
@@ -239,11 +239,23 @@ export const heroSlides = [
     href: "/admissions",
     secondaryCta: "Student Portal",
     secondaryHref: "/portal",
-    alt: "Graduating students marching in Mbale town",
+    alt: "Aerial view of Mbale School of Nursing and Midwifery campus surrounded by green landscape",
   },
   {
     id: "2",
-    image: "/images/graduates.jpg",
+    image: "/images/hero/hero-campus-mountains.png",
+    title: "A campus built for learning",
+    description:
+      "Modern teaching blocks, skills labs, and open grounds — set against the hills of Eastern Uganda.",
+    cta: "Apply Now",
+    href: "/admissions",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
+    alt: "Campus buildings with mountain backdrop at MBSNM",
+  },
+  {
+    id: "3",
+    image: "/images/hero/hero-campus-building.png",
     title: "Learning that leads to real work",
     description:
       "You will spend time in skills labs and on hospital wards — not just in class. That is how we prepare you for the work ahead.",
@@ -251,11 +263,23 @@ export const heroSlides = [
     href: "/admissions",
     secondaryCta: "View Programmes",
     secondaryHref: "/academics",
-    alt: "Graduating class of Mbale School of Nursing and Midwifery",
+    alt: "Main administration and teaching block at MBSNM campus",
   },
   {
-    id: "3",
-    image: "/images/front-offices.jpg",
+    id: "4",
+    image: "/images/hero/hero-students-celebration.png",
+    title: "Celebrating every milestone",
+    description:
+      "Our graduates step out with confidence — trained to serve communities across Eastern Uganda and beyond.",
+    cta: "Apply Now",
+    href: "/admissions",
+    secondaryCta: "View Programmes",
+    secondaryHref: "/academics",
+    alt: "Nursing and midwifery students celebrating on campus",
+  },
+  {
+    id: "5",
+    image: "/images/hero/hero-clinical-training.png",
     title: "Hands-on from the start",
     description:
       "Classroom teaching and clinical placements at Mbale Referral Hospital and partner sites. You practise skills where care actually happens.",
@@ -263,19 +287,7 @@ export const heroSlides = [
     href: "/admissions",
     secondaryCta: "View Programmes",
     secondaryHref: "/academics",
-    alt: "Front offices and campus facilities at MBSNM",
-  },
-  {
-    id: "4",
-    image: "/images/admin-block.jpg",
-    title: "In God We Love and Serve",
-    description:
-      "We are a Christian school. We train nurses and midwives to care for people with skill, integrity, and compassion.",
-    cta: "Apply Now",
-    href: "/admissions",
-    secondaryCta: "View Programmes",
-    secondaryHref: "/academics",
-    alt: "Administration block and campus facilities",
+    alt: "Students practising clinical skills in the skills laboratory",
   },
 ] as const;
 
