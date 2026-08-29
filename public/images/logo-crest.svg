@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 28 172 178" role="img" aria-label="Mbale School of Nursing and Midwifery crest">
+  <defs>
+    <linearGradient id="sunGlow" x1="100" y1="52" x2="100" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5C842"/>
+      <stop offset="100%" stop-color="#E8A317"/>
+    </linearGradient>
+    <clipPath id="crestInner">
+      <circle cx="100" cy="96" r="60"/>
+    </clipPath>
+    <path id="crestTopArc" d="M 36 96 A 64 64 0 0 1 164 96" fill="none"/>
+    <path id="crestBottomArc" d="M 164 134 A 64 64 0 0 1 36 134" fill="none"/>
+  </defs>
+  <g id="crest">
+    <circle cx="100" cy="116" r="86" fill="#B5D9E5" stroke="#16357F" stroke-width="2"/>
+    <circle cx="100" cy="96" r="64" fill="#FFFFFF" stroke="#16357F" stroke-width="1.5"/>
+    <text fill="#10212B" font-family="Georgia, serif" font-size="14" font-weight="700" letter-spacing="0.35">
+      <textPath href="#crestTopArc" startOffset="50%" text-anchor="middle">Mbale School of Nursing</textPath>
+    </text>
+    <text fill="#10212B" font-family="Georgia, serif" font-size="14" font-weight="700" letter-spacing="0.35">
+      <textPath href="#crestBottomArc" startOffset="50%" text-anchor="middle">And Midwifery</textPath>
+    </text>
+    <g clip-path="url(#crestInner)">
+      <rect x="40" y="36" width="120" height="50" fill="#F4FAFB"/>
+      <g stroke="#E8A317" stroke-width="2.2" stroke-linecap="round">
+        <line x1="100" y1="40" x2="100" y2="47"/>
+        <line x1="84" y1="44" x2="88" y2="49"/>
+        <line x1="116" y1="44" x2="112" y2="49"/>
+        <line x1="72" y1="54" x2="77" y2="56"/>
+        <line x1="128" y1="54" x2="123" y2="56"/>
+      </g>
+      <circle cx="100" cy="60" r="11" fill="url(#sunGlow)"/>
+      <path d="M40 86 C58 68, 78 66, 100 72 C122 66, 142 68, 160 86 L160 96 L40 96 Z" fill="#198F34"/>
+      <path d="M40 96 H160 M100 86 V156" stroke="#198F34" stroke-width="2.2"/>
+      <rect x="40" y="96" width="120" height="60" fill="#FFFFFF"/>
+      <g transform="translate(52 106)">
+        <path d="M8 28 C18 8, 34 6, 42 18 C48 12, 56 14, 58 22 C62 20, 66 24, 64 30 C68 34, 64 40, 56 38 C52 44, 42 46, 32 40 C22 46, 10 40, 6 32 C2 28, 4 24, 8 28 Z" fill="#8B5E3C"/>
+        <path d="M14 30 C22 24, 32 24, 40 30" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M44 18 L52 14 L48 22 Z" fill="#C8922A"/>
+      </g>
+      <g transform="translate(118 102)">
+        <circle cx="18" cy="18" r="10" fill="#D4A574"/>
+        <path d="M8 10 H28 C30 10, 31 12, 31 14 V18 H5 V14 C5 12, 6 10, 8 10 Z" fill="#FFFFFF" stroke="#198F34" stroke-width="1"/>
+        <rect x="10" y="18" width="16" height="3" fill="#FFFFFF"/>
+        <path d="M6 28 C10 22, 14 20, 18 20 C22 20, 26 22, 30 28 V46 H6 Z" fill="#198F34"/>
+        <rect x="8" y="30" width="20" height="4" fill="#FFFFFF"/>
+      </g>
+    </g>
+    <path d="M26 174 C44 166, 72 162, 100 162 C128 162, 156 166, 174 174 C156 182, 128 186, 100 186 C72 186, 44 182, 26 174 Z" fill="#16357F" stroke="#0E2456" stroke-width="1"/>
+    <text x="100" y="179" text-anchor="middle" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="0.55">With GOD We Love and Serve</text>
+  </g>
+</svg>

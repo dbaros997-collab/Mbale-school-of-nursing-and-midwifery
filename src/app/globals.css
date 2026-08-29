@@ -342,17 +342,7 @@ html:not(.js-ready) main [style*="opacity:0"] {
   width: 100%;
 }
 
-.homepage-slider__photo-bg {
-  transform: scale(1.08);
-  filter: blur(20px) saturate(1.08) brightness(0.72);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.homepage-slider__photo-sharp {
-  object-fit: contain;
-  object-position: center center;
-  image-rendering: auto;
+.homepage-slider__photo {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }

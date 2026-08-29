@@ -8,10 +8,10 @@ type SchoolLogoProps = {
 };
 
 const LOCKUP = {
-  /** Official crest emblem — circular badge with motto banner. */
-  src: "/images/logo-lockup.png",
-  width: 714,
-  height: 622,
+  /** Official crest emblem — vector for crisp rendering at any size. */
+  src: "/images/logo-crest.svg",
+  width: 172,
+  height: 178,
 } as const;
 
 /** Baked at build time — busts browser cache when a new image deploys. */

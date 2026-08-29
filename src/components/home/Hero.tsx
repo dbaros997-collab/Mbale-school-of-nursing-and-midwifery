@@ -43,10 +43,10 @@ export function Hero() {
 
   useEffect(() => {
     for (const s of heroSlides) {
-      const sharp = new window.Image();
-      sharp.src = s.imageSharp;
-      const bg = new window.Image();
-      bg.src = s.image;
+      const img = new window.Image();
+      img.src = heroWebp(s.image);
+      const fallback = new window.Image();
+      fallback.src = s.image;
     }
   }, []);
 
@@ -69,28 +69,23 @@ export function Hero() {
             )}
             aria-hidden={i !== index}
           >
-            <img
-              src={s.image}
-              alt=""
-              width={1920}
-              height={830}
-              decoding="async"
-              draggable={false}
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              className="homepage-slider__photo-bg absolute inset-0 h-full w-full object-cover object-center"
-            />
-            <img
-              src={s.imageSharp}
-              alt={i === index ? s.alt : ""}
-              width={1024}
-              height={443}
-              decoding="async"
-              draggable={false}
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              className="homepage-slider__photo-sharp absolute inset-0 z-[1] h-full w-full"
-            />
+            <picture>
+              <source
+                srcSet={heroWebp(s.image)}
+                type="image/webp"
+              />
+              <img
+                src={s.image}
+                alt={i === index ? s.alt : ""}
+                width={1920}
+                height={830}
+                decoding="async"
+                draggable={false}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                className="homepage-slider__photo absolute inset-0 h-full w-full object-cover object-center"
+              />
+            </picture>
           </div>
         ))}
 
@@ -196,6 +191,10 @@ export function Hero() {
       </div>
     </section>
   );
+}
+
+function heroWebp(jpgPath: string) {
+  return jpgPath.replace(/\.jpg$/, ".webp");
 }
 
 function HeroCopy({
