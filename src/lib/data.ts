@@ -120,6 +120,42 @@ export const mainNav = [
       cta: "Explore",
     },
   },
+  {
+    label: "Programs",
+    href: "/academics",
+    columns: [
+      {
+        title: "Nursing",
+        links: [
+          { label: "Diploma in Nursing (Direct)", href: "/academics#diploma-nursing-direct" },
+          { label: "Diploma in Nursing (Extension)", href: "/academics#diploma-nursing-extension" },
+          { label: "Certificate in Nursing", href: "/academics#certificate-nursing" },
+        ],
+      },
+      {
+        title: "Midwifery",
+        links: [
+          { label: "Diploma in Midwifery (Direct)", href: "/academics#diploma-midwifery-direct" },
+          { label: "Diploma in Midwifery (Extension)", href: "/academics#diploma-midwifery-extension" },
+          { label: "Certificate in Midwifery", href: "/academics#certificate-midwifery" },
+        ],
+      },
+      {
+        title: "Catalogue",
+        links: [
+          { label: "All Programmes", href: "/academics" },
+          { label: "How to Apply", href: "/admissions" },
+          { label: "Entry Requirements", href: "/admissions" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Admissions Open",
+      title: "Find the programme that fits you, then apply for the next intake.",
+      href: "/academics",
+      cta: "Explore",
+    },
+  },
 ] as const;
 
 export const quickLinks = [
