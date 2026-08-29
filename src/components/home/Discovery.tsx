@@ -25,16 +25,6 @@ const ctaItems = [
     offset: "ml-0 sm:ml-3",
     from: "left" as const,
   },
-  {
-    title: "MBSNM Online",
-    href: "/portal",
-    image: "/images/discovery/discovery-online.jpg",
-    color: "var(--primary)",
-    textColor: "#ffffff",
-    reverse: false,
-    offset: "mr-0 sm:mr-8 lg:mr-12",
-    from: "left" as const,
-  },
 ];
 
 export function Discovery() {
@@ -119,7 +109,7 @@ export function Discovery() {
               </p>
             </div>
 
-            {/* Right: About / MBSNM Online */}
+            {/* Right: About */}
             <div className="flex flex-col justify-center gap-1 lg:col-span-5">
               {ctaItems.map((item, index) => (
                 <CtaPill key={item.title} item={item} index={index} />

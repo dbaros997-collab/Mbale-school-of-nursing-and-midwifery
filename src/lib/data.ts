@@ -120,36 +120,6 @@ export const mainNav = [
       cta: "Explore",
     },
   },
-  {
-    label: "MBSNM Online",
-    href: "/portal",
-    columns: [
-      {
-        title: "Learning",
-        links: [
-          { label: "Student Portal", href: "/portal" },
-          { label: "LMS Hub", href: "/portal/lms" },
-          { label: "Timetable", href: "/portal/timetable" },
-        ],
-      },
-      {
-        title: "Student Services",
-        links: [
-          { label: "Registration", href: "/portal/registration" },
-          { label: "Fees & Payments", href: "/portal/fees" },
-          { label: "Documents", href: "/portal/documents" },
-          { label: "Notices", href: "/portal/notices" },
-          { label: "Gulu University Portal", href: "/university-portal" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "e-Learning",
-      title: "Fees, registration, and learning tools — all in one place.",
-      href: "/portal",
-      cta: "Open Portal",
-    },
-  },
 ] as const;
 
 export const quickLinks = [
