@@ -342,10 +342,15 @@ html:not(.js-ready) main [style*="opacity:0"] {
   width: 100%;
 }
 
-/* Mobile: match banner photo ratio so the full width is visible without heavy zoom */
+/* Mobile: taller photo band — visible scene without heavy zoom */
 .homepage-slider__mobile-photo {
-  aspect-ratio: 1920 / 830;
   width: 100%;
+  height: clamp(15rem, 60vw, 19rem);
+}
+
+.homepage-slider__mobile-photo .homepage-slider__photo {
+  object-fit: cover;
+  object-position: center 38%;
 }
 
 .homepage-slider__photo {
