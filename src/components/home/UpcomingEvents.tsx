@@ -73,7 +73,7 @@ export function UpcomingEvents() {
                 >
                   <Image
                     src={lead.image}
-                    alt=""
+                    alt="MBSNM staff team in front of the campus building"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 40vw"
