@@ -39,6 +39,11 @@ const nextConfig: NextConfig = {
         destination: "/images/logo-lockup.png",
         permanent: false,
       },
+      {
+        source: "/images/clinical-infant-care-training.png",
+        destination: "/images/learning-pillars-clinical.jpg",
+        permanent: false,
+      },
     ];
   },
 };

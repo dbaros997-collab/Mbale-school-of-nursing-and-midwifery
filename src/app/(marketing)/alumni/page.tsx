@@ -55,7 +55,7 @@ export default function AlumniPage() {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border">
               <Image
-                src="/images/graduates.jpg"
+                src="/images/graduates-celebration.jpg"
                 alt="MBSNM graduates"
                 fill
                 className="object-cover"

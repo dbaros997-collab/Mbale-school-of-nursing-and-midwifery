@@ -12,6 +12,14 @@ const LEARNING_PILLARS_IMAGE = {
   height: 1280,
 } as const;
 
+/** Bust browser cache when a new build deploys. */
+const PILLARS_ASSET_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "pillars-clinical-v1";
+
+function pillarsAsset(path: string) {
+  return `${path}?v=${PILLARS_ASSET_VERSION}`;
+}
+
 const CAMPUS_VIDEO_URL = "https://youtu.be/L0XIzMuBm5g";
 
 const pillars = [
@@ -120,9 +128,9 @@ export function LearningPillars() {
         >
           <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-primary-dark/5 sm:aspect-[4/5] lg:aspect-[3/4]">
             <picture>
-              <source srcSet={LEARNING_PILLARS_IMAGE.webp} type="image/webp" />
+              <source srcSet={pillarsAsset(LEARNING_PILLARS_IMAGE.webp)} type="image/webp" />
               <img
-                src={LEARNING_PILLARS_IMAGE.jpg}
+                src={pillarsAsset(LEARNING_PILLARS_IMAGE.jpg)}
                 alt="Midwifery students observing infant care practice on a training mannequin"
                 width={LEARNING_PILLARS_IMAGE.width}
                 height={LEARNING_PILLARS_IMAGE.height}
@@ -152,7 +160,7 @@ export function LearningPillars() {
                 </span>
               </span>
               <span className="play-text">
-                A Glimpse of {SCHOOL.shortName}: Campus &amp; Graduation
+                A Glimpse of {SCHOOL.shortName}: Campus &amp; Clinical Training
               </span>
             </a>
           </div>
