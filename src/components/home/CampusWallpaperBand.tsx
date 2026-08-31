@@ -3,7 +3,7 @@ import { ApplyBand } from "@/components/home/ApplyBand";
 import { Footer } from "@/components/layout/Footer";
 
 /** Static path — served directly from /public (no Next.js image optimizer cache). */
-const FOOTER_WALLPAPER = "/images/footer-campus-building.jpg";
+const FOOTER_WALLPAPER = "/images/footer-campus-wide.jpg";
 
 /**
  * Campus aerial photo stays fixed in the viewport.
