@@ -666,25 +666,13 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
-/* Navy mist over the photo — no blur, keeps nurses sharp */
-.footer-fog-overlay {
-  background: linear-gradient(
-    180deg,
-    rgba(14, 36, 86, 0.18) 0%,
-    rgba(14, 36, 86, 0.48) 55%,
-    rgba(14, 36, 86, 0.65) 100%
-  );
-}
-
-.footer-on-photo {
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
-}
-
-/* Apply band panels — readable without washing out the photo */
+/* Frosted glass panels — matches the Follow Us / Newsletters see-through look */
 .wallpaper-glass {
-  background: rgba(14, 36, 86, 0.68);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
@@ -760,6 +748,153 @@ html:not(.js-ready) main [style*="opacity:0"] {
     max-width: 100%;
     padding-inline: 0.75rem;
     gap: 0.5rem 1rem;
+  }
+}
+
+/* School gallery slider — Grace High–style auto-advancing carousel */
+.gallery-slider {
+  position: relative;
+  overflow: hidden;
+  background: var(--primary-dark);
+}
+
+.gallery-slider--section {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 260px;
+  max-height: 620px;
+  border-radius: 1rem;
+  box-shadow: 0 18px 48px rgba(14, 36, 86, 0.14);
+}
+
+.gallery-slider__viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.gallery-slider__track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.gallery-slider__track.is-animating {
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.gallery-slider__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  filter: saturate(1.06) contrast(1.03) brightness(1.02);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.gallery-slider__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gallery-slider__overlay > * {
+  pointer-events: auto;
+}
+
+.gallery-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  background: rgba(14, 36, 86, 0.4);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.gallery-slider__arrow:hover {
+  background: rgba(14, 36, 86, 0.7);
+  border-color: var(--brand-yellow);
+}
+
+.gallery-slider__arrow:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.gallery-slider__arrow--prev {
+  left: clamp(10px, 2.5vw, 28px);
+}
+
+.gallery-slider__arrow--next {
+  right: clamp(10px, 2.5vw, 28px);
+}
+
+.gallery-slider__dots {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 3vw, 28px);
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.gallery-slider__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.2s, transform 0.2s, width 0.2s;
+}
+
+.gallery-slider__dot.is-active {
+  background: var(--brand-yellow);
+  width: 22px;
+  border-radius: 999px;
+}
+
+.gallery-slider__dot:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 768px) {
+  .gallery-slider__arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gallery-slider__dots {
+    bottom: 12px;
+  }
+
+  .gallery-slider--section {
+    aspect-ratio: 4 / 3;
+    min-height: 220px;
+    border-radius: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-slider__track.is-animating {
+    transition: none !important;
   }
 }
 

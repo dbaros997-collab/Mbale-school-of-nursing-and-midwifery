@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { openIntakesLabel, SCHOOL } from "@/lib/data";
-import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
 
 /** YouTube video from the ENTRY REQUIREMENTS area on mbsnm.org/services/ */
 const CAMPUS_VIDEO_ID = "L0XIzMuBm5g";
+
+const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg?v=hq";
 
 /**
  * UCU-style Apply for Admission — campus photo with navy overlay, two columns.
@@ -12,20 +13,13 @@ export function ApplyBand() {
   return (
     <section
       id="apply-admission"
-      className="relative scroll-mt-24 overflow-hidden"
+      className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
       aria-labelledby="apply-band-heading"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={FOOTER_SECTION_BG}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover object-[center_42%]"
-        aria-hidden
-        decoding="async"
-      />
-      <div className="footer-fog-overlay absolute inset-0" aria-hidden />
-      <div className="relative z-10 mx-auto grid max-w-[1290px] gap-4 px-3 py-12 sm:px-4 sm:py-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-6 lg:py-16">
-        <div className="wallpaper-glass flex flex-col justify-center rounded-xl px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
+      <div className="absolute inset-0 bg-primary/72" aria-hidden />
+      <div className="relative z-10 mx-auto grid max-w-[1290px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">
             Apply for Admission
           </p>
@@ -49,7 +43,7 @@ export function ApplyBand() {
           </div>
         </div>
 
-        <div className="wallpaper-glass flex flex-col justify-center rounded-xl px-6 py-10 sm:px-8 lg:px-10 lg:py-16">
+        <div className="flex flex-col justify-center border-t border-white/15 px-6 py-10 sm:border-t-0 sm:border-l sm:px-8 lg:px-10 lg:py-16">
           <h3 className="font-display text-[23px] font-black leading-none text-white sm:text-2xl">
             <a
               href={`https://youtu.be/${CAMPUS_VIDEO_ID}`}
