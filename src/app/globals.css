@@ -666,20 +666,25 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
-/* Light tint only — keeps the background photo sharp */
+/* Navy mist over the photo — no blur, keeps nurses sharp */
 .footer-fog-overlay {
   background: linear-gradient(
     180deg,
-    rgba(14, 36, 86, 0.08) 0%,
-    rgba(14, 36, 86, 0.22) 100%
+    rgba(14, 36, 86, 0.18) 0%,
+    rgba(14, 36, 86, 0.48) 55%,
+    rgba(14, 36, 86, 0.65) 100%
   );
 }
 
-/* Readable text panels without blurring the photo behind */
+.footer-on-photo {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Apply band panels — readable without washing out the photo */
 .wallpaper-glass {
-  background: rgba(14, 36, 86, 0.62);
+  background: rgba(14, 36, 86, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 767px) {
