@@ -106,9 +106,9 @@ export function Footer() {
           <div className="lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/logo-lockup-on-dark.svg"
+              src="/images/footer-school-logo.png"
               alt={SCHOOL.name}
-              className="h-auto w-full max-w-[220px]"
+              className="h-auto w-full max-w-[200px] rounded-lg"
               decoding="async"
             />
             <ul className="mt-6 space-y-2 text-sm leading-relaxed text-white/85">
