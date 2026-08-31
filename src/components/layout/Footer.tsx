@@ -108,7 +108,7 @@ export function Footer() {
           style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-primary/72" aria-hidden />
+        <div className="footer-fog-overlay absolute inset-0" aria-hidden />
 
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
@@ -166,7 +166,7 @@ export function Footer() {
           <FooterLinkCol title="Our Campus" links={campusLinks} />
         </div>
 
-        <div className="relative z-10 border-t border-white/20">
+        <div className="relative z-10 border-t border-white/25 bg-white/5 backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-sm text-white/70 sm:flex-row sm:px-8">
             <p>
               Copyright ©{new Date().getFullYear()} {SCHOOL.name}. All rights reserved.

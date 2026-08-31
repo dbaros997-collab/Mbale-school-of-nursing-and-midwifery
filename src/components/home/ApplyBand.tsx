@@ -15,9 +15,9 @@ export function ApplyBand() {
       style={{ backgroundImage: "url('/images/footer-section-bg.jpg?v=hq')" }}
       aria-labelledby="apply-band-heading"
     >
-      <div className="absolute inset-0 bg-primary/72" aria-hidden />
-      <div className="relative z-10 mx-auto grid max-w-[1290px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-        <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
+      <div className="footer-fog-overlay absolute inset-0" aria-hidden />
+      <div className="relative z-10 mx-auto grid max-w-[1290px] gap-4 px-3 sm:px-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-6">
+        <div className="wallpaper-glass flex flex-col justify-center rounded-xl px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">
             Apply for Admission
           </p>
@@ -41,7 +41,7 @@ export function ApplyBand() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center border-t border-white/15 px-6 py-10 sm:border-t-0 sm:border-l sm:px-8 lg:px-10 lg:py-16">
+        <div className="wallpaper-glass flex flex-col justify-center rounded-xl px-6 py-10 sm:px-8 lg:px-10 lg:py-16">
           <h3 className="font-display text-[23px] font-black leading-none text-white sm:text-2xl">
             <a
               href={`https://youtu.be/${CAMPUS_VIDEO_ID}`}

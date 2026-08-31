@@ -666,6 +666,17 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
+/* Foggy see-through overlay on footer / apply background photos */
+.footer-fog-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(22, 53, 127, 0.22) 0%,
+    rgba(14, 36, 86, 0.38) 100%
+  );
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+}
+
 /* Frosted glass panels — matches the Follow Us / Newsletters see-through look */
 .wallpaper-glass {
   background: rgba(255, 255, 255, 0.1);
