@@ -13,13 +13,10 @@ export function CampusWallpaperBand({ children }: { children?: React.ReactNode }
   return (
     <div className="campus-wallpaper relative">
       <div
-        className="campus-wallpaper__media bg-cover bg-center bg-no-repeat brightness-[1.03] contrast-[1.04] saturate-[1.06]"
+        className="campus-wallpaper__media bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('${FOOTER_WALLPAPER}')` }}
         aria-hidden
-      >
-        {/* Light bottom fade only — keeps footer text readable without washing out the photo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-55% via-black/10 via-75% to-black/35" />
-      </div>
+      />
 
       <div className="relative z-10">
         {children ?? (

@@ -6,7 +6,7 @@ export function AboutBand() {
   return (
     <section id="about" className="scroll-mt-24 py-14 text-white sm:py-16">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-        <div className="rounded-2xl border border-white/20 bg-black/35 p-6 shadow-2xl backdrop-blur-[3px] sm:p-8">
+        <div className="rounded-2xl border border-white/20 bg-black/20 p-6 shadow-2xl backdrop-blur-[2px] sm:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emphasis-gold">About MBSNM</p>
           <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Our story</h2>
           <p className="mt-4 leading-body text-white/90">{SCHOOL.aboutStory}</p>
