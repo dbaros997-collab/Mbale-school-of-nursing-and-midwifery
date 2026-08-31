@@ -60,7 +60,7 @@ function FooterLinkCol({
   );
 }
 
-const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg";
+const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg?v=hq";
 
 /** UCU-style lower section: yellow subscribe bar + navy four-column footer. */
 export function Footer() {
