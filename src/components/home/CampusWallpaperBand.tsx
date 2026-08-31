@@ -17,7 +17,7 @@ export function CampusWallpaperBand({ children }: { children?: React.ReactNode }
         style={{ backgroundImage: `url('${FOOTER_WALLPAPER}')` }}
         aria-hidden
       >
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(14,36,86,0.38),rgba(22,53,127,0.22))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(14,36,86,0.04)_0%,rgba(14,36,86,0.12)_45%,rgba(22,53,127,0.28)_100%)]" />
       </div>
 
       <div className="relative z-10">
