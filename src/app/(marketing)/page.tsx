@@ -5,7 +5,9 @@ import { CampusNews } from "@/components/home/CampusNews";
 import { UpcomingEvents } from "@/components/home/UpcomingEvents";
 import { SpotlightGrid } from "@/components/home/SpotlightGrid";
 import { VisionMission } from "@/components/home/VisionMission";
-import { CampusWallpaperBand } from "@/components/home/CampusWallpaperBand";
+import { AboutBand } from "@/components/home/AboutBand";
+import { ApplyBand } from "@/components/home/ApplyBand";
+import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function HomePage() {
@@ -22,7 +24,9 @@ export default function HomePage() {
       <UpcomingEvents />
       <SpotlightGrid />
       <VisionMission />
-      <CampusWallpaperBand />
+      <AboutBand />
+      <ApplyBand />
+      <Footer />
     </>
   );
 }

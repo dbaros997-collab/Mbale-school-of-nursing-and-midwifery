@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 export function AboutBand() {
   return (
-    <section id="about" className="scroll-mt-24 py-14 text-white sm:py-16">
+    <section id="about" className="scroll-mt-24 bg-primary-dark py-14 text-white sm:py-16">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-        <div className="wallpaper-glass rounded-2xl p-6 sm:p-8">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emphasis-gold">About MBSNM</p>
           <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Our story</h2>
           <p className="mt-4 leading-body text-white/90">{SCHOOL.aboutStory}</p>
