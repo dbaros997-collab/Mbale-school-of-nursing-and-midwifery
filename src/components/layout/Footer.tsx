@@ -108,7 +108,7 @@ export function Footer() {
             <img
               src="/images/footer-school-logo.png"
               alt={SCHOOL.name}
-              className="h-auto w-full max-w-[200px] rounded-lg"
+              className="h-auto w-[130px] max-w-[130px] rounded-lg sm:w-[150px] sm:max-w-[150px]"
               decoding="async"
             />
             <ul className="mt-6 space-y-2 text-sm leading-relaxed text-white/85">
