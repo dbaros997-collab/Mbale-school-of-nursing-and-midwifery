@@ -666,13 +666,11 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
-/* Frosted glass panels on Apply / footer content */
+/* Semi-transparent panels — tint only, keeps campus photo sharp behind */
 .wallpaper-glass {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
-  backdrop-filter: blur(8px) saturate(1.1);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  background: rgba(14, 36, 86, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 767px) {
