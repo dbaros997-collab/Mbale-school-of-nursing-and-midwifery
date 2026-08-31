@@ -656,14 +656,25 @@ html:not(.js-ready) main [style*="opacity:0"] {
 }
 
 .campus-wallpaper__media {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Frosted glass panels — matches the Follow Us / Newsletters see-through look */
+.wallpaper-glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
-  /* iOS often mishandles fixed layers — fall back to a static cover */
   .campus-wallpaper__media {
     position: absolute;
   }

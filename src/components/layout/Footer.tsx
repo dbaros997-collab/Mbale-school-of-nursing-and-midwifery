@@ -70,7 +70,7 @@ export function Footer({ onWallpaper = false }: FooterProps) {
           <div
             className={cn(
               "rounded-xl p-5 sm:p-6",
-              onWallpaper ? "border border-white/20 bg-black/20 backdrop-blur-[2px]" : "bg-primary-dark/65",
+              onWallpaper ? "wallpaper-glass" : "bg-primary-dark/65",
             )}
             role="region"
             aria-label="Newsletters"
@@ -135,7 +135,12 @@ export function Footer({ onWallpaper = false }: FooterProps) {
             </div>
           </div>
 
-          <div className="min-w-0">
+          <div
+            className={cn(
+              "min-w-0",
+              onWallpaper && "wallpaper-glass rounded-xl p-5 sm:p-6",
+            )}
+          >
             <h3 className="text-xl font-bold sm:text-2xl">Contact Us</h3>
 
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -184,7 +189,7 @@ export function Footer({ onWallpaper = false }: FooterProps) {
       <div
         className={cn(
           "border-t border-white/15",
-          onWallpaper ? "bg-black/20" : "bg-black/25",
+          onWallpaper ? "wallpaper-glass" : "bg-black/25",
         )}
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-sm text-white/75 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
