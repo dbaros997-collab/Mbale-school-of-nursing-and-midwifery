@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { openIntakesLabel, SCHOOL } from "@/lib/data";
-import { footerSectionBackgroundImage } from "@/lib/footer-section-bg";
+import { footerSectionPhoto } from "@/lib/footer-section-bg";
 
 /** YouTube video from the ENTRY REQUIREMENTS area on mbsnm.org/services/ */
 const CAMPUS_VIDEO_ID = "L0XIzMuBm5g";
@@ -13,9 +13,10 @@ export function ApplyBand() {
     <section
       id="apply-admission"
       className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: footerSectionBackgroundImage() }}
+      style={{ backgroundImage: footerSectionPhoto() }}
       aria-labelledby="apply-band-heading"
     >
+      <div className="footer-fog-overlay absolute inset-0" aria-hidden />
       <div className="relative z-10 mx-auto grid max-w-[1290px] gap-4 px-3 sm:px-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-6">
         <div className="wallpaper-glass flex flex-col justify-center rounded-xl px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">
