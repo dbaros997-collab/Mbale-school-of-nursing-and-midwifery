@@ -552,6 +552,81 @@ export const events = [
   },
 ] as const;
 
+export const galleryItems = [
+  {
+    id: "staff",
+    src: "/images/events-staff.png?v=nurses3",
+    alt: "MBSNM nursing and midwifery staff in uniform",
+    caption: "Our nursing and midwifery team",
+    category: "People",
+    featured: true,
+  },
+  {
+    id: "aerial",
+    src: "/images/footer-aerial-valley-hq.jpg",
+    alt: "Aerial view of MBSNM campus in Mbale",
+    caption: "Campus from above",
+    category: "Campus",
+    featured: true,
+  },
+  {
+    id: "graduation",
+    src: "/images/graduates-celebration.jpg",
+    alt: "Graduates celebrating at MBSNM",
+    caption: "Graduation celebrations",
+    category: "Graduation",
+  },
+  {
+    id: "clinical",
+    src: "/images/hero/hero-clinical-training.jpg",
+    alt: "Students in clinical training",
+    caption: "Clinical training in practice",
+    category: "Training",
+  },
+  {
+    id: "ward",
+    src: "/images/hero/hero-hospital-ward.jpg",
+    alt: "Hospital ward placement",
+    caption: "Hospital ward placements",
+    category: "Training",
+  },
+  {
+    id: "skills-lab",
+    src: "/images/learning-pillars-clinical.jpg",
+    alt: "Skills laboratory on campus",
+    caption: "Skills laboratory",
+    category: "Facilities",
+  },
+  {
+    id: "students",
+    src: "/images/hero/raw/students-celebration.jpg",
+    alt: "Students celebrating on campus",
+    caption: "Student life at MBSNM",
+    category: "Life",
+  },
+  {
+    id: "building",
+    src: "/images/footer-campus-building.jpg",
+    alt: "MBSNM campus building",
+    caption: "Teaching blocks",
+    category: "Campus",
+  },
+  {
+    id: "discovery",
+    src: "/images/discovery/discovery-about.jpg",
+    alt: "Students learning on campus",
+    caption: "Learning community",
+    category: "Life",
+  },
+  {
+    id: "graduates",
+    src: "/images/graduates.jpg",
+    alt: "MBSNM graduates in uniform",
+    caption: "Proud graduates",
+    category: "Graduation",
+  },
+] as const;
+
 export const spotlightArticles = [
   {
     id: "1",

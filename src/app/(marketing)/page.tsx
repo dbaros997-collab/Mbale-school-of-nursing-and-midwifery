@@ -3,6 +3,7 @@ import { Discovery } from "@/components/home/Discovery";
 import { LearningPillars } from "@/components/home/LearningPillars";
 import { CampusNews } from "@/components/home/CampusNews";
 import { UpcomingEvents } from "@/components/home/UpcomingEvents";
+import { SchoolGallery } from "@/components/home/SchoolGallery";
 import { SpotlightGrid } from "@/components/home/SpotlightGrid";
 import { VisionMission } from "@/components/home/VisionMission";
 import { AboutBand } from "@/components/home/AboutBand";
@@ -23,6 +24,7 @@ export default function HomePage() {
       <AboutBand />
       <CampusNews />
       <UpcomingEvents />
+      <SchoolGallery />
       <SpotlightGrid />
       <VisionMission />
       <ApplyBand />

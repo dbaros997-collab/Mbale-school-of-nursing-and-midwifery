@@ -20,6 +20,7 @@ const quickLinks = [
   { label: "Gulu University Portal", href: "/university-portal" },
   { label: "News & Events", href: "/#events" },
   { label: "Campus News", href: "/#campus-news" },
+  { label: "School Gallery", href: "/#gallery" },
   { label: "LMS Hub", href: "/portal/lms" },
   { label: "Contact", href: "/contact" },
   { label: "Staff", href: "/portal" },
@@ -31,6 +32,7 @@ const campusLinks = [
   { label: "Clinical Training", href: "/contact" },
   { label: "Alumni", href: "/alumni" },
   { label: "Campus Life", href: "/#about" },
+  { label: "School Gallery", href: "/#gallery" },
   { label: "Careers", href: "/admissions" },
   { label: "Emergency Numbers", href: "/contact" },
 ];
