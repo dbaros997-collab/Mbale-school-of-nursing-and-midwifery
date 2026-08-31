@@ -60,6 +60,8 @@ function FooterLinkCol({
   );
 }
 
+const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg";
+
 /** UCU-style lower section: yellow subscribe bar + navy four-column footer. */
 export function Footer() {
   return (
@@ -100,8 +102,15 @@ export function Footer() {
         </div>
       </div>
 
-      <footer className="relative bg-primary pt-16 text-white sm:pt-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
+      <footer className="relative overflow-hidden pt-16 text-white sm:pt-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-primary/88" aria-hidden />
+
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
           <div className="lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -157,7 +166,7 @@ export function Footer() {
           <FooterLinkCol title="Our Campus" links={campusLinks} />
         </div>
 
-        <div className="border-t border-white/20">
+        <div className="relative z-10 border-t border-white/20">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-sm text-white/70 sm:flex-row sm:px-8">
             <p>
               Copyright ©{new Date().getFullYear()} {SCHOOL.name}. All rights reserved.

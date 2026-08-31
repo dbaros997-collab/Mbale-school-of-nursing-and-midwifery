@@ -12,7 +12,7 @@ export function ApplyBand() {
     <section
       id="apply-admission"
       className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/footer-campus-building.jpg')" }}
+      style={{ backgroundImage: "url('/images/footer-section-bg.jpg')" }}
       aria-labelledby="apply-band-heading"
     >
       <div className="absolute inset-0 bg-primary/88" aria-hidden />
