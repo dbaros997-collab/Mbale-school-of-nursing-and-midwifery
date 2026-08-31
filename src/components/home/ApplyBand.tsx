@@ -15,7 +15,7 @@ export function ApplyBand() {
       style={{ backgroundImage: "url('/images/footer-section-bg.jpg')" }}
       aria-labelledby="apply-band-heading"
     >
-      <div className="absolute inset-0 bg-primary/88" aria-hidden />
+      <div className="absolute inset-0 bg-primary/72" aria-hidden />
       <div className="relative z-10 mx-auto grid max-w-[1290px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">

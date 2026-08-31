@@ -108,7 +108,7 @@ export function Footer() {
           style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-primary/88" aria-hidden />
+        <div className="absolute inset-0 bg-primary/72" aria-hidden />
 
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
