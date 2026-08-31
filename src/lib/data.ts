@@ -516,7 +516,7 @@ export const events = [
     date: "2026-06-15",
     location: "Main Hall, MBSNM Campus",
     mode: "Physical",
-    image: "/images/events-staff.jpg",
+    image: "/images/events-staff.png?v=nurses2",
   },
   {
     id: "1b",

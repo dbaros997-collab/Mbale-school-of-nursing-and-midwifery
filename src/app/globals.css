@@ -666,25 +666,23 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
-/* Soft fog layer over footer / apply campus photo */
+/* Soft fog — nurses photo stays visible behind Apply + footer */
 .footer-fog-overlay {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(22, 53, 127, 0.34) 50%,
-    rgba(14, 36, 86, 0.52) 100%
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(22, 53, 127, 0.2) 50%,
+    rgba(14, 36, 86, 0.34) 100%
   );
-  -webkit-backdrop-filter: blur(10px) saturate(1.08);
-  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(3px) saturate(1.05);
+  backdrop-filter: blur(3px) saturate(1.05);
 }
 
-/* Frosted panels — light mist on content boxes */
+/* Frosted panels — lighter so background photo shows through gaps */
 .wallpaper-glass {
-  background: rgba(255, 255, 255, 0.11);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  -webkit-backdrop-filter: blur(6px) saturate(1.05);
-  backdrop-filter: blur(6px) saturate(1.05);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14);
+  background: rgba(14, 36, 86, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 767px) {

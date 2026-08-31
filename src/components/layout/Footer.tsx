@@ -104,7 +104,7 @@ export function Footer() {
 
       <footer className="relative overflow-hidden pt-16 text-white sm:pt-20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-[center_35%] bg-no-repeat"
           style={{ backgroundImage: footerSectionPhoto() }}
           aria-hidden
         />

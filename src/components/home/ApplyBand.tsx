@@ -12,7 +12,7 @@ export function ApplyBand() {
   return (
     <section
       id="apply-admission"
-      className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
+      className="relative scroll-mt-24 bg-cover bg-[center_35%] bg-no-repeat"
       style={{ backgroundImage: footerSectionPhoto() }}
       aria-labelledby="apply-band-heading"
     >
