@@ -13,7 +13,7 @@ export function CampusWallpaperBand({ children }: { children?: React.ReactNode }
   return (
     <div className="campus-wallpaper relative">
       <div
-        className="campus-wallpaper__media bg-cover bg-center bg-no-repeat"
+        className="campus-wallpaper__media"
         style={{ backgroundImage: `url('${FOOTER_WALLPAPER}')` }}
         aria-hidden
       />

@@ -657,11 +657,12 @@ html:not(.js-ready) main [style*="opacity:0"] {
 
 .campus-wallpaper__media {
   position: absolute;
-  inset: 0;
+  /* Expand layer so cover shows a wider view — photo feels less zoomed in */
+  inset: -14%;
   z-index: 0;
   pointer-events: none;
   background-size: cover;
-  background-position: center;
+  background-position: center 42%;
   background-repeat: no-repeat;
 }
 
