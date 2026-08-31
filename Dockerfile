@@ -1,2 +1,4 @@
-# Coolify — pull the pre-built GHCR image (GitHub Actions pushes :latest on every main commit).
-FROM ghcr.io/dbaros997-collab/mbale-school:latest
+# Coolify — pull the GHCR image built by GitHub Actions for this exact commit.
+# SOURCE_COMMIT is injected by Coolify on git deploy (matches the :SHA tag on GHCR).
+ARG SOURCE_COMMIT=latest
+FROM ghcr.io/dbaros997-collab/mbale-school:${SOURCE_COMMIT}
