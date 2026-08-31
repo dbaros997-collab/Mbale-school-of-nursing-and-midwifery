@@ -17,7 +17,7 @@ export function ApplyBand() {
     >
       <div className="relative z-10 mx-auto grid max-w-[1290px] px-3 sm:px-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-6">
         {/* Left column — semi-transparent panel */}
-        <div className="flex flex-col justify-center bg-primary/70 px-6 py-12 backdrop-blur-sm sm:px-10 sm:py-14 lg:px-12 lg:py-16">
+        <div className="flex flex-col justify-center bg-primary/45 px-6 py-12 backdrop-blur-[2px] sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">
             Apply for Admission
           </p>
@@ -42,7 +42,7 @@ export function ApplyBand() {
         </div>
 
         {/* Right column — video panel */}
-        <div className="mt-3 flex flex-col justify-center bg-primary-dark/75 px-6 py-10 backdrop-blur-sm sm:mt-0 sm:px-8 lg:px-10 lg:py-16">
+        <div className="mt-3 flex flex-col justify-center bg-primary-dark/50 px-6 py-10 backdrop-blur-[2px] sm:mt-0 sm:px-8 lg:px-10 lg:py-16">
           <h3 className="font-display text-[23px] font-black leading-none text-white sm:text-2xl">
             <a
               href={`https://youtu.be/${CAMPUS_VIDEO_ID}`}

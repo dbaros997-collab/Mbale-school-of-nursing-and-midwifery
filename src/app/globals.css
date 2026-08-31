@@ -650,7 +650,7 @@ html:not(.js-ready) main [style*="opacity:0"] {
 /* Campus watermark band — clips a fixed photo so it stays put while content scrolls */
 .campus-wallpaper {
   position: relative;
-  background-color: var(--primary-dark);
+  background-color: #1a3a2a;
   /* Clips the fixed media to this section only */
   clip-path: inset(0);
 }

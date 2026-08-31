@@ -70,7 +70,7 @@ export function Footer({ onWallpaper = false }: FooterProps) {
           <div
             className={cn(
               "rounded-xl p-5 sm:p-6",
-              onWallpaper ? "border border-white/15 bg-black/25 backdrop-blur-[2px]" : "bg-primary-dark/65",
+              onWallpaper ? "border border-white/20 bg-black/20 backdrop-blur-[2px]" : "bg-primary-dark/65",
             )}
             role="region"
             aria-label="Newsletters"
