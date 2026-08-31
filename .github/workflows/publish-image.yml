@@ -12,11 +12,12 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
   build:
+    if: ${{ !contains(github.event.head_commit.message, '[pin-coolify]') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,6 +45,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/mbale-school:${{ steps.tags.outputs.short_sha }}
           build-args: |
+            SOURCE_COMMIT=${{ github.sha }}
             NEXT_PUBLIC_AZURE_CLIENT_ID=${{ vars.NEXT_PUBLIC_AZURE_CLIENT_ID }}
             NEXT_PUBLIC_AZURE_TENANT_ID=${{ vars.NEXT_PUBLIC_AZURE_TENANT_ID }}
             NEXT_PUBLIC_AZURE_REDIRECT_URI=${{ vars.NEXT_PUBLIC_AZURE_REDIRECT_URI }}
@@ -69,6 +71,20 @@ jobs:
               -d '{"visibility":"public"}' && break
           done
 
+      - name: Pin Coolify Dockerfile to this image
+        run: |
+          cat > Dockerfile <<EOF
+          # Auto-pinned to the GHCR image built by GitHub Actions for this commit.
+          # GitHub Actions updates this line after every successful "Publish Docker image" run.
+          FROM ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Dockerfile
+          git diff --staged --quiet && exit 0
+          git commit -m "Pin Coolify image to ${{ github.sha }} [pin-coolify]"
+          git push
+
       - name: Trigger Coolify redeploy
         if: success()
         continue-on-error: true
@@ -77,12 +93,8 @@ jobs:
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
         run: |
           echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}"
-          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:latest"
           if [ -z "$COOLIFY_WEBHOOK" ]; then
-            echo ""
-            echo "COOLIFY_WEBHOOK not set."
-            echo "After this workflow finishes, redeploy commit ${{ github.sha }} in Coolify"
-            echo "so it pulls ghcr.io/.../mbale-school:${{ github.sha }} (not a cached :latest)."
+            echo "COOLIFY_WEBHOOK not set — Coolify will deploy from the pinned Dockerfile push."
             exit 0
           fi
           curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
