@@ -20,11 +20,11 @@ export default function HomePage() {
       <ScrollReveal direction="left">
         <LearningPillars />
       </ScrollReveal>
+      <AboutBand />
       <CampusNews />
       <UpcomingEvents />
       <SpotlightGrid />
       <VisionMission />
-      <AboutBand />
       <ApplyBand />
       <Footer />
     </>

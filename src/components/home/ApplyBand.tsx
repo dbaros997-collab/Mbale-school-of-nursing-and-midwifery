@@ -5,18 +5,19 @@ import { openIntakesLabel, SCHOOL } from "@/lib/data";
 const CAMPUS_VIDEO_ID = "L0XIzMuBm5g";
 
 /**
- * UCU-style Apply for Admission content.
- * Renders on the shared campus watermark (no own background) so it moves with it.
+ * UCU-style Apply for Admission — campus photo with navy overlay, two columns.
  */
 export function ApplyBand() {
   return (
     <section
       id="apply-admission"
-      className="relative scroll-mt-24 bg-primary py-10 sm:py-12 lg:py-14"
+      className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/images/footer-campus-building.jpg')" }}
       aria-labelledby="apply-band-heading"
     >
-      <div className="relative z-10 mx-auto grid max-w-[1290px] px-3 sm:px-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-6">
-        <div className="flex flex-col justify-center bg-primary-dark/80 px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
+      <div className="absolute inset-0 bg-primary/88" aria-hidden />
+      <div className="relative z-10 mx-auto grid max-w-[1290px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
           <p className="font-sans text-[13px] font-medium uppercase tracking-[0.25em] text-brand-sky sm:text-sm md:text-[23px] md:tracking-[0.2em]">
             Apply for Admission
           </p>
@@ -40,7 +41,7 @@ export function ApplyBand() {
           </div>
         </div>
 
-        <div className="mt-3 flex flex-col justify-center bg-primary-dark px-6 py-10 sm:mt-0 sm:px-8 lg:px-10 lg:py-16">
+        <div className="flex flex-col justify-center border-t border-white/15 px-6 py-10 sm:border-t-0 sm:border-l sm:px-8 lg:px-10 lg:py-16">
           <h3 className="font-display text-[23px] font-black leading-none text-white sm:text-2xl">
             <a
               href={`https://youtu.be/${CAMPUS_VIDEO_ID}`}

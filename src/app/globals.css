@@ -686,6 +686,12 @@ html:not(.js-ready) main [style*="opacity:0"] {
   }
 }
 
+/* UCU-style subscribe bar above footer */
+.ucu-subscribe-bar {
+  background-color: var(--brand-yellow);
+  box-shadow: 0 8px 24px rgba(14, 36, 86, 0.18);
+}
+
 /* KIU-style footer: deep navy field + soft dotted texture */
 .kiu-footer {
   background-color: var(--primary-dark);

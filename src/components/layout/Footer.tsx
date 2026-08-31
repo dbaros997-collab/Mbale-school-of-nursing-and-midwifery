@@ -3,135 +3,170 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
-import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
 
-function YouTubeIcon({ className }: { className?: string }) {
+const academicsLinks = [
+  { label: "Why MBSNM", href: "/#about" },
+  { label: "Certificate Programmes", href: "/academics#certificate-nursing" },
+  { label: "Diploma Programmes", href: "/academics" },
+  { label: "Admission Requirements", href: "/admissions" },
+  { label: "How to Apply", href: "/admissions#apply" },
+  { label: "Fees & Payments", href: "/admissions" },
+  { label: "List of all Programmes", href: "/academics" },
+];
+
+const quickLinks = [
+  { label: "Student Portal", href: "/portal/dashboard" },
+  { label: "Gulu University Portal", href: "/university-portal" },
+  { label: "News & Events", href: "/#events" },
+  { label: "Campus News", href: "/#campus-news" },
+  { label: "LMS Hub", href: "/portal/lms" },
+  { label: "Contact", href: "/contact" },
+  { label: "Staff", href: "/portal" },
+];
+
+const campusLinks = [
+  { label: "About MBSNM", href: "/#about" },
+  { label: "Vision & Mission", href: "/#vision-mission" },
+  { label: "Clinical Training", href: "/contact" },
+  { label: "Alumni", href: "/alumni" },
+  { label: "Campus Life", href: "/#about" },
+  { label: "Careers", href: "/admissions" },
+  { label: "Emergency Numbers", href: "/contact" },
+];
+
+function FooterLinkCol({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+}) {
   return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden fill="currentColor">
-      <path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.58A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.84.58 9.38.58 9.38.58s7.54 0 9.38-.58a3 3 0 0 0 2.12-2.12A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" />
-    </svg>
+    <div>
+      <h4 className="text-base font-bold text-white">{title}</h4>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              className="text-sm text-white/80 transition hover:text-white hover:underline"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
-const socials = [
-  { label: "YouTube", href: SCHOOL.youtube, Icon: YouTubeIcon },
-  {
-    label: "WhatsApp",
-    href: schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`),
-    Icon: WhatsAppIcon,
-  },
-];
-
-/** ISBAT-style solid black footer: logo + socials | contact | campus. */
+/** UCU-style lower section: yellow subscribe bar + navy four-column footer. */
 export function Footer() {
   return (
-    <footer className="relative mt-auto bg-black text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 sm:px-8 lg:grid-cols-3 lg:gap-12 lg:py-14">
-        {/* Brand */}
-        <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/logo-lockup-on-dark.svg"
-            alt={SCHOOL.name}
-            className="h-auto w-full max-w-[280px]"
-            decoding="async"
-          />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
-            {SCHOOL.registration} {SCHOOL.motto}.
-          </p>
-          <ul className="mt-6 flex flex-wrap items-center gap-4">
-            {socials.map(({ label, href, Icon }) => (
-              <li key={label}>
+    <div className="relative mt-auto">
+      {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
+      <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="ucu-subscribe-bar flex flex-col gap-5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-10 sm:py-9">
+          <h2 className="font-display text-2xl font-bold leading-tight text-brand-ink sm:text-[1.75rem]">
+            Subscribe to get more information
+          </h2>
+          <form
+            className="w-full sm:max-w-md"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <label
+              htmlFor="footer-subscribe-email"
+              className="block text-sm font-semibold text-brand-ink"
+            >
+              Email
+            </label>
+            <div className="mt-1.5 flex overflow-hidden rounded-sm border border-primary/30 bg-white shadow-sm">
+              <input
+                id="footer-subscribe-email"
+                type="email"
+                name="email"
+                required
+                placeholder="Enter your email"
+                className="min-w-0 flex-1 border-0 px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+              />
+              <button
+                type="submit"
+                className="shrink-0 border-l border-primary/30 bg-brand-yellow px-5 py-2.5 text-sm font-bold text-brand-ink transition hover:bg-brand-yellow-dark focus-ring"
+              >
+                Subscribe
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer className="relative bg-primary pt-16 text-white sm:pt-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
+          {/* Brand + contact — UCU column 1 */}
+          <div className="lg:col-span-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-lockup-on-dark.svg"
+              alt={SCHOOL.name}
+              className="h-auto w-full max-w-[220px]"
+              decoding="async"
+            />
+            <ul className="mt-6 space-y-2 text-sm leading-relaxed text-white/85">
+              <li>{SCHOOL.address}</li>
+              <li>{SCHOOL.postal}</li>
+              <li>
+                Telephone:{" "}
                 <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="inline-flex text-white/80 transition hover:text-white focus-ring"
+                  href={`tel:${SCHOOL.phone.replace(/\s/g, "")}`}
+                  className="hover:text-brand-sky hover:underline"
                 >
-                  <Icon className="h-5 w-5" />
+                  {SCHOOL.phone}
                 </a>
               </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-sm text-white/55">
-            <Link href="/contact" className="underline underline-offset-2 hover:text-white">
+              <li>
+                Email Us:{" "}
+                <a href={`mailto:${SCHOOL.email}`} className="hover:text-brand-sky hover:underline">
+                  {SCHOOL.email}
+                </a>
+                {" / "}
+                <a
+                  href={`mailto:${SCHOOL.admissionsEmail}`}
+                  className="hover:text-brand-sky hover:underline"
+                >
+                  {SCHOOL.admissionsEmail}
+                </a>
+              </li>
+              <li>
+                WhatsApp:{" "}
+                <a
+                  href={schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`)}
+                  className="hover:text-brand-sky hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {SCHOOL.whatsapp}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <FooterLinkCol title="Academics" links={academicsLinks} />
+          <FooterLinkCol title="Quick Links" links={quickLinks} />
+          <FooterLinkCol title="Our Campus" links={campusLinks} />
+        </div>
+
+        <div className="border-t border-white/20">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-sm text-white/70 sm:flex-row sm:px-8">
+            <p>
+              Copyright ©{new Date().getFullYear()} {SCHOOL.name}. All rights reserved.
+            </p>
+            <Link href="/contact" className="hover:text-white hover:underline">
               Privacy Policy
             </Link>
-            <span aria-hidden className="mx-2">
-              |
-            </span>
-            <Link href="/contact" className="underline underline-offset-2 hover:text-white">
-              Terms &amp; Conditions
-            </Link>
-          </p>
+          </div>
         </div>
-
-        {/* Contact Us */}
-        <div>
-          <h3 className="font-display text-xl font-semibold sm:text-2xl">Contact Us</h3>
-          <address className="mt-5 space-y-4 text-sm not-italic leading-relaxed text-white/65">
-            <p>
-              {SCHOOL.name}
-              <br />
-              {SCHOOL.address}
-              <br />
-              {SCHOOL.postal}
-            </p>
-            <p>
-              Tel:{" "}
-              <a
-                href={`tel:${SCHOOL.phone.replace(/\s/g, "")}`}
-                className="text-white/80 hover:text-white hover:underline"
-              >
-                {SCHOOL.phone}
-              </a>
-            </p>
-            <p>
-              WhatsApp:{" "}
-              <a
-                href={schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`)}
-                className="text-white/80 hover:text-white hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {SCHOOL.whatsapp}
-              </a>
-            </p>
-            <p>
-              Email:{" "}
-              <a
-                href={`mailto:${SCHOOL.email}`}
-                className="text-white/80 hover:text-white hover:underline"
-              >
-                {SCHOOL.email}
-              </a>
-            </p>
-          </address>
-        </div>
-
-        {/* Campus & training */}
-        <div>
-          <h3 className="font-display text-xl font-semibold sm:text-2xl">Campus</h3>
-          <p className="mt-5 text-sm leading-relaxed text-white/65">
-            {SCHOOL.address}
-            <br />
-            {SCHOOL.postal}
-          </p>
-          <h3 className="mt-8 font-display text-xl font-semibold sm:text-2xl">Clinical Training</h3>
-          <p className="mt-5 text-sm leading-relaxed text-white/65">
-            Partner hospitals and community health sites across Eastern Uganda, including Mbale
-            Referral Hospital.
-          </p>
-        </div>
-      </div>
-
-      <div className="border-t border-white/15">
-        <p className="px-6 py-5 text-center text-sm text-white/55 sm:px-8">
-          Copyright © {new Date().getFullYear()} {SCHOOL.name}
-        </p>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }
 
