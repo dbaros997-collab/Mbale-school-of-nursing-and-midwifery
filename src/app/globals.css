@@ -666,6 +666,18 @@ html:not(.js-ready) main [style*="opacity:0"] {
   background-repeat: no-repeat;
 }
 
+/* Soft fog over footer / apply campus photo — photo stays visible */
+.footer-fog-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(22, 53, 127, 0.28) 50%,
+    rgba(14, 36, 86, 0.44) 100%
+  );
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+  backdrop-filter: blur(8px) saturate(1.08);
+}
+
 /* Frosted glass panels — matches the Follow Us / Newsletters see-through look */
 .wallpaper-glass {
   background: rgba(255, 255, 255, 0.1);
@@ -690,6 +702,12 @@ html:not(.js-ready) main [style*="opacity:0"] {
 .ucu-subscribe-bar {
   background-color: var(--brand-yellow);
   box-shadow: 0 8px 24px rgba(14, 36, 86, 0.18);
+}
+
+/* Footer link columns — solid navy only (no campus photo) */
+.site-footer-links {
+  background-color: var(--primary-dark);
+  background-image: none !important;
 }
 
 /* KIU-style footer: deep navy field + soft dotted texture */

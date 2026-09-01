@@ -66,7 +66,7 @@ function FooterLinkCol({
 /** UCU-style lower section: yellow subscribe bar + four-column footer. */
 export function Footer() {
   return (
-    <div className="relative mt-auto">
+    <div className="relative z-10 mt-auto">
       {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
       <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6">
         <div className="ucu-subscribe-bar flex flex-col gap-5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-10 sm:py-9">
@@ -103,7 +103,10 @@ export function Footer() {
         </div>
       </div>
 
-      <footer className="relative overflow-hidden bg-primary-dark pt-16 text-white sm:pt-20">
+      <footer
+        className="site-footer-links relative overflow-hidden pt-16 text-white sm:pt-20"
+        style={{ backgroundColor: "var(--primary-dark)" }}
+      >
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
           <div className="lg:col-span-1">
