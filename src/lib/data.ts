@@ -604,13 +604,6 @@ export const galleryItems = [
     category: "Graduation",
   },
   {
-    id: "clinical",
-    src: "/images/hero/hero-clinical-training.jpg",
-    alt: "Students in clinical training",
-    caption: "Clinical training in practice",
-    category: "Training",
-  },
-  {
     id: "ward",
     src: "/images/hero/hero-hospital-ward.jpg",
     alt: "Hospital ward placement",
@@ -629,13 +622,6 @@ export const galleryItems = [
     src: "/images/hero/raw/students-celebration.jpg",
     alt: "Students celebrating on campus",
     caption: "Student life at MBSNM",
-    category: "Life",
-  },
-  {
-    id: "discovery",
-    src: "/images/discovery/discovery-about.jpg",
-    alt: "Students learning on campus",
-    caption: "Learning community",
     category: "Life",
   },
   {
