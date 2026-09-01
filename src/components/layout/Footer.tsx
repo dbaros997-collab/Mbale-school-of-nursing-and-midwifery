@@ -114,9 +114,9 @@ export function Footer() {
             <img
               src="/images/footer-mbsnm-lockup.png"
               alt={SCHOOL.name}
-              width={180}
-              height={220}
-              className="h-auto w-[150px] max-w-[180px] sm:w-[180px]"
+              width={220}
+              height={270}
+              className="h-auto w-[175px] max-w-[220px] sm:w-[220px]"
               decoding="async"
             />
             <ul className="mt-6 space-y-2 text-sm leading-relaxed text-white/85">
