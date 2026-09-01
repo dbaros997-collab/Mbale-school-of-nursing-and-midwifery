@@ -359,6 +359,48 @@ html:not(.js-ready) main [style*="opacity:0"] {
   color: #fff;
 }
 
+/* Hero copy accents — logo palette (gold · sky · green) on dark scrims */
+.hero-accent-gold {
+  background: linear-gradient(
+    100deg,
+    #f5d078 0%,
+    var(--brand-yellow) 55%,
+    var(--brand-yellow-dark) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.4));
+}
+
+.hero-accent-green {
+  background: linear-gradient(
+    100deg,
+    #8ee4a4 0%,
+    var(--brand-green) 60%,
+    var(--brand-green-dark) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.4));
+}
+
+.hero-accent-sky {
+  color: var(--brand-sky);
+  text-shadow:
+    0 1px 14px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(181, 217, 229, 0.22);
+}
+
+.hero-desc-highlight {
+  font-weight: 600;
+  color: var(--brand-sky);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
 .hero-slider__scrim-linear {
   position: absolute;
   inset: 0;

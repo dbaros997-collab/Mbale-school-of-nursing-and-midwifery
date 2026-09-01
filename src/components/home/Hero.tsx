@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   FlaskConical,
@@ -9,7 +9,7 @@ import {
   Hospital,
   Monitor,
 } from "lucide-react";
-import { heroQuickBoxes, heroSlides, SCHOOL } from "@/lib/data";
+import { heroQuickBoxes, heroSlides } from "@/lib/data";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +35,71 @@ function heroAsset(path: string) {
   return `${path}?v=${HERO_ASSET_VERSION}`;
 }
 
+const HERO_TITLE_ACCENTS = [
+  "hero-accent-green",
+  "hero-accent-gold",
+  "hero-accent-sky",
+  "hero-accent-gold",
+  "hero-accent-green",
+] as const;
+
+const HERO_COPY_ACCENTS: Record<
+  string,
+  { titlePhrase: string; descriptionPhrases?: readonly string[] }
+> = {
+  "1": {
+    titlePhrase: "real health professionals",
+    descriptionPhrases: ["UNMC", "NCHE"],
+  },
+  "2": {
+    titlePhrase: "Real hospital",
+    descriptionPhrases: ["Mbale Referral Hospital"],
+  },
+  "3": { titlePhrase: "on day one" },
+  "4": { titlePhrase: "Learning by doing" },
+  "5": {
+    titlePhrase: "Hands-on",
+    descriptionPhrases: ["Mbale Referral Hospital"],
+  },
+};
+
+function highlightPhrase(text: string, phrase: string, accentClass: string): ReactNode {
+  const idx = text.indexOf(phrase);
+  if (idx === -1) return text;
+
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className={accentClass}>{phrase}</span>
+      {text.slice(idx + phrase.length)}
+    </>
+  );
+}
+
+function highlightPhrases(
+  text: string,
+  phrases: readonly string[],
+  className: string,
+): ReactNode {
+  if (phrases.length === 0) return text;
+
+  const pattern = phrases
+    .map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|");
+  const regex = new RegExp(`(${pattern})`, "g");
+  const parts = text.split(regex);
+
+  return parts.map((part, i) =>
+    phrases.includes(part) ? (
+      <span key={`${part}-${i}`} className={className}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export function Hero() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -54,11 +119,11 @@ export function Hero() {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="hero-section__copy"
     >
-      <HeroCopy slide={slide} />
+      <HeroCopy slide={slide} slideIndex={index} />
     </motion.div>
   ) : (
     <div className="hero-section__copy">
-      <HeroCopy slide={slide} />
+      <HeroCopy slide={slide} slideIndex={index} />
     </div>
   );
 
@@ -125,19 +190,38 @@ export function Hero() {
 
 function HeroCopy({
   slide,
+  slideIndex,
 }: {
   slide: (typeof heroSlides)[number];
+  slideIndex: number;
 }) {
+  const accent = HERO_COPY_ACCENTS[slide.id];
+  const titleAccent = HERO_TITLE_ACCENTS[slideIndex % HERO_TITLE_ACCENTS.length];
+
   return (
     <>
-      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug text-brand-yellow">
-        {SCHOOL.motto}
+      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug">
+        <span className="hero-accent-gold">In God</span>{" "}
+        <span className="hero-accent-sky">We Love</span>{" "}
+        <span className="hero-accent-green">and Serve</span>
       </p>
-      <h1 className="mt-3 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white">
-        {slide.title}
+      <div
+        className="brand-tricolor-rule mx-auto mt-3 max-w-[4.5rem] rounded-full opacity-90"
+        aria-hidden
+      />
+      <h1 className="mt-4 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
+        {accent
+          ? highlightPhrase(slide.title, accent.titlePhrase, titleAccent)
+          : slide.title}
       </h1>
       <p className="mx-auto mt-5 max-w-[36rem] text-[0.9375rem] leading-[1.7] text-white/88 sm:text-[1.0625rem] lg:text-lg">
-        {slide.description}
+        {accent?.descriptionPhrases
+          ? highlightPhrases(
+              slide.description,
+              accent.descriptionPhrases,
+              "hero-desc-highlight",
+            )
+          : slide.description}
       </p>
       <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
         <Link
