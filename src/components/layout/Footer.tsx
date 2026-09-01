@@ -112,11 +112,11 @@ export function Footer() {
           <div className="lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/footer-school-logo.png?v=2"
+              src="/images/footer-school-logo.png?v=3"
               alt={SCHOOL.name}
-              width={100}
-              height={100}
-              className="h-auto w-[100px] max-w-[100px] rounded-lg sm:w-[115px] sm:max-w-[115px]"
+              width={180}
+              height={220}
+              className="h-auto w-[150px] max-w-[180px] sm:w-[180px]"
               decoding="async"
             />
             <ul className="mt-6 space-y-2 text-sm leading-relaxed text-white/85">
