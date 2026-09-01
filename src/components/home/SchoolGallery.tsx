@@ -64,8 +64,8 @@ export function SchoolGallery() {
               aria-hidden
             />
             <p className={`mt-3 text-muted sm:mt-5 ${heroLeadClass}`}>
-              Campus life, training, facilities, and the people who make MBSNM home — swipe or use
-              the arrows to explore.
+              Campus, staff, training, and student life at MBSNM — swipe or use the arrows to
+              explore.
             </p>
           </div>
         </ScrollReveal>
