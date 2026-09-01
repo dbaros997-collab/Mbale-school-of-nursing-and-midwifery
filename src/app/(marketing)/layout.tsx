@@ -3,6 +3,9 @@ import { SiteStatusBar } from "@/components/layout/SiteStatusBar";
 import { MarketingFooter } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 
+/** Fresh HTML after each deploy — avoid 1-year CDN cache on marketing pages. */
+export const revalidate = 0;
+
 export default function MarketingLayout({
   children,
 }: {
