@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 
-const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg?v=hq";
-
 const academicsLinks = [
   { label: "Why MBSNM", href: "/#about" },
   { label: "Certificate Programmes", href: "/academics#certificate-nursing" },
@@ -105,14 +103,7 @@ export function Footer() {
         </div>
       </div>
 
-      <footer className="relative overflow-hidden pt-16 text-white sm:pt-20">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-primary/72" aria-hidden />
-
+      <footer className="relative overflow-hidden bg-primary-dark pt-16 text-white sm:pt-20">
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
           <div className="lg:col-span-1">
