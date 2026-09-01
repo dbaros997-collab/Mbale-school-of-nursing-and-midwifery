@@ -187,13 +187,9 @@ export default function AdminApplicationsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
-          Admissions queue
-        </p>
-        <h1 className="mt-1 text-2xl font-extrabold text-primary sm:text-3xl">
-          Application review
-        </h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted">
+        <p className="admin-page-eyebrow">Admissions queue</p>
+        <h1 className="admin-page-title">Application review</h1>
+        <p className="admin-page-desc">
           Review online applications, schedule interviews for qualified candidates, and update
           interview outcomes.
         </p>

@@ -22,15 +22,11 @@ export function AppPageHero({
       <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-4 px-4 py-8 sm:px-6 lg:px-8">
         <div className="min-w-0">
           {eyebrow ? (
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-green">
-              {eyebrow}
-            </p>
+            <p className="admin-page-eyebrow text-brand-green">{eyebrow}</p>
           ) : null}
-          <h1 className="mt-1 font-display text-2xl font-semibold leading-display text-primary sm:text-3xl">
-            {title}
-          </h1>
+          <h1 className="admin-page-title">{title}</h1>
           {description ? (
-            <p className="mt-1 max-w-2xl text-sm leading-body text-muted">{description}</p>
+            <p className="admin-page-desc">{description}</p>
           ) : null}
         </div>
         {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}

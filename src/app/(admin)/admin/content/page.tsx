@@ -154,13 +154,9 @@ export default function AdminContentPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
-          Content &amp; schedule
-        </p>
-        <h1 className="mt-1 text-2xl font-extrabold text-primary sm:text-3xl">
-          Manage academic content
-        </h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted">
+        <p className="admin-page-eyebrow">Content &amp; schedule</p>
+        <h1 className="admin-page-title">Manage academic content</h1>
+        <p className="admin-page-desc">
           Update the school timetable, post notice board announcements, and upload course
           materials or new units.
         </p>

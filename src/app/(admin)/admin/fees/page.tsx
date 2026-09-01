@@ -101,13 +101,9 @@ export default function AdminFeesPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
-          Financial ledger
-        </p>
-        <h1 className="mt-1 text-2xl font-extrabold text-primary sm:text-3xl">
-          Fee payments &amp; balances
-        </h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted">
+        <p className="admin-page-eyebrow">Financial ledger</p>
+        <h1 className="admin-page-title">Fee payments &amp; balances</h1>
+        <p className="admin-page-desc">
           View and record student fee payments, and update account balances in UGX.
         </p>
       </div>

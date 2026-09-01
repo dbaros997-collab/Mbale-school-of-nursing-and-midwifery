@@ -73,13 +73,9 @@ export default function AdminStudentsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-cyan">
-          Student records
-        </p>
-        <h1 className="mt-1 text-2xl font-extrabold text-primary sm:text-3xl">
-          Registered students
-        </h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted">
+        <p className="admin-page-eyebrow">Student records</p>
+        <h1 className="admin-page-title">Registered students</h1>
+        <p className="admin-page-desc">
           View profiles, check fee statuses, and approve new account registrations.
         </p>
       </div>

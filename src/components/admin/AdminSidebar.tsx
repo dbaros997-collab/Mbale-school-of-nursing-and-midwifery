@@ -58,8 +58,8 @@ export function AdminSidebar({ open, onClose, onLogout }: AdminSidebarProps) {
           <Link href="/" className="flex min-w-0 items-center gap-2" onClick={onClose}>
             <SchoolLogo variant="compact" className="!h-[84px] !w-[96px] shrink-0" />
             <div className="min-w-0">
-              <p className="truncate text-sm font-bold">MBSNM Admin</p>
-              <p className="truncate text-[11px] text-white/60">Staff control panel</p>
+              <p className="truncate text-base font-bold">MBSNM Admin</p>
+              <p className="truncate text-xs text-white/70 sm:text-sm">Staff control panel</p>
             </div>
           </Link>
           <button
@@ -87,7 +87,7 @@ export function AdminSidebar({ open, onClose, onLogout }: AdminSidebarProps) {
                     href={item.href}
                     onClick={onClose}
                     className={cn(
-                      "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition focus-ring",
+                      "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-base font-medium transition focus-ring",
                       active
                         ? "bg-primary-light text-white"
                         : "text-white/75 hover:bg-white/10 hover:text-white",
@@ -111,7 +111,7 @@ export function AdminSidebar({ open, onClose, onLogout }: AdminSidebarProps) {
               onClose();
               onLogout();
             }}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold text-white/85 transition hover:bg-white/10 focus-ring"
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-base font-semibold text-white/85 transition hover:bg-white/10 focus-ring"
           >
             <LogOut className="h-4 w-4 shrink-0" aria-hidden />
             Log out

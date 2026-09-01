@@ -431,6 +431,61 @@ html:not(.js-ready) main [style*="opacity:0"] {
   }
 }
 
+/* Staff admin — Grace High–style page titles */
+.admin-page-eyebrow {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.admin-page-title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.admin-page-desc {
+  margin-top: 0.65rem;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .admin-page-desc {
+    font-size: 1.125rem;
+  }
+}
+
+.admin-gate-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.admin-gate-desc {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .admin-gate-desc {
+    font-size: 1.125rem;
+  }
+}
+
 /* Sky hero section */
 .hero-sky {
   background: linear-gradient(

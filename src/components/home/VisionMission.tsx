@@ -56,16 +56,16 @@ export function VisionMission() {
               aria-hidden
             />
             <div className="relative z-10 flex h-full flex-col justify-center px-8 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16">
-              <h3 className="font-display text-3xl font-semibold text-white sm:text-4xl">
+              <h3 className="font-display text-[clamp(1.875rem,3vw,2.5rem)] font-bold leading-tight text-white">
                 Our School
               </h3>
-              <p className="mt-4 max-w-md text-base leading-relaxed text-white/90 sm:text-lg">
+              <p className="mt-4 max-w-md text-[0.975rem] leading-[1.75] text-white/92 sm:text-lg">
                 Explore our Christian foundation and dedicated learning community. A place where
                 every student is guided toward clinical excellence and Christ-like character.
               </p>
               <Link
                 href="/#about"
-                className="mt-8 inline-flex w-fit items-center gap-2 border border-white px-6 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition-colors hover:bg-white/10"
+                className="mt-8 inline-flex w-fit items-center gap-2 border border-white px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white transition-colors hover:bg-white/10"
               >
                 Explore
                 <ArrowRight className="h-4 w-4" aria-hidden />
@@ -80,7 +80,7 @@ export function VisionMission() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col justify-center bg-white px-8 py-12 sm:px-10 sm:py-14 lg:px-12 lg:py-16"
           >
-            <h3 className="font-display text-3xl font-semibold text-primary sm:text-4xl">
+            <h3 className="font-display text-[clamp(1.75rem,2.8vw,2.25rem)] font-bold leading-tight text-primary">
               Our Core Values
             </h3>
             <ul className="mt-8 space-y-5 sm:space-y-6">
@@ -96,11 +96,11 @@ export function VisionMission() {
                     className="flex items-center gap-4 sm:gap-5"
                   >
                     <Icon
-                      className="h-7 w-7 shrink-0 text-primary sm:h-8 sm:w-8"
+                      className="h-8 w-8 shrink-0 text-primary sm:h-10 sm:w-10"
                       strokeWidth={1.5}
                       aria-hidden
                     />
-                    <span className="text-base font-bold text-primary sm:text-lg">
+                    <span className="font-display text-[1.25rem] font-bold leading-tight text-primary sm:text-[1.35rem]">
                       {value.title}
                     </span>
                   </motion.li>

@@ -45,34 +45,34 @@ function StaffLoginGate() {
     <div className="flex min-h-full items-center justify-center bg-surface px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm">
         <SchoolLogo surface="light" variant="header" className="mx-auto !h-[160px] !w-[184px]" />
-        <h1 className="mt-6 text-center font-display text-2xl font-semibold text-primary">
+        <h1 className="admin-gate-title mt-6 text-center">
           Staff Admin Panel
         </h1>
-        <p className="mt-2 text-center text-sm text-muted">
+        <p className="admin-gate-desc text-center">
           Restricted to authorised registry and academic staff only. Students cannot
           sign in here.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-          <label className="block text-xs font-semibold text-muted">
+          <label className="block text-sm font-semibold text-muted">
             Staff email
             <input
               type="email"
               autoComplete="username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-primary outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30"
+              className="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-3 text-base text-primary outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30"
               required
             />
           </label>
-          <label className="block text-xs font-semibold text-muted">
+          <label className="block text-sm font-semibold text-muted">
             Password
             <input
               type="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-primary outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30"
+              className="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-3 text-base text-primary outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30"
               required
             />
           </label>
@@ -88,13 +88,13 @@ function StaffLoginGate() {
           </Button>
         </form>
 
-        <p className="mt-4 rounded-lg bg-surface px-3 py-2 text-xs text-muted">
+        <p className="mt-4 rounded-lg bg-surface px-3 py-2.5 text-sm text-muted">
           Demo staff access: <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.email}</span>
           {" · "}
           password <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.password}</span>
         </p>
 
-        <div className="mt-6 flex flex-col items-center gap-2 text-center text-sm">
+        <div className="mt-6 flex flex-col items-center gap-2 text-center text-base">
           <Link href="/portal" className="font-semibold text-primary hover:underline focus-ring">
             Student portal
           </Link>
@@ -112,10 +112,10 @@ function StudentBlockedOnAdmin() {
     <div className="flex min-h-full items-center justify-center bg-surface px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm text-center">
         <SchoolLogo surface="light" variant="header" className="mx-auto !h-[160px] !w-[184px]" />
-        <h1 className="mt-6 font-display text-2xl font-semibold text-primary">
+        <h1 className="admin-gate-title mt-6">
           Staff access only
         </h1>
-        <p className="mt-2 text-sm text-muted">
+        <p className="admin-gate-desc">
           {profile?.fullName ? `Hi ${profile.fullName.split(" ")[0]}. ` : ""}
           The admin control panel is reserved for registry staff in charge. Please use
           the student portal instead.
@@ -156,7 +156,7 @@ function AdminChrome({ children }: { children: React.ReactNode }) {
 
   if (!ready) {
     return (
-      <div className="flex min-h-full items-center justify-center bg-surface text-sm text-muted">
+      <div className="flex min-h-full items-center justify-center bg-surface text-base font-medium text-muted sm:text-lg">
         Loading admin panel…
       </div>
     );

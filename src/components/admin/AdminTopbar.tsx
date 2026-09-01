@@ -24,11 +24,11 @@ export function AdminTopbar({ onMenuClick, onLogout }: AdminTopbarProps) {
           <Menu className="h-5 w-5" />
         </button>
         <div className="min-w-0">
-          <p className="flex items-center gap-1.5 truncate text-sm font-bold text-white sm:text-base">
-            <Shield className="hidden h-4 w-4 shrink-0 text-brand-sky sm:inline" aria-hidden />
+          <p className="flex items-center gap-1.5 truncate text-base font-bold text-white sm:text-lg">
+            <Shield className="hidden h-5 w-5 shrink-0 text-brand-sky sm:inline" aria-hidden />
             {adminProfile?.fullName ?? "Staff"}
           </p>
-          <p className="truncate text-xs text-brand-sky">
+          <p className="truncate text-sm text-brand-sky sm:text-base">
             {adminProfile?.title ?? "Administrator"}
             {session?.token ? " · Staff session" : ""}
           </p>
@@ -44,7 +44,7 @@ export function AdminTopbar({ onMenuClick, onLogout }: AdminTopbarProps) {
             e.stopPropagation();
             onLogout();
           }}
-          className="btn-pill relative z-[61] inline-flex shrink-0 items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20 focus-ring"
+          className="btn-pill relative z-[61] inline-flex shrink-0 items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-2 text-base font-semibold text-white transition hover:bg-white/20 focus-ring"
           aria-label="Log out"
         >
           <LogOut className="h-4 w-4" aria-hidden />
