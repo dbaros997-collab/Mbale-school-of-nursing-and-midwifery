@@ -554,14 +554,6 @@ export const events = [
 
 export const galleryItems = [
   {
-    id: "campus-courtyard",
-    src: "/images/gallery/campus-courtyard-aerial.jpg",
-    alt: "Aerial view of MBSNM campus courtyard and teaching blocks",
-    caption: "Campus courtyard from above",
-    category: "Campus",
-    featured: true,
-  },
-  {
     id: "campus-wide",
     src: "/images/gallery/campus-aerial-wide.jpg",
     alt: "Wide aerial view of MBSNM campus and surrounding Mbale landscape",
@@ -605,22 +597,6 @@ export const galleryItems = [
     category: "People",
   },
   {
-    id: "staff",
-    src: "/images/events-staff.jpg",
-    alt: "MBSNM nursing and midwifery staff in uniform",
-    caption: "Our nursing and midwifery team",
-    category: "People",
-    featured: true,
-  },
-  {
-    id: "aerial",
-    src: "/images/footer-aerial-valley-hq.jpg",
-    alt: "Aerial view of MBSNM campus in Mbale",
-    caption: "Campus from above",
-    category: "Campus",
-    featured: true,
-  },
-  {
     id: "graduation",
     src: "/images/graduates-celebration.jpg",
     alt: "Graduates celebrating at MBSNM",
@@ -654,13 +630,6 @@ export const galleryItems = [
     alt: "Students celebrating on campus",
     caption: "Student life at MBSNM",
     category: "Life",
-  },
-  {
-    id: "building",
-    src: "/images/footer-campus-building.jpg",
-    alt: "MBSNM campus building",
-    caption: "Teaching blocks",
-    category: "Campus",
   },
   {
     id: "discovery",
