@@ -65,7 +65,7 @@ function HeroSlideImage({
         draggable={false}
         loading={priority ? "eager" : "lazy"}
         fetchPriority={priority ? "high" : "auto"}
-        className="homepage-slider__photo block h-full w-full object-cover object-center"
+        className="homepage-slider__photo block h-full w-full object-cover"
       />
     </picture>
   );
@@ -147,7 +147,7 @@ export function Hero() {
       className="homepage-slider relative overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      {/* Mobile / small tablet: photo on top, copy below — no overlay crop */}
+      {/* Mobile: full-height photo with copy overlaid at the bottom */}
       <div className="md:hidden">
         <div className="homepage-slider__mobile-photo relative w-full overflow-hidden bg-primary-dark">
           {heroSlides.map((s, i) => (
@@ -167,11 +167,13 @@ export function Hero() {
               />
             </div>
           ))}
-        </div>
 
-        <div className="px-4 pb-8 pt-6">
-          {copyBlock}
-          <HeroDots index={index} onSelect={setIndex} className="mt-6" />
+          <div className="homepage-slider__mobile-overlay" aria-hidden />
+
+          <div className="homepage-slider__mobile-content absolute inset-x-0 bottom-0 z-[2] px-4 pb-8 pt-24">
+            {copyBlock}
+            <HeroDots index={index} onSelect={setIndex} className="mt-6" />
+          </div>
         </div>
       </div>
 

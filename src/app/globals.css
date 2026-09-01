@@ -329,7 +329,7 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
-/* KIU-style homepage hero slider — fixed 1920/830 ratio for sharp banner photos */
+/* KIU-style homepage hero slider — banner photos with subject-aware crop */
 .homepage-slider {
   position: relative;
   overflow: hidden;
@@ -338,24 +338,53 @@ html:not(.js-ready) main [style*="opacity:0"] {
 
 .homepage-slider__frame {
   position: relative;
-  aspect-ratio: 1920 / 830;
+  aspect-ratio: 16 / 9;
   width: 100%;
+  min-height: 28rem;
 }
 
-/* Mobile: taller photo band — visible scene without heavy zoom */
+/* Mobile: tall photo band with bottom gradient so subjects stay visible */
 .homepage-slider__mobile-photo {
   width: 100%;
-  height: clamp(15rem, 60vw, 19rem);
+  min-height: clamp(34rem, 132vw, 42rem);
 }
 
 .homepage-slider__mobile-photo .homepage-slider__photo {
   object-fit: cover;
-  object-position: center 38%;
+  object-position: center 32%;
+}
+
+.homepage-slider__mobile-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 36, 86, 0.18) 0%,
+    rgba(14, 36, 86, 0.08) 38%,
+    rgba(14, 36, 86, 0.55) 62%,
+    rgba(14, 36, 86, 0.92) 82%,
+    var(--primary-dark) 100%
+  );
+}
+
+.homepage-slider__mobile-content {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(14, 36, 86, 0.72) 42%,
+    var(--primary-dark) 100%
+  );
 }
 
 .homepage-slider__photo {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.homepage-slider__frame .homepage-slider__photo {
+  object-position: center 30%;
 }
 
 .homepage-slider__overlay {
@@ -365,10 +394,10 @@ html:not(.js-ready) main [style*="opacity:0"] {
   pointer-events: none;
   background: linear-gradient(
     100deg,
-    rgba(14, 36, 86, 0.9) 0%,
-    rgba(22, 53, 127, 0.72) 38%,
-    rgba(22, 53, 127, 0.08) 58%,
-    transparent 100%
+    rgba(14, 36, 86, 0.88) 0%,
+    rgba(22, 53, 127, 0.62) 34%,
+    rgba(22, 53, 127, 0.12) 56%,
+    transparent 72%
   );
 }
 
@@ -377,12 +406,14 @@ html:not(.js-ready) main [style*="opacity:0"] {
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .homepage-slider__frame {
-    aspect-ratio: 16 / 9;
+  .homepage-slider__frame .homepage-slider__photo {
+    object-position: center 26%;
   }
+}
 
-  .homepage-slider__photo {
-    object-position: center 30%;
+@media (min-width: 1280px) {
+  .homepage-slider__frame {
+    min-height: 32rem;
   }
 }
 

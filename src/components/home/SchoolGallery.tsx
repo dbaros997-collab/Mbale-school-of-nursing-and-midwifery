@@ -6,9 +6,14 @@ import { X } from "lucide-react";
 import { galleryItems } from "@/lib/data";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type GalleryItem = (typeof galleryItems)[number];
+
+/** Match homepage hero slide typography (HeroCopy). */
+const heroTitleClass =
+  "font-display text-[clamp(1.875rem,4.5vw+0.25rem,3.75rem)] font-extrabold leading-[1.14] tracking-tight";
+const heroLeadClass =
+  "text-[0.9375rem] leading-[1.65] sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg lg:leading-[1.75]";
 
 export function SchoolGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -49,12 +54,20 @@ export function SchoolGallery() {
     <section id="gallery" className="scroll-mt-24 section-muted py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up">
-          <SectionHeading
-            eyebrow="Gallery"
-            title="School Gallery"
-            description="Campus life, training, facilities, and the people who make MBSNM home — swipe or use the arrows to explore."
-            align="center"
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-green">
+              Gallery
+            </p>
+            <h2 className={`${heroTitleClass} text-primary`}>School Gallery</h2>
+            <div
+              className="brand-tricolor-rule mx-auto mt-3 max-w-[5rem] rounded-full"
+              aria-hidden
+            />
+            <p className={`mt-3 text-muted sm:mt-5 ${heroLeadClass}`}>
+              Campus life, training, facilities, and the people who make MBSNM home — swipe or use
+              the arrows to explore.
+            </p>
+          </div>
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.08}>
@@ -75,13 +88,13 @@ export function SchoolGallery() {
                     <button
                       type="button"
                       onClick={() => openLightbox(activeItem)}
-                      className="absolute inset-x-0 bottom-0 z-[1] block w-full cursor-zoom-in p-5 text-left focus-ring sm:p-8"
+                      className="absolute inset-x-0 bottom-0 z-[1] block w-full cursor-zoom-in p-5 pb-14 text-left focus-ring sm:p-8 sm:pb-16"
                       aria-label={`View photo: ${activeItem.caption}`}
                     >
-                      <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-brand-yellow">
+                      <span className={`block text-white/90 ${heroLeadClass}`}>
                         {activeItem.category}
                       </span>
-                      <span className="mt-1 block font-display text-lg font-semibold leading-snug text-white sm:text-2xl">
+                      <span className={`mt-2 block text-white sm:mt-3 ${heroTitleClass}`}>
                         {activeItem.caption}
                       </span>
                     </button>
@@ -122,10 +135,8 @@ export function SchoolGallery() {
             </div>
 
             <div className="mt-4 shrink-0 text-center text-white sm:mt-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-yellow">
-                {active.category}
-              </p>
-              <p className="mt-1 font-display text-xl font-semibold sm:text-2xl">{active.caption}</p>
+              <p className={`text-white/90 ${heroLeadClass}`}>{active.category}</p>
+              <p className={`mt-2 text-white sm:mt-3 ${heroTitleClass}`}>{active.caption}</p>
             </div>
           </div>
         ) : null}
