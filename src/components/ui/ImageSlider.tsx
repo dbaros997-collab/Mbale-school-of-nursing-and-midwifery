@@ -96,6 +96,7 @@ export function ImageSlider({
     <div
       className={cn(
         "gallery-slider",
+        layout === "hero" && "gallery-slider--hero",
         layout === "section" && "gallery-slider--section",
         className,
       )}

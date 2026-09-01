@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  ChevronLeft,
-  ChevronRight,
   FlaskConical,
   GraduationCap,
   Hospital,
   Monitor,
 } from "lucide-react";
-import { heroQuickBoxes, heroSlides } from "@/lib/data";
+import { heroQuickBoxes, heroSlides, SCHOOL } from "@/lib/data";
+import { ImageSlider } from "@/components/ui/ImageSlider";
 import { cn } from "@/lib/utils";
 
 const quickIconMap = {
@@ -36,95 +35,16 @@ function heroAsset(path: string) {
   return `${path}?v=${HERO_ASSET_VERSION}`;
 }
 
-function heroWebp(jpgPath: string) {
-  return heroAsset(jpgPath.replace(/\.jpg$/, ".webp"));
-}
-
-function HeroSlideImage({
-  slide,
-  index,
-  activeIndex,
-  priority,
-}: {
-  slide: (typeof heroSlides)[number];
-  index: number;
-  activeIndex: number;
-  priority: boolean;
-}) {
-  const active = index === activeIndex;
-
-  return (
-    <picture>
-      <source srcSet={heroWebp(slide.image)} type="image/webp" />
-      <img
-        src={heroAsset(slide.image)}
-        alt={active ? slide.alt : ""}
-        width={1920}
-        height={830}
-        decoding="async"
-        draggable={false}
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-        className="homepage-slider__photo block h-full w-full object-cover"
-      />
-    </picture>
-  );
-}
-
-function HeroDots({
-  index,
-  onSelect,
-  className,
-}: {
-  index: number;
-  onSelect: (i: number) => void;
-  className?: string;
-}) {
-  return (
-    <div className={cn("flex items-center gap-2", className)} role="tablist" aria-label="Hero slides">
-      {heroSlides.map((s, i) => (
-        <button
-          key={s.id}
-          type="button"
-          role="tab"
-          aria-selected={i === index}
-          aria-label={`Slide ${i + 1}`}
-          className={cn(
-            "h-1 w-9 rounded-full transition",
-            i === index ? "bg-brand-yellow" : "bg-white/60 hover:bg-white/85",
-          )}
-          onClick={() => onSelect(i)}
-        />
-      ))}
-    </div>
-  );
-}
-
 export function Hero() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
   const slide = heroSlides[index];
   const animateCopy = !reduceMotion;
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % heroSlides.length);
-    }, 6500);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    for (const s of heroSlides) {
-      const img = new window.Image();
-      img.src = heroWebp(s.image);
-      const fallback = new window.Image();
-      fallback.src = heroAsset(s.image);
-    }
-  }, []);
-
-  const go = (next: number) => {
-    setIndex((next + heroSlides.length) % heroSlides.length);
-  };
+  const slideImages = useMemo(
+    () => heroSlides.map((s) => heroAsset(s.image)),
+    [],
+  );
 
   const copyBlock = animateCopy ? (
     <motion.div
@@ -132,12 +52,12 @@ export function Hero() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="max-w-[min(100%,52rem)] text-white"
+      className="hero-section__copy"
     >
       <HeroCopy slide={slide} />
     </motion.div>
   ) : (
-    <div className="max-w-[min(100%,52rem)] text-white">
+    <div className="hero-section__copy">
       <HeroCopy slide={slide} />
     </div>
   );
@@ -147,86 +67,19 @@ export function Hero() {
       className="homepage-slider relative overflow-hidden bg-primary-dark"
       aria-label="Homepage hero"
     >
-      {/* Mobile: full-height photo with copy overlaid at the bottom */}
-      <div className="md:hidden">
-        <div className="homepage-slider__mobile-photo relative w-full overflow-hidden bg-primary-dark">
-          {heroSlides.map((s, i) => (
-            <div
-              key={s.id}
-              className={cn(
-                "absolute inset-0 transition-opacity duration-700 ease-in-out",
-                i === index ? "opacity-100" : "pointer-events-none opacity-0",
-              )}
-              aria-hidden={i !== index}
-            >
-              <HeroSlideImage
-                slide={s}
-                index={i}
-                activeIndex={index}
-                priority={i === 0}
-              />
-            </div>
-          ))}
-
-          <div className="homepage-slider__mobile-overlay" aria-hidden />
-
-          <div className="homepage-slider__mobile-content absolute inset-x-0 bottom-0 z-[2] px-4 pb-8 pt-24">
-            {copyBlock}
-            <HeroDots index={index} onSelect={setIndex} className="mt-6" />
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop: full-width banner with overlay copy */}
-      <div className="homepage-slider__frame relative hidden w-full md:block">
-        {heroSlides.map((s, i) => (
-          <div
-            key={s.id}
-            className={cn(
-              "absolute inset-0 transition-opacity duration-700 ease-in-out",
-              i === index ? "opacity-100" : "pointer-events-none opacity-0",
-            )}
-            aria-hidden={i !== index}
-          >
-            <HeroSlideImage
-              slide={s}
-              index={i}
-              activeIndex={index}
-              priority={i === 0}
-            />
-          </div>
-        ))}
-
-        <div className="homepage-slider__overlay" aria-hidden />
-
-        <div className="homepage-slider__content absolute inset-0 flex items-center">
-          <div className="mx-auto w-full max-w-7xl px-6 pb-20 pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] lg:px-8 lg:pb-24">
-            {copyBlock}
-          </div>
-        </div>
-
-        <button
-          type="button"
-          aria-label="Previous slide"
-          className="absolute left-2 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring lg:left-4"
-          onClick={() => go(index - 1)}
+      <div className="hero-section">
+        <ImageSlider
+          images={slideImages}
+          layout="hero"
+          intervalMs={6500}
+          altPrefix="Hero slide"
+          onIndexChange={setIndex}
         >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button
-          type="button"
-          aria-label="Next slide"
-          className="absolute right-2 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-black/25 p-2 text-white transition hover:bg-black/45 focus-ring lg:right-4"
-          onClick={() => go(index + 1)}
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
+          <div className="hero-slider__scrim-linear" aria-hidden />
+          <div className="hero-slider__scrim-radial" aria-hidden />
+        </ImageSlider>
 
-        <div className="absolute inset-x-0 bottom-6 z-[3]" role="presentation">
-          <div className="mx-auto flex w-[min(1140px,calc(100%-2rem))] items-center justify-start">
-            <HeroDots index={index} onSelect={setIndex} />
-          </div>
-        </div>
+        <div className="hero-section__content">{copyBlock}</div>
       </div>
 
       <div className="relative z-10 px-4 md:-mt-16 md:px-6 lg:px-8">
@@ -277,22 +130,25 @@ function HeroCopy({
 }) {
   return (
     <>
-      <h1 className="font-display text-[clamp(1.875rem,4.5vw+0.25rem,3.75rem)] font-extrabold leading-[1.14] tracking-tight text-white">
+      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug text-brand-yellow">
+        {SCHOOL.motto}
+      </p>
+      <h1 className="mt-3 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white">
         {slide.title}
       </h1>
-      <p className="mt-5 max-w-[48rem] text-[0.9375rem] leading-[1.65] text-white/90 sm:mt-6 sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg lg:leading-[1.75]">
+      <p className="mx-auto mt-5 max-w-[36rem] text-[0.9375rem] leading-[1.7] text-white/88 sm:text-[1.0625rem] lg:text-lg">
         {slide.description}
       </p>
-      <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
+      <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
         <Link
           href={slide.href}
-          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-5 py-3 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-6 sm:py-[15px] sm:text-lg"
+          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-6 py-3 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
         >
           {slide.cta}
         </Link>
         <Link
           href={slide.secondaryHref}
-          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border-2 border-white/80 bg-transparent px-5 py-3 text-sm font-bold leading-none text-white transition hover:bg-white hover:text-primary focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-6 sm:py-[15px] sm:text-lg"
+          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border-2 border-white/70 bg-white/5 px-6 py-3 text-sm font-bold leading-none text-white backdrop-blur-sm transition hover:border-white hover:bg-white/12 focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
         >
           {slide.secondaryCta}
         </Link>
