@@ -9,7 +9,7 @@ import {
   Hospital,
   Monitor,
 } from "lucide-react";
-import { heroQuickBoxes, heroSlides } from "@/lib/data";
+import { heroQuickBoxes, heroSlides, SCHOOL } from "@/lib/data";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { cn } from "@/lib/utils";
 
@@ -200,10 +200,8 @@ function HeroCopy({
 
   return (
     <>
-      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug">
-        <span className="hero-accent-gold">In God</span>{" "}
-        <span className="hero-accent-sky">We Love</span>{" "}
-        <span className="hero-accent-green">and Serve</span>
+      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug text-white">
+        {SCHOOL.motto}
       </p>
       <h1 className="mt-3 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
         {accent
