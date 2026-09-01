@@ -112,7 +112,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/footer-school-logo.png?v=3"
+              src="/images/footer-mbsnm-lockup.png"
               alt={SCHOOL.name}
               width={180}
               height={220}
