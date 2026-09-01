@@ -205,11 +205,7 @@ function HeroCopy({
         <span className="hero-accent-sky">We Love</span>{" "}
         <span className="hero-accent-green">and Serve</span>
       </p>
-      <div
-        className="brand-tricolor-rule mx-auto mt-3 max-w-[4.5rem] rounded-full opacity-90"
-        aria-hidden
-      />
-      <h1 className="mt-4 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
+      <h1 className="mt-3 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
         {accent
           ? highlightPhrase(slide.title, accent.titlePhrase, titleAccent)
           : slide.title}
