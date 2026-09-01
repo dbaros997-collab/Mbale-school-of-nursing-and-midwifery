@@ -3,12 +3,13 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { discoveryRoles, discoveryTopics } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const DISCOVERY_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "discovery-v1";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "discovery-v2";
 
 function discoveryAsset(path: string) {
   return `${path}?v=${DISCOVERY_ASSET_VERSION}`;
@@ -17,7 +18,8 @@ function discoveryAsset(path: string) {
 const ctaItems = [
   {
     title: "About",
-    image: "/images/discovery/discovery-about.jpg",
+    image: "/images/discovery/discovery-about.webp",
+    objectPosition: "50% 35%",
     color: "var(--brand-yellow)",
     textColor: "var(--primary-dark)",
     reverse: false,
@@ -26,7 +28,8 @@ const ctaItems = [
   },
   {
     title: "Programs",
-    image: "/images/discovery/discovery-programs.jpg",
+    image: "/images/discovery/discovery-programs.webp",
+    objectPosition: "center center",
     color: "var(--brand-green)",
     textColor: "#ffffff",
     reverse: true,
@@ -157,17 +160,8 @@ function CtaPill({
           item.reverse && "flex-row-reverse",
         )}
       >
-        {/* Full-bleed photo */}
         <span
-          className="absolute inset-0 z-0 rounded-[80px] bg-cover bg-center"
-          style={{ backgroundImage: `url('${discoveryAsset(item.image)}')` }}
-          aria-hidden
-        />
-        <span className="absolute inset-0 z-0 rounded-[80px] bg-black/10" aria-hidden />
-
-        {/* Colored label capsule — wider for longer titles */}
-        <span
-          className="relative z-10 flex h-full w-[150px] min-w-[150px] items-center justify-center rounded-[80px] px-2 text-center sm:w-[170px] sm:min-w-[170px]"
+          className="relative z-10 flex h-full w-[150px] min-w-[150px] shrink-0 items-center justify-center rounded-[80px] px-2 text-center sm:w-[170px] sm:min-w-[170px]"
           style={{ backgroundColor: item.color, color: item.textColor }}
         >
           <span className="text-base font-medium leading-tight tracking-tight sm:text-lg">
@@ -175,8 +169,18 @@ function CtaPill({
           </span>
         </span>
 
-        {/* Spacer so the colored pill sits left/right while image shows beside it */}
-        <span className="relative z-10 flex-1" aria-hidden />
+        <div className="relative min-h-full min-w-0 flex-1">
+          <Image
+            src={discoveryAsset(item.image)}
+            alt=""
+            fill
+            sizes="(max-width: 1024px) 55vw, 320px"
+            quality={90}
+            className="object-cover"
+            style={{ objectPosition: item.objectPosition }}
+            aria-hidden
+          />
+        </div>
       </div>
     </motion.div>
   );
