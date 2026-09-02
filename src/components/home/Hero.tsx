@@ -29,7 +29,7 @@ const quickIconStyles = [
 
 /** Bust CDN/browser cache when a new build deploys. */
 const HERO_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v2";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v3-no-lab";
 
 function heroAsset(path: string) {
   return `${path}?v=${HERO_ASSET_VERSION}`;
