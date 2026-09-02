@@ -35,9 +35,10 @@ export function AboutBand() {
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
           <Image
-            src="/images/front-offices.jpg"
-            alt="Front offices at Mbale School of Nursing and Midwifery"
+            src="/images/about/leadership-team.jpg"
+            alt="MBSNM leadership and nursing faculty team"
             fill
+            unoptimized
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
