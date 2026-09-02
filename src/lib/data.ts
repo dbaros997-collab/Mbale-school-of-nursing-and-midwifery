@@ -407,7 +407,7 @@ export const newsItems = [
     category: "Events",
     excerpt:
       "Our graduands marched through Mbale town celebrating academic excellence and inspiring youth to join the nursing profession.",
-    image: "/images/campus-news/graduation-celebrations.jpg",
+    image: "/images/campus-news/graduation-parade-mbale.jpg",
     featured: true,
   },
   {
