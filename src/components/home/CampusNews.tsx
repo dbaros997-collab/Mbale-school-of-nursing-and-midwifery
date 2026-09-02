@@ -37,8 +37,9 @@ export function CampusNews() {
               >
                 <Image
                   src={item.image}
-                  alt=""
+                  alt={item.title}
                   fill
+                  unoptimized
                   className="object-cover transition duration-700 group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
