@@ -16,7 +16,6 @@ const academicsLinks = [
 
 const quickLinks = [
   { label: "Student Portal", href: "/portal/dashboard" },
-  { label: "Gulu University Portal", href: "/university-portal" },
   { label: "News & Events", href: "/#events" },
   { label: "Campus News", href: "/#campus-news" },
   { label: "School Gallery", href: "/#gallery" },

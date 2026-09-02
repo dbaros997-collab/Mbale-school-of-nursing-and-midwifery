@@ -14,7 +14,7 @@ export default function AcademicsPage() {
         breadcrumb="Study at MBSNM"
         title="Courses & Programs"
         subtitle={`Explore diploma and certificate pathways in Nursing and Midwifery at ${SCHOOL.name}.`}
-        image="/images/computer-lab.jpg"
+        image="/images/discovery/discovery-programs.webp"
       />
 
       <section className="section-sky py-14">
@@ -36,7 +36,7 @@ export default function AcademicsPage() {
                   <div className="relative min-h-[200px] overflow-hidden bg-surface lg:rounded-l-3xl">
                     <Image
                       src={program.image}
-                      alt=""
+                      alt={program.title}
                       fill
                       className="object-cover"
                       sizes="280px"

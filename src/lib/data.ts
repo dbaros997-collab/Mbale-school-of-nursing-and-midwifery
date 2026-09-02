@@ -21,58 +21,6 @@ export const SCHOOL = {
     "Christians from GREM started MBSNM when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
 } as const;
 
-/** Public Gulu University (GU) portal & website information */
-export const GULU_UNIVERSITY = {
-  name: "Gulu University",
-  shortName: "GU",
-  motto: "For Community Transformation",
-  website: "https://gu.ac.ug/",
-  studentPortal: "https://myportal.gu.ac.ug/",
-  applicationPortal: "https://apply.gu.ac.ug/",
-  helpdesk: "https://helpme.gu.ac.ug/",
-  poweredBy: "HEMIS Consortium",
-  about:
-    "Gulu University is a public university in Northern Uganda focused on community transformation — including health sciences through its Faculty of Medicine, which trains human resources for rural-based health facilities.",
-  portalIntro:
-    "The GU student portal (myportal.gu.ac.ug) is the official HEMIS online account for enrolled students. Sign in to manage registration, fees, results, and other academic records.",
-  portalServices: [
-    {
-      title: "Course registration",
-      detail: "Register for semester modules and confirm your study load online.",
-    },
-    {
-      title: "Fees & payments",
-      detail: "View fee balances, payment history, and complete university fee transactions.",
-    },
-    {
-      title: "Results & transcripts",
-      detail: "Check semester results and request academic transcripts when available.",
-    },
-    {
-      title: "Admission & enrollment",
-      detail: "View admission status, acceptance details, and complete freshers enrollment steps.",
-    },
-    {
-      title: "Academic calendar",
-      detail: "Access timetables, registration deadlines, and key dates for the academic year.",
-    },
-    {
-      title: "Student profile",
-      detail: "Update contact details and manage your portal account settings.",
-    },
-  ],
-  signInSteps: [
-    "Visit the student portal at myportal.gu.ac.ug.",
-    "Enter your username and password, then click Sign In.",
-    "New students should follow the freshers enrollment guide published on gu.ac.ug before first login.",
-    "If you forgot your password, click Forgot your Password — a reset link (OTP) is sent to your registered email.",
-  ],
-  admissionNote:
-    "Admitted students are published on the official Gulu University website (gu.ac.ug) and through other university communication channels.",
-  freshersGuide:
-    "Gulu University publishes step-by-step guides for enrollment, payment, and registration at the start of each academic year — check the Notice Board on gu.ac.ug.",
-} as const;
-
 /** WhatsApp click-to-chat URL (wa.me) */
 export function schoolWhatsAppUrl(message?: string) {
   const digits = SCHOOL.whatsapp.replace(/\D/g, "");
@@ -92,7 +40,6 @@ export const mainNav = [
           { label: "Mission & Vision", href: "/#vision-mission" },
           { label: "Core Values", href: "/#vision-mission" },
           { label: "Accreditation", href: "/contact" },
-          { label: "Gulu University Portal", href: "/university-portal" },
           { label: "Contact Address", href: "/contact" },
         ],
       },
@@ -160,7 +107,6 @@ export const mainNav = [
 
 export const quickLinks = [
   { label: "Student Portal", href: "/portal/dashboard" },
-  { label: "Gulu University Portal", href: "/university-portal" },
   { label: "Activate Account", href: "/portal/activate" },
   { label: "Application Portal", href: "/admissions#apply" },
   { label: "Track Application", href: "/admissions/track" },
@@ -273,7 +219,6 @@ export const discoveryTopics: Record<string, { value: string; label: string; hre
   ],
   continuing: [
     { value: "portal", label: "Student Portal", href: "/portal/dashboard" },
-    { value: "gu-portal", label: "Gulu University Portal", href: "/university-portal" },
     { value: "timetable", label: "Timetables", href: "/portal" },
     { value: "fees", label: "Fee Balances", href: "/portal" },
     { value: "placement", label: "Clinical Placement", href: "/academics" },
@@ -315,7 +260,7 @@ export const programs = [
       "Hospital and community clinical competence",
       "Leadership and patient advocacy skills",
     ],
-    image: "/images/grad1.jpg",
+    image: "/images/hero/hero-hospital-ward.jpg",
   },
   {
     id: "diploma-nursing-extension",
@@ -335,7 +280,7 @@ export const programs = [
       "Ward management readiness",
       "Improved career mobility",
     ],
-    image: "/images/equipment.jpg",
+    image: "/images/gallery/staff-nurses-trio.jpg",
   },
   {
     id: "certificate-nursing",
@@ -355,7 +300,7 @@ export const programs = [
       "Strong fundamentals for diploma progression",
       "Community health service capacity",
     ],
-    image: "/images/computer-lab.jpg",
+    image: "/images/gallery/classroom-training.jpg",
   },
   {
     id: "diploma-midwifery-direct",
@@ -375,7 +320,7 @@ export const programs = [
       "Maternal and newborn emergency response",
       "Community midwifery leadership",
     ],
-    image: "/images/graduates.jpg",
+    image: "/images/hero/hero-clinical-infant-care.jpg",
   },
   {
     id: "diploma-midwifery-extension",
@@ -395,7 +340,7 @@ export const programs = [
       "Improved maternal outcomes focus",
       "Facility leadership readiness",
     ],
-    image: "/images/graduation-day.jpg",
+    image: "/images/gallery/clinical-demonstration.jpg",
   },
   {
     id: "certificate-midwifery",
@@ -415,7 +360,7 @@ export const programs = [
       "Pathway to diploma extension",
       "Community maternal health impact",
     ],
-    image: "/images/activity-1.jpg",
+    image: "/images/hero/hero-injection-practice.jpg",
   },
 ] as const;
 
@@ -843,11 +788,6 @@ export const statusBarUpdates = [
     id: "contact",
     text: "Questions? admissions@mbsnm.org · +256 779 400 773",
     href: "/contact",
-  },
-  {
-    id: "gu-portal",
-    text: "Gulu University students — sign in at myportal.gu.ac.ug",
-    href: "/university-portal",
   },
 ] as const;
 
