@@ -260,7 +260,7 @@ export const programs = [
       "Hospital and community clinical competence",
       "Leadership and patient advocacy skills",
     ],
-    image: "/images/hero/hero-hospital-ward.jpg",
+    image: "/images/programs/diploma-nursing-direct.jpg",
   },
   {
     id: "diploma-nursing-extension",
@@ -280,7 +280,7 @@ export const programs = [
       "Ward management readiness",
       "Improved career mobility",
     ],
-    image: "/images/gallery/staff-nurses-trio.jpg",
+    image: "/images/programs/diploma-nursing-extension.jpg",
   },
   {
     id: "certificate-nursing",
@@ -300,7 +300,7 @@ export const programs = [
       "Strong fundamentals for diploma progression",
       "Community health service capacity",
     ],
-    image: "/images/gallery/classroom-training.jpg",
+    image: "/images/programs/certificate-nursing.jpg",
   },
   {
     id: "diploma-midwifery-direct",
@@ -320,7 +320,7 @@ export const programs = [
       "Maternal and newborn emergency response",
       "Community midwifery leadership",
     ],
-    image: "/images/hero/hero-clinical-infant-care.jpg",
+    image: "/images/programs/diploma-midwifery-direct.jpg",
   },
   {
     id: "diploma-midwifery-extension",
@@ -340,7 +340,7 @@ export const programs = [
       "Improved maternal outcomes focus",
       "Facility leadership readiness",
     ],
-    image: "/images/gallery/clinical-demonstration.jpg",
+    image: "/images/programs/diploma-midwifery-extension.jpg",
   },
   {
     id: "certificate-midwifery",
@@ -360,7 +360,7 @@ export const programs = [
       "Pathway to diploma extension",
       "Community maternal health impact",
     ],
-    image: "/images/hero/hero-injection-practice.jpg",
+    image: "/images/programs/certificate-midwifery.jpg",
   },
 ] as const;
 
