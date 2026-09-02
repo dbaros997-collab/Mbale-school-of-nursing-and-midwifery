@@ -32,14 +32,15 @@ export default function AcademicsPage() {
                 id={program.id}
                 className="scroll-mt-28 overflow-hidden rounded-3xl content-panel"
               >
-                <div className="grid lg:grid-cols-[280px_1fr]">
-                  <div className="relative min-h-[200px] overflow-hidden bg-surface lg:rounded-l-3xl">
+                <div className="grid lg:grid-cols-[360px_1fr]">
+                  <div className="relative min-h-[240px] overflow-hidden bg-surface sm:min-h-[280px] lg:min-h-0 lg:rounded-l-3xl">
                     <Image
                       src={program.image}
                       alt={program.title}
                       fill
+                      unoptimized
                       className="object-cover"
-                      sizes="280px"
+                      sizes="(max-width: 1024px) 100vw, 360px"
                     />
                   </div>
                   <div className="p-6 sm:p-8">

@@ -10,8 +10,8 @@ const assetsDir =
   "C:/Users/joscom/.cursor/projects/c-Users-joscom-Mable-abale-school/assets";
 const outDir = path.join(process.cwd(), "public/images/programs");
 
-/** Card sidebar aspect — matches academics grid (~280×200) */
-const CARD = { width: 840, height: 600 };
+/** Card sidebar aspect — 2× desktop column for retina, capped at source pixels */
+const CARD = { width: 1024, height: 732 };
 
 const PROGRAMS = [
   {
@@ -55,18 +55,18 @@ for (const { id, src } of PROGRAMS) {
       fit: "cover",
       position: "centre",
       kernel: sharp.kernel.lanczos3,
-    })
-    .sharpen({ sigma: 0.4 });
+      withoutEnlargement: true,
+    });
 
   const jpgOut = path.join(outDir, `${id}.jpg`);
   const webpOut = path.join(outDir, `${id}.webp`);
 
   await pipeline
     .clone()
-    .jpeg({ quality: 92, mozjpeg: true, chromaSubsampling: "4:4:4", progressive: true })
+    .jpeg({ quality: 98, mozjpeg: true, chromaSubsampling: "4:4:4", progressive: true })
     .toFile(jpgOut);
 
-  await pipeline.clone().webp({ quality: 90, effort: 6 }).toFile(webpOut);
+  await pipeline.clone().webp({ quality: 95, effort: 6, smartSubsample: false }).toFile(webpOut);
 
   console.log(
     `${id} → jpg ${(fs.statSync(jpgOut).size / 1024).toFixed(0)} KB, webp ${(fs.statSync(webpOut).size / 1024).toFixed(0)} KB`,
