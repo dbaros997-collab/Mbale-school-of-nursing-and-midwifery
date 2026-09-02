@@ -2,6 +2,10 @@ import Image from "next/image";
 import { coreValues, SCHOOL } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
+/** Bust browser cache when a new build deploys. */
+const ABOUT_ASSET_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-v1";
+
 export function AboutBand() {
   return (
     <section id="about" className="scroll-mt-24 bg-primary-dark py-14 text-white sm:py-16">
@@ -35,10 +39,11 @@ export function AboutBand() {
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
           <Image
-            src="/images/about/leadership-team.jpg"
+            src={`/images/about/leadership-team.jpg?v=${ABOUT_ASSET_VERSION}`}
             alt="MBSNM leadership and nursing faculty team"
             fill
             unoptimized
+            priority
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
