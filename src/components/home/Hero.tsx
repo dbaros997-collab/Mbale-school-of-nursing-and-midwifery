@@ -40,7 +40,6 @@ const HERO_TITLE_ACCENTS = [
   "hero-accent-gold",
   "hero-accent-sky",
   "hero-accent-gold",
-  "hero-accent-green",
 ] as const;
 
 const HERO_COPY_ACCENTS: Record<
@@ -57,10 +56,6 @@ const HERO_COPY_ACCENTS: Record<
   },
   "3": { titlePhrase: "on day one" },
   "4": { titlePhrase: "Learning by doing" },
-  "5": {
-    titlePhrase: "Hands-on",
-    descriptionPhrases: ["Mbale Referral Hospital"],
-  },
 };
 
 function highlightPhrase(text: string, phrase: string, accentClass: string): ReactNode {

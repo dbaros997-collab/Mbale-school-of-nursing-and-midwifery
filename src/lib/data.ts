@@ -218,18 +218,6 @@ export const heroSlides = [
     secondaryHref: "/academics",
     alt: "Instructor guiding a student through injection technique on a clinical mannequin",
   },
-  {
-    id: "5",
-    image: "/images/hero/hero-clinical-training.jpg",
-    title: "Hands-on from the start",
-    description:
-      "Classroom teaching and clinical placements at Mbale Referral Hospital and partner sites. You practise skills where care actually happens.",
-    cta: "Apply Now",
-    href: "/admissions",
-    secondaryCta: "View Programmes",
-    secondaryHref: "/academics",
-    alt: "Students practising clinical skills in the skills laboratory",
-  },
 ] as const;
 
 /** KIU-style quick highlight boxes under the hero */
