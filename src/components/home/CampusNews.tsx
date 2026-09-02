@@ -13,6 +13,14 @@ function formatDate(iso: string) {
   });
 }
 
+/** Bust browser cache when a new build deploys. */
+const NEWS_ASSET_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "news-v1";
+
+function newsImage(path: string) {
+  return `${path}?v=${NEWS_ASSET_VERSION}`;
+}
+
 export function CampusNews() {
   const stories = newsItems.filter((n) => n.featured).slice(0, 2);
 
@@ -36,7 +44,7 @@ export function CampusNews() {
                 className="group relative block aspect-[16/11] min-h-[260px] overflow-hidden rounded-3xl focus-ring sm:min-h-[320px]"
               >
                 <Image
-                  src={item.image}
+                  src={newsImage(item.image)}
                   alt={item.title}
                   fill
                   unoptimized
