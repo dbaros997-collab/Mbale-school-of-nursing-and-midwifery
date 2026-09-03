@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { openIntakesLabel, SCHOOL } from "@/lib/data";
 
-/** YouTube video from the ENTRY REQUIREMENTS area on mbsnm.org/services/ */
-const CAMPUS_VIDEO_ID = "L0XIzMuBm5g";
-
+const CAMPUS_GLIMPSE_VIDEO = "/videos/campus-glimpse.mp4";
 const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg?v=hq";
 
 /**
@@ -45,25 +43,20 @@ export function ApplyBand() {
 
         <div className="flex flex-col justify-center border-t border-white/15 px-6 py-10 sm:border-t-0 sm:border-l sm:px-8 lg:px-10 lg:py-16">
           <h3 className="font-display text-[23px] font-black leading-none text-white sm:text-2xl">
-            <a
-              href={`https://youtu.be/${CAMPUS_VIDEO_ID}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition hover:text-brand-yellow focus-ring"
-            >
-              A Glimpse of {SCHOOL.shortName}
-            </a>
+            A Glimpse of {SCHOOL.shortName}
           </h3>
           <div className="mt-4 w-full overflow-hidden rounded-2xl">
             <div className="relative aspect-video w-full">
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src={`https://www.youtube.com/embed/${CAMPUS_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${CAMPUS_VIDEO_ID}&controls=1&rel=0&playsinline=1`}
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src={CAMPUS_GLIMPSE_VIDEO}
                 title={`A Glimpse of ${SCHOOL.shortName}`}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
               />
             </div>
           </div>
