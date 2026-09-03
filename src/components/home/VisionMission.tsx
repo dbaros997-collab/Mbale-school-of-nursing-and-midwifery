@@ -45,8 +45,8 @@ export function VisionMission() {
             className="relative min-h-[22rem] sm:min-h-[26rem]"
           >
             <Image
-              src="/images/admin-block.jpg"
-              alt={`Campus and learning facilities at ${SCHOOL.shortName}`}
+              src="/images/campus-aerial.png"
+              alt={`Aerial view of the ${SCHOOL.shortName} campus`}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
