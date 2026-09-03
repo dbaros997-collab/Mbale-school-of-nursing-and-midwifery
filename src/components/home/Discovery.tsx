@@ -18,6 +18,7 @@ function discoveryAsset(path: string) {
 const ctaItems = [
   {
     title: "About",
+    href: "/#about",
     image: "/images/discovery/discovery-about.webp",
     objectPosition: "50% 35%",
     color: "var(--brand-yellow)",
@@ -28,6 +29,7 @@ const ctaItems = [
   },
   {
     title: "Programs",
+    href: "/academics",
     image: "/images/discovery/discovery-programs.webp",
     objectPosition: "center center",
     color: "var(--brand-green)",
@@ -44,9 +46,28 @@ export function Discovery() {
   const [topic, setTopic] = useState("");
   const topics = useMemo(() => discoveryTopics[role] ?? [], [role]);
 
+  function navigateHref(href: string) {
+    const hashIndex = href.indexOf("#");
+    if (hashIndex !== -1) {
+      const path = href.slice(0, hashIndex) || "/";
+      const hash = href.slice(hashIndex + 1);
+      if ((path === "/" || path === window.location.pathname) && hash) {
+        const target = document.getElementById(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.history.pushState(null, "", `#${hash}`);
+          return;
+        }
+      }
+    }
+    router.push(href);
+  }
+
   function onShow() {
-    const match = topics.find((t) => t.value === topic) ?? topics[0];
-    if (match) router.push(match.href);
+    const match = topic
+      ? topics.find((t) => t.value === topic)
+      : topics[0];
+    if (match) navigateHref(match.href);
   }
 
   return (
@@ -120,7 +141,7 @@ export function Discovery() {
               </p>
             </div>
 
-            {/* Right: About / Programs (visual only) */}
+            {/* Right: About / Programs */}
             <div className="flex flex-col justify-center gap-1 lg:col-span-5">
               {ctaItems.map((item, index) => (
                 <CtaPill key={item.title} item={item} index={index} />
@@ -154,14 +175,15 @@ function CtaPill({
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      <div
+      <Link
+        href={item.href}
         className={cn(
-          "relative flex h-[88px] w-full overflow-hidden rounded-[80px] sm:h-[96px]",
+          "group relative flex h-[88px] w-full overflow-hidden rounded-[80px] transition hover:opacity-95 focus-ring sm:h-[96px]",
           item.reverse && "flex-row-reverse",
         )}
       >
         <span
-          className="relative z-10 flex h-full w-[150px] min-w-[150px] shrink-0 items-center justify-center rounded-[80px] px-2 text-center sm:w-[170px] sm:min-w-[170px]"
+          className="relative z-10 flex h-full w-[150px] min-w-[150px] shrink-0 items-center justify-center rounded-[80px] px-2 text-center transition group-hover:brightness-105 sm:w-[170px] sm:min-w-[170px]"
           style={{ backgroundColor: item.color, color: item.textColor }}
         >
           <span className="text-base font-medium leading-tight tracking-tight sm:text-lg">
@@ -176,12 +198,12 @@ function CtaPill({
             fill
             sizes="(max-width: 1024px) 55vw, 320px"
             quality={90}
-            className="object-cover"
+            className="object-cover transition group-hover:scale-[1.02]"
             style={{ objectPosition: item.objectPosition }}
             aria-hidden
           />
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 }

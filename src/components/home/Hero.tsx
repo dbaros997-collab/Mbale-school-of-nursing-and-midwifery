@@ -128,16 +128,18 @@ export function Hero() {
       aria-label="Homepage hero"
     >
       <div className="hero-section">
-        <ImageSlider
-          images={slideImages}
-          layout="hero"
-          intervalMs={6500}
-          altPrefix="Hero slide"
-          onIndexChange={setIndex}
-        >
-          <div className="hero-slider__scrim-linear" aria-hidden />
-          <div className="hero-slider__scrim-radial" aria-hidden />
-        </ImageSlider>
+        <div className="hero-section__photos">
+          <ImageSlider
+            images={slideImages}
+            layout="hero"
+            intervalMs={6500}
+            altPrefix="Hero slide"
+            onIndexChange={setIndex}
+          >
+            <div className="hero-slider__scrim-linear max-md:hidden" aria-hidden />
+            <div className="hero-slider__scrim-radial max-md:hidden" aria-hidden />
+          </ImageSlider>
+        </div>
 
         <div className="hero-section__content">{copyBlock}</div>
       </div>
