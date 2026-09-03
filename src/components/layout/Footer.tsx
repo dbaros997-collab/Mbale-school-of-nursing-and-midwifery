@@ -66,12 +66,15 @@ function FooterLinkCol({
 export function Footer() {
   return (
     <div className="relative z-10 mt-auto overflow-hidden">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={FOOTER_SECTION_BG}
+        alt=""
         aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+        decoding="async"
       />
-      <div className="pointer-events-none absolute inset-0 bg-primary/62" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-primary/48" aria-hidden />
 
       {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
