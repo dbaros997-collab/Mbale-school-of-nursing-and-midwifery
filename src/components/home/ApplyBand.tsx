@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { openIntakesLabel, SCHOOL } from "@/lib/data";
-import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
+import { APPLY_BAND_BG } from "@/lib/footer-section-bg";
 
 const CAMPUS_GLIMPSE_VIDEO = "/videos/campus-glimpse.mp4";
 
@@ -12,7 +12,7 @@ export function ApplyBand() {
     <section
       id="apply-admission"
       className="relative scroll-mt-24 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
+      style={{ backgroundImage: `url('${APPLY_BAND_BG}')` }}
       aria-labelledby="apply-band-heading"
     >
       <div className="absolute inset-0 bg-primary/72" aria-hidden />
