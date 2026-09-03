@@ -1,7 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 
 const academicsLinks = [
@@ -103,9 +102,11 @@ export function Footer() {
       </div>
 
       <footer
-        className="site-footer-links relative overflow-hidden pt-16 text-white sm:pt-20"
-        style={{ backgroundColor: "var(--primary-dark)" }}
+        className="site-footer-links relative overflow-hidden bg-cover bg-center bg-no-repeat pt-16 text-white sm:pt-20"
+        style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
       >
+        <div className="footer-fog-overlay absolute inset-0" aria-hidden />
+        <div className="absolute inset-0 bg-primary-dark/78" aria-hidden />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 pb-12 pt-4 sm:px-8 lg:grid-cols-4 lg:gap-8 lg:pb-14">
           {/* Brand + contact — UCU column 1 */}
           <div className="lg:col-span-1">

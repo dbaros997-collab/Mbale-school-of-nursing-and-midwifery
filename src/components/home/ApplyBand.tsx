@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { openIntakesLabel, SCHOOL } from "@/lib/data";
+import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
 
 const CAMPUS_GLIMPSE_VIDEO = "/videos/campus-glimpse.mp4";
-const FOOTER_SECTION_BG = "/images/footer-section-bg.jpg?v=hq";
 
 /**
  * UCU-style Apply for Admission — campus photo with navy overlay, two columns.
