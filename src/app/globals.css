@@ -859,9 +859,9 @@ html:not(.js-ready) main [style*="opacity:0"] {
   box-shadow: 0 8px 24px rgba(14, 36, 86, 0.18);
 }
 
-/* Footer link columns — campus aerial photo with navy overlay */
+/* Footer link columns — transparent; campus photo lives on parent wrapper */
 .site-footer-links {
-  background-color: var(--primary-dark);
+  background: transparent;
 }
 
 /* KIU-style footer: deep navy field + soft dotted texture */
