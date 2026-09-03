@@ -29,7 +29,7 @@ const quickIconStyles = [
 
 /** Bust CDN/browser cache when a new build deploys. */
 const HERO_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v4-mobile-full";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v5-fullbleed";
 
 function heroAsset(path: string) {
   return `${path}?v=${HERO_ASSET_VERSION}`;
@@ -138,6 +138,7 @@ export function Hero() {
           >
             <div className="hero-slider__scrim-linear max-md:hidden" aria-hidden />
             <div className="hero-slider__scrim-radial max-md:hidden" aria-hidden />
+            <div className="hero-slider__scrim-bottom md:hidden" aria-hidden />
           </ImageSlider>
         </div>
 

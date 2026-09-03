@@ -123,13 +123,32 @@ export function ImageSlider({
         >
           {images.map((src, i) => {
             const fit = objectFitFor?.has(src) ? "contain" : "cover";
+            const slideClass = cn(
+              "gallery-slider__slide",
+              layout === "hero" && i === index && "is-active",
+            );
+
+            if (layout === "hero") {
+              return (
+                <div key={src} className={slideClass} aria-hidden={i !== index}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt={`${altPrefix} ${i + 1} of ${count}`}
+                    className="gallery-slider__slide-img"
+                    loading={i === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    draggable={false}
+                    style={{ objectFit: fit }}
+                  />
+                </div>
+              );
+            }
+
             return (
               <div
                 key={src}
-                className={cn(
-                  "gallery-slider__slide",
-                  layout === "hero" && i === index && "is-active",
-                )}
+                className={slideClass}
                 style={{
                   backgroundImage: `url("${src}")`,
                   backgroundSize: fit,

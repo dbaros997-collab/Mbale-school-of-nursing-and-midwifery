@@ -420,25 +420,33 @@ html:not(.js-ready) main [style*="opacity:0"] {
     radial-gradient(ellipse 120% 90% at 50% 50%, transparent 38%, rgba(14, 36, 86, 0.48) 100%);
 }
 
+.hero-slider__scrim-bottom {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 36, 86, 0.08) 0%,
+    rgba(14, 36, 86, 0.02) 38%,
+    rgba(14, 36, 86, 0.62) 72%,
+    rgba(14, 36, 86, 0.9) 100%
+  );
+}
+
 @media (max-width: 767px) {
   .hero-section {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    min-height: auto;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 100svh;
     padding:
-      calc(var(--site-status-bar-height) + var(--site-header-height))
-      0
-      0;
+      calc(var(--site-status-bar-height) + var(--site-header-height) + 0.5rem)
+      1.25rem
+      2rem;
     gap: 0;
-    overflow: visible;
   }
 
   .hero-section__photos {
-    position: relative;
-    width: 100%;
-    height: clamp(18rem, 58svh, 28rem);
-    flex-shrink: 0;
+    position: absolute;
+    inset: 0;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -451,12 +459,13 @@ html:not(.js-ready) main [style*="opacity:0"] {
     width: 100%;
   }
 
-  .gallery-slider--hero .gallery-slider__slide {
+  .gallery-slider--hero .gallery-slider__slide,
+  .gallery-slider--hero .gallery-slider__slide-img {
     filter: none;
   }
 
   .gallery-slider--hero .gallery-slider__overlay {
-    display: none;
+    display: block;
   }
 
   .gallery-slider--hero .gallery-slider__arrow {
@@ -465,13 +474,12 @@ html:not(.js-ready) main [style*="opacity:0"] {
 
   .gallery-slider--hero .gallery-slider__dots {
     bottom: 0.75rem;
+    z-index: 4;
   }
 
   .hero-section__content {
-    position: relative;
-    z-index: 2;
-    padding: 1.25rem 1.25rem 1.75rem;
-    background: var(--primary-dark);
+    padding: 0;
+    background: transparent;
   }
 }
 
@@ -967,6 +975,14 @@ html:not(.js-ready) main [style*="opacity:0"] {
   filter: saturate(1.06) contrast(1.03) brightness(1.02);
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+.gallery-slider__slide-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .gallery-slider__overlay {
