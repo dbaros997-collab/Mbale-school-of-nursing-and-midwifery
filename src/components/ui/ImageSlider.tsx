@@ -5,28 +5,11 @@ import {
   useEffect,
   useRef,
   useState,
-  useSyncExternalStore,
   type CSSProperties,
   type ReactNode,
 } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const MOBILE_HERO_MQ = "(max-width: 767px)";
-
-function subscribeMobileHeroPeek(onStoreChange: () => void) {
-  const mq = window.matchMedia(MOBILE_HERO_MQ);
-  mq.addEventListener("change", onStoreChange);
-  return () => mq.removeEventListener("change", onStoreChange);
-}
-
-function getMobileHeroPeekSnapshot() {
-  return window.matchMedia(MOBILE_HERO_MQ).matches;
-}
-
-function getMobileHeroPeekServerSnapshot() {
-  return false;
-}
 
 type ImageSliderProps = {
   images: string[];
@@ -61,20 +44,11 @@ export function ImageSlider({
   const [resumeKey, setResumeKey] = useState(0);
   const [animating, setAnimating] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
-  const isMobileViewport = useSyncExternalStore(
-    subscribeMobileHeroPeek,
-    getMobileHeroPeekSnapshot,
-    getMobileHeroPeekServerSnapshot,
-  );
-  const mobileHeroPeek = layout === "hero" && isMobileViewport;
   const count = images.length;
 
-  const trackStyle: CSSProperties =
-    layout === "hero"
-      ? mobileHeroPeek
-        ? { transform: `translateX(calc(12px - ${index} * (76vw + 12px)))` }
-        : { transform: `translate3d(-${index * 100}%, 0, 0)` }
-      : { transform: `translate3d(-${index * 100}%, 0, 0)` };
+  const trackStyle: CSSProperties = {
+    transform: `translate3d(-${index * 100}%, 0, 0)`,
+  };
 
   const goTo = useCallback(
     (next: number, withAnim = true) => {
@@ -134,7 +108,6 @@ export function ImageSlider({
       className={cn(
         "gallery-slider",
         layout === "hero" && "gallery-slider--hero",
-        layout === "hero" && mobileHeroPeek && "gallery-slider--hero-peek",
         layout === "section" && "gallery-slider--section",
         className,
       )}

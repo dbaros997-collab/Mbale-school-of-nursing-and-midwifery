@@ -29,7 +29,7 @@ const quickIconStyles = [
 
 /** Bust CDN/browser cache when a new build deploys. */
 const HERO_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v3-no-lab";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v4-mobile-full";
 
 function heroAsset(path: string) {
   return `${path}?v=${HERO_ASSET_VERSION}`;
@@ -144,7 +144,7 @@ export function Hero() {
         <div className="hero-section__content">{copyBlock}</div>
       </div>
 
-      <div className="relative z-10 px-4 md:-mt-16 md:px-6 lg:px-8">
+      <div className="relative z-10 -mt-6 px-4 md:-mt-16 md:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-4">
             {heroQuickBoxes.map((box, i) => {
@@ -197,15 +197,15 @@ function HeroCopy({
 
   return (
     <>
-      <p className="font-display text-[clamp(1rem,2vw,1.35rem)] italic leading-snug text-white">
+      <p className="font-display text-[clamp(0.875rem,3.2vw,1.35rem)] italic leading-snug text-white/95">
         {SCHOOL.motto}
       </p>
-      <h1 className="mt-3 font-display text-[clamp(1.875rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
+      <h1 className="mt-2 font-display text-[clamp(1.625rem,6.8vw,3.5rem)] font-extrabold leading-[1.1] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.45)] sm:mt-3 sm:leading-[1.08]">
         {accent
           ? highlightPhrase(slide.title, accent.titlePhrase, titleAccent)
           : slide.title}
       </h1>
-      <p className="mx-auto mt-5 max-w-[36rem] text-[0.9375rem] leading-[1.7] text-white/88 sm:text-[1.0625rem] lg:text-lg">
+      <p className="mx-auto mt-3 max-w-[34rem] text-[0.875rem] leading-[1.65] text-white/90 sm:mt-5 sm:max-w-[36rem] sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg">
         {accent?.descriptionPhrases
           ? highlightPhrases(
               slide.description,
@@ -214,16 +214,16 @@ function HeroCopy({
             )
           : slide.description}
       </p>
-      <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+      <div className="mx-auto mt-5 flex w-full max-w-[20rem] flex-col items-stretch justify-center gap-2.5 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
         <Link
           href={slide.href}
-          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-6 py-3 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
+          className="btn-pill inline-flex min-h-[2.75rem] w-full items-center justify-center rounded-full border border-brand-green bg-brand-green px-5 py-2.5 text-sm font-extrabold leading-none text-white shadow-[0_10px_24px_rgba(25,143,52,0.28)] transition hover:border-brand-green-dark hover:bg-brand-green-dark focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
         >
           {slide.cta}
         </Link>
         <Link
           href={slide.secondaryHref}
-          className="btn-pill inline-flex min-h-[3rem] w-full items-center justify-center rounded-full border-2 border-white/70 bg-white/5 px-6 py-3 text-sm font-bold leading-none text-white backdrop-blur-sm transition hover:border-white hover:bg-white/12 focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
+          className="btn-pill inline-flex min-h-[2.75rem] w-full items-center justify-center rounded-full border-2 border-white/70 bg-white/5 px-5 py-2.5 text-sm font-bold leading-none text-white backdrop-blur-sm transition hover:border-white hover:bg-white/12 focus-ring sm:min-h-[3.25rem] sm:w-auto sm:min-w-[11rem] sm:px-8 sm:text-base"
         >
           {slide.secondaryCta}
         </Link>
