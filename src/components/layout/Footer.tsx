@@ -78,7 +78,7 @@ export function Footer() {
 
       {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="ucu-subscribe-bar flex flex-col gap-5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-10 sm:py-9">
+        <div className="ucu-subscribe-bar flex flex-col gap-5 bg-brand-green px-6 py-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-10 sm:py-9">
           <h2 className="font-display text-2xl font-bold leading-tight text-white sm:text-[1.75rem]">
             Subscribe to get more information
           </h2>
