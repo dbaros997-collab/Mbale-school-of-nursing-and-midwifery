@@ -79,7 +79,7 @@ export function Footer() {
       {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         <div className="ucu-subscribe-bar flex flex-col gap-5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-10 sm:py-9">
-          <h2 className="font-display text-2xl font-bold leading-tight text-brand-ink sm:text-[1.75rem]">
+          <h2 className="font-display text-2xl font-bold leading-tight text-white sm:text-[1.75rem]">
             Subscribe to get more information
           </h2>
           <form
@@ -88,22 +88,22 @@ export function Footer() {
           >
             <label
               htmlFor="footer-subscribe-email"
-              className="block text-sm font-semibold text-brand-ink"
+              className="block text-sm font-semibold text-white/90"
             >
               Email
             </label>
-            <div className="mt-1.5 flex overflow-hidden rounded-sm border border-primary/30 bg-white shadow-sm">
+            <div className="mt-1.5 flex overflow-hidden rounded-sm border border-white/25 bg-white shadow-sm">
               <input
                 id="footer-subscribe-email"
                 type="email"
                 name="email"
                 required
                 placeholder="Enter your email"
-                className="min-w-0 flex-1 border-0 px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+                className="min-w-0 flex-1 border-0 px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-green"
               />
               <button
                 type="submit"
-                className="shrink-0 border-l border-primary/30 bg-brand-yellow px-5 py-2.5 text-sm font-bold text-brand-ink transition hover:bg-brand-yellow-dark focus-ring"
+                className="shrink-0 border-l border-white/25 bg-white px-5 py-2.5 text-sm font-bold text-brand-green transition hover:bg-brand-ivory focus-ring"
               >
                 Subscribe
               </button>
