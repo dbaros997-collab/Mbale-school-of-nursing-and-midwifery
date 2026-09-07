@@ -7,11 +7,12 @@ import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 
 const academicsLinks = [
   { label: "Why MBSNM", href: "/#about" },
+  { label: "Department of Nursing", href: "/academics/nursing" },
+  { label: "Nursing Programmes", href: "/academics/nursing/programs" },
   { label: "Certificate Programmes", href: "/academics#certificate-nursing" },
   { label: "Diploma Programmes", href: "/academics" },
   { label: "Admission Requirements", href: "/admissions" },
   { label: "How to Apply", href: "/admissions#apply" },
-  { label: "Fees & Payments", href: "/admissions" },
   { label: "List of all Programmes", href: "/academics" },
 ];
 
@@ -28,7 +29,7 @@ const quickLinks = [
 const campusLinks = [
   { label: "About MBSNM", href: "/#about" },
   { label: "Vision & Mission", href: "/#vision-mission" },
-  { label: "Clinical Training", href: "/contact" },
+  { label: "Clinical Training", href: "/academics/nursing/clinical-placements" },
   { label: "Alumni", href: "/alumni" },
   { label: "Campus Life", href: "/#about" },
   { label: "School Gallery", href: "/#gallery" },

@@ -1,53 +1,50 @@
-"use client";
-
 import Image from "next/image";
-import Link from "next/link";
-import { Download, Briefcase, CheckCircle2, Clock, ShieldCheck } from "lucide-react";
-import { programs, nursingDepartment, SCHOOL } from "@/lib/data";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Button } from "@/components/ui/Button";
+import { Briefcase, CheckCircle2, Clock, ShieldCheck } from "lucide-react";
+import { nursingDepartment, nursingPrograms, SCHOOL } from "@/lib/data";
 import { PageBanner } from "@/components/ui/PageBanner";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { NursingSubNav } from "@/components/academics/NursingSubNav";
 import { Callout } from "@/components/ui/Callout";
+import { Button } from "@/components/ui/Button";
 
-export default function AcademicsPage() {
+export default function NursingProgramsPage() {
+  const { accreditation } = nursingDepartment;
+
   return (
     <div>
       <PageBanner
-        breadcrumb="Study at MBSNM"
-        title="Courses & Programs"
-        subtitle={`Explore diploma and certificate pathways in Nursing and Midwifery at ${SCHOOL.name}.`}
+        breadcrumb="Department of Nursing"
+        title="Nursing Programmes"
+        subtitle={`Diploma and certificate pathways offered by the Department of Nursing at ${SCHOOL.shortName}.`}
         image="/images/discovery/discovery-programs.webp"
       />
 
-      <section className="section-sky py-14">
+      <section className="section-sky py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <NursingSubNav />
+        </div>
+      </section>
+
+      <section className="section-surface py-14">
         <div className="mx-auto max-w-7xl space-y-10 px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Course catalogue"
-            title="Nursing & Midwifery offerings"
-            description="Select a program to review duration, requirements, and graduate pathways."
+            eyebrow="Accredited programmes"
+            title="Three nursing courses"
+            description="All programmes are registered with the Ministry of Education and Sports and examined through UHPAB."
           />
 
           <Callout>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex gap-3">
-                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
-                <div className="space-y-2 text-sm leading-relaxed text-foreground">
-                  <p className="font-semibold text-primary">{nursingDepartment.name}</p>
-                  <p>{nursingDepartment.accreditation.registration}</p>
-                  <p>{nursingDepartment.accreditation.examinations}</p>
-                </div>
+            <div className="flex gap-3">
+              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+              <div className="space-y-2 text-sm leading-relaxed text-foreground">
+                <p>{accreditation.registration}</p>
+                <p>{accreditation.examinations}</p>
               </div>
-              <Link
-                href="/academics/nursing"
-                className="shrink-0 text-sm font-bold text-primary underline-offset-2 hover:underline focus-ring"
-              >
-                Explore the department →
-              </Link>
             </div>
           </Callout>
 
           <div className="space-y-8">
-            {programs.map((program) => (
+            {nursingPrograms.map((program) => (
               <article
                 key={program.id}
                 id={program.id}
@@ -114,26 +111,8 @@ export default function AcademicsPage() {
                       <Button href="/admissions" variant="green" size="sm">
                         Apply for this course
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        href={
-                          program.category === "Nursing"
-                            ? "/academics/nursing/curriculum"
-                            : undefined
-                        }
-                        onClick={
-                          program.category === "Nursing"
-                            ? undefined
-                            : () =>
-                                alert(
-                                  `Curriculum overview for ${program.title} will be available as a downloadable PDF. Contact ${SCHOOL.admissionsEmail} for the current syllabus.`,
-                                )
-                        }
-                        ariaLabel={`Request curriculum for ${program.title}`}
-                      >
-                        <Download className="h-4 w-4" aria-hidden />
-                        Curriculum / syllabus info
+                      <Button href="/academics/nursing/curriculum" variant="ghost" size="sm">
+                        View curriculum
                       </Button>
                     </div>
                   </div>

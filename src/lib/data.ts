@@ -56,7 +56,7 @@ export const mainNav = [
         links: [
           { label: "Visit Campus", href: "/contact" },
           { label: "Mbale City Campus", href: "/contact" },
-          { label: "Clinical Training Sites", href: "/#spotlight" },
+          { label: "Clinical Training Sites", href: "/academics/nursing/clinical-placements" },
         ],
       },
     ],
@@ -74,9 +74,10 @@ export const mainNav = [
       {
         title: "Nursing",
         links: [
-          { label: "Diploma in Nursing (Direct)", href: "/academics#diploma-nursing-direct" },
-          { label: "Diploma in Nursing (Extension)", href: "/academics#diploma-nursing-extension" },
-          { label: "Certificate in Nursing", href: "/academics#certificate-nursing" },
+          { label: "Department of Nursing", href: "/academics/nursing" },
+          { label: "Nursing Programmes", href: "/academics/nursing/programs" },
+          { label: "Curriculum & Course Units", href: "/academics/nursing/curriculum" },
+          { label: "Clinical Placements", href: "/academics/nursing/clinical-placements" },
         ],
       },
       {
@@ -245,7 +246,7 @@ export const programs = [
     id: "diploma-nursing-direct",
     title: "Diploma in Nursing (Direct)",
     category: "Nursing",
-    duration: "2 years",
+    duration: "3 years",
     level: "Diploma",
     summary:
       "Comprehensive direct-entry nursing training covering clinical care, pharmacology, community health, and professional ethics.",
@@ -266,7 +267,7 @@ export const programs = [
     id: "diploma-nursing-extension",
     title: "Diploma in Nursing (Extension)",
     category: "Nursing",
-    duration: "18 months",
+    duration: "1.5 years",
     level: "Diploma",
     summary:
       "Upgrade pathway for certified nurses seeking diploma-level competence and expanded clinical responsibility.",
@@ -363,6 +364,57 @@ export const programs = [
     image: "/images/programs/certificate-midwifery.jpg",
   },
 ] as const;
+
+export const nursingPrograms = programs.filter((p) => p.category === "Nursing");
+
+export const nursingDepartment = {
+  name: "Department of Nursing",
+  overview:
+    "The Department of Nursing at MBSNM prepares compassionate, competent nurses through rigorous classroom instruction, skills-lab practice, and supervised clinical rotations across Eastern Uganda. Our programmes blend professional nursing science with Christian values of service to the poor, the young, and the elderly.",
+  head: {
+    name: "Ms. Nakacwa Morine",
+    title: "Head of Department",
+    image: "/images/gallery/staff-head-nursing-nakigowa.png?v=2",
+  },
+  teamDescription:
+    "The department is led by the Head of Department alongside dedicated health tutors and clinical instructors who guide students from foundational skills through advanced ward and community practice.",
+  accreditation: {
+    registration:
+      "All nursing courses are fully registered under the Ministry of Education and Sports (Health Education and Training Department).",
+    examinations:
+      "Semester examinations are conducted through the Uganda Health Professions Assessment Board (UHPAB) under assessment center number U120.",
+  },
+  coreSubjects: [
+    "Foundations of Nursing",
+    "Anatomy and Physiology",
+    "Pharmacology",
+    "Medical and Surgical Nursing",
+    "Pediatrics",
+    "Reproductive Health",
+    "Mental Health",
+    "Palliative Care",
+    "Basic Computer",
+    "Health Service Management",
+    "Applied Research",
+  ],
+  clinicalPlacements: {
+    regionalHospitals: [
+      "Mbale Regional Referral Hospital",
+      "Tororo District General Hospital",
+      "Bududa District General Hospital",
+    ],
+    hcivs: ["Budadiri", "Bukasakya", "Bugobero", "Busiu", "Namatala", "Mukuju"],
+    hciiis: [
+      "Nakaloke",
+      "Namakwekwe",
+      "Malukhu",
+      "Mbale Police",
+      "Mbale Prisons",
+      "Mbale Municipal",
+      "Bunampongo",
+    ],
+  },
+} as const;
 
 export const applicationIntakes = [
   {
@@ -504,8 +556,8 @@ export const galleryItems = [
   {
     id: "staff-head-nursing-nakigowa",
     src: "/images/gallery/staff-head-nursing-nakigowa.png?v=2",
-    alt: "Ms Nakigowa U., Head of Nursing at MBSNM, working at her office desk",
-    caption: "Ms Nakigowa U.",
+    alt: "Ms. Nakacwa Morine, Head of Department of Nursing at MBSNM, working at her office desk",
+    caption: "Ms. Nakacwa Morine",
     category: "Head of Nursing",
   },
   {
@@ -726,7 +778,7 @@ export const faqs = [
   {
     question: "Where do students do clinical placements?",
     answer:
-      "You will train at Mbale Referral Hospital and other approved sites. That is where you learn to care for real patients.",
+      "Nursing students train at Mbale Regional Referral Hospital, Tororo and Bududa District General Hospitals, and affiliated HCIVs and HCIIIs across the region. See the Clinical Placements page for the full list of partner sites.",
   },
   {
     question: "What documents do I need to apply?",
