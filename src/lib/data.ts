@@ -523,13 +523,6 @@ export const galleryItems = [
     category: "Staff",
   },
   {
-    id: "staff-nurse-office",
-    src: "/images/gallery/staff-nurse-office.jpg",
-    alt: "MBSNM nurse seated at her office desk",
-    caption: "Nursing administration",
-    category: "Staff",
-  },
-  {
     id: "staff-nurse-laptop",
     src: "/images/gallery/staff-nurse-laptop.jpg",
     alt: "MBSNM nurse working at a laptop in the office",
