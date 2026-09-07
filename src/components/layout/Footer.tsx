@@ -65,16 +65,13 @@ function FooterLinkCol({
 /** UCU-style lower section: yellow subscribe bar + four-column footer over campus aerial. */
 export function Footer() {
   return (
-    <div className="relative z-10 mt-auto overflow-hidden">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={FOOTER_SECTION_BG}
-        alt=""
+    <div className="footer-section-bg relative z-10 mt-auto overflow-hidden">
+      <div
+        className="footer-section-bg__photo pointer-events-none absolute inset-0 overflow-hidden"
+        style={{ backgroundImage: `url('${FOOTER_SECTION_BG}')` }}
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-        decoding="async"
       />
-      <div className="pointer-events-none absolute inset-0 bg-primary/48" aria-hidden />
+      <div className="footer-section-bg__overlay pointer-events-none absolute inset-0" aria-hidden />
 
       {/* Subscribe bar — overlaps footer like ucu.ac.ug */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">

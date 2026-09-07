@@ -851,6 +851,38 @@ html:not(.js-ready) main [style*="opacity:0"] {
   }
 }
 
+/* Footer celebration photo — tall mobile footers otherwise over-zoom object-cover */
+.footer-section-bg {
+  background-color: var(--primary);
+}
+
+.footer-section-bg__photo {
+  background-size: cover;
+  background-position: center 38%;
+  background-repeat: no-repeat;
+}
+
+.footer-section-bg__overlay {
+  background: color-mix(in srgb, var(--primary) 48%, transparent);
+}
+
+@media (max-width: 767px) {
+  .footer-section-bg__photo {
+    /* Fit photo to screen width (like desktop) instead of zooming to footer height */
+    background-size: 100% auto;
+    background-position: center top;
+  }
+
+  .footer-section-bg__overlay {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 28%, transparent) 0%,
+      color-mix(in srgb, var(--primary) 38%, transparent) 38%,
+      color-mix(in srgb, var(--primary) 72%, transparent) 100%
+    );
+  }
+}
+
 /* UCU-style subscribe bar above footer */
 .ucu-subscribe-bar {
   background-color: var(--brand-green);
