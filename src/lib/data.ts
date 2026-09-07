@@ -537,11 +537,11 @@ export const galleryItems = [
     category: "Staff",
   },
   {
-    id: "staff-leadership-desk",
-    src: "/images/gallery/staff-leadership-desk.jpg",
-    alt: "MBSNM leadership team member at his desk",
-    caption: "School leadership",
-    category: "Staff",
+    id: "staff-deputy-principal-buyo-iron",
+    src: "/images/gallery/staff-deputy-principal-buyo-iron.png",
+    alt: "Mr Buyo R. Iron, Deputy Principal at MBSNM, in his office",
+    caption: "Mr Buyo R. Iron",
+    category: "Deputy Principal",
   },
   {
     id: "staff-office-collaboration",
