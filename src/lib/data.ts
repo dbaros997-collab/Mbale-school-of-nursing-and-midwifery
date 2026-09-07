@@ -658,13 +658,6 @@ export const galleryItems = [
     caption: "Student life at MBSNM",
     category: "Life",
   },
-  {
-    id: "graduates",
-    src: "/images/graduates.jpg",
-    alt: "MBSNM graduates in uniform",
-    caption: "Proud graduates",
-    category: "Graduation",
-  },
 ] as const;
 
 export const spotlightArticles = [
