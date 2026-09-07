@@ -523,11 +523,11 @@ export const galleryItems = [
     category: "Staff",
   },
   {
-    id: "staff-nurse-laptop",
-    src: "/images/gallery/staff-nurse-laptop.jpg",
-    alt: "MBSNM nurse working at a laptop in the office",
-    caption: "Faculty at work",
-    category: "Staff",
+    id: "staff-head-nursing-nakigowa",
+    src: "/images/gallery/staff-head-nursing-nakigowa.png",
+    alt: "Ms Nakigowa U., Head of Nursing at MBSNM, working at her office desk",
+    caption: "Ms Nakigowa U.",
+    category: "Head of Nursing",
   },
   {
     id: "staff-deputy-principal-buyo-iron",
