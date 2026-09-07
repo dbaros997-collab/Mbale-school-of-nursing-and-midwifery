@@ -495,11 +495,11 @@ export const galleryItems = [
     featured: true,
   },
   {
-    id: "staff-nurse-desk-calendar",
-    src: "/images/gallery/staff-nurse-desk-calendar.jpg",
-    alt: "MBSNM nursing staff member at her office desk with the school calendar",
-    caption: "Nursing staff at MBSNM",
-    category: "Staff",
+    id: "staff-head-midwifery-oyella-florence",
+    src: "/images/gallery/staff-head-midwifery-oyella-florence.png",
+    alt: "Miss Oyella Florence, Head of Midwifery at MBSNM, at her office desk",
+    caption: "Miss Oyella Florence",
+    category: "Head of Midwifery",
   },
   {
     id: "staff-nurses-trio",
