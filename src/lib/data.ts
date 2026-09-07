@@ -496,10 +496,24 @@ export const galleryItems = [
   },
   {
     id: "staff-head-midwifery-oyella-florence",
-    src: "/images/gallery/staff-head-midwifery-oyella-florence.png",
+    src: "/images/gallery/staff-head-midwifery-oyella-florence.png?v=2",
     alt: "Miss Oyella Florence, Head of Midwifery at MBSNM, at her office desk",
     caption: "Miss Oyella Florence",
     category: "Head of Midwifery",
+  },
+  {
+    id: "staff-head-nursing-nakigowa",
+    src: "/images/gallery/staff-head-nursing-nakigowa.png?v=2",
+    alt: "Ms Nakigowa U., Head of Nursing at MBSNM, working at her office desk",
+    caption: "Ms Nakigowa U.",
+    category: "Head of Nursing",
+  },
+  {
+    id: "staff-deputy-principal-buyo-iron",
+    src: "/images/gallery/staff-deputy-principal-buyo-iron.png?v=3",
+    alt: "Mr Buyo R. Iron, Deputy Principal at MBSNM, in his office",
+    caption: "Mr Buyo R. Iron",
+    category: "Deputy Principal",
   },
   {
     id: "staff-nurses-trio",
@@ -521,20 +535,6 @@ export const galleryItems = [
     alt: "MBSNM clinical staff member at his desk with laptop",
     caption: "Clinical leadership",
     category: "Staff",
-  },
-  {
-    id: "staff-head-nursing-nakigowa",
-    src: "/images/gallery/staff-head-nursing-nakigowa.png",
-    alt: "Ms Nakigowa U., Head of Nursing at MBSNM, working at her office desk",
-    caption: "Ms Nakigowa U.",
-    category: "Head of Nursing",
-  },
-  {
-    id: "staff-deputy-principal-buyo-iron",
-    src: "/images/gallery/staff-deputy-principal-buyo-iron.png?v=3",
-    alt: "Mr Buyo R. Iron, Deputy Principal at MBSNM, in his office",
-    caption: "Mr Buyo R. Iron",
-    category: "Deputy Principal",
   },
   {
     id: "staff-office-collaboration",
