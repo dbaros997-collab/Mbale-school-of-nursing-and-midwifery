@@ -531,7 +531,7 @@ export const galleryItems = [
   },
   {
     id: "staff-deputy-principal-buyo-iron",
-    src: "/images/gallery/staff-deputy-principal-buyo-iron.jpg?v=2",
+    src: "/images/gallery/staff-deputy-principal-buyo-iron.png?v=3",
     alt: "Mr Buyo R. Iron, Deputy Principal at MBSNM, in his office",
     caption: "Mr Buyo R. Iron",
     category: "Deputy Principal",

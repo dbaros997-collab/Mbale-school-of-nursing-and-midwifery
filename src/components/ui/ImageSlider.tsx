@@ -149,15 +149,20 @@ export function ImageSlider({
               <div
                 key={src}
                 className={slideClass}
-                style={{
-                  backgroundImage: `url("${src}")`,
-                  backgroundSize: fit,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
                 aria-hidden={i !== index}
                 aria-label={`${altPrefix} ${i + 1} of ${count}`}
-              />
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={`${altPrefix} ${i + 1} of ${count}`}
+                  className="gallery-slider__slide-img"
+                  loading={i === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable={false}
+                  style={{ objectFit: fit }}
+                />
+              </div>
             );
           })}
         </div>

@@ -20,6 +20,14 @@ export function SchoolGallery() {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const slideImages = useMemo(() => galleryItems.map((item) => item.src), []);
+  /** Portrait staff photos — show the full image instead of cropping to 16:9. */
+  const fullPhotoSlides = useMemo(
+    () =>
+      new Set([
+        galleryItems.find((item) => item.id === "staff-deputy-principal-buyo-iron")?.src ?? "",
+      ]),
+    [],
+  );
 
   const openLightbox = useCallback((item: GalleryItem) => {
     setActive(item);
@@ -75,6 +83,7 @@ export function SchoolGallery() {
               layout="section"
               intervalMs={5000}
               altPrefix="Gallery photo"
+              objectFitFor={fullPhotoSlides}
               renderOverlay={(index) => {
                 const item = galleryItems[index];
                 if (!item) return null;
