@@ -16,12 +16,10 @@ const heroLeadClass =
   "text-[0.9375rem] leading-[1.65] sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg lg:leading-[1.75]";
 
 export function SchoolGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [active, setActive] = useState<GalleryItem | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const slideImages = useMemo(() => galleryItems.map((item) => item.src), []);
-  const activeItem = galleryItems[activeIndex];
 
   const openLightbox = useCallback((item: GalleryItem) => {
     setActive(item);
@@ -77,9 +75,11 @@ export function SchoolGallery() {
               layout="section"
               intervalMs={5000}
               altPrefix="Gallery photo"
-              onIndexChange={setActiveIndex}
-              renderOverlay={() =>
-                activeItem ? (
+              renderOverlay={(index) => {
+                const item = galleryItems[index];
+                if (!item) return null;
+
+                return (
                   <>
                     <div
                       aria-hidden
@@ -87,20 +87,20 @@ export function SchoolGallery() {
                     />
                     <button
                       type="button"
-                      onClick={() => openLightbox(activeItem)}
+                      onClick={() => openLightbox(item)}
                       className="absolute inset-x-0 bottom-0 z-[1] block w-full cursor-zoom-in p-5 pb-14 text-left focus-ring sm:p-8 sm:pb-16"
-                      aria-label={`View photo: ${activeItem.caption}`}
+                      aria-label={`View photo: ${item.caption}`}
                     >
                       <span className={`block text-white/90 ${heroLeadClass}`}>
-                        {activeItem.category}
+                        {item.category}
                       </span>
                       <span className={`mt-2 block text-white sm:mt-3 ${heroTitleClass}`}>
-                        {activeItem.caption}
+                        {item.caption}
                       </span>
                     </button>
                   </>
-                ) : null
-              }
+                );
+              }}
             />
           </div>
         </ScrollReveal>
