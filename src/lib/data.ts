@@ -83,6 +83,7 @@ export const mainNav = [
       {
         title: "Midwifery",
         links: [
+          { label: "Head of Midwifery", href: "/academics/midwifery" },
           { label: "Diploma in Midwifery (Direct)", href: "/academics#diploma-midwifery-direct" },
           { label: "Diploma in Midwifery (Extension)", href: "/academics#diploma-midwifery-extension" },
           { label: "Certificate in Midwifery", href: "/academics#certificate-midwifery" },
@@ -414,6 +415,38 @@ export const nursingDepartment = {
       "Bunampongo",
     ],
   },
+} as const;
+
+export const headOfMidwifery = {
+  title: "Head of Midwifery Training Programme",
+  head: {
+    name: "Miss Oyella Florence",
+    image: "/images/gallery/staff-head-midwifery-oyella-florence.png?v=2",
+  },
+  intro:
+    "Information to midwifery students and qualified midwives — from the Head of Midwifery Training Programme at MBSNM.",
+  toStudents: [
+    "Midwifery is a deeply rewarding course. Midwives are second only to God, and are often the first to touch lives at birth.",
+    "Lives can be saved within one minute — the golden minute.",
+    "Have courage, stay calm with mothers and their caretakers, and be quick in your actions to save life.",
+    "We save two lives at the same time: the mother's life and the baby's life.",
+    "Be curious to learn during clinical placement — competency is all about hands-on practice.",
+  ],
+  toQualified: [
+    "It is our role to bring new lives into the world.",
+    "Midwives are among the first to touch lives after God — you are pillars of life.",
+    "Provide emotional support to mothers, their husbands, attendants, and relatives to reduce fear and pain and increase joy.",
+    "Work hard; do not abandon your competency because of pride, criticism, or laziness.",
+    "Maintain integrity and dignity even without motivation or appreciation — you will be a hero in the community you serve.",
+  ],
+  inspireBy: [
+    "Use a calm voice and steady hands during practice.",
+    "Change any frightening situation that may seem abnormal for your clients.",
+  ],
+  conclusion: [
+    "I encourage every student midwife and every practising midwife: you are pillars of life-saving in the whole world. Keep growing every day — knowledge is not static.",
+    "To those who have completed O and A level: we have a place for you at Mbale School of Nursing and Midwifery — the heart of Africa in Uganda — in Mbale city.",
+  ],
 } as const;
 
 export const applicationIntakes = [
