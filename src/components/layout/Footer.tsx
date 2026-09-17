@@ -116,10 +116,10 @@ export function Footer() {
           <div className="lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/footer-mbsnm-lockup.png"
+              src="/images/footer-mbsnm-lockup.png?v=crest-2026-09-17"
               alt={SCHOOL.name}
-              width={220}
-              height={270}
+              width={440}
+              height={310}
               className="h-auto w-[175px] max-w-[220px] sm:w-[220px]"
               decoding="async"
             />

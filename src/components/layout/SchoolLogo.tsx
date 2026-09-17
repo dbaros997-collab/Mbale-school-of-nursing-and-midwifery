@@ -10,13 +10,13 @@ type SchoolLogoProps = {
 const LOCKUP = {
   /** Official crest emblem — circular badge with motto banner. */
   src: "/images/logo-lockup.png",
-  width: 714,
-  height: 622,
+  width: 1022,
+  height: 721,
 } as const;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "png-lockup-restored";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-09-17";
 
 /** Official MBSNM crest emblem. */
 export function SchoolLogo({
@@ -32,12 +32,12 @@ export function SchoolLogo({
       src={src}
       alt="Mbale School of Nursing and Midwifery"
       width={compact ? 180 : LOCKUP.width}
-      height={compact ? 186 : LOCKUP.height}
+      height={compact ? 127 : LOCKUP.height}
       className={cn(
         "block h-auto w-auto shrink-0 object-contain object-left",
         compact
-          ? "h-[72px] w-auto max-w-[83px] sm:h-[80px] sm:max-w-[92px]"
-          : "h-[80px] w-auto max-w-[92px] sm:h-[92px] sm:max-w-[106px] md:h-[104px] md:max-w-[119px] lg:h-[116px] lg:max-w-[133px]",
+          ? "h-[72px] w-auto max-w-[102px] sm:h-[80px] sm:max-w-[113px]"
+          : "h-[80px] w-auto max-w-[113px] sm:h-[92px] sm:max-w-[130px] md:h-[104px] md:max-w-[147px] lg:h-[116px] lg:max-w-[164px]",
         className,
       )}
       decoding="async"
