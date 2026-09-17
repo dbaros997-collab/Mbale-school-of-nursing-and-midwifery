@@ -17,6 +17,7 @@ import {
   saveStaffLoginHint,
 } from "@/lib/portal/staff-login-routing";
 import { getStaffAdminUrl, LEGACY_STUDENT_ADMIN_HOST } from "@/lib/site-url";
+import { OfficialSiteNotice } from "@/components/layout/OfficialSiteNotice";
 import { ShieldCheck } from "lucide-react";
 import {
   activationInputClass,
@@ -74,7 +75,9 @@ export function StudentLoginGate() {
   }
 
   return (
-    <div className="flex min-h-full items-center justify-center bg-surface px-4 py-12">
+    <div className="flex min-h-full flex-col bg-surface">
+      <OfficialSiteNotice surface="portal" />
+      <div className="flex flex-1 items-center justify-center px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm">
         <SchoolLogo surface="light" variant="header" className="mx-auto !h-[160px] !w-[184px]" />
         <h1 className="mt-6 text-center font-display text-2xl font-semibold text-primary">
@@ -224,6 +227,7 @@ export function StudentLoginGate() {
           </Link>
           <BackToWebsite variant="page" />
         </div>
+      </div>
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ import {
 } from "@/services/portal/admin/auth";
 import { getStaffAdminUrl, LEGACY_STUDENT_ADMIN_HOST, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import { clearStaffLoginHint, readStaffLoginHint } from "@/lib/portal/staff-login-routing";
+import { OfficialSiteNotice } from "@/components/layout/OfficialSiteNotice";
 
 function StaffLoginGate() {
   const { applyStaffSession } = useAuth();
@@ -57,7 +58,9 @@ function StaffLoginGate() {
   }
 
   return (
-    <div className="flex min-h-full items-center justify-center bg-surface px-4 py-12">
+    <div className="flex min-h-full flex-col bg-surface">
+      <OfficialSiteNotice surface="admin" />
+      <div className="flex flex-1 items-center justify-center px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm">
         <SchoolLogo surface="light" variant="header" className="mx-auto !h-[160px] !w-[184px]" />
         <h1 className="admin-gate-title mt-6 text-center">
@@ -137,6 +140,7 @@ function StaffLoginGate() {
           </Link>
           <BackToWebsite variant="page" />
         </div>
+      </div>
       </div>
     </div>
   );
