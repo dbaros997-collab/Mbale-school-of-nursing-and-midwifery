@@ -22,7 +22,7 @@ import {
   FieldLabel,
 } from "@/components/portal/activation/form";
 import { MicrosoftSignInButton } from "@/components/microsoft/MicrosoftSignInButton";
-import { isMicrosoftClientConfigured } from "@/lib/microsoft/config";
+import { OFFICIAL_EMAIL_DOMAIN } from "@/lib/site-url";
 
 export function StudentLoginGate() {
   const { applyActivatedSession, applyStaffSession } = useAuth();
@@ -31,7 +31,6 @@ export function StudentLoginGate() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const showMicrosoftSignIn = isMicrosoftClientConfigured();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -85,36 +84,53 @@ export function StudentLoginGate() {
             Sign in to view fees, registration, timetable, and course materials.
           </p>
 
-          {showMicrosoftSignIn ? (
-            <>
-              <div className="mt-8">
-                <MicrosoftSignInButton
-                  surface="portal"
-                  size="lg"
-                  className="w-full"
-                  onError={(message) => setError(message)}
-                />
-              </div>
-
-              <div className="relative my-6 py-1">
-                <div className="absolute inset-0 flex items-center" aria-hidden>
-                  <div className="w-full border-t border-border" />
-                </div>
-                <p className="relative mx-auto w-fit bg-white px-3 text-xs font-semibold uppercase tracking-wider text-muted">
-                  Or sign in with password
-                </p>
-              </div>
-            </>
-          ) : null}
-
           {error ? (
             <p
               role="alert"
-              className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
+              className="mt-6 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
             >
               {error}
             </p>
           ) : null}
+
+          <section
+            className="mt-8 rounded-xl border-2 border-primary/20 bg-gradient-to-b from-brand-sky-soft/50 to-white p-5 shadow-sm"
+            aria-labelledby="portal-microsoft-sign-in"
+          >
+            <p className="text-center text-xs font-bold uppercase tracking-wider text-primary">
+              Recommended for students
+            </p>
+            <h2
+              id="portal-microsoft-sign-in"
+              className="mt-2 text-center font-display text-lg font-semibold text-primary"
+            >
+              Sign in with Microsoft 365
+            </h2>
+            <p className="mt-2 text-center text-sm text-muted">
+              Use your official{" "}
+              <span className="font-medium text-primary">@{OFFICIAL_EMAIL_DOMAIN}</span> school
+              account. You&apos;ll be redirected to Microsoft to verify your identity, then returned
+              to the portal.
+            </p>
+            <div className="mt-5">
+              <MicrosoftSignInButton
+                surface="portal"
+                size="lg"
+                label="Sign in with Microsoft 365"
+                className="w-full"
+                onError={(message) => setError(message)}
+              />
+            </div>
+          </section>
+
+          <div className="relative my-8 py-1">
+            <div className="absolute inset-0 flex items-center" aria-hidden>
+              <div className="w-full border-t border-border" />
+            </div>
+            <p className="relative mx-auto w-fit bg-white px-3 text-xs font-semibold uppercase tracking-wider text-muted">
+              Or sign in with portal password
+            </p>
+          </div>
 
           <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
             <div>
@@ -148,7 +164,7 @@ export function StudentLoginGate() {
             </div>
 
             <Button type="submit" variant="green" className="w-full" disabled={busy}>
-              {busy ? "Signing in…" : "Sign in"}
+              {busy ? "Signing in…" : "Sign in with password"}
             </Button>
           </form>
 

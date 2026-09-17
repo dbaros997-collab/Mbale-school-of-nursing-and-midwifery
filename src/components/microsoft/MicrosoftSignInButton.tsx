@@ -80,7 +80,8 @@ export function MicrosoftSignInButton({
         onDarkSurface &&
           "border border-white/75 bg-white text-primary shadow-sm hover:border-white hover:bg-brand-sky-soft",
         portalSurface &&
-          "border border-[#8c8c8c] bg-white text-[#5e5e5e] shadow-sm hover:border-[#8c8c8c] hover:bg-[#f3f3f3]",
+          "min-h-12 border-2 border-[#8c8c8c] bg-white text-base font-semibold text-[#5e5e5e] shadow-md hover:border-[#5e5e5e] hover:bg-[#f3f3f3]",
+        portalSurface && large && "min-h-[3.25rem]",
         className,
       )}
       disabled={busy}
