@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { OFFICIAL_SITE_LOGO } from "@/lib/site-logo";
 
 type SchoolLogoProps = {
   className?: string;
@@ -7,12 +8,7 @@ type SchoolLogoProps = {
   surface?: "dark" | "light";
 };
 
-const LOCKUP = {
-  /** Official crest emblem — circular badge with motto banner. */
-  src: "/images/logo-lockup.png",
-  width: 1022,
-  height: 721,
-} as const;
+const LOCKUP = OFFICIAL_SITE_LOGO;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
@@ -24,7 +20,7 @@ export function SchoolLogo({
   variant = "header",
 }: SchoolLogoProps) {
   const compact = variant === "compact";
-  const src = `${LOCKUP.src}?v=${LOGO_CACHE_VERSION}`;
+  const src = `${LOCKUP.path}?v=${LOGO_CACHE_VERSION}`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

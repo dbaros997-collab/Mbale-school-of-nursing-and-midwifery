@@ -1,9 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { SCHOOL } from "@/lib/data";
+import {
+  OFFICIAL_SITE_LOGO,
+  SITE_ICON_PATHS,
+  officialSiteLogoOpenGraphImage,
+} from "@/lib/site-logo";
 import { getPublicSiteUrl, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 const siteUrl = getPublicSiteUrl();
+const defaultDescription =
+  "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE. In God We Love and Serve.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -13,23 +21,50 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl || OFFICIAL_SITE_URL),
+  applicationName: SCHOOL.shortName,
   title: {
-    default: "Welcome | Mbale School of Nursing and Midwifery",
-    template: "%s | Mbale School of Nursing and Midwifery",
+    default: `Welcome | ${SCHOOL.name}`,
+    template: `%s | ${SCHOOL.name}`,
   },
-  description:
-    "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE. In God We Love and Serve.",
+  description: defaultDescription,
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: [
+      { url: SITE_ICON_PATHS.favicon, sizes: "any" },
+      { url: SITE_ICON_PATHS.icon48, sizes: "48x48", type: "image/png" },
+      { url: SITE_ICON_PATHS.icon96, sizes: "96x96", type: "image/png" },
+      { url: SITE_ICON_PATHS.icon192, sizes: "192x192", type: "image/png" },
+      {
+        url: OFFICIAL_SITE_LOGO.path,
+        sizes: `${OFFICIAL_SITE_LOGO.width}x${OFFICIAL_SITE_LOGO.height}`,
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: SITE_ICON_PATHS.appleTouch,
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+    shortcut: [SITE_ICON_PATHS.favicon],
   },
   openGraph: {
     type: "website",
     locale: "en_UG",
     url: siteUrl || OFFICIAL_SITE_URL,
-    siteName: "Mbale School of Nursing and Midwifery",
-    title: "Mbale School of Nursing and Midwifery",
-    description:
-      "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
+    siteName: SCHOOL.name,
+    title: SCHOOL.name,
+    description: defaultDescription,
+    images: [officialSiteLogoOpenGraphImage()],
+  },
+  twitter: {
+    card: "summary",
+    title: SCHOOL.name,
+    description: defaultDescription,
+    images: [OFFICIAL_SITE_LOGO.path],
   },
 };
 
