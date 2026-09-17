@@ -2,7 +2,9 @@
 
 Modern, responsive website for **Mable School of Nursing and Midwifery** — *With GOD We Love and Serve*.
 
-Built with Next.js, Tailwind CSS, Framer Motion, and Lucide icons. Content and campus imagery sourced from [mbsnm.org](https://mbsnm.org).
+Built with Next.js, Tailwind CSS, Framer Motion, and Lucide icons.
+
+**Live site:** [https://mbaleschoolofnursing.ac.ug](https://mbaleschoolofnursing.ac.ug)
 
 ## Pages
 

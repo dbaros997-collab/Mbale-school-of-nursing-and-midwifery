@@ -97,13 +97,13 @@ export default function ContactPage() {
             </ul>
 
             <div className="mt-6 flex gap-3">
-              <Link
-                href="/"
-                aria-label="Website"
+              <a
+                href={SCHOOL.website}
+                aria-label="Official website"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white transition hover:bg-accent-green focus-ring"
               >
                 <Globe className="h-4 w-4" />
-              </Link>
+              </a>
               <a
                 href={SCHOOL.youtube}
                 target="_blank"

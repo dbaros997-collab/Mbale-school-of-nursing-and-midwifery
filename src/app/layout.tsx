@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { getPublicSiteUrl, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import "./globals.css";
+
+const siteUrl = getPublicSiteUrl();
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -9,12 +12,25 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl || OFFICIAL_SITE_URL),
   title: {
     default: "Welcome | Mbale School of Nursing and Midwifery",
     template: "%s | Mbale School of Nursing and Midwifery",
   },
   description:
     "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE. In God We Love and Serve.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_UG",
+    url: siteUrl || OFFICIAL_SITE_URL,
+    siteName: "Mbale School of Nursing and Midwifery",
+    title: "Mbale School of Nursing and Midwifery",
+    description:
+      "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
+  },
 };
 
 export default function RootLayout({

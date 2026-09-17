@@ -17,7 +17,8 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_AZURE_TENANT_ID: process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
     NEXT_PUBLIC_AZURE_REDIRECT_URI: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+    NEXT_PUBLIC_SITE_URL:
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://mbaleschoolofnursing.ac.ug",
     NEXT_PUBLIC_LOGO_VERSION: process.env.NEXT_PUBLIC_LOGO_VERSION,
   },
   allowedDevOrigins: [

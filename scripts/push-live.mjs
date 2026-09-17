@@ -35,7 +35,7 @@ Done.
 
   1. Coolify → Deployments — wait for build to finish (~5–6 min)
   2. Logs should show "MBSNM build ${sha} start" then "build done"
-  3. Check https://YOUR-SITE/api/health — build should be "${sha}" or full SHA
+  3. Check https://mbaleschoolofnursing.ac.ug/api/health — build should be "${sha}" or full SHA
   4. Hard refresh: Ctrl+Shift+R
 
 Cancel any quick 30-second deploy — that was a stale cached image, not a real build.

@@ -12,8 +12,8 @@ export const SCHOOL = {
   admissionsEmail: "admissions@mbsnm.org",
   address: "Malere, behind the Forest Road, Mbale — Uganda",
   postal: "P. O. Box — Mbale, Uganda",
-  /** This new site is the official web home */
-  website: "/",
+  /** Official public website */
+  website: "https://mbaleschoolofnursing.ac.ug",
   youtube: "https://www.youtube.com/channel/UC-YnxFTZ5-atVFZCGGZ91PQ",
   registration:
     "Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
@@ -114,7 +114,7 @@ export const quickLinks = [
   { label: "Track Application", href: "/admissions/track" },
   { label: "Courses & Programs", href: "/academics" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Official Website", href: "/" },
+  { label: "Official Website", href: "https://mbaleschoolofnursing.ac.ug" },
 ] as const;
 
 export const heroSlides = [

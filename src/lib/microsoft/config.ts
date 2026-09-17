@@ -1,5 +1,7 @@
 /** Microsoft 365 environment configuration — all secrets via process.env */
 
+import { getPublicSiteUrl } from "@/lib/site-url";
+
 export const MICROSOFT_SCOPES = [
   "openid",
   "profile",
@@ -37,7 +39,7 @@ function getAppOrigin(): string {
     return window.location.origin;
   }
 
-  return "http://localhost:5173";
+  return getPublicSiteUrl();
 }
 
 export function getMicrosoftPublicConfig() {

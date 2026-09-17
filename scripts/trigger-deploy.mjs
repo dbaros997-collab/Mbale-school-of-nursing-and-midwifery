@@ -28,7 +28,7 @@ Deploy triggered.
 
   1. Coolify → Deployments — watch for a new build (~5–6 min)
   2. GitHub → Actions — "Publish Docker image" runs in parallel
-  3. Live site: https://dpai6rjxhncrqnwnfqeydq2m.146.190.214.147.sslip.io
-  4. Head of Midwifery: /academics/midwifery
+  3. Live site: https://mbaleschoolofnursing.ac.ug
+  4. Head of Midwifery: https://mbaleschoolofnursing.ac.ug/academics/midwifery
   5. Hard refresh when done: Ctrl+Shift+R
 `);
