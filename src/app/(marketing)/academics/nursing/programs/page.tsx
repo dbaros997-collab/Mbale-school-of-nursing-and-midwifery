@@ -6,6 +6,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NursingSubNav } from "@/components/academics/NursingSubNav";
 import { Callout } from "@/components/ui/Callout";
 import { Button } from "@/components/ui/Button";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/academics/nursing/programs", {
+  title: "Nursing Programmes",
+  description:
+    "Diploma and certificate nursing programmes at MBSNM — entry requirements, duration, and accreditation details.",
+});
 
 export default function NursingProgramsPage() {
   const { accreditation } = nursingDepartment;

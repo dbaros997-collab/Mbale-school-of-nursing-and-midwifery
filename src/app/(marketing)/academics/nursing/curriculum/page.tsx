@@ -4,6 +4,12 @@ import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NursingSubNav } from "@/components/academics/NursingSubNav";
 import { Button } from "@/components/ui/Button";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/academics/nursing/curriculum", {
+  title: "Nursing Curriculum",
+  description: "Core nursing subjects and course units taught across MBSNM nursing programmes.",
+});
 
 export default function NursingCurriculumPage() {
   const { coreSubjects } = nursingDepartment;

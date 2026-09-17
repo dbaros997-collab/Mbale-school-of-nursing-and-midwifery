@@ -6,6 +6,13 @@ import { cn } from "@/lib/utils";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/alumni", {
+  title: "Alumni",
+  description:
+    "MBSNM alumni network — stay connected, share your story, and support the next generation of nurses and midwives.",
+});
 
 const highlights = [
   {

@@ -6,12 +6,11 @@ import {
   SITE_ICON_PATHS,
   officialSiteLogoOpenGraphImage,
 } from "@/lib/site-logo";
+import { DEFAULT_SITE_DESCRIPTION, GLOBAL_INDEXING_ROBOTS } from "@/lib/seo";
 import { getPublicSiteUrl, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 const siteUrl = getPublicSiteUrl();
-const defaultDescription =
-  "Nursing and midwifery training in Mbale. Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE. In God We Love and Serve.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -26,10 +25,8 @@ export const metadata: Metadata = {
     default: `Welcome | ${SCHOOL.name}`,
     template: `%s | ${SCHOOL.name}`,
   },
-  description: defaultDescription,
-  alternates: {
-    canonical: "/",
-  },
+  description: DEFAULT_SITE_DESCRIPTION,
+  robots: GLOBAL_INDEXING_ROBOTS,
   icons: {
     icon: [
       { url: SITE_ICON_PATHS.favicon, sizes: "any" },
@@ -57,13 +54,13 @@ export const metadata: Metadata = {
     url: siteUrl || OFFICIAL_SITE_URL,
     siteName: SCHOOL.name,
     title: SCHOOL.name,
-    description: defaultDescription,
+    description: DEFAULT_SITE_DESCRIPTION,
     images: [officialSiteLogoOpenGraphImage()],
   },
   twitter: {
     card: "summary",
     title: SCHOOL.name,
-    description: defaultDescription,
+    description: DEFAULT_SITE_DESCRIPTION,
     images: [OFFICIAL_SITE_LOGO.path],
   },
 };

@@ -5,6 +5,13 @@ import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NursingSubNav } from "@/components/academics/NursingSubNav";
 import { Button } from "@/components/ui/Button";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/academics/nursing", {
+  title: "Department of Nursing",
+  description:
+    "Department of Nursing at MBSNM — leadership, diploma and certificate pathways, and clinical training in Uganda.",
+});
 
 export default function NursingDepartmentPage() {
   const { head, teamDescription, overview } = nursingDepartment;

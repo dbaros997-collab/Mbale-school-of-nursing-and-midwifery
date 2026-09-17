@@ -1,14 +1,21 @@
 import type { MetadataRoute } from "next";
-import { getPublicSiteUrl } from "@/lib/site-url";
+import { absolutePublicUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = getPublicSiteUrl();
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/portal/", "/admin/", "/api/"],
-    },
-    sitemap: `${base}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/portal/", "/admin/", "/api/", "/auth/"],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow: ["/portal/", "/admin/", "/api/", "/auth/"],
+      },
+    ],
+    sitemap: `${absolutePublicUrl("/")}/sitemap.xml`,
+    host: new URL(absolutePublicUrl("/")).host,
   };
 }

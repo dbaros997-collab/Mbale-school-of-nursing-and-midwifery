@@ -5,6 +5,13 @@ import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Callout } from "@/components/ui/Callout";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/academics/midwifery", {
+  title: "Head of Midwifery",
+  description:
+    "Message from the Head of Midwifery at Mbale School of Nursing and Midwifery — training compassionate midwives for Uganda.",
+});
 
 function MessageList({ items }: { items: readonly string[] }) {
   return (

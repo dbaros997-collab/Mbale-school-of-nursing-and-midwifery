@@ -4,6 +4,13 @@ import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NursingSubNav } from "@/components/academics/NursingSubNav";
 import { Button } from "@/components/ui/Button";
+import { marketingPageMetadata } from "@/lib/seo";
+
+export const metadata = marketingPageMetadata("/academics/nursing/clinical-placements", {
+  title: "Clinical Placements",
+  description:
+    "Hospital and health-centre clinical placement sites used for practical nursing training at MBSNM.",
+});
 
 const siteGroups = [
   {
