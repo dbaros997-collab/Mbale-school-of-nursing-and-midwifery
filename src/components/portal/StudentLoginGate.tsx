@@ -11,6 +11,12 @@ import {
   loginStudent,
   STUDENT_DEMO_CREDENTIALS,
 } from "@/services/portal/auth";
+import { loginStaff } from "@/services/portal/admin/auth";
+import {
+  isStaffPortalLoginIdentifier,
+  saveStaffLoginHint,
+} from "@/lib/portal/staff-login-routing";
+import { ShieldCheck } from "lucide-react";
 import {
   activationInputClass,
   FieldLabel,
@@ -18,7 +24,7 @@ import {
 import { MicrosoftSignInButton } from "@/components/microsoft/MicrosoftSignInButton";
 
 export function StudentLoginGate() {
-  const { applyActivatedSession } = useAuth();
+  const { applyActivatedSession, applyStaffSession } = useAuth();
   const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +35,28 @@ export function StudentLoginGate() {
     e.preventDefault();
     setBusy(true);
     setError(null);
+
+    if (isStaffPortalLoginIdentifier(identifier)) {
+      const staffResult = await loginStaff(identifier, password);
+      if (staffResult.ok) {
+        applyStaffSession({
+          user: staffResult.user,
+          session: staffResult.session,
+          adminProfile: staffResult.adminProfile,
+        });
+        router.replace("/admin");
+        setBusy(false);
+        return;
+      }
+      saveStaffLoginHint(identifier);
+      setError(
+        `${staffResult.message} Opening the Staff Admin sign-in page — use your registry credentials there.`,
+      );
+      setBusy(false);
+      router.replace("/admin");
+      return;
+    }
+
     const result = await loginStudent(identifier, password);
     if (!result.ok || !result.data) {
       setError(result.message);
@@ -52,9 +80,28 @@ export function StudentLoginGate() {
           Student Portal
         </h1>
         <p className="mt-2 text-center text-sm text-muted">
-          Welcome back. Sign in with Microsoft 365, or use your student number and activation
-          password.
+          For students only. Registry and academic staff must use the{" "}
+          <Link href="/admin" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Staff Admin panel
+          </Link>
+          , not this page.
         </p>
+
+        <div className="mt-6 rounded-xl border border-primary/20 bg-accent-cyan-soft/30 p-4">
+          <div className="flex gap-3">
+            <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-primary">Staff &amp; registry officers</p>
+              <p className="mt-1 text-xs leading-relaxed text-muted">
+                Do not use the old mbsnm.org SitePad login. Open the new staff control panel on
+                this website.
+              </p>
+              <Button href="/admin" variant="navy" size="sm" className="mt-3 w-full sm:w-auto">
+                Open Staff Admin
+              </Button>
+            </div>
+          </div>
+        </div>
 
         <section
           className="mt-8 rounded-xl border border-border bg-surface/50 p-4"
@@ -72,7 +119,12 @@ export function StudentLoginGate() {
               surface="portal"
               size="lg"
               className="w-full"
-              onError={setError}
+              onError={(message) => {
+                setError(message);
+                if (/admin control panel|staff security group|official mbsnm student account/i.test(message)) {
+                  saveStaffLoginHint("registry@mbsnm.org");
+                }
+              }}
             />
           </div>
         </section>
@@ -147,6 +199,9 @@ export function StudentLoginGate() {
             className="font-semibold text-primary hover:underline focus-ring"
           >
             First time here? Activate your account
+          </Link>
+          <Link href="/admin" className="font-semibold text-primary hover:underline focus-ring">
+            Staff admin login
           </Link>
           <BackToWebsite variant="page" />
         </div>

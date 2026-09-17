@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,6 +15,7 @@ import {
   STAFF_DEMO_CREDENTIALS,
 } from "@/services/portal/admin/auth";
 import { OFFICIAL_SITE_URL } from "@/lib/site-url";
+import { clearStaffLoginHint, readStaffLoginHint } from "@/lib/portal/staff-login-routing";
 
 function StaffLoginGate() {
   const { applyStaffSession } = useAuth();
@@ -23,6 +24,18 @@ function StaffLoginGate() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [redirectNote, setRedirectNote] = useState<string | null>(null);
+
+  useEffect(() => {
+    const hinted = readStaffLoginHint();
+    if (hinted) {
+      setEmail(hinted);
+      setRedirectNote(
+        "You were redirected from the student portal. Sign in here with your staff credentials.",
+      );
+      clearStaffLoginHint();
+    }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -82,6 +95,12 @@ function StaffLoginGate() {
               required
             />
           </label>
+
+          {redirectNote ? (
+            <p className="rounded-lg border border-accent-cyan/30 bg-accent-cyan-soft/40 px-3 py-2 text-sm text-primary">
+              {redirectNote}
+            </p>
+          ) : null}
 
           {error ? (
             <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700" role="alert">

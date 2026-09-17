@@ -209,7 +209,7 @@ export function Header() {
             <nav className="space-y-1 px-4 py-3" aria-label="Mobile">
               <div className="mb-3 rounded-lg border border-white/15 bg-white/5 px-3 py-3">
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
-                  Student access
+                  Student &amp; staff access
                 </p>
                 <HeaderPortalActions
                   layout="stacked"

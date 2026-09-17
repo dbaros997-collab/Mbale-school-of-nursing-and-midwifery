@@ -51,6 +51,20 @@ export function MicrosoftAuthCallbackHandler() {
           throw new Error(payload.message || "Microsoft sign-in failed.");
         }
 
+        const email = payload.profile.email.toLowerCase();
+        const isStaffMicrosoft =
+          payload.profile.institutionalRole === "staff" ||
+          ((email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) &&
+            !email.endsWith("@student.mbsnm.org"));
+
+        if (isStaffMicrosoft) {
+          if (!cancelled) {
+            setMessage("Staff account detected. Opening the Staff Admin panel…");
+            router.replace("/admin");
+          }
+          return;
+        }
+
         const portalSession = mapMicrosoftProfileToPortalSession(payload.profile);
         applyMicrosoftSession({
           ...portalSession,
