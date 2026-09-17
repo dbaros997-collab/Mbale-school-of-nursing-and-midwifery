@@ -5,10 +5,11 @@
  */
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
-
-const OFFICIAL_SITE = "https://mbaleschoolofnursing.ac.ug";
-const CALLBACK_PATH = "/auth/microsoft/callback";
-const PRODUCTION_CALLBACK = `${OFFICIAL_SITE}${CALLBACK_PATH}`;
+import {
+  MICROSOFT_AUTH_CALLBACK_PATH as CALLBACK_PATH,
+  MICROSOFT_PRODUCTION_CALLBACK_URL as PRODUCTION_CALLBACK,
+  OFFICIAL_SITE_URL as OFFICIAL_SITE,
+} from "./microsoft-oauth-defaults.mjs";
 
 function loadDotEnv(root) {
   const path = resolve(root, ".env");
@@ -133,6 +134,40 @@ function validate({ production }) {
         `Set NEXT_PUBLIC_AZURE_REDIRECT_URI=${PRODUCTION_CALLBACK} at build time.`,
       ),
     );
+  }
+
+  const siteUrlRaw = read("NEXT_PUBLIC_SITE_URL");
+  if (production) {
+    const expectedHost = new URL(OFFICIAL_SITE).host;
+    if (!siteUrlRaw) {
+      issues.push(
+        issue(
+          "warning",
+          "site_url_missing",
+          `Set NEXT_PUBLIC_SITE_URL=${OFFICIAL_SITE} at Docker build time.`,
+        ),
+      );
+    } else {
+      try {
+        const site = new URL(siteUrlRaw);
+        if (site.host !== expectedHost) {
+          issues.push(
+            issue(
+              "error",
+              "site_url_host",
+              `NEXT_PUBLIC_SITE_URL should use ${expectedHost} (got ${site.host}).`,
+            ),
+          );
+        }
+        if (site.protocol !== "https:") {
+          issues.push(
+            issue("error", "site_url_https", "Production NEXT_PUBLIC_SITE_URL must use https."),
+          );
+        }
+      } catch {
+        issues.push(issue("error", "site_url_invalid", "NEXT_PUBLIC_SITE_URL is not a valid URL."));
+      }
+    }
   }
 
   return issues;

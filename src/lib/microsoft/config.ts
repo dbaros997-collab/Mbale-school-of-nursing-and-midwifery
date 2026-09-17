@@ -1,6 +1,19 @@
 /** Microsoft 365 environment configuration — all secrets via process.env */
 
+import {
+  MICROSOFT_AUTH_CALLBACK_PATH,
+  MICROSOFT_ENV,
+  MICROSOFT_LOCAL_DEV_CALLBACK_URL,
+  MICROSOFT_PRODUCTION_CALLBACK_URL,
+} from "./env-vars";
 import { getPublicSiteUrl, OFFICIAL_EMAIL_DOMAIN } from "@/lib/site-url";
+
+export {
+  MICROSOFT_AUTH_CALLBACK_PATH,
+  MICROSOFT_ENV,
+  MICROSOFT_LOCAL_DEV_CALLBACK_URL,
+  MICROSOFT_PRODUCTION_CALLBACK_URL,
+} from "./env-vars";
 
 export const MICROSOFT_SCOPES = [
   "openid",
@@ -25,21 +38,6 @@ function readEnvFirst(...keys: string[]): string | undefined {
     if (value) return value;
   }
   return undefined;
-}
-
-function trimTrailingSlash(value: string): string {
-  return value.replace(/\/+$/, "");
-}
-
-function getAppOrigin(): string {
-  const fromEnv = readEnvFirst("NEXT_PUBLIC_APP_URL", "NEXT_PUBLIC_SITE_URL");
-  if (fromEnv) return trimTrailingSlash(fromEnv);
-
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-
-  return getPublicSiteUrl();
 }
 
 export function getMicrosoftPublicConfig() {
@@ -90,14 +88,22 @@ export function getAllowedStudentEmailDomains(): string[] {
 }
 
 function getMicrosoftRedirectUri(): string {
-  const explicit = readEnv("NEXT_PUBLIC_AZURE_REDIRECT_URI");
+  const explicit = readEnv(MICROSOFT_ENV.redirectUri[0]);
   if (explicit) return explicit;
 
   if (typeof window !== "undefined") {
-    return `${window.location.origin}/auth/microsoft/callback`;
+    return `${window.location.origin}${MICROSOFT_AUTH_CALLBACK_PATH}`;
   }
 
-  return `${getAppOrigin()}/auth/microsoft/callback`;
+  if (process.env.NODE_ENV === "production") {
+    return MICROSOFT_PRODUCTION_CALLBACK_URL;
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    return MICROSOFT_LOCAL_DEV_CALLBACK_URL;
+  }
+
+  return `${getPublicSiteUrl()}${MICROSOFT_AUTH_CALLBACK_PATH}`;
 }
 
 export function getMicrosoftServerConfig() {

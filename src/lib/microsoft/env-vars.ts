@@ -1,11 +1,17 @@
 import { OFFICIAL_EMAIL_DOMAIN, OFFICIAL_SITE_URL } from "@/lib/site-url";
 
-/** OAuth callback path (append to site origin). Must match Azure Entra redirect URI registration. */
+/** OAuth callback path (append to site origin). Must match Azure Entra redirect URI registration.
+ *  Production URL also mirrored in scripts/microsoft-oauth-defaults.mjs for Node validators. */
 export const MICROSOFT_AUTH_CALLBACK_PATH = "/auth/microsoft/callback";
 
 export const MICROSOFT_PRODUCTION_CALLBACK_URL = `${OFFICIAL_SITE_URL}${MICROSOFT_AUTH_CALLBACK_PATH}`;
 
 export const MICROSOFT_LOCAL_DEV_CALLBACK_URL = `http://localhost:5173${MICROSOFT_AUTH_CALLBACK_PATH}`;
+
+/** Where MSAL sends the browser after logout (SPA platform post-logout redirect). */
+export const MICROSOFT_POST_LOGOUT_PATH = "/portal";
+
+export const MICROSOFT_PRODUCTION_POST_LOGOUT_URL = `${OFFICIAL_SITE_URL}${MICROSOFT_POST_LOGOUT_PATH}`;
 
 /**
  * Environment variable names used by Microsoft 365 SSO.

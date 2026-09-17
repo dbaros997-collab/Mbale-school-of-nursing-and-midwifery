@@ -7,6 +7,10 @@ import {
   InteractionRequiredAuthError,
 } from "@azure/msal-browser";
 import { getMicrosoftPublicConfig, MICROSOFT_SCOPES } from "./config";
+import {
+  MICROSOFT_POST_LOGOUT_PATH,
+  MICROSOFT_PRODUCTION_POST_LOGOUT_URL,
+} from "./env-vars";
 
 let msalInstance: PublicClientApplication | null = null;
 let initPromise: Promise<void> | null = null;
@@ -18,7 +22,10 @@ function buildMsalConfig() {
       clientId,
       authority,
       redirectUri,
-      postLogoutRedirectUri: typeof window !== "undefined" ? `${window.location.origin}/portal` : "/portal",
+      postLogoutRedirectUri:
+        typeof window !== "undefined"
+          ? `${window.location.origin}${MICROSOFT_POST_LOGOUT_PATH}`
+          : MICROSOFT_PRODUCTION_POST_LOGOUT_URL,
       navigateToLoginRequestUrl: false,
     },
     cache: {

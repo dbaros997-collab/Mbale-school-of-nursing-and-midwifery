@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+/** Keep in sync with src/lib/site-url.ts and src/lib/microsoft/env-vars.ts */
+const OFFICIAL_SITE_URL = "https://mbaleschoolofnursing.ac.ug";
+const MICROSOFT_PRODUCTION_CALLBACK_URL = `${OFFICIAL_SITE_URL}/auth/microsoft/callback`;
+
 const nextConfig: NextConfig = {
   output: "standalone",
   productionBrowserSourceMaps: false,
@@ -19,10 +23,10 @@ const nextConfig: NextConfig = {
       process.env.MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS,
     NEXT_PUBLIC_AZURE_CLIENT_ID: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
     NEXT_PUBLIC_AZURE_TENANT_ID: process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
-    NEXT_PUBLIC_AZURE_REDIRECT_URI: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI,
+    NEXT_PUBLIC_AZURE_REDIRECT_URI:
+      process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI ?? MICROSOFT_PRODUCTION_CALLBACK_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NEXT_PUBLIC_SITE_URL:
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://mbaleschoolofnursing.ac.ug",
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? OFFICIAL_SITE_URL,
     NEXT_PUBLIC_LOGO_VERSION: process.env.NEXT_PUBLIC_LOGO_VERSION,
   },
   allowedDevOrigins: [

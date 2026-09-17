@@ -13,6 +13,7 @@ WORKDIR /app
 ARG SOURCE_COMMIT=unknown
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID
+# Defaults match src/lib/site-url.ts + src/lib/microsoft/env-vars.ts (official Entra SPA redirect).
 ARG NEXT_PUBLIC_AZURE_REDIRECT_URI=https://mbaleschoolofnursing.ac.ug/auth/microsoft/callback
 ARG NEXT_PUBLIC_SITE_URL=https://mbaleschoolofnursing.ac.ug
 ARG NEXT_PUBLIC_SUPABASE_URL

@@ -176,23 +176,38 @@ export function validateMicrosoftDeploymentConfig(options?: {
   }
 
   const siteUrl = readEnvFirst(MICROSOFT_ENV.siteUrl);
-  if (production && siteUrl) {
-    try {
-      const site = new URL(siteUrl);
-      const official = new URL(OFFICIAL_SITE_URL);
-      if (site.host !== official.host) {
-        issues.push({
-          level: "warning",
-          code: "site_url_host",
-          message: `${MICROSOFT_ENV.siteUrl[0]} should be ${OFFICIAL_SITE_URL} in production.`,
-        });
-      }
-    } catch {
+  if (production) {
+    if (!siteUrl) {
       issues.push({
         level: "warning",
-        code: "site_url_invalid",
-        message: `${readEnvFirst(MICROSOFT_ENV.siteUrl)} is not a valid URL.`,
+        code: "site_url_missing",
+        message: `${MICROSOFT_ENV.siteUrl[0]} should be ${OFFICIAL_SITE_URL} at Docker build time.`,
       });
+    } else {
+      try {
+        const site = new URL(siteUrl);
+        const official = new URL(OFFICIAL_SITE_URL);
+        if (site.host !== official.host) {
+          issues.push({
+            level: "error",
+            code: "site_url_host",
+            message: `${MICROSOFT_ENV.siteUrl[0]} should be ${OFFICIAL_SITE_URL} in production (got ${site.host}).`,
+          });
+        }
+        if (site.protocol !== "https:") {
+          issues.push({
+            level: "error",
+            code: "site_url_https",
+            message: "Production site URL must use https.",
+          });
+        }
+      } catch {
+        issues.push({
+          level: "error",
+          code: "site_url_invalid",
+          message: `${readEnvFirst(MICROSOFT_ENV.siteUrl)} is not a valid URL.`,
+        });
+      }
     }
   }
 
