@@ -12,7 +12,8 @@
     "postbuild": "node scripts/prepare-standalone.mjs",
     "start": "node scripts/start-standalone.mjs",
     "lint": "eslint",
-    "push:live": "node scripts/push-live.mjs"
+    "push:live": "node scripts/push-live.mjs",
+    "deploy:trigger": "node scripts/trigger-deploy.mjs"
   },
   "dependencies": {
     "@azure/msal-browser": "^5.19.0",

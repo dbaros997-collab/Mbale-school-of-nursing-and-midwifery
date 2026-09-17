@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Download, Briefcase, CheckCircle2, Clock, ShieldCheck } from "lucide-react";
-import { programs, nursingDepartment, SCHOOL } from "@/lib/data";
+import { programs, nursingDepartment, headOfMidwifery, SCHOOL } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { PageBanner } from "@/components/ui/PageBanner";
@@ -27,24 +27,43 @@ export default function AcademicsPage() {
             description="Select a program to review duration, requirements, and graduate pathways."
           />
 
-          <Callout>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex gap-3">
-                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
-                <div className="space-y-2 text-sm leading-relaxed text-foreground">
-                  <p className="font-semibold text-primary">{nursingDepartment.name}</p>
-                  <p>{nursingDepartment.accreditation.registration}</p>
-                  <p>{nursingDepartment.accreditation.examinations}</p>
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Callout>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex gap-3">
+                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+                  <div className="space-y-2 text-sm leading-relaxed text-foreground">
+                    <p className="font-semibold text-primary">{nursingDepartment.name}</p>
+                    <p>{nursingDepartment.accreditation.registration}</p>
+                    <p>{nursingDepartment.accreditation.examinations}</p>
+                  </div>
                 </div>
+                <Link
+                  href="/academics/nursing"
+                  className="shrink-0 text-sm font-bold text-primary underline-offset-2 hover:underline focus-ring"
+                >
+                  Explore the department →
+                </Link>
               </div>
-              <Link
-                href="/academics/nursing"
-                className="shrink-0 text-sm font-bold text-primary underline-offset-2 hover:underline focus-ring"
-              >
-                Explore the department →
-              </Link>
-            </div>
-          </Callout>
+            </Callout>
+            <Callout>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-2 text-sm leading-relaxed text-foreground">
+                  <p className="font-semibold text-primary">{headOfMidwifery.title}</p>
+                  <p>
+                    Message from {headOfMidwifery.head.name} for student and qualified midwives —
+                    courage at birth, the golden minute, and service with integrity.
+                  </p>
+                </div>
+                <Link
+                  href="/academics/midwifery"
+                  className="shrink-0 text-sm font-bold text-primary underline-offset-2 hover:underline focus-ring"
+                >
+                  Read the message →
+                </Link>
+              </div>
+            </Callout>
+          </div>
 
           <div className="space-y-8">
             {programs.map((program) => (
