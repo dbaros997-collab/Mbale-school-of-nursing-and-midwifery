@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { LEGACY_PATH_REDIRECTS } from "./src/lib/legacy-path-redirects";
 
 /** Keep in sync with src/lib/site-url.ts and src/lib/microsoft/env-vars.ts */
 const OFFICIAL_SITE_URL = "https://mbaleschoolofnursing.ac.ug";
@@ -48,6 +49,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      ...LEGACY_PATH_REDIRECTS,
       {
         source: "/images/logo-crest.svg",
         destination: "/images/logo-lockup.png",
@@ -57,6 +59,11 @@ const nextConfig: NextConfig = {
         source: "/images/clinical-infant-care-training.png",
         destination: "/images/learning-pillars-clinical.jpg",
         permanent: false,
+      },
+      {
+        source: "/images/footer-school-logo.png",
+        destination: "/images/footer-mbsnm-lockup.png",
+        permanent: true,
       },
       {
         source: "/wp-admin",

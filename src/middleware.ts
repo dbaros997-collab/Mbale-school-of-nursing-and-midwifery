@@ -1,34 +1,45 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import {
-  getStaffAdminUrl,
+  isLegacyMarketingHost,
   isLegacyStudentAdminHost,
-  OFFICIAL_SITE_URL,
+  isOfficialSiteWwwHost,
+  normalizeRequestHost,
+  officialSiteUrl,
+  STAFF_ADMIN_PATH,
 } from "@/lib/site-url";
 
-/** Legacy WordPress host — send visitors to the new official site once DNS points here. */
-const LEGACY_HOSTS = new Set(["mbsnm.org", "www.mbsnm.org"]);
+const PERMANENT_REDIRECT = 308;
+
+function redirectToOfficial(request: NextRequest): NextResponse {
+  const path = request.nextUrl.pathname + request.nextUrl.search;
+  return NextResponse.redirect(officialSiteUrl(path), PERMANENT_REDIRECT);
+}
 
 export function middleware(request: NextRequest) {
-  const host = request.headers.get("host")?.split(":")[0]?.toLowerCase();
+  const host = normalizeRequestHost(request.headers.get("host"));
   if (!host) {
     return NextResponse.next();
   }
 
   if (isLegacyStudentAdminHost(host)) {
-    const target = new URL(getStaffAdminUrl());
+    const target = officialSiteUrl(STAFF_ADMIN_PATH);
     target.search = request.nextUrl.search;
-    return NextResponse.redirect(target, 308);
+    return NextResponse.redirect(target, PERMANENT_REDIRECT);
   }
 
-  if (!LEGACY_HOSTS.has(host)) {
-    return NextResponse.next();
+  if (isLegacyMarketingHost(host)) {
+    return redirectToOfficial(request);
   }
 
-  const target = new URL(request.nextUrl.pathname + request.nextUrl.search, OFFICIAL_SITE_URL);
-  return NextResponse.redirect(target, 308);
+  if (isOfficialSiteWwwHost(host)) {
+    return redirectToOfficial(request);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images|api).*)"],
+  /** Include static assets so legacy hostnames cannot serve old /images or favicons locally. */
+  matcher: ["/((?!_next/static|_next/image).*)"],
 };
