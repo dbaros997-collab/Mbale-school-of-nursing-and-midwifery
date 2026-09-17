@@ -181,7 +181,7 @@ export function getDemoActivationHints() {
 /** Example returning student for the login screen hint */
 export const STUDENT_DEMO_CREDENTIALS = {
   studentNumber: "MBSNM/NS/2024/018",
-  email: "nagudi.sarah@student.mbsnm.org",
+  email: "nagudi.sarah@mbaleschoolofnursing.ac.ug",
   password: "Student@2026",
 } as const;
 

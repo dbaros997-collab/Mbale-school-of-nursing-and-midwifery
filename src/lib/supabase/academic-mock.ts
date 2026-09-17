@@ -65,7 +65,7 @@ export const MOCK_STUDENTS: StudentRow[] = [
   {
     id: "stu-sarah",
     full_name: "Nagudi Sarah",
-    email: "nagudi.sarah@student.mbsnm.org",
+    email: "nagudi.sarah@mbaleschoolofnursing.ac.ug",
     phone: "+256 700 123 456",
     course_enrolled: "course-dn-direct",
     enrollment_date: "2024-08-01",
@@ -74,7 +74,7 @@ export const MOCK_STUDENTS: StudentRow[] = [
   {
     id: "stu-okello",
     full_name: "Okello Brian",
-    email: "okello.brian@student.mbsnm.org",
+    email: "okello.brian@mbaleschoolofnursing.ac.ug",
     phone: "+256 772 441 902",
     course_enrolled: "course-dn-direct",
     enrollment_date: "2024-08-02",
@@ -83,7 +83,7 @@ export const MOCK_STUDENTS: StudentRow[] = [
   {
     id: "stu-nakato",
     full_name: "Nakato Esther",
-    email: "nakato.esther@student.mbsnm.org",
+    email: "nakato.esther@mbaleschoolofnursing.ac.ug",
     phone: "+256 705 662 118",
     course_enrolled: "course-dn-direct",
     enrollment_date: "2025-01-15",
@@ -92,7 +92,7 @@ export const MOCK_STUDENTS: StudentRow[] = [
   {
     id: "stu-waiswa",
     full_name: "Waiswa Daniel",
-    email: "waiswa.daniel@student.mbsnm.org",
+    email: "waiswa.daniel@mbaleschoolofnursing.ac.ug",
     phone: "+256 781 334 055",
     course_enrolled: "course-dn-direct",
     enrollment_date: "2025-01-18",
@@ -101,7 +101,7 @@ export const MOCK_STUDENTS: StudentRow[] = [
   {
     id: "stu-auma",
     full_name: "Auma Grace",
-    email: "auma.grace@student.mbsnm.org",
+    email: "auma.grace@mbaleschoolofnursing.ac.ug",
     phone: "+256 702 889 441",
     course_enrolled: "course-cn",
     enrollment_date: "2026-02-01",

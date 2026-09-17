@@ -108,11 +108,11 @@ on conflict (id) do nothing;
 
 -- Students
 insert into students (id, full_name, email, phone, course_enrolled, enrollment_date, status) values
-  ('stu-sarah', 'Nagudi Sarah', 'nagudi.sarah@student.mbsnm.org', '+256 700 123 456', 'course-dn-direct', '2024-08-01', 'active'),
-  ('stu-okello', 'Okello Brian', 'okello.brian@student.mbsnm.org', '+256 772 441 902', 'course-dn-direct', '2024-08-02', 'active'),
-  ('stu-nakato', 'Nakato Esther', 'nakato.esther@student.mbsnm.org', '+256 705 662 118', 'course-dn-direct', '2025-01-15', 'active'),
-  ('stu-waiswa', 'Waiswa Daniel', 'waiswa.daniel@student.mbsnm.org', '+256 781 334 055', 'course-dn-direct', '2025-01-18', 'active'),
-  ('stu-auma', 'Auma Grace', 'auma.grace@student.mbsnm.org', '+256 702 889 441', 'course-cn', '2026-02-01', 'pending')
+  ('stu-sarah', 'Nagudi Sarah', 'nagudi.sarah@mbaleschoolofnursing.ac.ug', '+256 700 123 456', 'course-dn-direct', '2024-08-01', 'active'),
+  ('stu-okello', 'Okello Brian', 'okello.brian@mbaleschoolofnursing.ac.ug', '+256 772 441 902', 'course-dn-direct', '2024-08-02', 'active'),
+  ('stu-nakato', 'Nakato Esther', 'nakato.esther@mbaleschoolofnursing.ac.ug', '+256 705 662 118', 'course-dn-direct', '2025-01-15', 'active'),
+  ('stu-waiswa', 'Waiswa Daniel', 'waiswa.daniel@mbaleschoolofnursing.ac.ug', '+256 781 334 055', 'course-dn-direct', '2025-01-18', 'active'),
+  ('stu-auma', 'Auma Grace', 'auma.grace@mbaleschoolofnursing.ac.ug', '+256 702 889 441', 'course-cn', '2026-02-01', 'pending')
 on conflict (id) do nothing;
 
 -- Clinical placements

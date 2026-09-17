@@ -25,7 +25,6 @@ const quickLinks = [
   { label: "LMS Hub", href: "/portal/lms" },
   { label: "Contact", href: "/contact" },
   { label: "Staff Admin", href: "/admin" },
-  { label: "Legacy admin (student.mbsnm.org)", href: "/admin" },
 ];
 
 const campusLinks = [

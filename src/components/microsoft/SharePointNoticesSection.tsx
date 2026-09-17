@@ -9,6 +9,7 @@ import { refreshMicrosoftTokenIfNeeded } from "@/lib/microsoft/client-token-sync
 import type { MicrosoftGraphNoticesBundle } from "@/lib/microsoft/types";
 import { useAuth } from "@/contexts/AuthContext";
 import { StatusBadge } from "@/components/portal/StatusBadge";
+import { formatAllowedDomainsForDisplay } from "@/lib/microsoft/access-policy";
 
 function formatPublished(iso: string) {
   return new Date(iso).toLocaleString("en-UG", {
@@ -139,8 +140,8 @@ export function SharePointNoticesSection() {
             <div className="min-w-0 flex-1">
               <h3 className="font-bold text-primary">Sign in to view SharePoint content</h3>
               <p className="mt-1 text-sm text-muted">
-                SharePoint notices and curriculum documents require your official MBSNM Microsoft
-                school account (<span className="font-semibold">@student.mbsnm.org</span> or an
+                SharePoint notices and curriculum documents require your official school account (
+                <span className="font-semibold">{formatAllowedDomainsForDisplay()}</span> or an
                 approved security group).
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">

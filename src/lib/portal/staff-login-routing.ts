@@ -1,10 +1,12 @@
+import { isOfficialStudentEmail } from "@/lib/site-url";
+
 const STAFF_EMAIL_SUFFIXES = ["@mbsnm.org", "@staff.mbsnm.org"] as const;
 
 /** True when the identifier is a staff mailbox — not the student portal. */
 export function isStaffPortalLoginIdentifier(identifier: string): boolean {
   const normalized = identifier.trim().toLowerCase();
   if (!normalized.includes("@")) return false;
-  if (normalized.endsWith("@student.mbsnm.org")) return false;
+  if (isOfficialStudentEmail(normalized)) return false;
   return STAFF_EMAIL_SUFFIXES.some((suffix) => normalized.endsWith(suffix));
 }
 

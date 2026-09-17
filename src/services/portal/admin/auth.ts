@@ -12,8 +12,8 @@ export const STAFF_DEMO_CREDENTIALS = {
   password: "Staff@2026",
 } as const;
 
-/** Legacy SitePad admin login — still accepted on the new staff panel */
-export const LEGACY_STAFF_DEMO_CREDENTIALS = {
+/** Additional demo staff account for migration testing */
+const LEGACY_STAFF_DEMO_CREDENTIALS = {
   email: "admin@mbsnm.org",
   password: "admin123",
 } as const;

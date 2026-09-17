@@ -8,6 +8,8 @@ import { handleMicrosoftRedirectCallback } from "@/lib/microsoft/msal-browser";
 import { fetchWithTimeout } from "@/lib/http/fetch-with-timeout";
 import { mapMicrosoftProfileToPortalSession } from "@/lib/microsoft/portal-bridge";
 import type { MicrosoftUserProfile } from "@/lib/microsoft/types";
+import { emailMatchesAnyDomain } from "@/lib/microsoft/access-policy";
+import { getMicrosoftServerConfig } from "@/lib/microsoft/config";
 
 export function MicrosoftAuthCallbackHandler() {
   const router = useRouter();
@@ -52,10 +54,15 @@ export function MicrosoftAuthCallbackHandler() {
         }
 
         const email = payload.profile.email.toLowerCase();
+        const { accessPolicy } = getMicrosoftServerConfig();
+        const isOfficialStudentMailbox = emailMatchesAnyDomain(
+          email,
+          accessPolicy.allowedStudentDomains,
+        );
         const isStaffMicrosoft =
           payload.profile.institutionalRole === "staff" ||
           ((email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) &&
-            !email.endsWith("@student.mbsnm.org"));
+            !isOfficialStudentMailbox);
 
         if (isStaffMicrosoft) {
           if (!cancelled) {

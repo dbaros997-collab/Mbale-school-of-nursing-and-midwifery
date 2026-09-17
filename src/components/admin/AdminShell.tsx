@@ -9,12 +9,8 @@ import { AdminTopbar } from "@/components/admin/AdminTopbar";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { Button } from "@/components/ui/Button";
-import {
-  loginStaff,
-  LEGACY_STAFF_DEMO_CREDENTIALS,
-  STAFF_DEMO_CREDENTIALS,
-} from "@/services/portal/admin/auth";
-import { getStaffAdminUrl, LEGACY_STUDENT_ADMIN_HOST, OFFICIAL_SITE_URL } from "@/lib/site-url";
+import { loginStaff, STAFF_DEMO_CREDENTIALS } from "@/services/portal/admin/auth";
+import { OFFICIAL_SITE_URL } from "@/lib/site-url";
 import { clearStaffLoginHint, readStaffLoginHint } from "@/lib/portal/staff-login-routing";
 import { OfficialSiteNotice } from "@/components/layout/OfficialSiteNotice";
 
@@ -67,18 +63,13 @@ function StaffLoginGate() {
           Staff Admin Panel
         </h1>
         <p className="admin-gate-desc text-center">
-          Restricted to authorised registry and academic staff only. Students cannot
-          sign in here. Use the official site at{" "}
+          Restricted to authorised registry and academic staff only. Students should use the{" "}
+          <Link href="/portal" className="font-semibold text-primary underline-offset-2 hover:underline">
+            student portal
+          </Link>{" "}
+          on{" "}
           <a href={OFFICIAL_SITE_URL} className="font-semibold text-primary underline-offset-2 hover:underline">
             mbaleschoolofnursing.ac.ug
-          </a>
-          — not the old mbsnm.org SitePad login. The former admin address{" "}
-          <span className="font-semibold">{LEGACY_STUDENT_ADMIN_HOST}</span> now opens this panel at{" "}
-          <a
-            href={getStaffAdminUrl()}
-            className="font-semibold text-primary underline-offset-2 hover:underline"
-          >
-            {getStaffAdminUrl()}
           </a>
           .
         </p>
@@ -128,10 +119,6 @@ function StaffLoginGate() {
           Demo staff:{" "}
           <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.email}</span> /{" "}
           <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.password}</span>
-          {" · "}
-          legacy:{" "}
-          <span className="font-semibold text-primary">{LEGACY_STAFF_DEMO_CREDENTIALS.email}</span> /{" "}
-          <span className="font-semibold text-primary">{LEGACY_STAFF_DEMO_CREDENTIALS.password}</span>
         </p>
 
         <div className="mt-6 flex flex-col items-center gap-2 text-center text-base">

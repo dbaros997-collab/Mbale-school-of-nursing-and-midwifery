@@ -1,5 +1,6 @@
 import { createRemoteJWKSet, jwtVerify, type JWTPayload, type RemoteJWKSet } from "jose";
 import { ConfidentialClientApplication } from "@azure/msal-node";
+import { emailMatchesAnyDomain } from "./access-policy";
 import { getMicrosoftPublicConfig, getMicrosoftServerConfig } from "./config";
 import type { MicrosoftInstitutionalRole, MicrosoftUserProfile, MicrosoftVerifiedIdentity } from "./types";
 
@@ -44,7 +45,8 @@ function resolveInstitutionalRole(payload: JWTPayload): MicrosoftInstitutionalRo
   if (lower.some((r) => r.includes("staff") || r.includes("admin"))) return "staff";
 
   const email = String(payload.preferred_username ?? payload.email ?? "").toLowerCase();
-  if (email.endsWith("@student.mbsnm.org")) return "student";
+  const { accessPolicy } = getMicrosoftServerConfig();
+  if (emailMatchesAnyDomain(email, accessPolicy.allowedStudentDomains)) return "student";
   if (email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) return "staff";
 
   return "unknown";

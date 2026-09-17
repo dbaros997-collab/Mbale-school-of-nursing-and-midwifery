@@ -1,6 +1,6 @@
 /** Microsoft 365 environment configuration — all secrets via process.env */
 
-import { getPublicSiteUrl } from "@/lib/site-url";
+import { getPublicSiteUrl, OFFICIAL_EMAIL_DOMAIN } from "@/lib/site-url";
 
 export const MICROSOFT_SCOPES = [
   "openid",
@@ -71,7 +71,7 @@ export function getMicrosoftServerConfig() {
   const publicConfig = getMicrosoftPublicConfig();
   const allowedStudentDomains = parseCsvEnv(
     readEnvFirst("MICROSOFT_ALLOWED_STUDENT_DOMAINS", "ALLOWED_EMAIL_DOMAIN") ??
-      "student.mbsnm.org",
+      OFFICIAL_EMAIL_DOMAIN,
   );
   const studentSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_STUDENT_SECURITY_GROUP_IDS"));
   const blockedSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_BLOCKED_SECURITY_GROUP_IDS"));

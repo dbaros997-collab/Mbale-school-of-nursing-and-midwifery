@@ -1,8 +1,16 @@
 /** Official public website (no trailing slash). */
 export const OFFICIAL_SITE_URL = "https://mbaleschoolofnursing.ac.ug";
 
-/** Former SitePad / registry admin host — send to Staff Admin once DNS points here. */
-export const LEGACY_STUDENT_ADMIN_HOST = "student.mbsnm.org";
+/** Official Azure AD / student mailbox domain (no leading @). */
+export const OFFICIAL_EMAIL_DOMAIN = "mbaleschoolofnursing.ac.ug";
+
+export function isOfficialStudentEmail(email: string): boolean {
+  const normalized = email.trim().toLowerCase();
+  return normalized.endsWith(`@${OFFICIAL_EMAIL_DOMAIN}`);
+}
+
+/** Former student admin hostname — redirect to Staff Admin when requests hit this host. */
+const LEGACY_STUDENT_ADMIN_HOST = "student.mbsnm.org";
 
 export const STAFF_ADMIN_PATH = "/admin";
 

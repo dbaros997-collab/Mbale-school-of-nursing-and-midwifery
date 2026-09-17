@@ -119,7 +119,7 @@ export async function evaluateStudentPortalAccess(input: {
   if (blockedDomainWithoutGroup) {
     return {
       allowed: false,
-      reason: `Student portal sign-in requires an official school email (for example @${policy.allowedStudentDomains[0] ?? "student.mbsnm.org"}) or membership in an approved student security group.`,
+      reason: `Student portal sign-in requires an official school email${policy.allowedStudentDomains[0] ? ` (for example @${policy.allowedStudentDomains[0]})` : ""} or membership in an approved student security group.`,
     };
   }
 
@@ -136,7 +136,7 @@ export async function evaluateStudentPortalAccess(input: {
   const domainHint =
     policy.allowedStudentDomains.length > 0
       ? `@${policy.allowedStudentDomains.join(", @")}`
-      : "@student.mbsnm.org";
+      : "your official school student email";
 
   return {
     allowed: false,
@@ -146,6 +146,6 @@ export async function evaluateStudentPortalAccess(input: {
 
 export function formatAllowedDomainsForDisplay(): string {
   const { allowedStudentDomains } = getPortalAccessPolicy();
-  if (allowedStudentDomains.length === 0) return "@student.mbsnm.org";
+  if (allowedStudentDomains.length === 0) return "your official school email";
   return allowedStudentDomains.map((domain) => `@${domain}`).join(", ");
 }

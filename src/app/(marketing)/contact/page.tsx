@@ -49,11 +49,10 @@ export default function ContactPage() {
             <div className="mt-6 rounded-2xl border border-accent-green/30 bg-accent-green-soft/40 p-5">
               <p className="text-sm font-bold text-primary">Staff admin login</p>
               <p className="mt-1 text-sm leading-relaxed text-muted">
-                Registry and academic staff use the new control panel on this website — not the old
-                SitePad login at mbsnm.org.
+                Registry and academic staff sign in through the Staff Admin panel on this website.
               </p>
               <Button href="/admin" variant="green" size="sm" className="mt-4">
-                Open staff admin panel
+                Staff Admin
               </Button>
             </div>
 
