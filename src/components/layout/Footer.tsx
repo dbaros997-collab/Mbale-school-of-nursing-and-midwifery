@@ -24,7 +24,7 @@ const quickLinks = [
   { label: "School Gallery", href: "/#gallery" },
   { label: "LMS Hub", href: "/portal/lms" },
   { label: "Contact", href: "/contact" },
-  { label: "Staff", href: "/portal" },
+  { label: "Staff Admin", href: "/admin" },
 ];
 
 const campusLinks = [

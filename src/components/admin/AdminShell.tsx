@@ -11,8 +11,10 @@ import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { Button } from "@/components/ui/Button";
 import {
   loginStaff,
+  LEGACY_STAFF_DEMO_CREDENTIALS,
   STAFF_DEMO_CREDENTIALS,
 } from "@/services/portal/admin/auth";
+import { OFFICIAL_SITE_URL } from "@/lib/site-url";
 
 function StaffLoginGate() {
   const { applyStaffSession } = useAuth();
@@ -50,7 +52,11 @@ function StaffLoginGate() {
         </h1>
         <p className="admin-gate-desc text-center">
           Restricted to authorised registry and academic staff only. Students cannot
-          sign in here.
+          sign in here. Use the official site at{" "}
+          <a href={OFFICIAL_SITE_URL} className="font-semibold text-primary underline-offset-2 hover:underline">
+            mbaleschoolofnursing.ac.ug
+          </a>
+          — not the old mbsnm.org SitePad login.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -89,9 +95,13 @@ function StaffLoginGate() {
         </form>
 
         <p className="mt-4 rounded-lg bg-surface px-3 py-2.5 text-sm text-muted">
-          Demo staff access: <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.email}</span>
+          Demo staff:{" "}
+          <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.email}</span> /{" "}
+          <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.password}</span>
           {" · "}
-          password <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.password}</span>
+          legacy:{" "}
+          <span className="font-semibold text-primary">{LEGACY_STAFF_DEMO_CREDENTIALS.email}</span> /{" "}
+          <span className="font-semibold text-primary">{LEGACY_STAFF_DEMO_CREDENTIALS.password}</span>
         </p>
 
         <div className="mt-6 flex flex-col items-center gap-2 text-center text-base">

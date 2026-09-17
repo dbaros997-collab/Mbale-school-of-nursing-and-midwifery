@@ -12,6 +12,20 @@ export const STAFF_DEMO_CREDENTIALS = {
   password: "Staff@2026",
 } as const;
 
+/** Legacy SitePad admin login — still accepted on the new staff panel */
+export const LEGACY_STAFF_DEMO_CREDENTIALS = {
+  email: "admin@mbsnm.org",
+  password: "admin123",
+} as const;
+
+const STAFF_LOGIN_ACCOUNTS = [STAFF_DEMO_CREDENTIALS, LEGACY_STAFF_DEMO_CREDENTIALS] as const;
+
+function matchesStaffLogin(email: string, password: string): boolean {
+  return STAFF_LOGIN_ACCOUNTS.some(
+    (account) => email === account.email && password === account.password,
+  );
+}
+
 export type StaffLoginResult =
   | {
       ok: true;
@@ -34,10 +48,7 @@ export async function loginStaff(
     return { ok: false, message: "Enter your staff email and password." };
   }
 
-  if (
-    normalized !== STAFF_DEMO_CREDENTIALS.email ||
-    password !== STAFF_DEMO_CREDENTIALS.password
-  ) {
+  if (!matchesStaffLogin(normalized, password)) {
     return {
       ok: false,
       message: "Invalid staff credentials. Access is limited to authorised registry staff.",

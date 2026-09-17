@@ -46,6 +46,17 @@ export default function ContactPage() {
               description="Prefer email, phone, or WhatsApp? Use the channels below or send a message through the form."
             />
 
+            <div className="mt-6 rounded-2xl border border-accent-green/30 bg-accent-green-soft/40 p-5">
+              <p className="text-sm font-bold text-primary">Staff admin login</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted">
+                Registry and academic staff use the new control panel on this website — not the old
+                SitePad login at mbsnm.org.
+              </p>
+              <Button href="/admin" variant="green" size="sm" className="mt-4">
+                Open staff admin panel
+              </Button>
+            </div>
+
             <ul className="mt-8 space-y-4">
               {[
                 { icon: MapPin, label: "Address", value: SCHOOL.address },

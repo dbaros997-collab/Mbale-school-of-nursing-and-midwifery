@@ -23,10 +23,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Demo credentials (Portal admin)
+## Demo credentials (Staff admin at `/admin`)
 
-- Email: `admin@mbsnm.org`
-- Password: `admin123`
+- Email: `registry@mbsnm.org` · Password: `Staff@2026`
+- Legacy (still accepted): `admin@mbsnm.org` · `admin123`
+
+Use [https://mbaleschoolofnursing.ac.ug/admin](https://mbaleschoolofnursing.ac.ug/admin) — not the old mbsnm.org SitePad site.
 
 ## Stack
 

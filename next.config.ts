@@ -50,6 +50,21 @@ const nextConfig: NextConfig = {
         destination: "/images/learning-pillars-clinical.jpg",
         permanent: false,
       },
+      {
+        source: "/wp-admin",
+        destination: "/admin",
+        permanent: false,
+      },
+      {
+        source: "/wp-admin/:path*",
+        destination: "/admin",
+        permanent: false,
+      },
+      {
+        source: "/wp-login.php",
+        destination: "/admin",
+        permanent: false,
+      },
     ];
   },
   async headers() {
