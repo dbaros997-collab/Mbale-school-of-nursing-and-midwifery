@@ -1,6 +1,7 @@
 import type { JWTPayload } from "jose";
 import { fetchWithTimeout } from "@/lib/http/fetch-with-timeout";
-import { getMicrosoftServerConfig } from "./config";
+import { getAllowedStudentEmailDomains, getMicrosoftServerConfig } from "./config";
+import { isStaffInstitutionalRole, resolveInstitutionalRole } from "./roles";
 
 export type PortalAccessDecision = {
   allowed: boolean;
@@ -86,6 +87,15 @@ export async function evaluateStudentPortalAccess(input: {
     };
   }
 
+  const institutionalRole = resolveInstitutionalRole(input.idTokenPayload);
+  if (isStaffInstitutionalRole(institutionalRole)) {
+    return {
+      allowed: false,
+      reason:
+        "Your Microsoft account is signed in as staff. Use the Staff Admin panel instead of the student portal.",
+    };
+  }
+
   // Fast path: official student email domains skip the Graph group lookup on login.
   if (emailMatchesAnyDomain(email, policy.allowedStudentDomains)) {
     return {
@@ -145,7 +155,7 @@ export async function evaluateStudentPortalAccess(input: {
 }
 
 export function formatAllowedDomainsForDisplay(): string {
-  const { allowedStudentDomains } = getPortalAccessPolicy();
+  const allowedStudentDomains = getAllowedStudentEmailDomains();
   if (allowedStudentDomains.length === 0) return "your official school email";
   return allowedStudentDomains.map((domain) => `@${domain}`).join(", ");
 }

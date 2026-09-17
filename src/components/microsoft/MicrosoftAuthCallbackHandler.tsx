@@ -8,8 +8,7 @@ import { handleMicrosoftRedirectCallback } from "@/lib/microsoft/msal-browser";
 import { fetchWithTimeout } from "@/lib/http/fetch-with-timeout";
 import { mapMicrosoftProfileToPortalSession } from "@/lib/microsoft/portal-bridge";
 import type { MicrosoftUserProfile } from "@/lib/microsoft/types";
-import { emailMatchesAnyDomain } from "@/lib/microsoft/access-policy";
-import { getMicrosoftServerConfig } from "@/lib/microsoft/config";
+import { isStaffInstitutionalRole } from "@/lib/microsoft/roles";
 
 export function MicrosoftAuthCallbackHandler() {
   const router = useRouter();
@@ -36,6 +35,7 @@ export function MicrosoftAuthCallbackHandler() {
           body: JSON.stringify({
             idToken: result.idToken,
             accessToken: result.accessToken,
+            refreshToken: result.refreshToken,
             expiresIn: result.expiresOn
               ? Math.max(60, Math.floor((result.expiresOn.getTime() - Date.now()) / 1000))
               : 3600,
@@ -53,18 +53,7 @@ export function MicrosoftAuthCallbackHandler() {
           throw new Error(payload.message || "Microsoft sign-in failed.");
         }
 
-        const email = payload.profile.email.toLowerCase();
-        const { accessPolicy } = getMicrosoftServerConfig();
-        const isOfficialStudentMailbox = emailMatchesAnyDomain(
-          email,
-          accessPolicy.allowedStudentDomains,
-        );
-        const isStaffMicrosoft =
-          payload.profile.institutionalRole === "staff" ||
-          ((email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) &&
-            !isOfficialStudentMailbox);
-
-        if (isStaffMicrosoft) {
+        if (isStaffInstitutionalRole(payload.profile.institutionalRole)) {
           if (!cancelled) {
             setMessage("Staff account detected. Opening the Staff Admin panel…");
             router.replace("/admin");

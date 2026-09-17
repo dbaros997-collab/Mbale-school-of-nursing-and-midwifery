@@ -1,8 +1,8 @@
 import { createRemoteJWKSet, jwtVerify, type JWTPayload, type RemoteJWKSet } from "jose";
 import { ConfidentialClientApplication } from "@azure/msal-node";
-import { emailMatchesAnyDomain } from "./access-policy";
 import { getMicrosoftPublicConfig, getMicrosoftServerConfig } from "./config";
-import type { MicrosoftInstitutionalRole, MicrosoftUserProfile, MicrosoftVerifiedIdentity } from "./types";
+import { resolveInstitutionalRole } from "./roles";
+import type { MicrosoftUserProfile, MicrosoftVerifiedIdentity } from "./types";
 
 let msalClient: ConfidentialClientApplication | null = null;
 let cachedJwks: RemoteJWKSet | null = null;
@@ -36,22 +36,6 @@ function getMsalClient() {
   return msalClient;
 }
 
-function resolveInstitutionalRole(payload: JWTPayload): MicrosoftInstitutionalRole {
-  const roles = Array.isArray(payload.roles) ? payload.roles.map(String) : [];
-  const lower = roles.map((r) => r.toLowerCase());
-
-  if (lower.some((r) => r.includes("student"))) return "student";
-  if (lower.some((r) => r.includes("lecturer") || r.includes("faculty"))) return "lecturer";
-  if (lower.some((r) => r.includes("staff") || r.includes("admin"))) return "staff";
-
-  const email = String(payload.preferred_username ?? payload.email ?? "").toLowerCase();
-  const { accessPolicy } = getMicrosoftServerConfig();
-  if (emailMatchesAnyDomain(email, accessPolicy.allowedStudentDomains)) return "student";
-  if (email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) return "staff";
-
-  return "unknown";
-}
-
 export async function verifyMicrosoftIdToken(idToken: string): Promise<MicrosoftVerifiedIdentity> {
   const { clientId, tenantId } = getMicrosoftPublicConfig();
   if (!clientId || !tenantId) {
@@ -60,10 +44,29 @@ export async function verifyMicrosoftIdToken(idToken: string): Promise<Microsoft
 
   const jwks = getMicrosoftJwks(tenantId);
 
-  const { payload } = await jwtVerify(idToken, jwks, {
-    issuer: [`https://login.microsoftonline.com/${tenantId}/v2.0`, `https://sts.windows.net/${tenantId}/`],
-    audience: clientId,
-  });
+  let payload: JWTPayload;
+  try {
+    ({ payload } = await jwtVerify(idToken, jwks, {
+      issuer: [
+        `https://login.microsoftonline.com/${tenantId}/v2.0`,
+        `https://sts.windows.net/${tenantId}/`,
+      ],
+      audience: clientId,
+    }));
+  } catch (firstError) {
+    // Some tenants register an Application ID URI — retry with that audience shape.
+    try {
+      ({ payload } = await jwtVerify(idToken, jwks, {
+        issuer: [
+          `https://login.microsoftonline.com/${tenantId}/v2.0`,
+          `https://sts.windows.net/${tenantId}/`,
+        ],
+        audience: [`api://${clientId}`, clientId],
+      }));
+    } catch {
+      throw firstError;
+    }
+  }
 
   const email = String(
     payload.preferred_username ?? payload.email ?? payload.upn ?? "",

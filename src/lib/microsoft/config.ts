@@ -45,13 +45,10 @@ function getAppOrigin(): string {
 export function getMicrosoftPublicConfig() {
   const clientId = readEnvFirst("NEXT_PUBLIC_AZURE_CLIENT_ID", "MICROSOFT_CLIENT_ID");
   const tenantId = readEnvFirst("NEXT_PUBLIC_AZURE_TENANT_ID", "MICROSOFT_TENANT_ID");
-  const redirectUri =
-    readEnv("NEXT_PUBLIC_AZURE_REDIRECT_URI") ?? `${getAppOrigin()}/auth/microsoft/callback`;
-
   return {
     clientId: clientId ?? "",
     tenantId: tenantId ?? "",
-    redirectUri,
+    redirectUri: getMicrosoftRedirectUri(),
     authority: tenantId
       ? `https://login.microsoftonline.com/${tenantId}`
       : "https://login.microsoftonline.com/common",
@@ -63,16 +60,49 @@ function parseCsvEnv(value: string | undefined): string[] {
   if (!value?.trim()) return [];
   return value
     .split(",")
-    .map((part) => part.trim())
+    .map((part) => part.trim().replace(/^@/, "").toLowerCase())
     .filter(Boolean);
+}
+
+/** Default legacy UPN suffix while Azure AD migrates mailboxes to the official domain. */
+const DEFAULT_LEGACY_STUDENT_EMAIL_DOMAINS = ["student.mbsnm.org"] as const;
+
+/**
+ * Domains that qualify for student portal Microsoft sign-in.
+ * Env overrides the base list; legacy UPN domains are merged unless disabled.
+ */
+export function getAllowedStudentEmailDomains(): string[] {
+  const fromEnv = parseCsvEnv(
+    readEnvFirst("MICROSOFT_ALLOWED_STUDENT_DOMAINS", "ALLOWED_EMAIL_DOMAIN"),
+  );
+  const base = fromEnv.length > 0 ? fromEnv : [OFFICIAL_EMAIL_DOMAIN.toLowerCase()];
+
+  if (readEnv("MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS") === "false") {
+    return [...new Set(base)];
+  }
+
+  const legacy = parseCsvEnv(
+    readEnv("MICROSOFT_LEGACY_STUDENT_EMAIL_DOMAINS") ??
+      DEFAULT_LEGACY_STUDENT_EMAIL_DOMAINS.join(","),
+  );
+
+  return [...new Set([...base, ...legacy])];
+}
+
+function getMicrosoftRedirectUri(): string {
+  const explicit = readEnv("NEXT_PUBLIC_AZURE_REDIRECT_URI");
+  if (explicit) return explicit;
+
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/auth/microsoft/callback`;
+  }
+
+  return `${getAppOrigin()}/auth/microsoft/callback`;
 }
 
 export function getMicrosoftServerConfig() {
   const publicConfig = getMicrosoftPublicConfig();
-  const allowedStudentDomains = parseCsvEnv(
-    readEnvFirst("MICROSOFT_ALLOWED_STUDENT_DOMAINS", "ALLOWED_EMAIL_DOMAIN") ??
-      OFFICIAL_EMAIL_DOMAIN,
-  );
+  const allowedStudentDomains = getAllowedStudentEmailDomains();
   const studentSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_STUDENT_SECURITY_GROUP_IDS"));
   const blockedSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_BLOCKED_SECURITY_GROUP_IDS"));
   const blockedEmailDomains = parseCsvEnv(
