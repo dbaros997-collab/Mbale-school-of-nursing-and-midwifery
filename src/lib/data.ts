@@ -14,6 +14,8 @@ export const SCHOOL = {
   postal: "P. O. Box — Mbale, Uganda",
   /** Official public website */
   website: "https://mbaleschoolofnursing.ac.ug",
+  /** Former registry admin URL (now redirects to Staff Admin on the official site) */
+  legacyStaffAdminUrl: "https://student.mbsnm.org",
   youtube: "https://www.youtube.com/channel/UC-YnxFTZ5-atVFZCGGZ91PQ",
   registration:
     "Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
@@ -109,6 +111,10 @@ export const mainNav = [
 
 export const quickLinks = [
   { label: "Staff Admin", href: "/admin" },
+  {
+    label: "Legacy admin (student.mbsnm.org)",
+    href: "/admin",
+  },
   { label: "Student Portal", href: "/portal/dashboard" },
   { label: "Activate Account", href: "/portal/activate" },
   { label: "Application Portal", href: "/admissions#apply" },

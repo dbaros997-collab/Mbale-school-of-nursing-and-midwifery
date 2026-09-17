@@ -14,7 +14,7 @@ import {
   LEGACY_STAFF_DEMO_CREDENTIALS,
   STAFF_DEMO_CREDENTIALS,
 } from "@/services/portal/admin/auth";
-import { OFFICIAL_SITE_URL } from "@/lib/site-url";
+import { getStaffAdminUrl, LEGACY_STUDENT_ADMIN_HOST, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import { clearStaffLoginHint, readStaffLoginHint } from "@/lib/portal/staff-login-routing";
 
 function StaffLoginGate() {
@@ -69,7 +69,15 @@ function StaffLoginGate() {
           <a href={OFFICIAL_SITE_URL} className="font-semibold text-primary underline-offset-2 hover:underline">
             mbaleschoolofnursing.ac.ug
           </a>
-          — not the old mbsnm.org SitePad login.
+          — not the old mbsnm.org SitePad login. The former admin address{" "}
+          <span className="font-semibold">{LEGACY_STUDENT_ADMIN_HOST}</span> now opens this panel at{" "}
+          <a
+            href={getStaffAdminUrl()}
+            className="font-semibold text-primary underline-offset-2 hover:underline"
+          >
+            {getStaffAdminUrl()}
+          </a>
+          .
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">

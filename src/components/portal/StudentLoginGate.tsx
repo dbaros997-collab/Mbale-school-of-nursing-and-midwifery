@@ -16,6 +16,7 @@ import {
   isStaffPortalLoginIdentifier,
   saveStaffLoginHint,
 } from "@/lib/portal/staff-login-routing";
+import { getStaffAdminUrl, LEGACY_STUDENT_ADMIN_HOST } from "@/lib/site-url";
 import { ShieldCheck } from "lucide-react";
 import {
   activationInputClass,
@@ -93,8 +94,18 @@ export function StudentLoginGate() {
             <div className="min-w-0 flex-1">
               <p className="text-sm font-bold text-primary">Staff &amp; registry officers</p>
               <p className="mt-1 text-xs leading-relaxed text-muted">
-                Do not use the old mbsnm.org SitePad login. Open the new staff control panel on
-                this website.
+                The old admin site{" "}
+                <a
+                  href={getStaffAdminUrl()}
+                  className="font-semibold text-primary underline-offset-2 hover:underline"
+                >
+                  {LEGACY_STUDENT_ADMIN_HOST}
+                </a>{" "}
+                now uses{" "}
+                <Link href="/admin" className="font-semibold text-primary underline-offset-2 hover:underline">
+                  Staff Admin
+                </Link>{" "}
+                on this website — not the student portal below.
               </p>
               <Button href="/admin" variant="navy" size="sm" className="mt-3 w-full sm:w-auto">
                 Open Staff Admin
@@ -111,8 +122,16 @@ export function StudentLoginGate() {
             Recommended for MBSNM students
           </p>
           <p className="mt-1 text-center text-xs text-muted">
-            Use your official <span className="font-semibold text-primary">@student.mbsnm.org</span>{" "}
-            school account
+            Students: sign in with your <span className="font-semibold text-primary">@student.mbsnm.org</span>{" "}
+            school account. Staff who used the old{" "}
+            <Link href="/admin" className="font-semibold text-primary underline-offset-2 hover:underline">
+              {LEGACY_STUDENT_ADMIN_HOST}
+            </Link>{" "}
+            admin site should use{" "}
+            <Link href="/admin" className="font-semibold text-primary underline-offset-2 hover:underline">
+              Staff Admin
+            </Link>
+            .
           </p>
           <div className="mt-4">
             <MicrosoftSignInButton
