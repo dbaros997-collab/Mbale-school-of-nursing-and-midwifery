@@ -8,10 +8,12 @@ RUN npm ci --include=dev --no-audit --no-fund
 
 FROM base AS builder
 WORKDIR /app
+# Microsoft SPA settings (baked into client bundle). Runtime secrets go on the Coolify container:
+# MICROSOFT_CLIENT_SECRET, SESSION_SECRET, ALLOWED_EMAIL_DOMAIN — see .env.example
 ARG SOURCE_COMMIT=unknown
 ARG NEXT_PUBLIC_AZURE_CLIENT_ID
 ARG NEXT_PUBLIC_AZURE_TENANT_ID
-ARG NEXT_PUBLIC_AZURE_REDIRECT_URI
+ARG NEXT_PUBLIC_AZURE_REDIRECT_URI=https://mbaleschoolofnursing.ac.ug/auth/microsoft/callback
 ARG NEXT_PUBLIC_SITE_URL=https://mbaleschoolofnursing.ac.ug
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY

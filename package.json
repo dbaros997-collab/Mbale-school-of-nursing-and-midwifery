@@ -13,7 +13,9 @@
     "start": "node scripts/start-standalone.mjs",
     "lint": "eslint",
     "push:live": "node scripts/push-live.mjs",
-    "deploy:trigger": "node scripts/trigger-deploy.mjs"
+    "deploy:trigger": "node scripts/trigger-deploy.mjs",
+    "validate:microsoft-env": "node scripts/validate-microsoft-env.mjs",
+    "validate:microsoft-env:production": "node scripts/validate-microsoft-env.mjs --production"
   },
   "dependencies": {
     "@azure/msal-browser": "^5.19.0",
