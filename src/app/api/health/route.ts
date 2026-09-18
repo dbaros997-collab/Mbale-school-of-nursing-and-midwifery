@@ -16,10 +16,7 @@ export async function GET() {
       microsoft: {
         serverConfigured: microsoft.serverConfigured,
         clientConfigured: microsoft.clientConfigured,
-        ready:
-          microsoft.serverConfigured &&
-          microsoft.clientConfigured &&
-          !microsoftConfigHasErrors(microsoft),
+        ready: microsoft.clientConfigured && !microsoftConfigHasErrors(microsoft),
         issueCount: microsoft.issues.length,
       },
     });

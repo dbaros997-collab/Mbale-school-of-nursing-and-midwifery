@@ -5,6 +5,16 @@ import { LEGACY_PATH_REDIRECTS } from "./src/lib/legacy-path-redirects";
 const OFFICIAL_SITE_URL = "https://mbaleschoolofnursing.ac.ug";
 const MICROSOFT_PRODUCTION_CALLBACK_URL = `${OFFICIAL_SITE_URL}/auth/microsoft/callback`;
 
+function configEnv(key: string): string | undefined {
+  const value = process.env[key]?.trim();
+  return value || undefined;
+}
+
+const bakedAzureClientId =
+  configEnv("NEXT_PUBLIC_AZURE_CLIENT_ID") ?? configEnv("MICROSOFT_CLIENT_ID");
+const bakedAzureTenantId =
+  configEnv("NEXT_PUBLIC_AZURE_TENANT_ID") ?? configEnv("MICROSOFT_TENANT_ID");
+
 const nextConfig: NextConfig = {
   output: "standalone",
   productionBrowserSourceMaps: false,
@@ -16,7 +26,9 @@ const nextConfig: NextConfig = {
     cpus: 1,
   },
   env: {
-    // Do not inline Azure client/tenant IDs here — Coolify runtime MICROSOFT_* must win on the server.
+    // Baked for browser MSAL at build; server reads runtime snapshot via read-env.ts.
+    NEXT_PUBLIC_AZURE_CLIENT_ID: bakedAzureClientId,
+    NEXT_PUBLIC_AZURE_TENANT_ID: bakedAzureTenantId,
     ALLOWED_EMAIL_DOMAIN: process.env.ALLOWED_EMAIL_DOMAIN,
     MICROSOFT_ALLOWED_STUDENT_DOMAINS: process.env.MICROSOFT_ALLOWED_STUDENT_DOMAINS,
     MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS:

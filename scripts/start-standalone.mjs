@@ -10,6 +10,8 @@ import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import { loadRuntimeDotenv } from "./load-runtime-dotenv.mjs";
+import { publishRuntimeEnvSnapshot, syncMicrosoftEnvAliases } from "./microsoft-env-sync.mjs";
 
 process.env.HOSTNAME = "0.0.0.0";
 
@@ -18,6 +20,10 @@ if (!process.env.PORT?.trim()) {
 }
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
+loadRuntimeDotenv(rootDir);
+syncMicrosoftEnvAliases();
+publishRuntimeEnvSnapshot();
+
 const serverEntry = [
   join(rootDir, "server.js"),
   join(rootDir, ".next", "standalone", "server.js"),

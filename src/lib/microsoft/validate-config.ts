@@ -3,7 +3,7 @@ import {
   getMicrosoftPublicConfig,
   getMicrosoftServerConfig,
   isMicrosoftClientConfigured,
-  isMicrosoftConfigured,
+  isMicrosoftConfidentialClientConfigured,
 } from "./config";
 import {
   MICROSOFT_AUTH_CALLBACK_PATH,
@@ -97,9 +97,9 @@ export function validateMicrosoftDeploymentConfig(options?: {
 
   if (isPlaceholder(serverConfig.clientSecret)) {
     issues.push({
-      level: "error",
+      level: isMicrosoftClientConfigured() ? "warning" : "error",
       code: "client_secret_missing",
-      message: `Set ${MICROSOFT_ENV.clientSecret.join(" or ")} (server runtime — never expose as NEXT_PUBLIC_*).`,
+      message: `Set ${MICROSOFT_ENV.clientSecret.join(" or ")} for Graph/refresh (optional for basic Microsoft sign-in).`,
     });
   }
 
@@ -203,7 +203,7 @@ export function validateMicrosoftDeploymentConfig(options?: {
   }
 
   return {
-    serverConfigured: isMicrosoftConfigured(),
+    serverConfigured: isMicrosoftConfidentialClientConfigured(),
     clientConfigured: isMicrosoftClientConfigured(),
     redirectUri: publicConfig.redirectUri,
     allowedStudentDomains,

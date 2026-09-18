@@ -5,6 +5,7 @@ import {
 } from "@/lib/microsoft/validate-config";
 import { MICROSOFT_PRODUCTION_CALLBACK_URL } from "@/lib/microsoft/env-vars";
 import { OFFICIAL_SITE_URL } from "@/lib/site-url";
+import { listMicrosoftEnvKeyPresence } from "@/lib/microsoft/read-env";
 
 /** Non-secret Microsoft SSO deployment checklist for operators (Coolify / ICT). */
 export async function GET(request: Request) {
@@ -15,13 +16,14 @@ export async function GET(request: Request) {
   const validation = validateMicrosoftDeploymentConfig({ production });
 
   return NextResponse.json({
-    ok: validation.serverConfigured && validation.clientConfigured && !microsoftConfigHasErrors(validation),
+    ok: validation.clientConfigured && !microsoftConfigHasErrors(validation),
     officialSite: OFFICIAL_SITE_URL,
     productionCallbackUrl: MICROSOFT_PRODUCTION_CALLBACK_URL,
     serverConfigured: validation.serverConfigured,
     clientConfigured: validation.clientConfigured,
     redirectUri: validation.redirectUri,
     allowedStudentDomains: validation.allowedStudentDomains,
+    runtimeEnvKeysPresent: listMicrosoftEnvKeyPresence(),
     issues: validation.issues,
   });
 }

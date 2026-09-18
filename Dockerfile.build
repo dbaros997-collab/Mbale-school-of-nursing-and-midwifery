@@ -52,6 +52,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/scripts/start-standalone.mjs ./scripts/start-standalone.mjs
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/microsoft-env-sync.mjs ./scripts/microsoft-env-sync.mjs
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/load-runtime-dotenv.mjs ./scripts/load-runtime-dotenv.mjs
 USER nextjs
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=45s --retries=3 \

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { readMicrosoftSession, saveMicrosoftSession } from "@/lib/microsoft/session";
 import { isAccessTokenExpired, refreshMicrosoftAccessToken } from "@/lib/microsoft/token";
-import { isMicrosoftConfigured } from "@/lib/microsoft/config";
+import { isMicrosoftConfidentialClientConfigured } from "@/lib/microsoft/config";
 
 export async function POST() {
-  if (!isMicrosoftConfigured()) {
+  if (!isMicrosoftConfidentialClientConfigured()) {
     return NextResponse.json({ ok: false, message: "Microsoft 365 is not configured." }, { status: 503 });
   }
 

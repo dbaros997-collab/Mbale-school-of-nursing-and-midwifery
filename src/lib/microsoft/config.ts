@@ -32,8 +32,18 @@ export const MICROSOFT_SCOPES = [
   "GroupMember.Read.All",
 ] as const;
 
-const SERVER_CLIENT_ID_KEYS = ["MICROSOFT_CLIENT_ID", "NEXT_PUBLIC_AZURE_CLIENT_ID"] as const;
-const SERVER_TENANT_ID_KEYS = ["MICROSOFT_TENANT_ID", "NEXT_PUBLIC_AZURE_TENANT_ID"] as const;
+const SERVER_CLIENT_ID_KEYS = [
+  "MICROSOFT_CLIENT_ID",
+  "NEXT_PUBLIC_AZURE_CLIENT_ID",
+  "AZURE_CLIENT_ID",
+  "AZURE_AD_CLIENT_ID",
+] as const;
+const SERVER_TENANT_ID_KEYS = [
+  "MICROSOFT_TENANT_ID",
+  "NEXT_PUBLIC_AZURE_TENANT_ID",
+  "AZURE_TENANT_ID",
+  "AZURE_AD_TENANT_ID",
+] as const;
 const BROWSER_CLIENT_ID_KEYS = ["NEXT_PUBLIC_AZURE_CLIENT_ID", "MICROSOFT_CLIENT_ID"] as const;
 const BROWSER_TENANT_ID_KEYS = ["NEXT_PUBLIC_AZURE_TENANT_ID", "MICROSOFT_TENANT_ID"] as const;
 
@@ -142,10 +152,16 @@ export function getMicrosoftServerConfig() {
   };
 }
 
+/** True when Entra app + tenant IDs are available (MSAL redirect + id-token verify). */
 export function isMicrosoftConfigured(): boolean {
-  const { clientId, tenantId } = getMicrosoftPublicConfig();
-  const { clientSecret, sessionSecret } = getMicrosoftServerConfig();
-  return Boolean(clientId && tenantId && clientSecret && sessionSecret);
+  return isMicrosoftClientConfigured();
+}
+
+/** True when server-side token refresh / Graph (confidential client) can run. */
+export function isMicrosoftConfidentialClientConfigured(): boolean {
+  if (!isMicrosoftClientConfigured()) return false;
+  const { clientSecret } = getMicrosoftServerConfig();
+  return Boolean(clientSecret);
 }
 
 export function isMicrosoftClientConfigured(): boolean {
