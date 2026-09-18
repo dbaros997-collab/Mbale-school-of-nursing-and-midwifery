@@ -88,33 +88,7 @@ jobs:
               -d '{"visibility":"public"}' && break
           done
 
-      - name: Pin Coolify Dockerfile to this image
+      - name: Deployment note
         run: |
-          cat > Dockerfile <<EOF
-          # Auto-pinned to the GHCR image built by GitHub Actions for this commit.
-          # GitHub Actions updates this line after every successful "Publish Docker image" run.
-          FROM ghcr.io/${{ github.repository_owner }}/mbale-school:${{ steps.tags.outputs.short_sha }}
-          EOF
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Dockerfile
-          git diff --staged --quiet && exit 0
-          git commit -m "Pin Coolify image to ${{ github.sha }} [pin-coolify]"
-          git pull --rebase origin main
-          git push origin main
-
-      - name: Trigger Coolify redeploy
-        if: success()
-        continue-on-error: true
-        env:
-          COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK }}
-          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
-        run: |
-          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}"
-          if [ -z "$COOLIFY_WEBHOOK" ]; then
-            echo "COOLIFY_WEBHOOK not set — Coolify will deploy from the pinned Dockerfile push."
-            exit 0
-          fi
-          curl -fsS -X GET "${COOLIFY_WEBHOOK}?force=true" \
-            ${COOLIFY_TOKEN:+ -H "Authorization: Bearer ${COOLIFY_TOKEN}"}
-          echo "Coolify redeploy triggered for ${{ github.sha }}."
+          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/mbale-school:latest"
+          echo "Coolify redeploy is triggered once by the Redeploy Coolify workflow (after GHCR is ready)."

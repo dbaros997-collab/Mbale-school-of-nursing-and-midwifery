@@ -196,6 +196,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
 
     async function bootstrap() {
+      try {
       const stored = readStoredAuth();
       if (stored.mode === "demo-admin") {
         if (!cancelled) {
@@ -258,6 +259,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setAuthProvider(null);
         setMicrosoftProfile(null);
         setReady(true);
+      }
+      } catch (error) {
+        console.error("[AuthContext] bootstrap failed", error);
+        if (!cancelled) {
+          writeStoredAuth("logged-out");
+          setSession(null);
+          setUser(null);
+          setProfile(null);
+          setAdminProfile(null);
+          setAuthProvider(null);
+          setMicrosoftProfile(null);
+          setReady(true);
+        }
       }
     }
 

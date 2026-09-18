@@ -34,4 +34,9 @@ if (!serverEntry) {
   process.exit(1);
 }
 
-createRequire(import.meta.url)(serverEntry);
+try {
+  createRequire(import.meta.url)(serverEntry);
+} catch (error) {
+  console.error("[start-standalone] Failed to start Next.js server:", error);
+  process.exit(1);
+}
