@@ -4,7 +4,15 @@ import { clearMicrosoftSession, readMicrosoftSession } from "@/lib/microsoft/ses
 
 export async function GET() {
   const configured = isMicrosoftConfigured();
-  const session = configured ? await readMicrosoftSession() : null;
+  let session = null;
+  if (configured) {
+    try {
+      session = await readMicrosoftSession();
+    } catch (error) {
+      console.error("[microsoft/session]", error);
+      return NextResponse.json({ authenticated: false, configured: true, error: "session_unavailable" });
+    }
+  }
 
   if (!session) {
     return NextResponse.json({
@@ -30,6 +38,11 @@ export async function GET() {
 }
 
 export async function DELETE() {
-  await clearMicrosoftSession();
-  return NextResponse.json({ ok: true, message: "Microsoft session cleared." });
+  try {
+    await clearMicrosoftSession();
+    return NextResponse.json({ ok: true, message: "Microsoft session cleared." });
+  } catch (error) {
+    console.error("[microsoft/session] DELETE", error);
+    return NextResponse.json({ ok: false, message: "Could not clear Microsoft session." }, { status: 500 });
+  }
 }

@@ -9,10 +9,19 @@ export type MicrosoftIronSession = {
   microsoft?: MicrosoftSessionData;
 };
 
+const IRON_SESSION_DEV_PASSWORD = "development-only-insecure-session-secret-32chars";
+
+/** iron-session requires password length >= 32; invalid Coolify values must not crash requests. */
+function resolveIronSessionPassword(raw: string): string {
+  const trimmed = raw.trim();
+  if (trimmed.length >= 32) return trimmed;
+  return IRON_SESSION_DEV_PASSWORD;
+}
+
 function getSessionOptions(): SessionOptions {
   const { sessionSecret } = getMicrosoftServerConfig();
   return {
-    password: sessionSecret || "development-only-insecure-session-secret-32chars",
+    password: resolveIronSessionPassword(sessionSecret),
     cookieName: MICROSOFT_SESSION_COOKIE,
     cookieOptions: {
       httpOnly: true,
