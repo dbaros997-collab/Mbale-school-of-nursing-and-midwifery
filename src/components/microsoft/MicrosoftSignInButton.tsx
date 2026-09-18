@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { useMicrosoftClientConfigured } from "@/lib/microsoft/use-microsoft-client-configured";
+import { loadMicrosoftBrowserPublicConfig } from "@/lib/microsoft/browser-public-config";
 import { loginWithMicrosoftRedirect } from "@/lib/microsoft/msal-browser";
 
 function MicrosoftLogo({ className }: { className?: string }) {
@@ -37,26 +37,20 @@ export function MicrosoftSignInButton({
   surface = "light",
 }: MicrosoftSignInButtonProps) {
   const [busy, setBusy] = useState(false);
-  const configured = useMicrosoftClientConfigured();
 
   async function handleClick() {
-    if (!configured) {
-      onError?.(
-        "Microsoft 365 sign-in is not configured. Add Azure AD environment variables to enable SSO.",
-      );
-      return;
-    }
-
     setBusy(true);
     try {
+      await loadMicrosoftBrowserPublicConfig();
       await loginWithMicrosoftRedirect();
     } catch (err) {
-      setBusy(false);
       onError?.(
         err instanceof Error
           ? err.message
           : "Microsoft sign-in could not start. Check your connection and try again.",
       );
+    } finally {
+      setBusy(false);
     }
   }
 

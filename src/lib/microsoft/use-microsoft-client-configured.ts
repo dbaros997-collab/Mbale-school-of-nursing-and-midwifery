@@ -1,28 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isMicrosoftBrowserPublicConfigReady, loadMicrosoftBrowserPublicConfig } from "./browser-public-config";
+import { probeMicrosoftClientConfigured } from "./browser-public-config";
 
-/** Whether MSAL can start (build-time or runtime Azure client + tenant IDs). */
+/** Whether MSAL can start — resolved from server runtime env via /api/auth/microsoft/client-config. */
 export function useMicrosoftClientConfigured(): boolean {
-  const [configured, setConfigured] = useState(isMicrosoftBrowserPublicConfigReady());
+  const [configured, setConfigured] = useState(false);
 
   useEffect(() => {
-    if (configured) return;
-
     let cancelled = false;
-    void loadMicrosoftBrowserPublicConfig()
-      .then(() => {
-        if (!cancelled) setConfigured(true);
-      })
-      .catch(() => {
-        if (!cancelled) setConfigured(false);
-      });
-
+    void probeMicrosoftClientConfigured().then((ready) => {
+      if (!cancelled) setConfigured(ready);
+    });
     return () => {
       cancelled = true;
     };
-  }, [configured]);
+  }, []);
 
   return configured;
 }

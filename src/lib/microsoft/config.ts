@@ -7,6 +7,11 @@ import {
   MICROSOFT_PRODUCTION_CALLBACK_URL,
 } from "./env-vars";
 import { getPublicSiteUrl, OFFICIAL_EMAIL_DOMAIN } from "@/lib/site-url";
+import {
+  isMicrosoftEnvPlaceholder,
+  readRuntimeEnv,
+  readRuntimeEnvFirst,
+} from "./read-env";
 
 export {
   MICROSOFT_AUTH_CALLBACK_PATH,
@@ -27,22 +32,26 @@ export const MICROSOFT_SCOPES = [
   "GroupMember.Read.All",
 ] as const;
 
-function readEnv(key: string): string | undefined {
-  const value = process.env[key]?.trim();
-  return value || undefined;
+const SERVER_CLIENT_ID_KEYS = ["MICROSOFT_CLIENT_ID", "NEXT_PUBLIC_AZURE_CLIENT_ID"] as const;
+const SERVER_TENANT_ID_KEYS = ["MICROSOFT_TENANT_ID", "NEXT_PUBLIC_AZURE_TENANT_ID"] as const;
+const BROWSER_CLIENT_ID_KEYS = ["NEXT_PUBLIC_AZURE_CLIENT_ID", "MICROSOFT_CLIENT_ID"] as const;
+const BROWSER_TENANT_ID_KEYS = ["NEXT_PUBLIC_AZURE_TENANT_ID", "MICROSOFT_TENANT_ID"] as const;
+
+function readMicrosoftClientId(): string | undefined {
+  const keys =
+    typeof window === "undefined" ? SERVER_CLIENT_ID_KEYS : BROWSER_CLIENT_ID_KEYS;
+  return readRuntimeEnvFirst(keys);
 }
 
-function readEnvFirst(...keys: string[]): string | undefined {
-  for (const key of keys) {
-    const value = readEnv(key);
-    if (value) return value;
-  }
-  return undefined;
+function readMicrosoftTenantId(): string | undefined {
+  const keys =
+    typeof window === "undefined" ? SERVER_TENANT_ID_KEYS : BROWSER_TENANT_ID_KEYS;
+  return readRuntimeEnvFirst(keys);
 }
 
 export function getMicrosoftPublicConfig() {
-  const clientId = readEnvFirst("NEXT_PUBLIC_AZURE_CLIENT_ID", "MICROSOFT_CLIENT_ID");
-  const tenantId = readEnvFirst("NEXT_PUBLIC_AZURE_TENANT_ID", "MICROSOFT_TENANT_ID");
+  const clientId = readMicrosoftClientId();
+  const tenantId = readMicrosoftTenantId();
   return {
     clientId: clientId ?? "",
     tenantId: tenantId ?? "",
@@ -71,16 +80,16 @@ const DEFAULT_LEGACY_STUDENT_EMAIL_DOMAINS = ["student.mbsnm.org"] as const;
  */
 export function getAllowedStudentEmailDomains(): string[] {
   const fromEnv = parseCsvEnv(
-    readEnvFirst("MICROSOFT_ALLOWED_STUDENT_DOMAINS", "ALLOWED_EMAIL_DOMAIN"),
+    readRuntimeEnvFirst(["MICROSOFT_ALLOWED_STUDENT_DOMAINS", "ALLOWED_EMAIL_DOMAIN"]),
   );
   const base = fromEnv.length > 0 ? fromEnv : [OFFICIAL_EMAIL_DOMAIN.toLowerCase()];
 
-  if (readEnv("MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS") === "false") {
+  if (readRuntimeEnv("MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS") === "false") {
     return [...new Set(base)];
   }
 
   const legacy = parseCsvEnv(
-    readEnv("MICROSOFT_LEGACY_STUDENT_EMAIL_DOMAINS") ??
+    readRuntimeEnv("MICROSOFT_LEGACY_STUDENT_EMAIL_DOMAINS") ??
       DEFAULT_LEGACY_STUDENT_EMAIL_DOMAINS.join(","),
   );
 
@@ -88,7 +97,7 @@ export function getAllowedStudentEmailDomains(): string[] {
 }
 
 function getMicrosoftRedirectUri(): string {
-  const explicit = readEnv(MICROSOFT_ENV.redirectUri[0]);
+  const explicit = readRuntimeEnv(MICROSOFT_ENV.redirectUri[0]);
   if (explicit) return explicit;
 
   if (typeof window !== "undefined") {
@@ -109,20 +118,21 @@ function getMicrosoftRedirectUri(): string {
 export function getMicrosoftServerConfig() {
   const publicConfig = getMicrosoftPublicConfig();
   const allowedStudentDomains = getAllowedStudentEmailDomains();
-  const studentSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_STUDENT_SECURITY_GROUP_IDS"));
-  const blockedSecurityGroupIds = parseCsvEnv(readEnv("MICROSOFT_BLOCKED_SECURITY_GROUP_IDS"));
+  const studentSecurityGroupIds = parseCsvEnv(readRuntimeEnv("MICROSOFT_STUDENT_SECURITY_GROUP_IDS"));
+  const blockedSecurityGroupIds = parseCsvEnv(readRuntimeEnv("MICROSOFT_BLOCKED_SECURITY_GROUP_IDS"));
   const blockedEmailDomains = parseCsvEnv(
-    readEnv("MICROSOFT_BLOCKED_EMAIL_DOMAINS") ?? "staff.mbsnm.org,mbsnm.org",
+    readRuntimeEnv("MICROSOFT_BLOCKED_EMAIL_DOMAINS") ?? "staff.mbsnm.org,mbsnm.org",
   );
 
   return {
     ...publicConfig,
-    clientSecret: readEnvFirst("AZURE_CLIENT_SECRET", "MICROSOFT_CLIENT_SECRET") ?? "",
-    sessionSecret: readEnv("SESSION_SECRET") ?? "",
-    sharePointSiteId: readEnv("MICROSOFT_SHAREPOINT_SITE_ID") ?? "",
-    sharePointDriveId: readEnv("MICROSOFT_SHAREPOINT_DRIVE_ID") ?? "",
-    curriculumFolderPath: readEnv("MICROSOFT_CURRICULUM_FOLDER_PATH") ?? "/Curriculum",
-    noticesListId: readEnv("MICROSOFT_NOTICES_LIST_ID") ?? "",
+    clientSecret:
+      readRuntimeEnvFirst(["AZURE_CLIENT_SECRET", "MICROSOFT_CLIENT_SECRET"]) ?? "",
+    sessionSecret: readRuntimeEnv("SESSION_SECRET") ?? "",
+    sharePointSiteId: readRuntimeEnv("MICROSOFT_SHAREPOINT_SITE_ID") ?? "",
+    sharePointDriveId: readRuntimeEnv("MICROSOFT_SHAREPOINT_DRIVE_ID") ?? "",
+    curriculumFolderPath: readRuntimeEnv("MICROSOFT_CURRICULUM_FOLDER_PATH") ?? "/Curriculum",
+    noticesListId: readRuntimeEnv("MICROSOFT_NOTICES_LIST_ID") ?? "",
     accessPolicy: {
       allowedStudentDomains,
       studentSecurityGroupIds,
@@ -139,11 +149,7 @@ export function isMicrosoftConfigured(): boolean {
 }
 
 export function isMicrosoftClientConfigured(): boolean {
-  const { clientId, tenantId } = getMicrosoftPublicConfig();
-  const placeholder =
-    !clientId ||
-    !tenantId ||
-    clientId.startsWith("your_") ||
-    tenantId.startsWith("your_");
-  return !placeholder;
+  const clientId = readMicrosoftClientId();
+  const tenantId = readMicrosoftTenantId();
+  return !isMicrosoftEnvPlaceholder(clientId) && !isMicrosoftEnvPlaceholder(tenantId);
 }

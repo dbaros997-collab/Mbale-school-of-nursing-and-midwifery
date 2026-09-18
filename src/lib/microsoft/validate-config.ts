@@ -11,6 +11,7 @@ import {
   MICROSOFT_PRODUCTION_CALLBACK_URL,
 } from "./env-vars";
 import { OFFICIAL_SITE_URL } from "@/lib/site-url";
+import { isMicrosoftEnvPlaceholder, readRuntimeEnv, readRuntimeEnvFirst } from "./read-env";
 
 export type MicrosoftConfigIssueLevel = "error" | "warning";
 
@@ -20,28 +21,7 @@ export type MicrosoftConfigIssue = {
   message: string;
 };
 
-function readEnv(key: string): string | undefined {
-  const value = process.env[key]?.trim();
-  return value || undefined;
-}
-
-function readEnvFirst(keys: readonly string[]): string | undefined {
-  for (const key of keys) {
-    const value = readEnv(key);
-    if (value) return value;
-  }
-  return undefined;
-}
-
-function isPlaceholder(value: string | undefined): boolean {
-  if (!value) return true;
-  const lower = value.toLowerCase();
-  return (
-    lower.startsWith("your_") ||
-    lower.includes("change-before-production") ||
-    lower === "unknown"
-  );
-}
+const isPlaceholder = isMicrosoftEnvPlaceholder;
 
 function parseRedirectUri(raw: string | undefined): URL | null {
   if (!raw) return null;
@@ -76,10 +56,10 @@ export function validateMicrosoftDeploymentConfig(options?: {
   const serverConfig = getMicrosoftServerConfig();
   const allowedStudentDomains = getAllowedStudentEmailDomains();
 
-  const clientIdPublic = readEnv(MICROSOFT_ENV.clientId[0]);
-  const clientIdServer = readEnv(MICROSOFT_ENV.clientId[1]);
-  const tenantIdPublic = readEnv(MICROSOFT_ENV.tenantId[0]);
-  const tenantIdServer = readEnv(MICROSOFT_ENV.tenantId[1]);
+  const clientIdPublic = readRuntimeEnv(MICROSOFT_ENV.clientId[0]);
+  const clientIdServer = readRuntimeEnv(MICROSOFT_ENV.clientId[1]);
+  const tenantIdPublic = readRuntimeEnv(MICROSOFT_ENV.tenantId[0]);
+  const tenantIdServer = readRuntimeEnv(MICROSOFT_ENV.tenantId[1]);
 
   if (clientIdPublic && clientIdServer && clientIdPublic !== clientIdServer) {
     issues.push({
@@ -132,7 +112,7 @@ export function validateMicrosoftDeploymentConfig(options?: {
   }
 
   const redirectRaw =
-    readEnv(MICROSOFT_ENV.redirectUri[0]) ?? publicConfig.redirectUri;
+    readRuntimeEnv(MICROSOFT_ENV.redirectUri[0]) ?? publicConfig.redirectUri;
   const redirect = parseRedirectUri(redirectRaw);
 
   if (!redirect) {
@@ -167,7 +147,7 @@ export function validateMicrosoftDeploymentConfig(options?: {
     }
   }
 
-  if (production && !readEnv(MICROSOFT_ENV.redirectUri[0])) {
+  if (production && !readRuntimeEnv(MICROSOFT_ENV.redirectUri[0])) {
     issues.push({
       level: "warning",
       code: "redirect_build_time",
@@ -175,7 +155,7 @@ export function validateMicrosoftDeploymentConfig(options?: {
     });
   }
 
-  const siteUrl = readEnvFirst(MICROSOFT_ENV.siteUrl);
+  const siteUrl = readRuntimeEnvFirst([...MICROSOFT_ENV.siteUrl]);
   if (production) {
     if (!siteUrl) {
       issues.push({
@@ -205,15 +185,15 @@ export function validateMicrosoftDeploymentConfig(options?: {
         issues.push({
           level: "error",
           code: "site_url_invalid",
-          message: `${readEnvFirst(MICROSOFT_ENV.siteUrl)} is not a valid URL.`,
+          message: `${readRuntimeEnvFirst([...MICROSOFT_ENV.siteUrl])} is not a valid URL.`,
         });
       }
     }
   }
 
   if (
-    !readEnv(MICROSOFT_ENV.allowedStudentDomains[0]) &&
-    !readEnv(MICROSOFT_ENV.allowedEmailDomain[0])
+    !readRuntimeEnv(MICROSOFT_ENV.allowedStudentDomains[0]) &&
+    !readRuntimeEnv(MICROSOFT_ENV.allowedEmailDomain[0])
   ) {
     issues.push({
       level: "warning",

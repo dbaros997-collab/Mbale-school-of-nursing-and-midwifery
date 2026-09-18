@@ -5,17 +5,6 @@ import { LEGACY_PATH_REDIRECTS } from "./src/lib/legacy-path-redirects";
 const OFFICIAL_SITE_URL = "https://mbaleschoolofnursing.ac.ug";
 const MICROSOFT_PRODUCTION_CALLBACK_URL = `${OFFICIAL_SITE_URL}/auth/microsoft/callback`;
 
-function trimEnv(key: string): string | undefined {
-  const value = process.env[key]?.trim();
-  return value || undefined;
-}
-
-/** Align NEXT_PUBLIC_* with MICROSOFT_* at build time (Docker / local). */
-const AZURE_CLIENT_ID =
-  trimEnv("NEXT_PUBLIC_AZURE_CLIENT_ID") ?? trimEnv("MICROSOFT_CLIENT_ID");
-const AZURE_TENANT_ID =
-  trimEnv("NEXT_PUBLIC_AZURE_TENANT_ID") ?? trimEnv("MICROSOFT_TENANT_ID");
-
 const nextConfig: NextConfig = {
   output: "standalone",
   productionBrowserSourceMaps: false,
@@ -27,14 +16,11 @@ const nextConfig: NextConfig = {
     cpus: 1,
   },
   env: {
-    MICROSOFT_CLIENT_ID: AZURE_CLIENT_ID,
-    MICROSOFT_TENANT_ID: AZURE_TENANT_ID,
+    // Do not inline Azure client/tenant IDs here — Coolify runtime MICROSOFT_* must win on the server.
     ALLOWED_EMAIL_DOMAIN: process.env.ALLOWED_EMAIL_DOMAIN,
     MICROSOFT_ALLOWED_STUDENT_DOMAINS: process.env.MICROSOFT_ALLOWED_STUDENT_DOMAINS,
     MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS:
       process.env.MICROSOFT_INCLUDE_LEGACY_STUDENT_DOMAINS,
-    NEXT_PUBLIC_AZURE_CLIENT_ID: AZURE_CLIENT_ID,
-    NEXT_PUBLIC_AZURE_TENANT_ID: AZURE_TENANT_ID,
     NEXT_PUBLIC_AZURE_REDIRECT_URI:
       process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI ?? MICROSOFT_PRODUCTION_CALLBACK_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
