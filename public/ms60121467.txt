@@ -1,0 +1,5 @@
+{
+  "Description": "Domain ownership verification file for Microsoft 365 - place in the website root",
+  "Domain": "mbaleschoolofnursing.ac.ug",
+  "Id": "bda00977-4b88-4dc1-a5de-31f2a3abeff4"
+}
