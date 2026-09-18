@@ -3,8 +3,8 @@ import { AppProviders } from "@/components/providers/AppProviders";
 import { SCHOOL } from "@/lib/data";
 import {
   OFFICIAL_SITE_LOGO,
-  SITE_ICON_PATHS,
   officialSiteLogoOpenGraphImage,
+  siteTabIconMetadata,
 } from "@/lib/site-logo";
 import { DEFAULT_SITE_DESCRIPTION, GLOBAL_INDEXING_ROBOTS } from "@/lib/seo";
 import { getPublicSiteUrl, OFFICIAL_SITE_URL } from "@/lib/site-url";
@@ -27,27 +27,7 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_SITE_DESCRIPTION,
   robots: GLOBAL_INDEXING_ROBOTS,
-  icons: {
-    icon: [
-      { url: SITE_ICON_PATHS.favicon, sizes: "any" },
-      { url: SITE_ICON_PATHS.icon48, sizes: "48x48", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon96, sizes: "96x96", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon192, sizes: "192x192", type: "image/png" },
-      {
-        url: OFFICIAL_SITE_LOGO.path,
-        sizes: `${OFFICIAL_SITE_LOGO.width}x${OFFICIAL_SITE_LOGO.height}`,
-        type: "image/png",
-      },
-    ],
-    apple: [
-      {
-        url: SITE_ICON_PATHS.appleTouch,
-        sizes: "180x180",
-        type: "image/png",
-      },
-    ],
-    shortcut: [SITE_ICON_PATHS.favicon],
-  },
+  icons: siteTabIconMetadata(),
   openGraph: {
     type: "website",
     locale: "en_UG",

@@ -50,3 +50,7 @@ const icoBuffer = execSync(
 writeFileSync(faviconIco, icoBuffer);
 writeFileSync(faviconApp, icoBuffer);
 console.log(`Wrote ${faviconIco} and ${faviconApp}`);
+
+const publicLogo = join(root, "public/school-logo.png");
+await sharp(source).png({ compressionLevel: 9 }).toFile(publicLogo);
+console.log(`Wrote ${publicLogo}`);
