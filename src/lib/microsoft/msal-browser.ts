@@ -6,7 +6,8 @@ import {
   type AuthenticationResult,
   InteractionRequiredAuthError,
 } from "@azure/msal-browser";
-import { getMicrosoftPublicConfig, MICROSOFT_SCOPES } from "./config";
+import { MICROSOFT_SCOPES } from "./config";
+import { loadMicrosoftBrowserPublicConfig } from "./browser-public-config";
 import {
   MICROSOFT_POST_LOGOUT_PATH,
   MICROSOFT_PRODUCTION_POST_LOGOUT_URL,
@@ -14,9 +15,10 @@ import {
 
 let msalInstance: PublicClientApplication | null = null;
 let initPromise: Promise<void> | null = null;
+let msalConfigKey = "";
 
-function buildMsalConfig() {
-  const { clientId, authority, redirectUri } = getMicrosoftPublicConfig();
+async function buildMsalConfig() {
+  const { clientId, authority, redirectUri } = await loadMicrosoftBrowserPublicConfig();
   return {
     auth: {
       clientId,
@@ -40,8 +42,12 @@ export async function getMsalInstance(): Promise<PublicClientApplication> {
     throw new Error("MSAL is only available in the browser.");
   }
 
-  if (!msalInstance) {
-    msalInstance = new PublicClientApplication(buildMsalConfig());
+  const config = await buildMsalConfig();
+  const nextKey = `${config.auth.clientId}|${config.auth.authority}|${config.auth.redirectUri}`;
+
+  if (!msalInstance || msalConfigKey !== nextKey) {
+    msalConfigKey = nextKey;
+    msalInstance = new PublicClientApplication(config);
     initPromise = msalInstance.initialize();
   }
 

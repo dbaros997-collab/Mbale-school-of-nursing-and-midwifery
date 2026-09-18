@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { isMicrosoftClientConfigured } from "@/lib/microsoft/config";
+import { useMicrosoftClientConfigured } from "@/lib/microsoft/use-microsoft-client-configured";
 import { loginWithMicrosoftRedirect } from "@/lib/microsoft/msal-browser";
 
 function MicrosoftLogo({ className }: { className?: string }) {
@@ -37,7 +37,7 @@ export function MicrosoftSignInButton({
   surface = "light",
 }: MicrosoftSignInButtonProps) {
   const [busy, setBusy] = useState(false);
-  const configured = isMicrosoftClientConfigured();
+  const configured = useMicrosoftClientConfigured();
 
   async function handleClick() {
     if (!configured) {
