@@ -1,10 +1,18 @@
 import { SCHOOL } from "@/lib/data";
 
-/** Official crest used in the header, footer, and social/search previews. */
-export const OFFICIAL_SITE_LOGO = {
+/** Transparent PNG crest (Open Graph, downloads). */
+export const OFFICIAL_SITE_LOGO_PNG = {
   path: "/images/logo-lockup.png",
-  width: 1024,
-  height: 723,
+  width: 984,
+  height: 687,
+  alt: SCHOOL.name,
+} as const;
+
+/** SVG with embedded transparent PNG — used in header/footer (avoids JPEG mis-serves of .png). */
+export const OFFICIAL_SITE_LOGO = {
+  path: "/images/logo-crest.svg",
+  width: OFFICIAL_SITE_LOGO_PNG.width,
+  height: OFFICIAL_SITE_LOGO_PNG.height,
   alt: SCHOOL.name,
 } as const;
 
@@ -52,11 +60,11 @@ export function siteTabIconMetadata() {
 
 export function officialSiteLogoOpenGraphImage() {
   return {
-    url: OFFICIAL_SITE_LOGO.path,
-    secureUrl: OFFICIAL_SITE_LOGO.path,
-    width: OFFICIAL_SITE_LOGO.width,
-    height: OFFICIAL_SITE_LOGO.height,
-    alt: OFFICIAL_SITE_LOGO.alt,
+    url: OFFICIAL_SITE_LOGO_PNG.path,
+    secureUrl: OFFICIAL_SITE_LOGO_PNG.path,
+    width: OFFICIAL_SITE_LOGO_PNG.width,
+    height: OFFICIAL_SITE_LOGO_PNG.height,
+    alt: OFFICIAL_SITE_LOGO_PNG.alt,
     type: "image/png" as const,
   };
 }

@@ -1,5 +1,5 @@
 /**
- * Build favicon + Apple touch icons from public/images/logo-lockup.png.
+ * Build crest PNGs + favicons from public/images/school-crest-source.png.
  * Run: node scripts/generate-site-icons.mjs
  *
  * Icons live under public/ only (not src/app/*) so Next.js does not inject a
@@ -11,13 +11,41 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { removeEdgeMatte } from "./make-logo-transparent.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const source = join(root, "public/images/school-crest-source.png");
+const lockup = join(root, "public/images/logo-lockup.png");
+const footerLockup = join(root, "public/images/footer-mbsnm-lockup.png");
+
+let crestPng = await removeEdgeMatte(source);
+crestPng = await sharp(crestPng)
+  .trim({ threshold: 10 })
+  .png({ compressionLevel: 9, force: true })
+  .toBuffer();
+const crestMeta = await sharp(crestPng).metadata();
+if (!crestMeta.hasAlpha) {
+  throw new Error("logo-lockup must have alpha after matte removal");
+}
+writeFileSync(lockup, crestPng);
+writeFileSync(footerLockup, crestPng);
+console.log(
+  `Wrote ${lockup} (transparent, ${crestMeta.width}x${crestMeta.height})`,
+);
+console.log(`Wrote ${footerLockup} (transparent)`);
+
+const crestSvg = join(root, "public/images/logo-crest.svg");
+const svgMarkup = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${crestMeta.width} ${crestMeta.height}" role="img" aria-label="Mbale School of Nursing and Midwifery">
+  <image href="data:image/png;base64,${crestPng.toString("base64")}" width="${crestMeta.width}" height="${crestMeta.height}"/>
+</svg>
+`;
+writeFileSync(crestSvg, svgMarkup);
+console.log(`Wrote ${crestSvg} (embedded transparent PNG)`);
 
 async function writeSquareIcon(size, outputPath) {
   await mkdir(dirname(outputPath), { recursive: true });
-  await sharp(source)
+  await sharp(crestPng)
     .resize(size, size, {
       fit: "contain",
       background: { r: 255, g: 255, b: 255, alpha: 1 },
@@ -54,5 +82,5 @@ writeFileSync(faviconIco, icoBuffer);
 console.log(`Wrote ${faviconIco} (${icoBuffer.length} bytes)`);
 
 const publicLogo = join(root, "public/school-logo.png");
-await sharp(source).png({ compressionLevel: 9 }).toFile(publicLogo);
+await sharp(crestPng).png({ compressionLevel: 9 }).toFile(publicLogo);
 console.log(`Wrote ${publicLogo}`);

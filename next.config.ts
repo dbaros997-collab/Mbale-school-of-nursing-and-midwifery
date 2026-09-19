@@ -60,11 +60,6 @@ const nextConfig: NextConfig = {
     return [
       ...LEGACY_PATH_REDIRECTS,
       {
-        source: "/images/logo-crest.svg",
-        destination: "/images/logo-lockup.png",
-        permanent: false,
-      },
-      {
         source: "/images/clinical-infant-care-training.png",
         destination: "/images/learning-pillars-clinical.jpg",
         permanent: false,

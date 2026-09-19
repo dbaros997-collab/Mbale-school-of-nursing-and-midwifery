@@ -12,7 +12,7 @@ const LOCKUP = OFFICIAL_SITE_LOGO;
 
 /** Baked at build time — busts browser cache when a new image deploys. */
 const LOGO_CACHE_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-09-17";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-09-19-v3";
 
 /** Official MBSNM crest emblem. */
 export function SchoolLogo({
