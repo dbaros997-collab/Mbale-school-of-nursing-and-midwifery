@@ -3,8 +3,8 @@ import { SCHOOL } from "@/lib/data";
 /** Transparent PNG crest (Open Graph, downloads). */
 export const OFFICIAL_SITE_LOGO_PNG = {
   path: "/images/logo-lockup.png",
-  width: 984,
-  height: 687,
+  width: 1016,
+  height: 716,
   alt: SCHOOL.name,
 } as const;
 

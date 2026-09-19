@@ -24,10 +24,17 @@ function isNearBlack(r, g, b, a) {
   return a > 0 && r <= BLACK_THRESHOLD && g <= BLACK_THRESHOLD && b <= BLACK_THRESHOLD;
 }
 
+/** Dark scan fringes are neutral gray/black — not crest blues or greens. */
+function isNeutralDark(r, g, b) {
+  return Math.max(r, g, b) - Math.min(r, g, b) <= 36;
+}
+
 function isEdgeMatte(r, g, b, a) {
   if (a === 0) return false;
   if (isNearWhite(r, g, b, a) || isNearBlack(r, g, b, a)) return true;
-  return (r + g + b) / 3 < DARK_MATTE_LUMINANCE;
+  const avg = (r + g + b) / 3;
+  if (avg >= DARK_MATTE_LUMINANCE) return false;
+  return isNeutralDark(r, g, b);
 }
 
 function peelDarkFringe(data, width, height) {
