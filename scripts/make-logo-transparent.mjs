@@ -11,10 +11,8 @@ const root = join(__dirname, "..");
 
 const WHITE_THRESHOLD = 245;
 const BLACK_THRESHOLD = 40;
-/** JPEG/scan fringes around black mattes (e.g. rgb(32,64,141)) stay edge-connected. */
-const DARK_MATTE_LUMINANCE = 110;
-/** Peel dark anti-alias halos inward from transparent pixels (not crest interior). */
-const FRINGE_LUMINANCE = 32;
+/** Peel only near-black anti-alias halos inward from transparent pixels. */
+const FRINGE_LUMINANCE = 28;
 
 function isNearWhite(r, g, b, a) {
   return a > 0 && r >= WHITE_THRESHOLD && g >= WHITE_THRESHOLD && b >= WHITE_THRESHOLD;
@@ -32,9 +30,11 @@ function isNeutralDark(r, g, b) {
 function isEdgeMatte(r, g, b, a) {
   if (a === 0) return false;
   if (isNearWhite(r, g, b, a) || isNearBlack(r, g, b, a)) return true;
+  if (!isNeutralDark(r, g, b)) return false;
+  const max = Math.max(r, g, b);
   const avg = (r + g + b) / 3;
-  if (avg >= DARK_MATTE_LUMINANCE) return false;
-  return isNeutralDark(r, g, b);
+  // Neutral scan grit only — never navy banner or crest blues (higher channels).
+  return max <= 28 && avg <= 24;
 }
 
 function peelDarkFringe(data, width, height) {
@@ -45,7 +45,11 @@ function peelDarkFringe(data, width, height) {
   const isDarkFringe = (idx) => {
     if (alphaAt(idx) < 128) return false;
     const p = idx * 4;
-    return (data[p] + data[p + 1] + data[p + 2]) / 3 <= FRINGE_LUMINANCE;
+    const r = data[p];
+    const g = data[p + 1];
+    const b = data[p + 2];
+    if (!isNeutralDark(r, g, b)) return false;
+    return (r + g + b) / 3 <= FRINGE_LUMINANCE;
   };
 
   let changed = true;

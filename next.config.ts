@@ -107,6 +107,24 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/images/logo-crest.svg",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/images/logo-lockup.png",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
         source: "/sitemap.xml",
         headers: [
           {
