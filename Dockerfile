@@ -1,3 +1,3 @@
-# Pull-only image for Coolify — always use :latest built by GitHub Actions (Publish Docker image).
-# Do not pin to a short SHA here; that caused extra git pushes and overlapping redeploys.
-FROM ghcr.io/dbaros997-collab/mbale-school:latest
+# Auto-pinned to the GHCR image built by GitHub Actions for this commit.
+# GitHub Actions updates this line after every successful "Publish Docker image" run.
+FROM ghcr.io/dbaros997-collab/mbale-school:b874959493a33ad90024ef4c43650acc427e63e2
