@@ -58,11 +58,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: "/favicon.ico",
-        destination: "/icons/site-icon-48.png",
-        permanent: false,
-      },
       ...LEGACY_PATH_REDIRECTS,
       {
         source: "/images/logo-crest.svg",
@@ -98,6 +93,24 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/favicon.ico",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      {
+        source: "/icons/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
       {
         source: "/sitemap.xml",
         headers: [

@@ -6,6 +6,8 @@
  * competing /favicon.ico?hash metadata route ahead of our explicit <link> tags.
  */
 import sharp from "sharp";
+import toIco from "to-ico";
+import { readFileSync, writeFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -38,8 +40,18 @@ for (const [size, path] of targets) {
   console.log(`Wrote ${path} (${size}x${size})`);
 }
 
-// /favicon.ico is redirected to site-icon-48.png in next.config.ts (png-to-ico produced oversized ICOs).
-console.log("favicon.ico → /icons/site-icon-48.png (see next.config redirects)");
+const favicon16 = join(root, "public/icons/site-icon-16.png");
+const favicon32 = join(root, "public/icons/site-icon-32.png");
+const favicon48 = join(root, "public/icons/site-icon-48.png");
+const faviconIco = join(root, "public/favicon.ico");
+
+const icoBuffer = await toIco([
+  readFileSync(favicon16),
+  readFileSync(favicon32),
+  readFileSync(favicon48),
+]);
+writeFileSync(faviconIco, icoBuffer);
+console.log(`Wrote ${faviconIco} (${icoBuffer.length} bytes)`);
 
 const publicLogo = join(root, "public/school-logo.png");
 await sharp(source).png({ compressionLevel: 9 }).toFile(publicLogo);
