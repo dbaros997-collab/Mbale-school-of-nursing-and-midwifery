@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { SCHOOL } from "@/lib/data";
+import { SiteIconHeadLinks } from "@/components/layout/SiteIconHeadLinks";
 import {
   OFFICIAL_SITE_LOGO,
   officialSiteLogoOpenGraphImage,
@@ -52,6 +53,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        <SiteIconHeadLinks />
+      </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <a
           href="#main-content"

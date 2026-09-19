@@ -21,7 +21,7 @@ export const SITE_ICON_PATHS = {
   icon192: "/icons/site-icon-192.png",
 } as const;
 
-/** Tab / browser chrome icons — square sizes only (not the wide lockup). */
+/** Same URLs as SiteIconHeadLinks in layout — for Next.js Metadata API. */
 export function siteTabIconMetadata() {
   return {
     icon: [
