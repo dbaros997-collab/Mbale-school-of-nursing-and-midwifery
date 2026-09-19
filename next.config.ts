@@ -58,6 +58,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/favicon.ico",
+        destination: "/icons/site-icon-48.png",
+        permanent: false,
+      },
       ...LEGACY_PATH_REDIRECTS,
       {
         source: "/images/logo-crest.svg",

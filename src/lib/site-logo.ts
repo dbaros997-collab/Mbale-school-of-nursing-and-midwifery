@@ -15,19 +15,27 @@ export const PUBLIC_SCHOOL_LOGO_PATH = "/school-logo.png" as const;
 export const SITE_ICON_PATHS = {
   favicon: "/favicon.ico",
   appleTouch: "/apple-touch-icon.png",
+  icon16: "/icons/site-icon-16.png",
   icon32: "/icons/site-icon-32.png",
   icon48: "/icons/site-icon-48.png",
   icon96: "/icons/site-icon-96.png",
   icon192: "/icons/site-icon-192.png",
 } as const;
 
+/** Cache-bust icon URLs after deploy (set NEXT_PUBLIC_LOGO_VERSION in Docker build). */
+export function siteIconHref(path: string): string {
+  const version = process.env.NEXT_PUBLIC_LOGO_VERSION?.trim();
+  if (!version) return path;
+  return `${path}?v=${encodeURIComponent(version)}`;
+}
+
 /** Same URLs as SiteIconHeadLinks in layout — for Next.js Metadata API. */
 export function siteTabIconMetadata() {
   return {
     icon: [
-      { url: SITE_ICON_PATHS.favicon, sizes: "any" },
-      { url: SITE_ICON_PATHS.icon32, sizes: "32x32", type: "image/png" },
       { url: SITE_ICON_PATHS.icon48, sizes: "48x48", type: "image/png" },
+      { url: SITE_ICON_PATHS.icon32, sizes: "32x32", type: "image/png" },
+      { url: SITE_ICON_PATHS.icon16, sizes: "16x16", type: "image/png" },
       { url: SITE_ICON_PATHS.icon96, sizes: "96x96", type: "image/png" },
       { url: SITE_ICON_PATHS.icon192, sizes: "192x192", type: "image/png" },
     ],

@@ -1,10 +1,11 @@
 /**
  * Build favicon + Apple touch icons from public/images/logo-lockup.png.
  * Run: node scripts/generate-site-icons.mjs
+ *
+ * Icons live under public/ only (not src/app/*) so Next.js does not inject a
+ * competing /favicon.ico?hash metadata route ahead of our explicit <link> tags.
  */
 import sharp from "sharp";
-import { execSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,20 +18,19 @@ async function writeSquareIcon(size, outputPath) {
   await sharp(source)
     .resize(size, size, {
       fit: "contain",
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
-    .png({ compressionLevel: 9 })
+    .png({ compressionLevel: 9, palette: size <= 48 })
     .toFile(outputPath);
 }
 
 const targets = [
+  [16, join(root, "public/icons/site-icon-16.png")],
   [32, join(root, "public/icons/site-icon-32.png")],
   [48, join(root, "public/icons/site-icon-48.png")],
   [96, join(root, "public/icons/site-icon-96.png")],
   [180, join(root, "public/apple-touch-icon.png")],
   [192, join(root, "public/icons/site-icon-192.png")],
-  [32, join(root, "src/app/icon.png")],
-  [180, join(root, "src/app/apple-icon.png")],
 ];
 
 for (const [size, path] of targets) {
@@ -38,18 +38,8 @@ for (const [size, path] of targets) {
   console.log(`Wrote ${path} (${size}x${size})`);
 }
 
-const favicon32 = join(root, "public/icons/site-icon-32.png");
-const favicon48 = join(root, "public/icons/site-icon-48.png");
-const faviconIco = join(root, "public/favicon.ico");
-const faviconApp = join(root, "src/app/favicon.ico");
-
-const icoBuffer = execSync(
-  `npx --yes png-to-ico "${favicon32}" "${favicon48}"`,
-  { cwd: root, encoding: "buffer", stdio: ["ignore", "pipe", "inherit"], shell: true },
-);
-writeFileSync(faviconIco, icoBuffer);
-writeFileSync(faviconApp, icoBuffer);
-console.log(`Wrote ${faviconIco} and ${faviconApp}`);
+// /favicon.ico is redirected to site-icon-48.png in next.config.ts (png-to-ico produced oversized ICOs).
+console.log("favicon.ico → /icons/site-icon-48.png (see next.config redirects)");
 
 const publicLogo = join(root, "public/school-logo.png");
 await sharp(source).png({ compressionLevel: 9 }).toFile(publicLogo);
