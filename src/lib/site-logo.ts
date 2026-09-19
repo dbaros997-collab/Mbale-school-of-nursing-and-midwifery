@@ -3,8 +3,8 @@ import { SCHOOL } from "@/lib/data";
 /** Official crest used in the header, footer, and social/search previews. */
 export const OFFICIAL_SITE_LOGO = {
   path: "/images/logo-lockup.png",
-  width: 1022,
-  height: 721,
+  width: 1024,
+  height: 723,
   alt: SCHOOL.name,
 } as const;
 
