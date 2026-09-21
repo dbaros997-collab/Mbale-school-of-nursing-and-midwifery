@@ -1,10 +1,16 @@
 import { SCHOOL } from "@/lib/data";
 
+/** Master crest PNG in public/ (replace to update all favicons via generate-site-icons.mjs). */
+export const SCHOOL_CREST_SOURCE_PATH = "/images/school-crest-source.png" as const;
+
+/** Published copy of the official crest PNG (same art as the source file). */
+export const PUBLIC_SCHOOL_LOGO_PNG_PATH = "/images/school-logo.png" as const;
+
 /** Transparent PNG crest (Open Graph, downloads). */
 export const OFFICIAL_SITE_LOGO_PNG = {
   path: "/images/logo-lockup.png",
-  width: 1021,
-  height: 719,
+  width: 1024,
+  height: 723,
   alt: SCHOOL.name,
 } as const;
 
@@ -19,9 +25,11 @@ export const OFFICIAL_SITE_LOGO = {
 /** Same crest at site root for static links and PWA manifests. */
 export const PUBLIC_SCHOOL_LOGO_PATH = "/school-logo.png" as const;
 
-/** PNG favicons derived from the official crest (see scripts/generate-site-icons.mjs). */
+/** Tab/search icons — PNG crest sizes (see scripts/generate-site-icons.mjs). */
 export const SITE_ICON_PATHS = {
-  favicon: "/favicon.ico",
+  /** Primary browser tab icon (PNG crest, not the Next.js default). */
+  favicon: "/icons/site-icon-48.png",
+  faviconIco: "/favicon.ico",
   appleTouch: "/apple-touch-icon.png",
   icon16: "/icons/site-icon-16.png",
   icon32: "/icons/site-icon-32.png",
@@ -72,7 +80,11 @@ export function siteTabIconMetadata() {
         sizes: "96x96",
         type: "image/png",
       },
-      { url: siteIconHref(SITE_ICON_PATHS.favicon), sizes: "any" },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.faviconIco),
+        sizes: "any",
+        type: "image/x-icon",
+      },
     ],
     apple: [
       {

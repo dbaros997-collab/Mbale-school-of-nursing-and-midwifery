@@ -32,7 +32,6 @@ export function SiteIconHeadLinks() {
         sizes="512x512"
         href={absoluteIcon(SITE_ICON_PATHS.icon512)}
       />
-      <link rel="icon" href={absoluteIcon(SITE_ICON_PATHS.favicon)} sizes="any" />
       <link
         rel="icon"
         type="image/png"
@@ -47,7 +46,14 @@ export function SiteIconHeadLinks() {
       />
       <link
         rel="shortcut icon"
+        type="image/png"
         href={absoluteIcon(SITE_ICON_PATHS.favicon)}
+      />
+      <link
+        rel="icon"
+        href={absoluteIcon(SITE_ICON_PATHS.faviconIco)}
+        sizes="any"
+        type="image/x-icon"
       />
       <link
         rel="apple-touch-icon"

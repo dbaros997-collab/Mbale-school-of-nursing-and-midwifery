@@ -2,8 +2,8 @@
  * Build crest PNGs + favicons from public/images/school-crest-source.png.
  * Run: node scripts/generate-site-icons.mjs
  *
- * Also syncs src/app/favicon.ico, icon.png, and apple-icon.png so Next.js never
- * falls back to the default Vercel triangle in dev or metadata routes.
+ * Also syncs src/app/favicon.ico, icon.png, and apple-icon.png so Next.js file
+ * metadata serves the school crest instead of the framework default icon.
  */
 import sharp from "sharp";
 import toIco from "to-ico";
@@ -96,5 +96,8 @@ copyFileSync(
 console.log(`Synced crest into ${appDir} (favicon.ico, icon.png, apple-icon.png)`);
 
 const publicLogo = join(root, "public/school-logo.png");
+const publicLogoImages = join(root, "public/images/school-logo.png");
 await sharp(crestPng).png({ compressionLevel: 9 }).toFile(publicLogo);
+await sharp(crestPng).png({ compressionLevel: 9 }).toFile(publicLogoImages);
 console.log(`Wrote ${publicLogo}`);
+console.log(`Wrote ${publicLogoImages}`);
