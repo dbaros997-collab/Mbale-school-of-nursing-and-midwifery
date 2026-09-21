@@ -39,11 +39,12 @@ export const SITE_ICON_PATHS = {
   icon512: "/icons/site-icon-512.png",
 } as const;
 
-/** Cache-bust icon URLs after deploy (set NEXT_PUBLIC_LOGO_VERSION in Docker build). */
+/** Bust favicon cache in dev and production (Docker sets NEXT_PUBLIC_LOGO_VERSION). */
+export const SITE_ICON_CACHE_VERSION =
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-09-21-v8";
+
 export function siteIconHref(path: string): string {
-  const version = process.env.NEXT_PUBLIC_LOGO_VERSION?.trim();
-  if (!version) return path;
-  return `${path}?v=${encodeURIComponent(version)}`;
+  return `${path}?v=${encodeURIComponent(SITE_ICON_CACHE_VERSION)}`;
 }
 
 /** Same URLs as SiteIconHeadLinks in layout — for Next.js Metadata API. */
@@ -79,11 +80,6 @@ export function siteTabIconMetadata() {
         url: siteIconHref(SITE_ICON_PATHS.icon96),
         sizes: "96x96",
         type: "image/png",
-      },
-      {
-        url: siteIconHref(SITE_ICON_PATHS.faviconIco),
-        sizes: "any",
-        type: "image/x-icon",
       },
     ],
     apple: [

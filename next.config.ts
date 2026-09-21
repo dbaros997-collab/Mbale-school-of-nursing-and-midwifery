@@ -60,6 +60,11 @@ const nextConfig: NextConfig = {
     return [
       ...LEGACY_PATH_REDIRECTS,
       {
+        source: "/favicon.ico",
+        destination: "/icons/site-icon-48.png",
+        permanent: false,
+      },
+      {
         source: "/images/clinical-infant-care-training.png",
         destination: "/images/learning-pillars-clinical.jpg",
         permanent: false,

@@ -17,14 +17,14 @@ export function SiteIconHeadLinks() {
       <link
         rel="icon"
         type="image/png"
-        sizes="192x192"
-        href={absoluteIcon(SITE_ICON_PATHS.icon192)}
+        sizes="48x48"
+        href={absoluteIcon(SITE_ICON_PATHS.icon48)}
       />
       <link
         rel="icon"
         type="image/png"
-        sizes="48x48"
-        href={absoluteIcon(SITE_ICON_PATHS.icon48)}
+        sizes="192x192"
+        href={absoluteIcon(SITE_ICON_PATHS.icon192)}
       />
       <link
         rel="icon"
@@ -48,12 +48,6 @@ export function SiteIconHeadLinks() {
         rel="shortcut icon"
         type="image/png"
         href={absoluteIcon(SITE_ICON_PATHS.favicon)}
-      />
-      <link
-        rel="icon"
-        href={absoluteIcon(SITE_ICON_PATHS.faviconIco)}
-        sizes="any"
-        type="image/x-icon"
       />
       <link
         rel="apple-touch-icon"

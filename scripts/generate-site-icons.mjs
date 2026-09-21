@@ -2,8 +2,8 @@
  * Build crest PNGs + favicons from public/images/school-crest-source.png.
  * Run: node scripts/generate-site-icons.mjs
  *
- * Also syncs src/app/favicon.ico, icon.png, and apple-icon.png so Next.js file
- * metadata serves the school crest instead of the framework default icon.
+ * Icons stay in public/ only — do not add src/app/favicon.ico or Next injects a
+ * hashed /favicon.ico route that overrides these PNG links in the tab UI.
  */
 import sharp from "sharp";
 import toIco from "to-ico";
@@ -85,15 +85,6 @@ const icoBuffer = await toIco([
 ]);
 writeFileSync(faviconIco, icoBuffer);
 console.log(`Wrote ${faviconIco} (${icoBuffer.length} bytes)`);
-
-const appDir = join(root, "src/app");
-copyFileSync(faviconIco, join(appDir, "favicon.ico"));
-copyFileSync(favicon48, join(appDir, "icon.png"));
-copyFileSync(
-  join(root, "public/apple-touch-icon.png"),
-  join(appDir, "apple-icon.png"),
-);
-console.log(`Synced crest into ${appDir} (favicon.ico, icon.png, apple-icon.png)`);
 
 const publicLogo = join(root, "public/school-logo.png");
 const publicLogoImages = join(root, "public/images/school-logo.png");
