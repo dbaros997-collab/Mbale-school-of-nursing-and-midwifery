@@ -28,6 +28,7 @@ export const SITE_ICON_PATHS = {
   icon48: "/icons/site-icon-48.png",
   icon96: "/icons/site-icon-96.png",
   icon192: "/icons/site-icon-192.png",
+  icon512: "/icons/site-icon-512.png",
 } as const;
 
 /** Cache-bust icon URLs after deploy (set NEXT_PUBLIC_LOGO_VERSION in Docker build). */
@@ -41,20 +42,46 @@ export function siteIconHref(path: string): string {
 export function siteTabIconMetadata() {
   return {
     icon: [
-      { url: SITE_ICON_PATHS.icon48, sizes: "48x48", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon32, sizes: "32x32", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon16, sizes: "16x16", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon96, sizes: "96x96", type: "image/png" },
-      { url: SITE_ICON_PATHS.icon192, sizes: "192x192", type: "image/png" },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon192),
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon48),
+        sizes: "48x48",
+        type: "image/png",
+      },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon512),
+        sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon32),
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon16),
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: siteIconHref(SITE_ICON_PATHS.icon96),
+        sizes: "96x96",
+        type: "image/png",
+      },
+      { url: siteIconHref(SITE_ICON_PATHS.favicon), sizes: "any" },
     ],
     apple: [
       {
-        url: SITE_ICON_PATHS.appleTouch,
+        url: siteIconHref(SITE_ICON_PATHS.appleTouch),
         sizes: "180x180",
         type: "image/png",
       },
     ],
-    shortcut: [SITE_ICON_PATHS.favicon],
+    shortcut: [siteIconHref(SITE_ICON_PATHS.favicon)],
   } satisfies import("next").Metadata["icons"];
 }
 

@@ -143,7 +143,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/((?!_next/static|_next/image|images|api).*)",
+        source:
+          "/((?!_next/static|_next/image|images|api|favicon\\.ico|icons/|apple-touch-icon\\.png|school-logo\\.png).*)",
         headers: [
           {
             key: "Cache-Control",

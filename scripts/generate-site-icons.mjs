@@ -2,12 +2,12 @@
  * Build crest PNGs + favicons from public/images/school-crest-source.png.
  * Run: node scripts/generate-site-icons.mjs
  *
- * Icons live under public/ only (not src/app/*) so Next.js does not inject a
- * competing /favicon.ico?hash metadata route ahead of our explicit <link> tags.
+ * Also syncs src/app/favicon.ico, icon.png, and apple-icon.png so Next.js never
+ * falls back to the default Vercel triangle in dev or metadata routes.
  */
 import sharp from "sharp";
 import toIco from "to-ico";
-import { readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -50,7 +50,11 @@ async function writeSquareIcon(size, outputPath) {
       fit: "contain",
       background: { r: 255, g: 255, b: 255, alpha: 1 },
     })
-    .png({ compressionLevel: 9, palette: size <= 48 })
+    .png({
+      compressionLevel: 9,
+      palette: size <= 16,
+      effort: size >= 192 ? 10 : 7,
+    })
     .toFile(outputPath);
 }
 
@@ -61,6 +65,7 @@ const targets = [
   [96, join(root, "public/icons/site-icon-96.png")],
   [180, join(root, "public/apple-touch-icon.png")],
   [192, join(root, "public/icons/site-icon-192.png")],
+  [512, join(root, "public/icons/site-icon-512.png")],
 ];
 
 for (const [size, path] of targets) {
@@ -80,6 +85,15 @@ const icoBuffer = await toIco([
 ]);
 writeFileSync(faviconIco, icoBuffer);
 console.log(`Wrote ${faviconIco} (${icoBuffer.length} bytes)`);
+
+const appDir = join(root, "src/app");
+copyFileSync(faviconIco, join(appDir, "favicon.ico"));
+copyFileSync(favicon48, join(appDir, "icon.png"));
+copyFileSync(
+  join(root, "public/apple-touch-icon.png"),
+  join(appDir, "apple-icon.png"),
+);
+console.log(`Synced crest into ${appDir} (favicon.ico, icon.png, apple-icon.png)`);
 
 const publicLogo = join(root, "public/school-logo.png");
 await sharp(crestPng).png({ compressionLevel: 9 }).toFile(publicLogo);

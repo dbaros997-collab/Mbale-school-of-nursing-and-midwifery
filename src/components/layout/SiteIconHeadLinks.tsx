@@ -17,8 +17,20 @@ export function SiteIconHeadLinks() {
       <link
         rel="icon"
         type="image/png"
+        sizes="192x192"
+        href={absoluteIcon(SITE_ICON_PATHS.icon192)}
+      />
+      <link
+        rel="icon"
+        type="image/png"
         sizes="48x48"
         href={absoluteIcon(SITE_ICON_PATHS.icon48)}
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="512x512"
+        href={absoluteIcon(SITE_ICON_PATHS.icon512)}
       />
       <link rel="icon" href={absoluteIcon(SITE_ICON_PATHS.favicon)} sizes="any" />
       <link

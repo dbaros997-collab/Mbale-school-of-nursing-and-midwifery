@@ -2,7 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { SCHOOL } from "@/lib/data";
 import { SiteIconHeadLinks } from "@/components/layout/SiteIconHeadLinks";
-import { OFFICIAL_SITE_LOGO, officialSiteLogoOpenGraphImage } from "@/lib/site-logo";
+import {
+  OFFICIAL_SITE_LOGO,
+  officialSiteLogoOpenGraphImage,
+  siteTabIconMetadata,
+} from "@/lib/site-logo";
 import { DEFAULT_SITE_DESCRIPTION, GLOBAL_INDEXING_ROBOTS } from "@/lib/seo";
 import { getPublicSiteUrl, OFFICIAL_SITE_URL } from "@/lib/site-url";
 import "./globals.css";
@@ -24,6 +28,7 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_SITE_DESCRIPTION,
   robots: GLOBAL_INDEXING_ROBOTS,
+  icons: siteTabIconMetadata(),
   openGraph: {
     type: "website",
     locale: "en_UG",
