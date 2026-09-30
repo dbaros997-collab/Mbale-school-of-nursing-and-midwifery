@@ -7,7 +7,7 @@ type DataTableProps = {
   caption?: string;
 };
 
-/** Table shell with MBSNM sky header and navy/sky zebra rows. */
+/** Table shell with Mbale School of Nursing and Midwifery sky header and navy/sky zebra rows. */
 export function DataTable({ children, className, caption }: DataTableProps) {
   return (
     <div className={cn("data-table-shell overflow-hidden rounded-xl", className)}>

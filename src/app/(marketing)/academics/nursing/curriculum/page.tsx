@@ -9,7 +9,7 @@ import { marketingPageMetadata } from "@/lib/seo";
 export const metadata = marketingPageMetadata("/academics/nursing/curriculum", {
   title: "Nursing Curriculum",
   description:
-    "Year-by-year, semester-by-semester course units for each MBSNM nursing programme — certificate and diploma pathways.",
+    "Year-by-year, semester-by-semester course units for each Mbale School of Nursing and Midwifery nursing programme — certificate and diploma pathways.",
 });
 
 export default function NursingCurriculumPage() {

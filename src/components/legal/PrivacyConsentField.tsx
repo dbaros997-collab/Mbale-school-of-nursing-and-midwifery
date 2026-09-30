@@ -70,7 +70,7 @@ export function PrivacyConsentField({
           >
             Privacy Policy
           </Link>{" "}
-          and consent to MBSNM processing my personal information for the purpose described above.
+          and consent to Mbale School of Nursing and Midwifery processing my personal information for the purpose described above.
         </span>
       </label>
     </div>

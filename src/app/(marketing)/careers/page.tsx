@@ -35,7 +35,7 @@ export default function CareersPage() {
     <div>
       <PageBanner
         breadcrumb="Careers"
-        title="Work at MBSNM"
+        title="Work at Mbale School of Nursing and Midwifery"
         subtitle={`Join a Christian health training institution serving Eastern Uganda — ${SCHOOL.motto}.`}
         image="/images/events-staff.jpg"
       />
@@ -71,7 +71,7 @@ export default function CareersPage() {
               acknowledge receipt and contact shortlisted candidates.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button href={`mailto:${SCHOOL.email}?subject=Career%20enquiry%20at%20MBSNM`} variant="green">
+              <Button href={`mailto:${SCHOOL.email}?subject=Career%20enquiry%20at%20Mbale School of Nursing and Midwifery`} variant="green">
                 Email your application
               </Button>
               <Button href="/contact" variant="ghost">

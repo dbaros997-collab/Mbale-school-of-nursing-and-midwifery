@@ -70,7 +70,7 @@ export function SchoolGallery() {
               aria-hidden
             />
             <p className={`mt-3 text-muted sm:mt-5 ${heroLeadClass}`}>
-              Campus, staff, training, and student life at MBSNM — swipe or use the arrows to
+              Campus, staff, training, and student life at Mbale School of Nursing and Midwifery — swipe or use the arrows to
               explore.
             </p>
           </div>

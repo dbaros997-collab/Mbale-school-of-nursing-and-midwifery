@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Your privacy"
-            title="Personal data at MBSNM"
+            title="Personal data at Mbale School of Nursing and Midwifery"
             description="We follow the Data Protection and Privacy Act, 2019 (Uganda) and treat applicant, student, and staff information with care."
           />
 

@@ -36,7 +36,7 @@ function buildNotificationContent(record: ApplicationRecord): {
 
   if (record.qualificationStatus === "qualified" && record.interview) {
     const interviewLabel = INTERVIEW_STATUS_LABELS[record.interview.status];
-    const subject = `MBSNM Interview Invitation — ${record.applicationReference}`;
+    const subject = `Mbale School of Nursing and Midwifery Interview Invitation — ${record.applicationReference}`;
     const scheduled = formatInterviewDateTime(
       record.interview.scheduledDate,
       record.interview.scheduledTime,
@@ -59,7 +59,7 @@ function buildNotificationContent(record: ApplicationRecord): {
       "",
       `Track your application anytime at /admissions/track using reference ${record.applicationReference}.`,
       "",
-      "In God We Love and Serve — MBSNM Admissions",
+      "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ]
       .filter(Boolean)
       .join("\n");
@@ -67,7 +67,7 @@ function buildNotificationContent(record: ApplicationRecord): {
   }
 
   if (tracking === "qualified") {
-    const subject = `MBSNM Application Update — ${statusLabel} (${record.applicationReference})`;
+    const subject = `Mbale School of Nursing and Midwifery Application Update — ${statusLabel} (${record.applicationReference})`;
     const body = [
       `Dear ${record.fullName},`,
       "",
@@ -85,13 +85,13 @@ function buildNotificationContent(record: ApplicationRecord): {
       "",
       `Track your application anytime at /admissions/track using reference ${record.applicationReference}.`,
       "",
-      "In God We Love and Serve — MBSNM Admissions",
+      "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ].join("\n");
     return { subject, body, preview: body.slice(0, 160) + "…" };
   }
 
   if (tracking === "unsuccessful_fee_processed") {
-    const subject = `MBSNM Application Update — ${statusLabel} (${record.applicationReference})`;
+    const subject = `Mbale School of Nursing and Midwifery Application Update — ${statusLabel} (${record.applicationReference})`;
     const body = [
       `Dear ${record.fullName},`,
       "",
@@ -111,13 +111,13 @@ function buildNotificationContent(record: ApplicationRecord): {
       "",
       "If you believe this is an error, contact admissions@mbsnm.org or call our office.",
       "",
-      "In God We Love and Serve — MBSNM Admissions",
+      "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ].join("\n");
     return { subject, body, preview: body.slice(0, 160) + "…" };
   }
 
   if (tracking === "rejected") {
-    const subject = `MBSNM Application Update — ${statusLabel} (${record.applicationReference})`;
+    const subject = `Mbale School of Nursing and Midwifery Application Update — ${statusLabel} (${record.applicationReference})`;
     const body = [
       `Dear ${record.fullName},`,
       "",
@@ -134,12 +134,12 @@ function buildNotificationContent(record: ApplicationRecord): {
       "",
       "If you believe this is an error, contact admissions@mbsnm.org or call our office.",
       "",
-      "In God We Love and Serve — MBSNM Admissions",
+      "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ].join("\n");
     return { subject, body, preview: body.slice(0, 160) + "…" };
   }
 
-  const subject = `MBSNM Application Received — ${statusLabel} (${record.applicationReference})`;
+  const subject = `Mbale School of Nursing and Midwifery Application Received — ${statusLabel} (${record.applicationReference})`;
   const body = [
     `Dear ${record.fullName},`,
     "",
@@ -156,7 +156,7 @@ function buildNotificationContent(record: ApplicationRecord): {
     "",
     `Track your application at /admissions/track using reference ${record.applicationReference}.`,
     "",
-    "In God We Love and Serve — MBSNM Admissions",
+    "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
   ].join("\n");
   return { subject, body, preview: body.slice(0, 160) + "…" };
 }

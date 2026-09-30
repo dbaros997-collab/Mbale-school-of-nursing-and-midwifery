@@ -8,7 +8,7 @@ import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 
 const academicsLinks = [
-  { label: "Why MBSNM", href: "/#about" },
+  { label: "Why Mbale School of Nursing and Midwifery", href: "/#about" },
   { label: "Department of Nursing", href: "/academics/nursing" },
   { label: "Head of Midwifery", href: "/academics/midwifery" },
   { label: "Nursing Programmes", href: "/academics/nursing/programs" },
@@ -32,7 +32,7 @@ const quickLinks = [
 ];
 
 const campusLinks = [
-  { label: "About MBSNM", href: "/#about" },
+  { label: "About Mbale School of Nursing and Midwifery", href: "/#about" },
   { label: "Vision & Mission", href: "/#vision-mission" },
   { label: "Clinical Training", href: "/academics/nursing/clinical-placements" },
   { label: "Alumni", href: "/alumni" },

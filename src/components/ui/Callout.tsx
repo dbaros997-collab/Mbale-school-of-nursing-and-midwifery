@@ -7,7 +7,7 @@ type CalloutProps = {
   role?: "note" | "status" | "alert";
 };
 
-/** Sky callout panel with a navy left edge marker (MBSNM UI pattern). */
+/** Sky callout panel with a navy left edge marker (Mbale School of Nursing and Midwifery UI pattern). */
 export function Callout({ children, className, role = "note" }: CalloutProps) {
   return (
     <div role={role} className={cn("callout-sky px-4 py-3 sm:px-5 sm:py-4", className)}>

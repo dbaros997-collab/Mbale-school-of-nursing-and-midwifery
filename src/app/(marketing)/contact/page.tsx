@@ -155,7 +155,7 @@ export default function ContactPage() {
                 <div className="mt-8 text-center" role="status">
                   <CheckCircle2 className="mx-auto h-10 w-10 text-accent-green" aria-hidden />
                   <p className="mt-3 font-bold text-primary">Message sent</p>
-                  <p className="mt-1 text-sm text-muted">Thank you for contacting MBSNM. (Mock form)</p>
+                  <p className="mt-1 text-sm text-muted">Thank you for contacting Mbale School of Nursing and Midwifery. (Mock form)</p>
                   <Button className="mt-5" variant="ghost" onClick={() => setSent(false)}>
                     Send another
                   </Button>

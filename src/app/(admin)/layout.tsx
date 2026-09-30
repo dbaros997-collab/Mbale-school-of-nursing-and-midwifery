@@ -4,7 +4,7 @@ import { privateAppMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = privateAppMetadata(
   "Staff Admin",
-  "MBSNM staff control panel — restricted to authorised registry and academic officers.",
+  "Mbale School of Nursing and Midwifery staff control panel — restricted to authorised registry and academic officers.",
 );
 
 export default function AdminLayout({

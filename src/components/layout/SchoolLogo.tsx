@@ -14,7 +14,7 @@ const LOCKUP = OFFICIAL_SITE_LOGO;
 const LOGO_CACHE_VERSION =
   process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "crest-2026-09-21-v8";
 
-/** Official MBSNM crest emblem. */
+/** Official Mbale School of Nursing and Midwifery crest emblem. */
 export function SchoolLogo({
   className,
   variant = "header",

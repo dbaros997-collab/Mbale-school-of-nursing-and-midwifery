@@ -107,7 +107,7 @@ export function SharePointNoticesSection() {
             SharePoint notices &amp; curriculum
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Official circulars and nursing/midwifery resources from the MBSNM SharePoint site.
+            Official circulars and nursing/midwifery resources from the Mbale School of Nursing and Midwifery SharePoint site.
           </p>
         </div>
         {data?.authenticated ? (

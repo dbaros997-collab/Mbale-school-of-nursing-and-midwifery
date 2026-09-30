@@ -10,7 +10,7 @@ import { marketingPageMetadata } from "@/lib/seo";
 export const metadata = marketingPageMetadata("/academics/nursing", {
   title: "Department of Nursing",
   description:
-    "Department of Nursing at MBSNM — leadership, diploma and certificate pathways, and clinical training in Uganda.",
+    "Department of Nursing at Mbale School of Nursing and Midwifery — leadership, diploma and certificate pathways, and clinical training in Uganda.",
 });
 
 export default function NursingDepartmentPage() {
@@ -53,7 +53,7 @@ export default function NursingDepartmentPage() {
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border">
               <Image
                 src="/images/gallery/staff-nurses-trio.jpg"
-                alt="MBSNM nursing team"
+                alt="Mbale School of Nursing and Midwifery nursing team"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

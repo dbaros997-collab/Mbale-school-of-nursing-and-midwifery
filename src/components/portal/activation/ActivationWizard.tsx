@@ -121,7 +121,7 @@ export function ActivationWizard() {
           First-time student activation
         </p>
         <h1 className="mt-1 text-2xl font-extrabold text-primary sm:text-3xl">
-          Activate your MBSNM portal account
+          Activate your Mbale School of Nursing and Midwifery portal account
         </h1>
         <p className="mt-2 max-w-xl text-sm text-muted">
           Use your temporary registration number and admission letter to verify
@@ -229,7 +229,7 @@ export function ActivationWizard() {
       {step < 4 ? (
         <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-muted">
           <ShieldCheck className="h-3.5 w-3.5 text-accent-green" aria-hidden />
-          Your details are used only for MBSNM student records and emergency readiness.
+          Your details are used only for Mbale School of Nursing and Midwifery student records and emergency readiness.
         </p>
       ) : null}
     </div>

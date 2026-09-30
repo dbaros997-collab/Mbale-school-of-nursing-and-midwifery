@@ -13,7 +13,7 @@ type TintBarChartProps = {
   caption?: string;
 };
 
-/** Horizontal bar chart using approved MBSNM tint scales only. */
+/** Horizontal bar chart using approved Mbale School of Nursing and Midwifery tint scales only. */
 export function TintBarChart({ items, className, caption }: TintBarChartProps) {
   const max = Math.max(...items.map((item) => item.value), 1);
 

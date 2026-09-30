@@ -9,7 +9,7 @@ import { marketingPageMetadata } from "@/lib/seo";
 export const metadata = marketingPageMetadata("/academics/nursing/clinical-placements", {
   title: "Clinical Placements",
   description:
-    "Hospital and health-centre clinical placement sites used for practical nursing training at MBSNM.",
+    "Hospital and health-centre clinical placement sites used for practical nursing training at Mbale School of Nursing and Midwifery.",
 });
 
 const siteGroups = [

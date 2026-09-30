@@ -134,7 +134,7 @@ export function Discovery() {
 
               <p className="mt-5 text-sm leading-relaxed text-muted">
                 While this is not a comprehensive list of the options you require, it is based on the
-                most requested for information from MBSNM. Unable to find what you&apos;re looking for?{" "}
+                most requested for information from Mbale School of Nursing and Midwifery. Unable to find what you&apos;re looking for?{" "}
                 <Link href="/contact" className="font-semibold text-primary underline-offset-2 hover:underline">
                   Let us know
                 </Link>

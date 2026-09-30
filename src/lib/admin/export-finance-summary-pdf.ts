@@ -244,5 +244,5 @@ export async function downloadAdminFinanceSummaryPdf(bundle: AdminFeesBundle): P
     });
   }
 
-  doc.save(`MBSNM-finance-summary-${slugDate(generatedAt)}.pdf`);
+  doc.save(`Mbale School of Nursing and Midwifery-finance-summary-${slugDate(generatedAt)}.pdf`);
 }

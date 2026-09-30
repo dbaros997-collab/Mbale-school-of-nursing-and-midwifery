@@ -21,7 +21,7 @@ export function CampusNews() {
             </h2>
             <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">
               Stories about people, training, innovations, and opportunities across the{" "}
-              <span className="font-semibold text-foreground">MBSNM</span> community.
+              <span className="font-semibold text-foreground">Mbale School of Nursing and Midwifery</span> community.
             </p>
           </div>
         </ScrollReveal>

@@ -1,6 +1,6 @@
 export const SCHOOL = {
   name: "Mbale School of Nursing and Midwifery",
-  shortName: "MBSNM",
+  shortName: "Mbale School of Nursing and Midwifery",
   motto: "In God We Love and Serve",
   tagline: "We train the real health professionals.",
   foundedBy: "Global Revival Evangelistic Ministries (GREM)",
@@ -23,7 +23,7 @@ export const SCHOOL = {
   registration:
     "Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
   aboutStory:
-    "Christians from GREM started MBSNM when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
+    "Christians from GREM started Mbale School of Nursing and Midwifery when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
 } as const;
 
 /** Embedded Google Maps iframe URL (campus pin). */
@@ -69,8 +69,8 @@ export const quickLinks = [
 ] as const;
 
 /**
- * Makerere-style top navigation, with labels chosen for MBSNM (not copied literally):
- * “Courses Offered” instead of “Study at Mak”; other items tailored for MBSNM.
+ * Makerere-style top navigation, with labels chosen for Mbale School of Nursing and Midwifery (not copied literally):
+ * “Courses Offered” instead of “Study at Mak”; other items tailored for Mbale School of Nursing and Midwifery.
  */
 export const mainNav = [
   {
@@ -114,7 +114,7 @@ export const mainNav = [
       href: "/admissions",
       cta: "Apply for admission",
       image: "/images/gallery/clinical-demonstration.jpg",
-      imageAlt: "Clinical skills demonstration with nursing students at MBSNM",
+      imageAlt: "Clinical skills demonstration with nursing students at Mbale School of Nursing and Midwifery",
     },
   },
   {
@@ -189,12 +189,12 @@ export const mainNav = [
       },
     ],
     featured: {
-      eyebrow: "Discover MBSNM",
+      eyebrow: "Discover Mbale School of Nursing and Midwifery",
       title: "Nursing and midwifery training rooted in faith and service.",
       href: "/#about",
       cta: "Explore our story",
       image: "/images/gallery/campus-aerial-wide.jpg",
-      imageAlt: "Wide aerial view of the MBSNM campus and surrounding Mbale landscape",
+      imageAlt: "Wide aerial view of the Mbale School of Nursing and Midwifery campus and surrounding Mbale landscape",
     },
   },
   {
@@ -224,7 +224,7 @@ export const mainNav = [
       href: "/news",
       cta: "Read campus news",
       image: "/images/graduates-celebration.jpg",
-      imageAlt: "Graduates celebrating at MBSNM",
+      imageAlt: "Graduates celebrating at Mbale School of Nursing and Midwifery",
     },
   },
   {
@@ -237,7 +237,7 @@ export const mainNav = [
       href: "/admissions#apply",
       cta: "Apply online",
       image: "/images/gallery/nursing-students-group.jpg",
-      imageAlt: "Group portrait of nursing students at MBSNM",
+      imageAlt: "Group portrait of nursing students at Mbale School of Nursing and Midwifery",
     },
   },
 ] as const;
@@ -361,7 +361,7 @@ export const discoveryTopics: Record<string, { value: string; label: string; hre
     { value: "contact", label: "Stay Connected", href: "/contact" },
   ],
   visitor: [
-    { value: "about", label: "About MBSNM", href: "/#about" },
+    { value: "about", label: "About Mbale School of Nursing and Midwifery", href: "/#about" },
     { value: "visit", label: "Visit Campus", href: "/contact" },
     { value: "programs", label: "Programs", href: "/academics" },
   ],
@@ -496,7 +496,7 @@ export const nursingPrograms = programs.filter((p) => p.category === "Nursing");
 export const nursingDepartment = {
   name: "Department of Nursing",
   overview:
-    "The Department of Nursing at MBSNM prepares compassionate, competent nurses through rigorous classroom instruction, skills-lab practice, and supervised clinical rotations across Eastern Uganda. Our programmes blend professional nursing science with Christian values of service to the poor, the young, and the elderly.",
+    "The Department of Nursing at Mbale School of Nursing and Midwifery prepares compassionate, competent nurses through rigorous classroom instruction, skills-lab practice, and supervised clinical rotations across Eastern Uganda. Our programmes blend professional nursing science with Christian values of service to the poor, the young, and the elderly.",
   head: {
     name: "Ms. Nakacwa Morine",
     title: "Head of Department",
@@ -549,7 +549,7 @@ export const headOfMidwifery = {
     image: "/images/gallery/staff-head-midwifery-oyella-florence.png?v=2",
   },
   intro:
-    "Information to midwifery students and qualified midwives — from the Head of Midwifery Training Programme at MBSNM.",
+    "Information to midwifery students and qualified midwives — from the Head of Midwifery Training Programme at Mbale School of Nursing and Midwifery.",
   toStudents: [
     "Midwifery is a deeply rewarding course. Midwives are second only to God, and are often the first to touch lives at birth.",
     "Lives can be saved within one minute — the golden minute.",
@@ -625,7 +625,7 @@ export const newsItems = [
     body: [
       "Graduands from nursing and midwifery programmes celebrated their achievements with a parade through Mbale town.",
       "Families, faculty, and community leaders joined the procession to honour a new cohort of health professionals ready to serve Eastern Uganda.",
-      "The celebration highlighted MBSNM’s commitment to training competent, compassionate clinicians rooted in Christian service.",
+      "The celebration highlighted Mbale School of Nursing and Midwifery’s commitment to training competent, compassionate clinicians rooted in Christian service.",
     ],
     image: "/images/campus-news/graduation-parade-mbale.jpg",
     featured: true,
@@ -653,7 +653,7 @@ export const newsItems = [
     excerpt:
       "Modern classrooms, practical labs, and lighting upgrades are underway to strengthen our learning environment.",
     body: [
-      "MBSNM is upgrading classrooms, practical laboratories, student services offices, and campus lighting.",
+      "Mbale School of Nursing and Midwifery is upgrading classrooms, practical laboratories, student services offices, and campus lighting.",
       "The improvements support safer evening study, better simulation practice, and a more welcoming environment for visitors and enrollees.",
       "Work continues in phases so teaching and clinical rotations are not disrupted.",
     ],
@@ -692,7 +692,7 @@ export const events = [
     id: "1",
     title: "June 2026 Intake Orientation",
     date: "2026-06-15",
-    location: "Main Hall, MBSNM Campus",
+    location: "Main Hall, Mbale School of Nursing and Midwifery Campus",
     mode: "Physical",
     image: "/images/events-staff.jpg",
     description:
@@ -702,7 +702,7 @@ export const events = [
     id: "1b",
     title: "July 2026 Intake Orientation",
     date: "2026-07-15",
-    location: "Main Hall, MBSNM Campus",
+    location: "Main Hall, Mbale School of Nursing and Midwifery Campus",
     mode: "Physical",
     image: "/images/graduates.jpg",
     description:
@@ -754,7 +754,7 @@ export const galleryItems = [
   {
     id: "campus-wide",
     src: "/images/gallery/campus-aerial-wide.jpg",
-    alt: "Wide aerial view of MBSNM campus and surrounding Mbale landscape",
+    alt: "Wide aerial view of Mbale School of Nursing and Midwifery campus and surrounding Mbale landscape",
     caption: "Our campus in Mbale",
     category: "Campus",
     featured: true,
@@ -762,64 +762,64 @@ export const galleryItems = [
   {
     id: "staff-head-midwifery-oyella-florence",
     src: "/images/gallery/staff-head-midwifery-oyella-florence.png?v=2",
-    alt: "Miss Oyella Florence, Head of Midwifery at MBSNM, at her office desk",
+    alt: "Miss Oyella Florence, Head of Midwifery at Mbale School of Nursing and Midwifery, at her office desk",
     caption: "Miss Oyella Florence",
     category: "Head of Midwifery",
   },
   {
     id: "staff-head-nursing-nakigowa",
     src: "/images/gallery/staff-head-nursing-nakigowa.png?v=2",
-    alt: "Ms. Nakacwa Morine, Head of Department of Nursing at MBSNM, working at her office desk",
+    alt: "Ms. Nakacwa Morine, Head of Department of Nursing at Mbale School of Nursing and Midwifery, working at her office desk",
     caption: "Ms. Nakacwa Morine",
     category: "Head of Nursing",
   },
   {
     id: "staff-deputy-principal-buyo-iron",
     src: "/images/gallery/staff-deputy-principal-buyo-iron.png?v=3",
-    alt: "Mr Buyo R. Iron, Deputy Principal at MBSNM, in his office",
+    alt: "Mr Buyo R. Iron, Deputy Principal at Mbale School of Nursing and Midwifery, in his office",
     caption: "Mr Buyo R. Iron",
     category: "Deputy Principal",
   },
   {
     id: "staff-nurses-trio",
     src: "/images/gallery/staff-nurses-trio.jpg",
-    alt: "Three MBSNM nurses in white uniforms seated together",
+    alt: "Three Mbale School of Nursing and Midwifery nurses in white uniforms seated together",
     caption: "Our nursing team",
     category: "Staff",
   },
   {
     id: "staff-admin-desk",
     src: "/images/gallery/staff-admin-desk.jpg",
-    alt: "MBSNM administrative staff member working at her desk",
+    alt: "Mbale School of Nursing and Midwifery administrative staff member working at her desk",
     caption: "Student services office",
     category: "Staff",
   },
   {
     id: "staff-clinical-lead",
     src: "/images/gallery/staff-clinical-lead.jpg",
-    alt: "MBSNM clinical staff member at his desk with laptop",
+    alt: "Mbale School of Nursing and Midwifery clinical staff member at his desk with laptop",
     caption: "Clinical leadership",
     category: "Staff",
   },
   {
     id: "staff-office-collaboration",
     src: "/images/gallery/staff-office-collaboration.jpg",
-    alt: "Two MBSNM staff members reviewing documents together at a desk",
+    alt: "Two Mbale School of Nursing and Midwifery staff members reviewing documents together at a desk",
     caption: "Office team at work",
     category: "Staff",
   },
   {
     id: "students-building",
     src: "/images/gallery/students-building-front.jpg",
-    alt: "Nursing students in green uniforms posing in front of the MBSNM building",
+    alt: "Nursing students in green uniforms posing in front of the Mbale School of Nursing and Midwifery building",
     caption: "Students at the main building",
     category: "People",
   },
   {
     id: "school-bus",
     src: "/images/gallery/school-bus-group.jpg",
-    alt: "Students lined up in front of the MBSNM school bus",
-    caption: "MBSNM school bus and students",
+    alt: "Students lined up in front of the Mbale School of Nursing and Midwifery school bus",
+    caption: "Mbale School of Nursing and Midwifery school bus and students",
     category: "Life",
   },
   {
@@ -846,7 +846,7 @@ export const galleryItems = [
   {
     id: "graduation",
     src: "/images/graduates-celebration.jpg",
-    alt: "Graduates celebrating at MBSNM",
+    alt: "Graduates celebrating at Mbale School of Nursing and Midwifery",
     caption: "Graduation celebrations",
     category: "Graduation",
   },
@@ -868,7 +868,7 @@ export const galleryItems = [
     id: "students",
     src: "/images/hero/raw/students-celebration.jpg",
     alt: "Students celebrating on campus",
-    caption: "Student life at MBSNM",
+    caption: "Student life at Mbale School of Nursing and Midwifery",
     category: "Life",
   },
 ] as const;

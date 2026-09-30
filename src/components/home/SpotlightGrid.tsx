@@ -15,7 +15,7 @@ export function SpotlightGrid() {
           <SectionHeading
             eyebrow="Excellence"
             title="Campus & Clinical Excellence"
-            description="Articles about training, facilities & community impact at MBSNM"
+            description="Articles about training, facilities & community impact at Mbale School of Nursing and Midwifery"
             align="center"
           />
         </ScrollReveal>

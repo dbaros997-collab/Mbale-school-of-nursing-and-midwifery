@@ -58,7 +58,7 @@ export function AdminSidebar({ open, onClose, onLogout }: AdminSidebarProps) {
           <Link href="/" className="flex min-w-0 items-center gap-2" onClick={onClose}>
             <SchoolLogo variant="compact" className="!h-[84px] !w-[96px] shrink-0" />
             <div className="min-w-0">
-              <p className="truncate text-base font-bold">MBSNM Admin</p>
+              <p className="truncate text-base font-bold">Mbale School of Nursing and Midwifery Admin</p>
               <p className="truncate text-xs text-white/70 sm:text-sm">Staff control panel</p>
             </div>
           </Link>

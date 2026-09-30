@@ -63,7 +63,7 @@ export default function NoticesPage() {
         <div>
           <h2 className="text-lg font-extrabold text-primary">Portal announcements</h2>
           <p className="mt-1 text-sm text-muted">
-            Updates published directly through the MBSNM student portal.
+            Updates published directly through the Mbale School of Nursing and Midwifery student portal.
           </p>
         </div>
 

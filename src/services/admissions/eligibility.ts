@@ -39,7 +39,7 @@ export function getProgramTitle(programId: string): string {
 }
 
 /**
- * Institutional minimum criteria for MBSNM nursing & midwifery programmes.
+ * Institutional minimum criteria for Mbale School of Nursing and Midwifery nursing & midwifery programmes.
  * - Certificate: passes (P8 or better) in English, Mathematics, and Biology
  * - Direct diploma: P7 or better in key subjects + at least 5 total UCE passes
  * - Extension: certificate credentials flagged for manual document review

@@ -11,7 +11,7 @@ import { marketingPageMetadata } from "@/lib/seo";
 export const metadata = marketingPageMetadata("/academics/nursing/programs", {
   title: "Nursing Programmes",
   description:
-    "Diploma and certificate nursing programmes at MBSNM — entry requirements, duration, and accreditation details.",
+    "Diploma and certificate nursing programmes at Mbale School of Nursing and Midwifery — entry requirements, duration, and accreditation details.",
 });
 
 export default function NursingProgramsPage() {

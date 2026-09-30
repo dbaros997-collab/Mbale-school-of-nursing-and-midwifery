@@ -28,7 +28,7 @@ export function ProfileCompletionStep({
     <StepCard>
       <h2 className="text-xl font-extrabold text-primary">Complete your profile</h2>
       <p className="mt-1 text-sm text-muted">
-        Provide next-of-kin, emergency contact, and medical details required by MBSNM.
+        Provide next-of-kin, emergency contact, and medical details required by Mbale School of Nursing and Midwifery.
       </p>
 
       <form

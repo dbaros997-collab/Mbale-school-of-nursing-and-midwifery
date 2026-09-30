@@ -89,7 +89,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
           {isAdmissionsRelated ? (
             <div className="mt-10 rounded-2xl border border-accent-green/30 bg-accent-green-soft/40 p-6">
-              <p className="font-bold text-primary">Applying to MBSNM?</p>
+              <p className="font-bold text-primary">Applying to Mbale School of Nursing and Midwifery?</p>
               <p className="mt-1 text-sm text-muted">
                 Review entry requirements and submit your application before orientation week.
               </p>

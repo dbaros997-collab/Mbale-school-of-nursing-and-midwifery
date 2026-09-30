@@ -182,7 +182,7 @@ export default function AdmissionsPage() {
           <SectionHeading
             eyebrow="How to apply"
             title="Step-by-step application guide"
-            description="From program selection to interview — a clear path into MBSNM."
+            description="From program selection to interview — a clear path into Mbale School of Nursing and Midwifery."
           />
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {applicationSteps.map((item, i) => {

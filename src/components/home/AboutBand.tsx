@@ -11,7 +11,7 @@ export function AboutBand() {
     <section id="about" className="scroll-mt-24 bg-primary-dark py-14 text-white sm:py-16">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-emphasis-gold">About MBSNM</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-emphasis-gold">About Mbale School of Nursing and Midwifery</p>
           <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Our story</h2>
           <p className="mt-4 leading-body text-white/90">{SCHOOL.aboutStory}</p>
           <blockquote className="pull-quote mt-4 border-l-2 border-brand-yellow pl-4 text-lg font-semibold text-white">
@@ -40,7 +40,7 @@ export function AboutBand() {
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
           <Image
             src={`/images/about/leadership-team.jpg?v=${ABOUT_ASSET_VERSION}`}
-            alt="MBSNM leadership and nursing faculty team"
+            alt="Mbale School of Nursing and Midwifery leadership and nursing faculty team"
             fill
             unoptimized
             priority

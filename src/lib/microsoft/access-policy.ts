@@ -150,7 +150,7 @@ export async function evaluateStudentPortalAccess(input: {
 
   return {
     allowed: false,
-    reason: `Access denied. Sign in with an official MBSNM student account (${domainHint}) or ask ICT to add you to the student security group.`,
+    reason: `Access denied. Sign in with an official Mbale School of Nursing and Midwifery student account (${domainHint}) or ask ICT to add you to the student security group.`,
   };
 }
 

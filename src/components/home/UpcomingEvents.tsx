@@ -73,7 +73,7 @@ export function UpcomingEvents() {
                 >
                   <Image
                     src={lead.image}
-                    alt="MBSNM nursing staff in uniform"
+                    alt="Mbale School of Nursing and Midwifery nursing staff in uniform"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 40vw"

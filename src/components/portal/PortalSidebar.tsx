@@ -66,7 +66,7 @@ export function PortalSidebar({ open, onClose, onLogout }: PortalSidebarProps) {
           <Link href="/" className="flex min-w-0 items-center gap-2" onClick={onClose}>
             <SchoolLogo variant="compact" className="!h-[84px] !w-[96px] shrink-0" />
             <div className="min-w-0">
-              <p className="truncate text-sm font-bold">MBSNM Portal</p>
+              <p className="truncate text-sm font-bold">Mbale School of Nursing and Midwifery Portal</p>
               <p className="truncate text-[11px] text-white/60">Student workspace</p>
             </div>
           </Link>

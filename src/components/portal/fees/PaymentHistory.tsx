@@ -117,7 +117,7 @@ export function PaymentHistory({
                 <h3 id="receipt-title" className="text-lg font-bold text-primary">
                   Payment receipt
                 </h3>
-                <p className="mt-1 text-xs text-muted">MBSNM Finance · Mock gateway</p>
+                <p className="mt-1 text-xs text-muted">Mbale School of Nursing and Midwifery Finance · Mock gateway</p>
               </div>
               <button
                 type="button"

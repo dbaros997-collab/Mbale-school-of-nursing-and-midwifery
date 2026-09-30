@@ -15,7 +15,7 @@ export const INTERVIEW_REQUIRED_DOCUMENTS = [
 ] as const;
 
 export const DEFAULT_INTERVIEW_VENUES: Record<InterviewMode, string> = {
-  physical: "MBSNM Main Campus — Admissions Block, Ground Floor",
+  physical: "Mbale School of Nursing and Midwifery Main Campus — Admissions Block, Ground Floor",
   online: "Online via Google Meet (link shared after scheduling)",
 };
 

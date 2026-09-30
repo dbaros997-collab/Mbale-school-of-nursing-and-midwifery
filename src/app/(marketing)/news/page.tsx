@@ -35,7 +35,7 @@ export default async function NewsIndexPage({ searchParams }: NewsIndexPageProps
       <PageBanner
         breadcrumb="News & Events"
         title="Happening around Campus"
-        subtitle="Stories about people, training, innovations, and opportunities across the MBSNM community."
+        subtitle="Stories about people, training, innovations, and opportunities across the Mbale School of Nursing and Midwifery community."
         image="/images/campus-news/graduation-parade-mbale.jpg"
       />
 

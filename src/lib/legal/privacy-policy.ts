@@ -17,7 +17,7 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
   {
     title: "Who we are (data controller)",
     body: [
-      `${SCHOOL.name} (“MBSNM”, “we”, “us”) is the data controller for personal information collected through this website, admissions channels, and student services.`,
+      `${SCHOOL.name} (“we”, “us”) is the data controller for personal information collected through this website, admissions channels, and student services.`,
       `Registered address: ${SCHOOL.address}. Postal: ${SCHOOL.postal}.`,
       `For privacy enquiries contact ${SCHOOL.email} or ${SCHOOL.admissionsEmail}.`,
     ],

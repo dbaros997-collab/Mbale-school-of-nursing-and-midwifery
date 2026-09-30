@@ -1,4 +1,4 @@
-/** Approved MBSNM tint scales for tables and charts — primary hues only. */
+/** Approved Mbale School of Nursing and Midwifery tint scales for tables and charts — primary hues only. */
 export const CHART_TINTS = [
   "#16357f", /* navy */
   "#198f34", /* service green */

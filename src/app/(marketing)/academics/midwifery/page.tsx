@@ -32,7 +32,7 @@ export default function HeadOfMidwiferyPage() {
   return (
     <div>
       <PageBanner
-        breadcrumb="Midwifery at MBSNM"
+        breadcrumb="Midwifery at Mbale School of Nursing and Midwifery"
         title="Head of Midwifery"
         subtitle={intro}
         image="/images/programs/diploma-midwifery-direct.jpg"
@@ -45,7 +45,7 @@ export default function HeadOfMidwiferyPage() {
               <div className="relative aspect-[3/4] bg-surface">
                 <Image
                   src={head.image}
-                  alt={`${head.name}, ${title} at MBSNM`}
+                  alt={`${head.name}, ${title} at Mbale School of Nursing and Midwifery`}
                   fill
                   unoptimized
                   className="object-cover object-top"
@@ -63,7 +63,7 @@ export default function HeadOfMidwiferyPage() {
                 <SectionHeading
                   eyebrow="To student midwives"
                   title="Training with courage and compassion"
-                  description="Guidance for midwifery students beginning their journey at MBSNM."
+                  description="Guidance for midwifery students beginning their journey at Mbale School of Nursing and Midwifery."
                 />
                 <MessageList items={toStudents} />
               </div>

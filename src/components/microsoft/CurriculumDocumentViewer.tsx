@@ -91,7 +91,7 @@ export function CurriculumDocumentViewer() {
             <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
               Curriculum notes (OneDrive / SharePoint)
             </h2>
-            <p className="text-xs text-muted">Shared nursing &amp; midwifery resources from MBSNM</p>
+            <p className="text-xs text-muted">Shared nursing &amp; midwifery resources from Mbale School of Nursing and Midwifery</p>
           </div>
         </div>
         <button

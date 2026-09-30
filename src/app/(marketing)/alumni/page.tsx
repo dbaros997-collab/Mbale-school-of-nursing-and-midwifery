@@ -11,7 +11,7 @@ import { marketingPageMetadata } from "@/lib/seo";
 export const metadata = marketingPageMetadata("/alumni", {
   title: "Alumni",
   description:
-    "MBSNM alumni network — stay connected, share your story, and support the next generation of nurses and midwives.",
+    "Mbale School of Nursing and Midwifery alumni network — stay connected, share your story, and support the next generation of nurses and midwives.",
 });
 
 const highlights = [
@@ -49,7 +49,7 @@ export default function AlumniPage() {
               <SectionHeading
                 eyebrow="Welcome back"
                 title="Your journey continues beyond graduation"
-                description="MBSNM alumni serve across Uganda and beyond. This page is your home for updates, reconnection, and ways to support the next generation of nurses and midwives."
+                description="Mbale School of Nursing and Midwifery alumni serve across Uganda and beyond. This page is your home for updates, reconnection, and ways to support the next generation of nurses and midwives."
               />
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button href="/contact" variant="green">
@@ -63,7 +63,7 @@ export default function AlumniPage() {
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border">
               <Image
                 src="/images/graduates-celebration.jpg"
-                alt="MBSNM graduates"
+                alt="Mbale School of Nursing and Midwifery graduates"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -77,7 +77,7 @@ export default function AlumniPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Alumni life"
-            title="Ways to engage with MBSNM"
+            title="Ways to engage with Mbale School of Nursing and Midwifery"
             description="Whether you graduated last year or a decade ago, there is a place for you in the network."
             align="center"
           />

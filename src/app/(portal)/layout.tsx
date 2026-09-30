@@ -4,7 +4,7 @@ import { privateAppMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = privateAppMetadata(
   "Student Portal",
-  "MBSNM student portal — dashboard, fees, registration, and LMS tools.",
+  "Mbale School of Nursing and Midwifery student portal — dashboard, fees, registration, and LMS tools.",
 );
 
 export default function PortalLayout({
