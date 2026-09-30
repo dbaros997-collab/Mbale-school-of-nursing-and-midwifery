@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Megaphone } from "lucide-react";
-import { newsItems, openIntakesLabel, SCHOOL } from "@/lib/data";
+import { newsHref, newsItems, openIntakesLabel, SCHOOL } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 function formatDate(iso: string) {
@@ -52,6 +53,7 @@ export function NewsAnnouncements() {
               transition={{ delay: index * 0.06 }}
               className="rounded-2xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm"
             >
+              <Link href={newsHref(item.id)} className="block rounded-xl focus-ring">
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 <span className="rounded-md bg-brand-green/25 px-2 py-0.5 font-semibold text-brand-sky">
                   {item.category}
@@ -62,6 +64,8 @@ export function NewsAnnouncements() {
               </div>
               <h3 className="mt-3 text-lg font-bold">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-white/75">{item.excerpt}</p>
+              <p className="mt-3 text-sm font-semibold text-brand-sky">Read story →</p>
+              </Link>
             </motion.article>
           ))}
         </div>

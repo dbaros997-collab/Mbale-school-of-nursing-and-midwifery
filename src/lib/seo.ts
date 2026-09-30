@@ -19,6 +19,10 @@ export const MARKETING_SITEMAP_ROUTES = [
   { path: "/admissions/track", priority: 0.65, changeFrequency: "weekly" as const },
   { path: "/contact", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/alumni", priority: 0.7, changeFrequency: "monthly" as const },
+  { path: "/news", priority: 0.75, changeFrequency: "weekly" as const },
+  { path: "/events", priority: 0.75, changeFrequency: "weekly" as const },
+  { path: "/careers", priority: 0.65, changeFrequency: "monthly" as const },
+  { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
 ] as const;
 
 export function absolutePublicUrl(pathname: string): string {

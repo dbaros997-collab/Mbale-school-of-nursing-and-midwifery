@@ -55,7 +55,7 @@ export default function AlumniPage() {
                 <Button href="/contact" variant="green">
                   Update your details
                 </Button>
-                <Button href="/#campus-news" variant="ghost">
+                <Button href="/news" variant="ghost">
                   Read campus news
                 </Button>
               </div>

@@ -19,8 +19,8 @@ const academicsLinks = [
 
 const quickLinks = [
   { label: "Student Portal", href: "/portal/dashboard" },
-  { label: "News & Events", href: "/#events" },
-  { label: "Campus News", href: "/#campus-news" },
+  { label: "News & Events", href: "/events" },
+  { label: "Campus News", href: "/news" },
   { label: "School Gallery", href: "/#gallery" },
   { label: "LMS Hub", href: "/portal/lms" },
   { label: "Contact", href: "/contact" },
@@ -34,7 +34,7 @@ const campusLinks = [
   { label: "Alumni", href: "/alumni" },
   { label: "Campus Life", href: "/#about" },
   { label: "School Gallery", href: "/#gallery" },
-  { label: "Careers", href: "/admissions" },
+  { label: "Careers", href: "/careers" },
   { label: "Emergency Numbers", href: "/contact" },
 ];
 
@@ -172,7 +172,7 @@ export function Footer() {
             <p>
               Copyright ©{new Date().getFullYear()} {SCHOOL.name}. All rights reserved.
             </p>
-            <Link href="/contact" className="hover:text-white hover:underline">
+            <Link href="/privacy" className="hover:text-white hover:underline">
               Privacy Policy
             </Link>
           </div>

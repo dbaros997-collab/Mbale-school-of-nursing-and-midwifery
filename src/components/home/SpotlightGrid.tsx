@@ -63,7 +63,7 @@ export function SpotlightGrid() {
         <ScrollReveal direction="up" delay={0.15}>
           <div className="mt-8 text-center">
             <Link
-              href="/academics"
+              href="/news"
               className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
             >
               More articles

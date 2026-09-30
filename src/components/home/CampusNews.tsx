@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { newsItems } from "@/lib/data";
+import { newsHref, newsItems } from "@/lib/data";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -40,7 +40,7 @@ export function CampusNews() {
           {stories.map((item, i) => (
             <ScrollReveal key={item.id} direction="right" delay={i * 0.12}>
               <Link
-                href="/admissions"
+                href={newsHref(item.id)}
                 className="group relative block aspect-[16/11] min-h-[260px] overflow-hidden rounded-3xl focus-ring sm:min-h-[320px]"
               >
                 <Image
@@ -83,7 +83,7 @@ export function CampusNews() {
         <ScrollReveal direction="up" delay={0.15}>
           <div className="mt-8 text-center">
             <Link
-              href="/admissions"
+              href="/news"
               className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
             >
               View more stories from MBSNM

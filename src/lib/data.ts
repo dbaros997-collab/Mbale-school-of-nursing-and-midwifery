@@ -39,7 +39,7 @@ export const mainNav = [
           { label: "Our Story", href: "/#about" },
           { label: "Mission & Vision", href: "/#vision-mission" },
           { label: "Core Values", href: "/#vision-mission" },
-          { label: "Accreditation", href: "/contact" },
+          { label: "Accreditation", href: "/academics/nursing/programs" },
           { label: "Contact Address", href: "/contact" },
         ],
       },
@@ -229,11 +229,11 @@ export const discoveryTopics: Record<string, { value: string; label: string; hre
   staff: [
     { value: "admin", label: "Admin Dashboard", href: "/admin" },
     { value: "contact", label: "Getting in Touch", href: "/contact" },
-    { value: "news", label: "Announcements", href: "/#campus-news" },
+    { value: "news", label: "Announcements", href: "/news" },
   ],
   alumni: [
     { value: "network", label: "Alumni Network", href: "/alumni" },
-    { value: "news", label: "Campus News", href: "/#campus-news" },
+    { value: "news", label: "Campus News", href: "/news" },
     { value: "contact", label: "Stay Connected", href: "/contact" },
   ],
   visitor: [
@@ -483,6 +483,11 @@ export const newsItems = [
     category: "Admissions",
     excerpt:
       "We are accepting applications for the June and July 2026 intakes across nursing and midwifery programs. Apply early to secure your place.",
+    body: [
+      "Applications are open for the June and July 2026 intakes across all certificate and diploma programmes in nursing and midwifery.",
+      "Submit your application online, pay the non-refundable application fee, and track your eligibility status from the admissions portal.",
+      "Places are limited — early applicants receive priority scheduling for interviews and orientation.",
+    ],
     image: "/images/graduation-day.jpg",
     featured: true,
   },
@@ -493,6 +498,11 @@ export const newsItems = [
     category: "Events",
     excerpt:
       "Our graduands marched through Mbale town celebrating academic excellence and inspiring youth to join the nursing profession.",
+    body: [
+      "Graduands from nursing and midwifery programmes celebrated their achievements with a parade through Mbale town.",
+      "Families, faculty, and community leaders joined the procession to honour a new cohort of health professionals ready to serve Eastern Uganda.",
+      "The celebration highlighted MBSNM’s commitment to training competent, compassionate clinicians rooted in Christian service.",
+    ],
     image: "/images/campus-news/graduation-parade-mbale.jpg",
     featured: true,
   },
@@ -503,6 +513,11 @@ export const newsItems = [
     category: "Academics",
     excerpt:
       "Students continue hands-on clinical training through our partnership with Mbale Referral Hospital and affiliated health facilities.",
+    body: [
+      "Continuing students are rotating through Mbale Regional Referral Hospital and partner district hospitals and health centres.",
+      "Supervised bedside practice complements skills-lab training so graduates are ward-ready on day one.",
+      "See the full list of clinical placement sites on the Nursing Clinical Placements page.",
+    ],
     image: "/images/equipment.jpg",
     featured: false,
   },
@@ -513,6 +528,11 @@ export const newsItems = [
     category: "Campus",
     excerpt:
       "Modern classrooms, practical labs, and lighting upgrades are underway to strengthen our learning environment.",
+    body: [
+      "MBSNM is upgrading classrooms, practical laboratories, student services offices, and campus lighting.",
+      "The improvements support safer evening study, better simulation practice, and a more welcoming environment for visitors and enrollees.",
+      "Work continues in phases so teaching and clinical rotations are not disrupted.",
+    ],
     image: "/images/front-offices.jpg",
     featured: false,
   },
@@ -523,10 +543,25 @@ export const newsItems = [
     category: "Leadership",
     excerpt:
       "The School Principal shared a charge of excellence, integrity, and compassionate service with graduating nurses and midwives.",
+    body: [
+      "At the graduation ceremony, the School Principal urged graduands to serve with integrity, humility, and clinical excellence.",
+      "Guest speakers and alumni joined faculty in commissioning the class to bring compassionate care to hospitals and communities across the region.",
+      "Congratulations to every nurse and midwife who completed their programme this year.",
+    ],
     image: "/images/principal.jpg",
     featured: false,
   },
 ] as const;
+
+export type NewsItem = (typeof newsItems)[number];
+
+export function getNewsById(id: string): NewsItem | undefined {
+  return newsItems.find((item) => item.id === id);
+}
+
+export function newsHref(id: string) {
+  return `/news/${id}`;
+}
 
 export const events = [
   {
@@ -536,6 +571,8 @@ export const events = [
     location: "Main Hall, MBSNM Campus",
     mode: "Physical",
     image: "/images/events-staff.jpg",
+    description:
+      "Welcome session for new students joining the June 2026 intake — campus tour, registration checklist, and introductions to faculty leads.",
   },
   {
     id: "1b",
@@ -544,6 +581,8 @@ export const events = [
     location: "Main Hall, MBSNM Campus",
     mode: "Physical",
     image: "/images/graduates.jpg",
+    description:
+      "Orientation for July 2026 entrants covering timetable planning, clinical placement expectations, and student portal activation.",
   },
   {
     id: "2",
@@ -552,6 +591,8 @@ export const events = [
     location: "Skills Laboratory & Computer Lab",
     mode: "Physical",
     image: "/images/equipment.jpg",
+    description:
+      "Prospective students and parents tour the skills lab, meet instructors, and observe simulation demonstrations.",
   },
   {
     id: "3",
@@ -560,6 +601,8 @@ export const events = [
     location: "Hybrid (Campus & Online)",
     mode: "Hybrid (Physical & Virtual)",
     image: "/images/front-offices.jpg",
+    description:
+      "Admissions staff explain entry requirements, fees, and how to apply online. Join in person at campus or via the shared meeting link on the day.",
   },
   {
     id: "4",
@@ -568,8 +611,20 @@ export const events = [
     location: "Campus Chapel & Partner Clinics",
     mode: "Physical",
     image: "/images/activity-1.jpg",
+    description:
+      "Chapel service followed by a community health outreach with students and faculty at partner clinic sites.",
   },
 ] as const;
+
+export type SchoolEvent = (typeof events)[number];
+
+export function getEventById(id: string): SchoolEvent | undefined {
+  return events.find((item) => item.id === id);
+}
+
+export function eventHref(id: string) {
+  return `/events/${id}`;
+}
 
 export const galleryItems = [
   {
@@ -700,14 +755,14 @@ export const spotlightArticles = [
     category: "Campus",
     title: "Modern Office Buildings Strengthen Student Services",
     image: "/images/front-offices.jpg",
-    href: "/contact",
+    href: "/news/4",
   },
   {
     id: "2",
     category: "Training",
     title: "Hands-on Equipment for Clinical Excellence",
     image: "/images/equipment.jpg",
-    href: "/academics",
+    href: "/news/3",
   },
   {
     id: "3",
@@ -721,21 +776,21 @@ export const spotlightArticles = [
     category: "Life",
     title: "Campus Celebrations & Student Activities",
     image: "/images/dancers.jpg",
-    href: "/#campus-news",
+    href: "/news/2",
   },
   {
     id: "5",
     category: "Infrastructure",
     title: "Modern Lighting Improves Night-time Campus Safety",
     image: "/images/campus-night.jpg",
-    href: "/contact",
+    href: "/news/4",
   },
   {
     id: "6",
     category: "Community",
     title: "Guest of Honour Inspires Graduating Class",
     image: "/images/guest-honour.jpg",
-    href: "/#campus-news",
+    href: "/news/5",
   },
 ] as const;
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { events } from "@/lib/data";
+import { eventHref, events } from "@/lib/data";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -53,7 +53,7 @@ export function UpcomingEvents() {
             description={
               <>
                 View more upcoming events at our{" "}
-                <Link href="/contact" className="font-semibold text-primary underline-offset-2 hover:underline">
+                <Link href="/events" className="font-semibold text-primary underline-offset-2 hover:underline">
                   Events Portal
                 </Link>
               </>
@@ -67,7 +67,7 @@ export function UpcomingEvents() {
             <article className="group overflow-hidden rounded-3xl border border-border bg-panel shadow-sm">
               <div className="grid md:grid-cols-2 md:min-h-[420px] lg:min-h-[480px]">
                 <Link
-                  href="/admissions"
+                  href={eventHref(lead.id)}
                   className="relative min-h-[240px] overflow-hidden md:min-h-full"
                   aria-label={`Open ${lead.title}`}
                 >
@@ -89,13 +89,13 @@ export function UpcomingEvents() {
                     {lead.mode}
                   </p>
                   <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-foreground sm:text-[2rem]">
-                    <Link href="/admissions" className="transition hover:text-primary">
+                    <Link href={eventHref(lead.id)} className="transition hover:text-primary">
                       {lead.title}
                     </Link>
                   </h3>
                   <p className="mt-3 text-muted">{lead.location}</p>
                   <Link
-                    href="/admissions"
+                    href={eventHref(lead.id)}
                     className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition hover:text-primary"
                   >
                     View Details
@@ -116,7 +116,7 @@ export function UpcomingEvents() {
                       {event.mode}
                     </p>
                     <h3 className="mt-1 font-display text-lg font-semibold leading-snug text-foreground sm:text-xl">
-                      <Link href="/admissions" className="transition hover:text-primary">
+                      <Link href={eventHref(event.id)} className="transition hover:text-primary">
                         {event.title}
                       </Link>
                     </h3>
