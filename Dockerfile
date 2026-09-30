@@ -1,3 +1,3 @@
 # Auto-pinned to the GHCR image built by GitHub Actions for this commit.
 # GitHub Actions updates this line after every successful "Publish Docker image" run.
-FROM ghcr.io/dbaros997-collab/mbale-school:82d8cb2ace0bbc1866391fe600ecbddc070c6e95
+FROM ghcr.io/dbaros997-collab/mbale-school:5182b5ebbf62a71d45289436005a4967438869b6
