@@ -3,19 +3,13 @@
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  FlaskConical,
-  GraduationCap,
-  Hospital,
-  Monitor,
-} from "lucide-react";
+import { FlaskConical, GraduationCap, Monitor } from "lucide-react";
 import { heroQuickBoxes, heroSlides, SCHOOL } from "@/lib/data";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { cn } from "@/lib/utils";
 
 const quickIconMap = {
   GraduationCap,
-  Hospital,
   FlaskConical,
   Monitor,
 } as const;
@@ -23,7 +17,6 @@ const quickIconMap = {
 const quickIconStyles = [
   "accent-chip-green",
   "accent-chip-sky",
-  "accent-chip-green",
   "accent-chip-gold",
 ] as const;
 
@@ -146,7 +139,7 @@ export function Hero() {
 
       <div className="relative z-10 -mt-6 px-4 md:-mt-16 md:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-3">
             {heroQuickBoxes.map((box, i) => {
               const Icon = quickIconMap[box.icon];
               return (
@@ -156,7 +149,7 @@ export function Hero() {
                   className={cn(
                     "flex items-start gap-3.5 px-5 py-5 transition hover:bg-surface focus-ring sm:gap-4 sm:px-6 sm:py-6",
                     i < heroQuickBoxes.length - 1 &&
-                      "border-b border-border sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:[&:nth-child(4)]:border-r-0",
+                      "border-b border-border sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:[&:nth-child(3)]:border-r-0",
                   )}
                 >
                   <span

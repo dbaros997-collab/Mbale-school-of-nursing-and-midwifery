@@ -353,14 +353,6 @@ export const heroQuickBoxes = [
     icon: "GraduationCap",
   },
   {
-    id: "clinical",
-    title: "Real hospital placements",
-    description:
-      "You practise in wards at Mbale Referral Hospital and other approved sites — not just in simulation.",
-    href: "/admissions",
-    icon: "Hospital",
-  },
-  {
     id: "labs",
     title: "Skills labs on campus",
     description:
