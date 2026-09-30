@@ -441,7 +441,11 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
               </p>
               <h4 className="relative mt-3 text-lg font-bold leading-snug">{featured.title}</h4>
               {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
-                <HeaderPortalActions layout="stacked" onNavigate={onNavigate} />
+                <HeaderPortalActions
+                  layout="stacked"
+                  showStaffAdmin={false}
+                  onNavigate={onNavigate}
+                />
               ) : (
                 <Link
                   href={featured.href}

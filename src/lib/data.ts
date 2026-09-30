@@ -144,7 +144,6 @@ export const mainNav = [
         links: [
           { label: "Contact Registry", href: "/contact" },
           { label: "Privacy Policy", href: "/privacy" },
-          { label: "Staff Admin", href: "/admin" },
         ],
       },
     ],
