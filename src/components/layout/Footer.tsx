@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { PrivacyConsentField } from "@/components/legal/PrivacyConsentField";
 import { FOOTER_SECTION_BG } from "@/lib/footer-section-bg";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 
@@ -24,6 +26,7 @@ const quickLinks = [
   { label: "School Gallery", href: "/#gallery" },
   { label: "LMS Hub", href: "/portal/lms" },
   { label: "Contact", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy" },
   { label: "Staff Admin", href: "/admin" },
 ];
 
@@ -64,6 +67,60 @@ function FooterLinkCol({
   );
 }
 
+function FooterSubscribeForm() {
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [subscribeError, setSubscribeError] = useState<string | null>(null);
+
+  function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!privacyConsent) {
+      setSubscribeError("Please confirm you have read the Privacy Policy before subscribing.");
+      return;
+    }
+    setSubscribeError(null);
+  }
+
+  return (
+    <form className="w-full sm:max-w-md" onSubmit={handleSubscribe}>
+      <label htmlFor="footer-subscribe-email" className="block text-sm font-semibold text-white/90">
+        Email
+      </label>
+      <div className="mt-1.5 flex overflow-hidden rounded-sm border border-white/25 bg-white shadow-sm">
+        <input
+          id="footer-subscribe-email"
+          type="email"
+          name="email"
+          required
+          placeholder="Enter your email"
+          className="min-w-0 flex-1 border-0 px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-green"
+        />
+        <button
+          type="submit"
+          disabled={!privacyConsent}
+          className="shrink-0 border-l border-white/25 bg-white px-5 py-2.5 text-sm font-bold text-brand-green transition hover:bg-brand-ivory focus-ring disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Subscribe
+        </button>
+      </div>
+      <PrivacyConsentField
+        id="footer-subscribe-privacy"
+        checked={privacyConsent}
+        onCheckedChange={(value) => {
+          setPrivacyConsent(value);
+          if (value) setSubscribeError(null);
+        }}
+        variant="onDark"
+        className="mt-3"
+      />
+      {subscribeError ? (
+        <p className="mt-2 text-xs font-medium text-brand-yellow" role="alert">
+          {subscribeError}
+        </p>
+      ) : null}
+    </form>
+  );
+}
+
 /** UCU-style lower section: yellow subscribe bar + four-column footer over campus aerial. */
 export function Footer() {
   return (
@@ -81,33 +138,7 @@ export function Footer() {
           <h2 className="font-display text-2xl font-bold leading-tight text-white sm:text-[1.75rem]">
             Subscribe to get more information
           </h2>
-          <form
-            className="w-full sm:max-w-md"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <label
-              htmlFor="footer-subscribe-email"
-              className="block text-sm font-semibold text-white/90"
-            >
-              Email
-            </label>
-            <div className="mt-1.5 flex overflow-hidden rounded-sm border border-white/25 bg-white shadow-sm">
-              <input
-                id="footer-subscribe-email"
-                type="email"
-                name="email"
-                required
-                placeholder="Enter your email"
-                className="min-w-0 flex-1 border-0 px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-green"
-              />
-              <button
-                type="submit"
-                className="shrink-0 border-l border-white/25 bg-white px-5 py-2.5 text-sm font-bold text-brand-green transition hover:bg-brand-ivory focus-ring"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
+          <FooterSubscribeForm />
         </div>
       </div>
 

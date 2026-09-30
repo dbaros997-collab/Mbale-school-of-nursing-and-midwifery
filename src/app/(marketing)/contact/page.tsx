@@ -15,13 +15,21 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
+import { PrivacyConsentField } from "@/components/legal/PrivacyConsentField";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentError, setConsentError] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!privacyConsent) {
+      setConsentError("Please confirm you have read the Privacy Policy before sending your message.");
+      return;
+    }
+    setConsentError(null);
     setLoading(true);
     await new Promise((r) => setTimeout(r, 700));
     setLoading(false);
@@ -193,7 +201,21 @@ export default function ContactPage() {
                     <span className="mb-1.5 block text-sm font-semibold">Message</span>
                     <textarea required className={`${inputClass} min-h-[140px] resize-y`} name="message" />
                   </label>
-                  <Button type="submit" variant="green" disabled={loading}>
+                  <PrivacyConsentField
+                    id="contact-form-privacy"
+                    checked={privacyConsent}
+                    onCheckedChange={(value) => {
+                      setPrivacyConsent(value);
+                      if (value) setConsentError(null);
+                    }}
+                    disabled={loading}
+                  />
+                  {consentError ? (
+                    <p className="text-sm font-medium text-red-600" role="alert">
+                      {consentError}
+                    </p>
+                  ) : null}
+                  <Button type="submit" variant="green" disabled={loading || !privacyConsent}>
                     {loading ? "Sending…" : "Send message"}
                   </Button>
                 </form>

@@ -952,6 +952,8 @@ export type ApplicationPayload = {
   paymentConfirmed: boolean;
   /** Applicant confirmed the non-refundable fee policy before paying */
   feePolicyAcknowledged: boolean;
+  /** Applicant consented to personal data processing per the Privacy Policy */
+  privacyConsentAcknowledged: boolean;
   paymentMethod: "bank" | "";
   paymentReference: string;
   transactionReference: string;

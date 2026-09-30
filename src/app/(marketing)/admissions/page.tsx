@@ -21,6 +21,7 @@ import { PageBanner } from "@/components/ui/PageBanner";
 import { formatUgx } from "@/lib/portal/constants";
 import { getProgramPathway } from "@/services/admissions/eligibility";
 import { cn } from "@/lib/utils";
+import { PrivacyConsentField } from "@/components/legal/PrivacyConsentField";
 
 type FormStep = "details" | "payment";
 
@@ -66,6 +67,7 @@ export default function AdmissionsPage() {
   const [form, setForm] = useState(emptyForm);
   const [paymentReference, setPaymentReference] = useState("");
   const [feeAcknowledged, setFeeAcknowledged] = useState(false);
+  const [privacyConsentAcknowledged, setPrivacyConsentAcknowledged] = useState(false);
   const [sendNotifications, setSendNotifications] = useState(true);
   const [notifySms, setNotifySms] = useState(false);
   const [detailsError, setDetailsError] = useState<string | null>(null);
@@ -87,6 +89,11 @@ export default function AdmissionsPage() {
       !form.documentsLabel
     ) {
       setDetailsError("Please complete all required fields before proceeding to payment.");
+      return false;
+    }
+
+    if (!privacyConsentAcknowledged) {
+      setDetailsError("Please read the Privacy Policy and confirm your consent before proceeding.");
       return false;
     }
 
@@ -130,6 +137,7 @@ export default function AdmissionsPage() {
       ...form,
       paymentConfirmed: false,
       feePolicyAcknowledged: feeAcknowledged,
+      privacyConsentAcknowledged,
       paymentMethod: "bank" as const,
       paymentReference,
       transactionReference: transactionReference ?? "",
@@ -154,6 +162,7 @@ export default function AdmissionsPage() {
     setFormStep("details");
     setPaymentReference("");
     setFeeAcknowledged(false);
+    setPrivacyConsentAcknowledged(false);
     setSendNotifications(true);
     setNotifySms(false);
     setDetailsError(null);
@@ -394,6 +403,15 @@ export default function AdmissionsPage() {
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                   />
                 </Field>
+
+                {formStep === "details" ? (
+                  <PrivacyConsentField
+                    id="admissions-form-privacy"
+                    checked={privacyConsentAcknowledged}
+                    onCheckedChange={setPrivacyConsentAcknowledged}
+                    disabled={formLocked}
+                  />
+                ) : null}
               </fieldset>
 
               {formStep === "payment" ? (

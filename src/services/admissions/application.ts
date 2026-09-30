@@ -98,11 +98,13 @@ export async function processApplicationAfterPayment(
     !payload.intakeId ||
     !payload.programId ||
     !payload.paymentConfirmed ||
-    !payload.feePolicyAcknowledged
+    !payload.feePolicyAcknowledged ||
+    !payload.privacyConsentAcknowledged
   ) {
     return {
       ok: false,
-      message: "Please complete all required fields, acknowledge the non-refundable fee policy, and pay the application fee.",
+      message:
+        "Please complete all required fields, confirm privacy consent, acknowledge the non-refundable fee policy, and pay the application fee.",
     };
   }
 
