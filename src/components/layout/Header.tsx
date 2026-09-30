@@ -445,19 +445,18 @@ function MegaFeaturedPanel({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-primary/15 bg-primary text-white shadow-[0_12px_32px_rgba(22,53,127,0.2)] lg:grid lg:min-h-[300px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
-      <div className="relative z-10 flex flex-col justify-center p-6 lg:p-7">{copy}</div>
-      <div className="relative min-h-[200px] border-t border-white/10 lg:min-h-full lg:border-l lg:border-t-0">
+    <div className="overflow-hidden rounded-lg border border-border/80 bg-primary text-white shadow-[0_12px_32px_rgba(22,53,127,0.2)] lg:grid lg:min-h-[320px] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)]">
+      <div className="relative z-10 order-2 flex flex-col justify-center bg-primary p-6 lg:order-1 lg:p-7">
+        {copy}
+      </div>
+      <div className="relative order-1 min-h-[220px] bg-neutral-100 lg:order-2 lg:min-h-full">
         <Image
           src={image}
           alt={imageAlt}
           fill
-          className="object-cover object-center"
-          sizes="(max-width: 1024px) 100vw, 380px"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary via-primary/35 to-transparent lg:from-primary/95 lg:via-primary/20"
-          aria-hidden
+          quality={92}
+          className="object-cover object-center contrast-[1.03] saturate-[1.06]"
+          sizes="(max-width: 1024px) 100vw, 420px"
         />
       </div>
     </div>
@@ -476,9 +475,9 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
           className={cn(
             "grid gap-8 lg:items-stretch lg:gap-8 xl:gap-10",
             featured && columnCount >= 3
-              ? "lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(280px,340px)]"
+              ? "lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(300px,420px)]"
               : featured
-                ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(280px,340px)]"
+                ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,420px)]"
                 : "lg:grid-cols-3",
           )}
         >
