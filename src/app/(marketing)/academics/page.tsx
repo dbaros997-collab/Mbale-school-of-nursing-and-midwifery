@@ -13,7 +13,7 @@ export default function AcademicsPage() {
   return (
     <div>
       <PageBanner
-        breadcrumb="Study at MBSNM"
+        breadcrumb="Courses Offered"
         title="Courses & Programs"
         subtitle={`Explore diploma and certificate pathways in Nursing and Midwifery at ${SCHOOL.name}.`}
         image="/images/discovery/discovery-programs.webp"

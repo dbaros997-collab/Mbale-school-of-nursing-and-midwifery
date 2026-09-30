@@ -70,7 +70,7 @@ export const quickLinks = [
 
 /**
  * Makerere-style top navigation, with labels chosen for MBSNM (not copied literally):
- * “Study at MBSNM” instead of “Study at Mak”; “Clinical & Placements” instead of “Research”.
+ * “Courses Offered” instead of “Study at Mak”; “Clinical & Placements” instead of “Research”.
  */
 export const mainNav = [
   {
@@ -78,7 +78,7 @@ export const mainNav = [
     href: "/",
   },
   {
-    label: "Study at MBSNM",
+    label: "Courses Offered",
     href: "/academics",
     columns: [
       {
