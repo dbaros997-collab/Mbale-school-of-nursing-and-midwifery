@@ -70,7 +70,7 @@ export const quickLinks = [
 
 /**
  * Makerere-style top navigation, with labels chosen for MBSNM (not copied literally):
- * “Courses Offered” instead of “Study at Mak”; “Clinical & Placements” instead of “Research”.
+ * “Courses Offered” instead of “Study at Mak”; other items tailored for MBSNM.
  */
 export const mainNav = [
   {
@@ -87,7 +87,6 @@ export const mainNav = [
           { label: "Department of Nursing", href: "/academics/nursing" },
           { label: "Nursing Programmes", href: "/academics/nursing/programs" },
           { label: "Curriculum & Course Units", href: "/academics/nursing/curriculum" },
-          { label: "Clinical Placements", href: "/academics/nursing/clinical-placements" },
         ],
       },
       {
@@ -153,42 +152,6 @@ export const mainNav = [
       href: "/portal",
       cta: "Open portal",
       microsoftSignIn: true,
-    },
-  },
-  {
-    label: "Clinical & Placements",
-    href: "/academics/nursing/clinical-placements",
-    columns: [
-      {
-        title: "Practice settings",
-        links: [
-          { label: "Clinical Placements Overview", href: "/academics/nursing/clinical-placements" },
-          { label: "Regional Referral Hospitals", href: "/academics/nursing/clinical-placements" },
-          { label: "Health Centre Rotations", href: "/academics/nursing/clinical-placements" },
-        ],
-      },
-      {
-        title: "Skills & research",
-        links: [
-          { label: "Skills Laboratory", href: "/academics/nursing" },
-          { label: "Applied Nursing Research", href: "/academics/nursing/curriculum" },
-          { label: "UHPAB Examinations (Center U120)", href: "/academics/nursing/programs" },
-        ],
-      },
-      {
-        title: "Community",
-        links: [
-          { label: "Community Health Outreach", href: "/#about" },
-          { label: "Alumni Network", href: "/alumni" },
-          { label: "Careers at MBSNM", href: "/careers" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "Real-world training",
-      title: "Hospital and community placements across Eastern Uganda.",
-      href: "/academics/nursing/clinical-placements",
-      cta: "View placement sites",
     },
   },
   {
