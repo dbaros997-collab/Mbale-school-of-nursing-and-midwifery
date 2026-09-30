@@ -1,6 +1,7 @@
 /**
- * Trigger a Coolify redeploy by pushing an empty commit to main.
+ * Trigger a Coolify deploy by pushing an empty commit to main.
  * Coolify must have a GitHub webhook on this repo (push → main).
+ * In the UI this is "Deploy" (▶), not a separate "Redeploy" action.
  */
 import { execSync } from "node:child_process";
 
@@ -18,7 +19,7 @@ const sha = run("git rev-parse --short HEAD");
 console.log(`Triggering Coolify deploy for ${sha}...`);
 
 execSync(
-  'git commit --allow-empty -m "Trigger Coolify redeploy." -m "Empty commit to fire the GitHub → Coolify webhook and restore the live site."',
+  'git commit --allow-empty -m "Trigger Coolify deploy." -m "Empty commit to fire the GitHub → Coolify webhook."',
   { stdio: "inherit" },
 );
 execSync("git push origin main", { stdio: "inherit" });

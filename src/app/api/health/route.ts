@@ -2,6 +2,9 @@ import {
   microsoftConfigHasErrors,
   validateMicrosoftDeploymentConfig,
 } from "@/lib/microsoft/validate-config";
+import { isFlutterwaveConfigured } from "@/lib/payments/flutterwave";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { getDatabasePoolConfig } from "@/lib/db/pool-config";
 
 /** Lightweight health probe for Coolify / Docker healthchecks. */
 export async function GET() {
@@ -9,6 +12,8 @@ export async function GET() {
     const microsoft = validateMicrosoftDeploymentConfig({
       production: process.env.NODE_ENV === "production",
     });
+
+    const db = getDatabasePoolConfig();
 
     return Response.json({
       ok: true,
@@ -19,6 +24,8 @@ export async function GET() {
         ready: microsoft.clientConfigured && !microsoftConfigHasErrors(microsoft),
         issueCount: microsoft.issues.length,
       },
+      supabase: { configured: isSupabaseConfigured(), mode: db.mode },
+      flutterwave: { configured: isFlutterwaveConfigured() },
     });
   } catch (error) {
     console.error("[health]", error);

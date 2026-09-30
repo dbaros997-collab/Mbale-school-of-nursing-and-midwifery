@@ -13,6 +13,7 @@ import type {
   Grade,
   DocumentRequest,
   Payment,
+  PaymentVerificationStatus,
   PendingActivation,
   Program,
   SemesterRegistration,
@@ -21,6 +22,26 @@ import type {
   TimetableSlot,
   User,
 } from "./schema";
+import { CURRENT_SEMESTER_FEE_DUE_ISO } from "./constants";
+import { bumpFeeLedgerRevision, bumpStudentFeeLedgerRevision } from "./fee-ledger-revision";
+import {
+  refreshStudentFeeLedger,
+  collectStudentIdAliases,
+  bindFeeLedgerStores,
+  buildDefaultFeeLineItems,
+  ensureStudentFeeLedger,
+  peekStudentOutstandingBalance,
+  provisionFeeLedgerForActivatedStudent,
+  seedStudentInvoice,
+  setStudentInvoice,
+  SARAH_STUDENT_ID,
+} from "./fee-student-ledger";
+import { registerActivatedStudentFeeHook } from "./student-registry";
+import {
+  isPendingFeeVerification,
+  sumPendingVerificationPayments,
+  validatePaymentHeadroom,
+} from "./fee-pending-reservations";
 import { registerStudentRegistrySync } from "./student-registry";
 
 export const REGISTRATION_SEMESTER = "Semester 2, 2025/26";
@@ -255,9 +276,17 @@ export function applyActiveStudentSession(user: User, profile: StudentProfile) {
     emergencyContact: { ...profile.emergencyContact },
     medicalInfo: { ...profile.medicalInfo },
   });
+  ensureStudentFeeLedger(profile.id, {
+    fullName: profile.fullName,
+    studentNumber: profile.studentNumber,
+    email: profile.email,
+  });
 }
 
 registerStudentRegistrySync(applyActiveStudentSession);
+registerActivatedStudentFeeHook((profile) => {
+  provisionFeeLedgerForActivatedStudent(profile);
+});
 
 export function updateMockProfile(
   patch: Partial<Omit<StudentProfile, "id" | "userId" | "studentNumber" | "programId">> & {
@@ -464,14 +493,19 @@ export let mockInvoice: FeeInvoice = {
   totalBilled: 1_450_000,
   totalPaid: 1_000_000,
   balance: 450_000,
+  paymentDueDate: CURRENT_SEMESTER_FEE_DUE_ISO,
 };
 
 /** Alias for older imports — always read live balance via this object */
 export const MOCK_INVOICE = mockInvoice;
 
 export function setMockInvoice(next: FeeInvoice) {
-  Object.assign(mockInvoice, next);
-  syncAdminStudentFeesFromInvoice();
+  const updated = setStudentInvoice(SARAH_STUDENT_ID, next, {
+    studentNumber: MOCK_PROFILE.studentNumber,
+    fullName: MOCK_PROFILE.fullName,
+    email: MOCK_PROFILE.email,
+  });
+  Object.assign(mockInvoice, updated);
 }
 
 export const MOCK_FEE_LINES: FeeLineItem[] = [
@@ -520,6 +554,273 @@ export function addMockPayment(payment: Payment) {
   if (!mockAdminPayments.some((p) => p.id === payment.id)) {
     mockAdminPayments = [payment, ...mockAdminPayments];
   }
+}
+
+export function updateMockPayment(
+  paymentId: string,
+  patch: Partial<Payment>,
+): Payment | null {
+  const idx = mockPayments.findIndex((p) => p.id === paymentId);
+  const adminIdx = mockAdminPayments.findIndex((p) => p.id === paymentId);
+  if (idx < 0 && adminIdx < 0) return null;
+
+  if (idx >= 0) {
+    Object.assign(mockPayments[idx], patch);
+  }
+  if (adminIdx >= 0) {
+    Object.assign(mockAdminPayments[adminIdx], patch);
+  } else if (idx >= 0) {
+    mockAdminPayments = [{ ...mockPayments[idx] }, ...mockAdminPayments];
+  }
+
+  return mockPayments.find((p) => p.id === paymentId) ?? mockAdminPayments.find((p) => p.id === paymentId) ?? null;
+}
+
+/** Pending finance review — surfaced on the admin verification dashboard */
+export let mockPendingBankPayments: Payment[] = [
+  {
+    id: "pay-pending-waiswa",
+    invoiceId: "inv-waiswa-2025-1",
+    studentId: "stu-waiswa",
+    amount: 200_000,
+    method: "bank",
+    reference: "PENDING-9030012345678",
+    transactionReference: "9030012345678",
+    status: "pending",
+    paidAt: "2026-09-20T10:30:00.000Z",
+    submittedAt: "2026-09-20T10:30:00.000Z",
+    depositSlipFileName: "waiswa-deposit-slip-march.jpg",
+    depositSlipDataUrl: null,
+    verificationStatus: "pending_review",
+    reviewNote: null,
+    reviewedAt: null,
+  },
+];
+
+export function listPendingVerificationPayments(): Payment[] {
+  const byId = new Map<string, Payment>();
+  for (const p of [...mockPendingBankPayments, ...mockPayments, ...mockAdminPayments]) {
+    if (isPendingFeeVerification(p)) {
+      byId.set(p.id, p);
+    }
+  }
+  return [...byId.values()].sort(
+    (a, b) =>
+      new Date(b.submittedAt ?? b.paidAt).getTime() -
+      new Date(a.submittedAt ?? a.paidAt).getTime(),
+  );
+}
+
+/** Unverified bank/mobile submissions + in-flight online checkout sessions (mock ledger). */
+export function getPendingPaymentReservationTotal(
+  studentId: string,
+  studentNumber?: string | null,
+): {
+  manualPending: number;
+  onlinePending: number;
+  total: number;
+} {
+  const aliases = collectStudentIdAliases(studentId, studentNumber);
+  const allPendingPayments = [
+    ...mockPendingBankPayments,
+    ...mockPayments,
+    ...mockAdminPayments,
+  ];
+  let manualPending = 0;
+  for (const alias of aliases) {
+    manualPending += sumPendingVerificationPayments(allPendingPayments, alias);
+  }
+  const onlinePending = mockOnlinePaymentSessions
+    .filter((s) => aliases.includes(s.studentId) && s.status === "pending")
+    .reduce((sum, s) => sum + s.amount, 0);
+  return { manualPending, onlinePending, total: manualPending + onlinePending };
+}
+
+export function addPendingBankPayment(payment: Payment) {
+  mockPendingBankPayments = [payment, ...mockPendingBankPayments];
+  addMockPayment(payment);
+  bumpStudentFeeLedgerRevision(payment.studentId);
+}
+
+export type MockOnlinePaymentSession = {
+  id: string;
+  studentId: string;
+  invoiceId: string;
+  amount: number;
+  txRef: string;
+  status: "pending" | "completed" | "failed" | "cancelled";
+  gatewayTransactionId?: string | null;
+};
+
+let mockOnlinePaymentSessions: MockOnlinePaymentSession[] = [];
+
+export function listMockOnlinePaymentSessions(): MockOnlinePaymentSession[] {
+  return [...mockOnlinePaymentSessions];
+}
+
+export function registerMockOnlinePaymentSession(input: {
+  studentId: string;
+  invoiceId: string;
+  amount: number;
+  txRef: string;
+}): { ok: true; session: MockOnlinePaymentSession } | { ok: false; code?: string; message: string } {
+  const amount = Math.round(input.amount);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return { ok: false, code: "INVALID_INPUT", message: "Invalid payment amount." };
+  }
+
+  const balance = peekStudentOutstandingBalance(input.studentId);
+
+  const reservations = getPendingPaymentReservationTotal(input.studentId);
+  const headroom = validatePaymentHeadroom({
+    outstandingBalance: balance,
+    pendingUnverifiedTotal: reservations.total,
+    paymentAmount: amount,
+  });
+  if (!headroom.ok) {
+    return {
+      ok: false,
+      code: "AMOUNT_EXCEEDS_BALANCE",
+      message: headroom.message,
+    };
+  }
+
+  if (mockOnlinePaymentSessions.some((s) => s.txRef === input.txRef)) {
+    return { ok: false, code: "DUPLICATE_REFERENCE", message: "Payment reference already exists." };
+  }
+
+  const session: MockOnlinePaymentSession = {
+    id: `ops-${Date.now()}`,
+    studentId: input.studentId,
+    invoiceId: input.invoiceId,
+    amount,
+    txRef: input.txRef,
+    status: "pending",
+  };
+  mockOnlinePaymentSessions = [session, ...mockOnlinePaymentSessions];
+  bumpFeeLedgerRevision();
+  return { ok: true, session };
+}
+
+export function settleMockOnlinePayment(input: {
+  txRef: string;
+  gatewayTransactionId: string;
+  status: "successful" | "failed" | "cancelled";
+  settledAmount: number;
+  paymentChannel?: string | null;
+  failureReason?: string | null;
+}): {
+  ok: true;
+  studentId: string;
+  alreadySettled?: boolean;
+} | {
+  ok: false;
+  code?: string;
+  message: string;
+} {
+  const idx = mockOnlinePaymentSessions.findIndex((s) => s.txRef === input.txRef);
+  if (idx < 0) {
+    return { ok: false, code: "NOT_FOUND", message: "Online payment session not found." };
+  }
+
+  const session = mockOnlinePaymentSessions[idx];
+  if (session.status === "completed") {
+    return { ok: true, studentId: session.studentId, alreadySettled: true };
+  }
+
+  if (input.status !== "successful") {
+    mockOnlinePaymentSessions[idx] = {
+      ...session,
+      status: input.status === "cancelled" ? "cancelled" : "failed",
+      gatewayTransactionId: input.gatewayTransactionId,
+    };
+    bumpFeeLedgerRevision();
+    return { ok: true, studentId: session.studentId };
+  }
+
+  if (Math.round(input.settledAmount) !== session.amount) {
+    return { ok: false, code: "AMOUNT_MISMATCH", message: "Gateway amount does not match session." };
+  }
+
+  const paidAt = new Date().toISOString();
+  const payment: Payment = {
+    id: `pay-online-${session.id}`,
+    invoiceId: session.invoiceId,
+    studentId: session.studentId,
+    amount: session.amount,
+    method: "online",
+    reference: `FLW-${input.gatewayTransactionId.replace(/\s+/g, "").slice(-16)}`,
+    transactionReference: input.gatewayTransactionId,
+    status: "completed",
+    paidAt,
+    submittedAt: paidAt,
+    verificationStatus: "approved",
+    reviewNote: input.paymentChannel ? `Channel: ${input.paymentChannel}` : null,
+    reviewedAt: paidAt,
+  };
+
+  addMockPayment(payment);
+  mockOnlinePaymentSessions[idx] = {
+    ...session,
+    status: "completed",
+    gatewayTransactionId: input.gatewayTransactionId,
+  };
+
+  refreshStudentFeeLedger(session.studentId);
+  if (session.studentId === SARAH_STUDENT_ID) {
+    Object.assign(mockInvoice, ensureStudentFeeLedger(SARAH_STUDENT_ID));
+  }
+
+  return { ok: true, studentId: session.studentId };
+}
+
+export function resolvePendingPayment(
+  paymentId: string,
+  decision: Extract<PaymentVerificationStatus, "approved" | "rejected">,
+  reviewNote: string | null,
+): Payment | null {
+  const pools = [mockPendingBankPayments, mockPayments, mockAdminPayments];
+  let target: Payment | undefined;
+  for (const pool of pools) {
+    target = pool.find((p) => p.id === paymentId);
+    if (target) break;
+  }
+  if (!target) return null;
+
+  const reviewedAt = new Date().toISOString();
+  if (decision === "approved") {
+    updateMockPayment(paymentId, {
+      status: "completed",
+      verificationStatus: "approved",
+      reviewNote,
+      reviewedAt,
+      paidAt: reviewedAt,
+      reference: target.transactionReference?.trim()
+        ? `BNK-VER-${target.transactionReference.replace(/\s+/g, "").slice(-12)}`
+        : target.reference,
+    });
+    mockPendingBankPayments = mockPendingBankPayments.filter((p) => p.id !== paymentId);
+
+    refreshStudentFeeLedger(target.studentId);
+    if (target.studentId === SARAH_STUDENT_ID) {
+      Object.assign(mockInvoice, ensureStudentFeeLedger(SARAH_STUDENT_ID));
+    }
+  } else {
+    updateMockPayment(paymentId, {
+      status: "failed",
+      verificationStatus: "rejected",
+      reviewNote,
+      reviewedAt,
+    });
+    mockPendingBankPayments = mockPendingBankPayments.filter((p) => p.id !== paymentId);
+    bumpStudentFeeLedgerRevision(target.studentId);
+  }
+
+  return (
+    mockPayments.find((p) => p.id === paymentId) ??
+    mockAdminPayments.find((p) => p.id === paymentId) ??
+    null
+  );
 }
 
 export const MOCK_MATERIALS: CourseMaterial[] = [
@@ -1048,11 +1349,21 @@ export let mockAdminPayments: Payment[] = [
 ];
 
 export function syncAdminStudentFeesFromInvoice() {
-  const row = mockAdminStudents.find((s) => s.id === mockInvoice.studentId);
-  if (!row) return;
-  row.feeBalance = mockInvoice.balance;
-  row.feeTotalPaid = mockInvoice.totalPaid;
-  row.feeTotalBilled = mockInvoice.totalBilled;
+  const invoice = ensureStudentFeeLedger(SARAH_STUDENT_ID);
+  Object.assign(mockInvoice, invoice);
+}
+
+export function upsertMockAdminStudentFromAdmission(record: AdminStudentRecord) {
+  const emailKey = record.email.trim().toLowerCase();
+  const idx = mockAdminStudents.findIndex(
+    (s) => s.id === record.id || s.email.trim().toLowerCase() === emailKey,
+  );
+  if (idx >= 0) {
+    mockAdminStudents[idx] = { ...mockAdminStudents[idx], ...record, id: mockAdminStudents[idx]!.id };
+    return { ...mockAdminStudents[idx]! };
+  }
+  mockAdminStudents = [...mockAdminStudents, record];
+  return { ...record };
 }
 
 export function approveAdminStudent(studentId: string): AdminStudentRecord | null {
@@ -1073,13 +1384,27 @@ export function updateAdminStudentFees(
   if (patch.feeTotalBilled !== undefined) {
     row.feeTotalBilled = patch.feeTotalBilled;
   }
-  if (studentId === mockInvoice.studentId) {
-    setMockInvoice({
-      ...mockInvoice,
+  setStudentInvoice(
+    studentId,
+    {
+      id: studentId === SARAH_STUDENT_ID ? mockInvoice.id : `inv-${studentId}-2025-1`,
+      studentId,
+      semesterLabel: mockInvoice.semesterLabel,
+      tuition: mockInvoice.tuition,
+      functionalFees: mockInvoice.functionalFees,
+      totalBilled: patch.feeTotalBilled ?? row.feeTotalBilled,
       totalPaid: patch.feeTotalPaid,
       balance: patch.feeBalance,
-      totalBilled: patch.feeTotalBilled ?? mockInvoice.totalBilled,
-    });
+      paymentDueDate: mockInvoice.paymentDueDate,
+    },
+    {
+      studentNumber: row.studentNumber,
+      fullName: row.fullName,
+      email: row.email,
+    },
+  );
+  if (studentId === SARAH_STUDENT_ID) {
+    Object.assign(mockInvoice, ensureStudentFeeLedger(SARAH_STUDENT_ID));
   }
   return { ...row };
 }
@@ -1089,6 +1414,7 @@ export function addAdminPayment(payment: Payment) {
   if (payment.studentId === MOCK_PROFILE.id) {
     addMockPayment(payment);
   }
+  bumpStudentFeeLedgerRevision(payment.studentId);
 }
 
 export function addMockAnnouncement(announcement: Announcement) {
@@ -1122,4 +1448,20 @@ export function addMockMaterial(material: CourseMaterial) {
 
 export function addMockCatalogUnit(unit: CourseUnit) {
   MOCK_CATALOG.push(unit);
+}
+
+bindFeeLedgerStores({
+  getAdminStudents: () => mockAdminStudents,
+  getPayments: () => mockPayments,
+  getAdminPayments: () => mockAdminPayments,
+});
+
+seedStudentInvoice(SARAH_STUDENT_ID, { ...mockInvoice }, buildDefaultFeeLineItems(mockInvoice.id));
+
+for (const student of mockAdminStudents) {
+  ensureStudentFeeLedger(student.id, {
+    studentNumber: student.studentNumber,
+    fullName: student.fullName,
+    email: student.email,
+  });
 }

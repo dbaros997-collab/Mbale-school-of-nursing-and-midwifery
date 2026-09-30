@@ -36,8 +36,8 @@ export default function RegistrationPage() {
     if (locked || busy) return;
     setBusy(true);
     setMessage(null);
-    const bundle = await toggleRegistrationUnit(unitId);
-    setData(bundle);
+    const result = await toggleRegistrationUnit(unitId);
+    setData(result.bundle);
     setBusy(false);
   }
 

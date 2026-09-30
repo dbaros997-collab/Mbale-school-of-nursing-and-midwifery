@@ -11,6 +11,11 @@ export const SCHOOL = {
   email: "info@mbsnm.org",
   admissionsEmail: "admissions@mbsnm.org",
   address: "Malere, behind the Forest Road, Mbale — Uganda",
+  /** Google Maps search query for the campus pin (name + official address). */
+  mapLocationQuery:
+    "Mbale School of Nursing and Midwifery, Malere, behind Forest Road, Mbale, Uganda",
+  directionsFromMbaleTown:
+    "From Mbale town centre (Clock Tower area), take the Soroti–Kumi Road toward Malere. Continue past the Malere / Forest Road area—the campus is in Malere, behind Forest Road, at the pinned location on the map below. The trip is usually about 10–15 minutes by boda or car in normal traffic; open Google Maps for turn-by-turn directions to the gate.",
   postal: "P. O. Box — Mbale, Uganda",
   /** Official public website */
   website: "https://mbaleschoolofnursing.ac.ug",
@@ -20,6 +25,17 @@ export const SCHOOL = {
   aboutStory:
     "Christians from GREM started MBSNM when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
 } as const;
+
+/** Embedded Google Maps iframe URL (campus pin). */
+export function schoolMapEmbedUrl(zoom = 17): string {
+  const q = encodeURIComponent(SCHOOL.mapLocationQuery);
+  return `https://maps.google.com/maps?q=${q}&z=${zoom}&output=embed`;
+}
+
+/** Open the campus pin in Google Maps (new tab). */
+export function schoolGoogleMapsUrl(): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SCHOOL.mapLocationQuery)}`;
+}
 
 /** WhatsApp click-to-chat URL (wa.me) */
 export function schoolWhatsAppUrl(message?: string) {

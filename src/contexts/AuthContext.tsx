@@ -13,12 +13,12 @@ import {
   MOCK_ADMIN_PROFILE,
   MOCK_ADMIN_SESSION,
   MOCK_ADMIN_USER,
-  MOCK_PROFILE,
-  MOCK_SESSION,
-  MOCK_USER,
-  applyActiveStudentSession,
 } from "@/lib/portal/mock-store";
-import { setActiveStudent } from "@/lib/portal/student-registry";
+import {
+  clearStoredStudentSession,
+  persistStudentSession,
+  readStoredStudentSession,
+} from "@/lib/portal/student-session-storage";
 import type { MicrosoftUserProfile } from "@/lib/microsoft/types";
 import { fetchWithTimeout } from "@/lib/http/fetch-with-timeout";
 import type {
@@ -48,7 +48,6 @@ type AuthState = {
   isStudent: boolean;
   authProvider: AuthProvider;
   microsoftProfile: MicrosoftUserProfile | null;
-  loginAsDemoStudent: () => void;
   applyStaffSession: (payload: {
     user: User;
     session: Session;
@@ -78,14 +77,6 @@ function cloneProfile(profile: StudentProfile): StudentProfile {
     emergencyContact: { ...profile.emergencyContact },
     medicalInfo: { ...profile.medicalInfo },
   };
-}
-
-function snapshotProfile(): StudentProfile {
-  return cloneProfile(MOCK_PROFILE);
-}
-
-function snapshotUser(): User {
-  return { ...MOCK_USER };
 }
 
 function snapshotAdminUser(): User {
@@ -168,18 +159,12 @@ async function restoreMicrosoftPortalSession(): Promise<{
 }
 
 function restoreStudentSession(userId: string) {
-  const active = setActiveStudent(userId);
-  if (!active) return null;
+  const stored = readStoredStudentSession();
+  if (!stored || stored.user.id !== userId) return null;
   return {
-    user: { ...active.user },
-    profile: cloneProfile(active.profile),
-    session: {
-      id: `sess-${active.user.id}`,
-      userId: active.user.id,
-      role: "student" as const,
-      token: `mock-jwt.student.${active.user.id}`,
-      expiresAt: MOCK_SESSION.expiresAt,
-    },
+    user: { ...stored.user },
+    profile: cloneProfile(stored.profile),
+    session: { ...stored.session },
   };
 }
 
@@ -281,25 +266,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const loginAsDemoStudent = useCallback(() => {
-    const restored = restoreStudentSession("user-sarah");
-    if (!restored) {
-      applyActiveStudentSession(snapshotUser(), snapshotProfile());
-      writeStudentSession("user-sarah");
-      setSession(MOCK_SESSION);
-      setUser(snapshotUser());
-      setProfile(snapshotProfile());
-    } else {
-      writeStudentSession(restored.user.id);
-      setSession(restored.session);
-      setUser(restored.user);
-      setProfile(restored.profile);
-    }
-    setAdminProfile(null);
-    setAuthProvider("local");
-    setMicrosoftProfile(null);
-  }, []);
-
   const applyStaffSession = useCallback(
     (payload: { user: User; session: Session; adminProfile: AdminProfile }) => {
       writeStoredAuth("demo-admin");
@@ -315,7 +281,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const applyActivatedSession = useCallback(
     (payload: { user: User; session: Session; profile: StudentProfile }) => {
-      setActiveStudent(payload.user.id);
+      persistStudentSession({
+        user: payload.user,
+        session: payload.session,
+        profile: cloneProfile(payload.profile),
+      });
       writeStudentSession(payload.user.id);
       setUser({ ...payload.user });
       setSession({ ...payload.session });
@@ -347,23 +317,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = useCallback(() => {
     if (!user?.id) return;
-    const active = setActiveStudent(user.id);
-    if (active) {
-      setProfile(cloneProfile(active.profile));
-      setUser({ ...active.user });
+    const stored = readStoredStudentSession();
+    if (stored && stored.user.id === user.id) {
+      setProfile(cloneProfile(stored.profile));
+      setUser({ ...stored.user });
     }
     setAdminProfile(null);
   }, [user?.id]);
 
   const logout = useCallback(() => {
     const wasMicrosoft = authProvider === "microsoft";
+    const wasStaff = user?.role === "admin";
     writeStoredAuth("logged-out");
+    clearStoredStudentSession();
     setSession(null);
     setUser(null);
     setProfile(null);
     setAdminProfile(null);
     setAuthProvider(null);
     setMicrosoftProfile(null);
+
+    if (wasStaff) {
+      void fetchWithTimeout("/api/admin/auth/logout", {
+        method: "POST",
+        timeoutMs: 5_000,
+      });
+    }
 
     if (wasMicrosoft) {
       void fetchWithTimeout("/api/auth/microsoft/session", {
@@ -374,7 +353,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logoutMicrosoftClient().catch(() => undefined),
       );
     }
-  }, [authProvider]);
+  }, [authProvider, user?.role]);
 
   const role = user?.role ?? null;
 
@@ -392,7 +371,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isStudent: role === "student",
       authProvider,
       microsoftProfile,
-      loginAsDemoStudent,
       applyStaffSession,
       applyActivatedSession,
       applyMicrosoftSession,
@@ -408,7 +386,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       authProvider,
       microsoftProfile,
-      loginAsDemoStudent,
       applyStaffSession,
       applyActivatedSession,
       applyMicrosoftSession,

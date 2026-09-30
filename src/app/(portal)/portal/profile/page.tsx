@@ -11,7 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/Button";
 
 export default function ProfilePage() {
-  const { refreshProfile } = useAuth();
+  const { profile: authProfile, refreshProfile } = useAuth();
   const [data, setData] = useState<ProfileBundle | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -26,7 +26,8 @@ export default function ProfilePage() {
   const [kinEmail, setKinEmail] = useState("");
 
   useEffect(() => {
-    void getProfileBundle().then((bundle) => {
+    if (!authProfile) return;
+    void getProfileBundle(authProfile).then((bundle) => {
       setData(bundle);
       setPhone(bundle.profile.phone);
       setEmail(bundle.profile.email);
@@ -37,23 +38,27 @@ export default function ProfilePage() {
       setKinEmail(bundle.profile.nextOfKin.email);
       setLoading(false);
     });
-  }, []);
+  }, [authProfile]);
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setFlash(null);
-    const result = await saveProfile({
-      phone,
-      email,
-      address,
-      nextOfKin: {
-        name: kinName,
-        relationship: kinRelationship,
-        phone: kinPhone,
-        email: kinEmail,
+    if (!authProfile) return;
+    const result = await saveProfile(
+      {
+        phone,
+        email,
+        address,
+        nextOfKin: {
+          name: kinName,
+          relationship: kinRelationship,
+          phone: kinPhone,
+          email: kinEmail,
+        },
       },
-    });
+      authProfile,
+    );
     setData(result.bundle);
     setFlash({ ok: result.ok, text: result.message });
     if (result.ok) refreshProfile();

@@ -1,9 +1,3 @@
-import { mockDelay } from "@/lib/mock-delay";
-import {
-  MOCK_PROFILE,
-  MOCK_PROGRAM,
-  updateMockProfile,
-} from "@/lib/portal/mock-store";
 import type { NextOfKin, StudentProfile } from "@/lib/portal/schema";
 
 export type ProfileBundle = {
@@ -18,42 +12,67 @@ export type ProfileUpdateInput = {
   nextOfKin: NextOfKin;
 };
 
-/** Ready for GET /api/portal/profile */
-export async function getProfileBundle(): Promise<ProfileBundle> {
-  await mockDelay(200);
+const EMPTY_PROFILE: StudentProfile = {
+  id: "",
+  userId: "",
+  studentNumber: "",
+  tempRegistrationNumber: null,
+  admissionLetterRef: "",
+  fullName: "",
+  programId: "",
+  phone: "",
+  email: "",
+  address: "",
+  nextOfKin: { name: "", relationship: "", phone: "", email: "" },
+  emergencyContact: { name: "", relationship: "", phone: "" },
+  medicalInfo: {
+    bloodGroup: "",
+    allergies: "",
+    chronicConditions: "",
+    disabilities: "",
+    doctorName: "",
+    doctorPhone: "",
+  },
+  creditsCompleted: 0,
+  creditsRequired: 120,
+  cumulativeGpa: 0,
+  semesterGpa: 0,
+};
+
+export async function getProfileBundle(profile?: StudentProfile | null): Promise<ProfileBundle> {
+  const base = profile ?? EMPTY_PROFILE;
   return {
     profile: {
-      ...MOCK_PROFILE,
-      nextOfKin: { ...MOCK_PROFILE.nextOfKin },
-      emergencyContact: { ...MOCK_PROFILE.emergencyContact },
-      medicalInfo: { ...MOCK_PROFILE.medicalInfo },
+      ...base,
+      nextOfKin: { ...base.nextOfKin },
+      emergencyContact: { ...base.emergencyContact },
+      medicalInfo: { ...base.medicalInfo },
     },
-    programTitle: MOCK_PROGRAM.title,
+    programTitle: "—",
   };
 }
 
-/** Ready for PATCH /api/portal/profile */
 export async function saveProfile(
   input: ProfileUpdateInput,
+  profile: StudentProfile,
 ): Promise<{ ok: boolean; message: string; bundle: ProfileBundle }> {
-  await mockDelay(450);
-
   if (!input.phone.trim() || !input.email.trim() || !input.address.trim()) {
     return {
       ok: false,
       message: "Phone, email, and address are required.",
-      bundle: await getProfileBundle(),
+      bundle: await getProfileBundle(profile),
     };
   }
   if (!input.nextOfKin.name.trim() || !input.nextOfKin.phone.trim()) {
     return {
       ok: false,
       message: "Next-of-kin name and phone are required.",
-      bundle: await getProfileBundle(),
+      bundle: await getProfileBundle(profile),
     };
   }
 
-  updateMockProfile({
+  const next: StudentProfile = {
+    ...profile,
     phone: input.phone.trim(),
     email: input.email.trim(),
     address: input.address.trim(),
@@ -63,11 +82,11 @@ export async function saveProfile(
       phone: input.nextOfKin.phone.trim(),
       email: input.nextOfKin.email.trim(),
     },
-  });
+  };
 
   return {
     ok: true,
-    message: "Profile updated successfully.",
-    bundle: await getProfileBundle(),
+    message: "Profile saved for this session. Full registry sync requires a live student record.",
+    bundle: await getProfileBundle(next),
   };
 }

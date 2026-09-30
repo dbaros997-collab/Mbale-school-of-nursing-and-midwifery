@@ -1,30 +1,7 @@
-import { mockDelay } from "@/lib/mock-delay";
-import {
-  MOCK_ADMIN_PROFILE,
-  MOCK_ADMIN_SESSION,
-  MOCK_ADMIN_USER,
-} from "@/lib/portal/mock-store";
+import { STAFF_DEMO_CREDENTIALS } from "@/lib/admin/staff-credentials";
 import type { AdminProfile, Session, User } from "@/lib/portal/schema";
 
-/** Demo staff credentials — registry officers only */
-export const STAFF_DEMO_CREDENTIALS = {
-  email: "registry@mbsnm.org",
-  password: "Staff@2026",
-} as const;
-
-/** Additional demo staff account for migration testing */
-const LEGACY_STAFF_DEMO_CREDENTIALS = {
-  email: "admin@mbsnm.org",
-  password: "admin123",
-} as const;
-
-const STAFF_LOGIN_ACCOUNTS = [STAFF_DEMO_CREDENTIALS, LEGACY_STAFF_DEMO_CREDENTIALS] as const;
-
-function matchesStaffLogin(email: string, password: string): boolean {
-  return STAFF_LOGIN_ACCOUNTS.some(
-    (account) => email === account.email && password === account.password,
-  );
-}
+export { STAFF_DEMO_CREDENTIALS };
 
 export type StaffLoginResult =
   | {
@@ -36,30 +13,35 @@ export type StaffLoginResult =
     }
   | { ok: false; message: string };
 
-/** Ready for POST /api/admin/auth/login */
-export async function loginStaff(
-  email: string,
-  password: string,
-): Promise<StaffLoginResult> {
-  await mockDelay(450);
+/** Staff sign-in — verifies on server and sets HttpOnly session cookie. */
+export async function loginStaff(email: string, password: string): Promise<StaffLoginResult> {
+  const res = await fetch("/api/admin/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ email, password }),
+  });
 
-  const normalized = email.trim().toLowerCase();
-  if (!normalized || !password) {
-    return { ok: false, message: "Enter your staff email and password." };
-  }
+  const json = (await res.json()) as {
+    ok?: boolean;
+    message?: string;
+    user?: User;
+    session?: Session;
+    adminProfile?: AdminProfile;
+  };
 
-  if (!matchesStaffLogin(normalized, password)) {
+  if (!res.ok || !json.user || !json.session || !json.adminProfile) {
     return {
       ok: false,
-      message: "Invalid staff credentials. Access is limited to authorised registry staff.",
+      message: json.message ?? "Invalid staff credentials. Access is limited to authorised registry staff.",
     };
   }
 
   return {
     ok: true,
-    message: "Welcome to the staff control panel.",
-    user: { ...MOCK_ADMIN_USER },
-    session: { ...MOCK_ADMIN_SESSION },
-    adminProfile: { ...MOCK_ADMIN_PROFILE },
+    message: json.message ?? "Welcome to the staff control panel.",
+    user: json.user,
+    session: json.session,
+    adminProfile: json.adminProfile,
   };
 }

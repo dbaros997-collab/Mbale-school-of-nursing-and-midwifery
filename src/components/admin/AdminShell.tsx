@@ -9,7 +9,7 @@ import { AdminTopbar } from "@/components/admin/AdminTopbar";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { Button } from "@/components/ui/Button";
-import { loginStaff, STAFF_DEMO_CREDENTIALS } from "@/services/portal/admin/auth";
+import { loginStaff } from "@/services/portal/admin/auth";
 import { OFFICIAL_SITE_URL } from "@/lib/site-url";
 import { clearStaffLoginHint, readStaffLoginHint } from "@/lib/portal/staff-login-routing";
 import { OfficialSiteNotice } from "@/components/layout/OfficialSiteNotice";
@@ -17,7 +17,7 @@ import { OfficialSiteNotice } from "@/components/layout/OfficialSiteNotice";
 function StaffLoginGate() {
   const { applyStaffSession } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState<string>(STAFF_DEMO_CREDENTIALS.email);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -114,12 +114,6 @@ function StaffLoginGate() {
             {busy ? "Signing in…" : "Sign in as staff"}
           </Button>
         </form>
-
-        <p className="mt-4 rounded-lg bg-surface px-3 py-2.5 text-sm text-muted">
-          Demo staff:{" "}
-          <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.email}</span> /{" "}
-          <span className="font-semibold text-primary">{STAFF_DEMO_CREDENTIALS.password}</span>
-        </p>
 
         <div className="mt-6 flex flex-col items-center gap-2 text-center text-base">
           <Link href="/portal" className="font-semibold text-primary hover:underline focus-ring">

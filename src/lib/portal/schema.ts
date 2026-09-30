@@ -4,7 +4,7 @@ import type { ApplicationRecord } from "@/lib/admissions/types";
 
 export type Role = "student" | "lecturer" | "admin";
 
-export type PaymentMethod = "mtn" | "airtel" | "bank";
+export type PaymentMethod = "mtn" | "airtel" | "bank" | "online";
 
 export type SubmissionStatus = "pending" | "submitted" | "graded";
 
@@ -13,6 +13,14 @@ export type DocumentRequestStatus = "processing" | "ready" | "downloaded";
 export type RegistrationStatus = "draft" | "submitted" | "approved" | "rejected";
 
 export type PaymentStatus = "pending" | "completed" | "failed";
+
+export type PaymentVerificationStatus = "pending_review" | "approved" | "rejected";
+
+/** Finance clearance for registration, exams, and document release */
+export type FinancialClearanceStatus =
+  | "cleared"
+  | "outstanding"
+  | "pending_verification";
 
 export type User = {
   id: string;
@@ -97,6 +105,8 @@ export type FeeInvoice = {
   totalBilled: number;
   totalPaid: number;
   balance: number;
+  /** ISO date — used for overdue / due-soon finance alerts */
+  paymentDueDate?: string;
 };
 
 export type FeeLineItem = {
@@ -112,9 +122,28 @@ export type Payment = {
   studentId: string;
   amount: number;
   method: PaymentMethod;
+  /** Gateway or finance-system reference (may differ from student-entered bank ref) */
   reference: string;
+  /** Reference printed on the student's deposit slip or mobile money SMS */
+  transactionReference?: string;
   status: PaymentStatus;
   paidAt: string;
+  submittedAt?: string;
+  depositSlipDataUrl?: string | null;
+  depositSlipFileName?: string | null;
+  verificationStatus?: PaymentVerificationStatus;
+  /** Supabase `bank_payment_submissions.id` when persisted for finance review */
+  bankSubmissionId?: string | null;
+  reviewNote?: string | null;
+  reviewedAt?: string | null;
+};
+
+/** Billed vs paid vs outstanding for one fee category */
+export type FeeCategorySummary = {
+  category: string;
+  billed: number;
+  paid: number;
+  outstanding: number;
 };
 
 export type CourseMaterial = {

@@ -8,6 +8,7 @@ import { SpotlightGrid } from "@/components/home/SpotlightGrid";
 import { VisionMission } from "@/components/home/VisionMission";
 import { AboutBand } from "@/components/home/AboutBand";
 import { ApplyBand } from "@/components/home/ApplyBand";
+import { CampusMapSection } from "@/components/home/CampusMapSection";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { marketingPageMetadata } from "@/lib/seo";
@@ -34,6 +35,9 @@ export default function HomePage() {
       <SchoolGallery />
       <SpotlightGrid />
       <VisionMission />
+      <ScrollReveal direction="up">
+        <CampusMapSection />
+      </ScrollReveal>
       <ApplyBand />
       <Footer />
     </>

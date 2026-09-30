@@ -1,4 +1,13 @@
 import type { PendingActivation, Session, StudentProfile, User } from "./schema";
+import {
+  generateUniqueActivationCredentials,
+  isValidAdmissionLetterRef,
+  isValidTempRegistrationNumber,
+  normalizeActivationToken,
+  validateActivationCredentialIndex,
+  type ActivationCredentialIndex,
+  type ActivationIntegrityIssue,
+} from "./activation-credentials";
 
 const REGISTRY_STORAGE_KEY = "mbsnm-student-registry";
 
@@ -7,86 +16,8 @@ export type RegisteredStudent = {
   profile: StudentProfile;
 };
 
-/** Students awaiting first-time portal activation */
-const DEFAULT_PENDING: PendingActivation[] = [
-  {
-    tempRegistrationNumber: "TMP/MBSNM/2026/042",
-    admissionLetterRef: "ADM-MBSNM-2026-1184",
-    fullName: "Auma Grace",
-    email: "auma.grace@mbaleschoolofnursing.ac.ug",
-    phone: "+256 704 888 301",
-    programId: "prog-dn",
-    studentNumber: "MBSNM/NS/2026/042",
-  },
-  {
-    tempRegistrationNumber: "TMP/MBSNM/2026/089",
-    admissionLetterRef: "ADM-MBSNM-2026-1290",
-    fullName: "Okello James",
-    email: "okello.james@mbaleschoolofnursing.ac.ug",
-    phone: "+256 701 222 445",
-    programId: "prog-dn",
-    studentNumber: "MBSNM/NS/2026/089",
-  },
-  {
-    tempRegistrationNumber: "TMP/MBSNM/2026/115",
-    admissionLetterRef: "ADM-MBSNM-2026-1402",
-    fullName: "Nabirye Faith",
-    email: "nabirye.faith@mbaleschoolofnursing.ac.ug",
-    phone: "+256 708 333 901",
-    programId: "prog-dn",
-    studentNumber: "MBSNM/NS/2026/115",
-  },
-];
-
-/** Pre-activated continuing student (demo) */
-const SEED_ACTIVATED: RegisteredStudent[] = [
-  {
-    user: {
-      id: "user-sarah",
-      email: "nagudi.sarah@mbaleschoolofnursing.ac.ug",
-      passwordHash: "mock-hash:Student@2026",
-      role: "student",
-      createdAt: "2024-08-01T08:00:00.000Z",
-      accountActivated: true,
-      mustChangePassword: false,
-    },
-    profile: {
-      id: "stu-sarah",
-      userId: "user-sarah",
-      studentNumber: "MBSNM/NS/2024/018",
-      tempRegistrationNumber: null,
-      admissionLetterRef: "ADM-MBSNM-2024-018",
-      fullName: "Nagudi Sarah",
-      programId: "prog-dn",
-      phone: "+256 700 123 456",
-      email: "nagudi.sarah@mbaleschoolofnursing.ac.ug",
-      address: "Mbale Municipality, Eastern Uganda",
-      nextOfKin: {
-        name: "Nagudi Peter",
-        relationship: "Father",
-        phone: "+256 772 987 654",
-        email: "peter.nagudi@email.com",
-      },
-      emergencyContact: {
-        name: "Nagudi Mary",
-        relationship: "Mother",
-        phone: "+256 701 555 221",
-      },
-      medicalInfo: {
-        bloodGroup: "O+",
-        allergies: "None known",
-        chronicConditions: "None",
-        disabilities: "None",
-        doctorName: "Dr. Okello James",
-        doctorPhone: "+256 750 111 222",
-      },
-      creditsCompleted: 48,
-      creditsRequired: 120,
-      cumulativeGpa: 3.42,
-      semesterGpa: 3.55,
-    },
-  },
-];
+const DEFAULT_PENDING: PendingActivation[] = [];
+const SEED_ACTIVATED: RegisteredStudent[] = [];
 
 type RegistrySnapshot = {
   students: RegisteredStudent[];
@@ -98,13 +29,20 @@ let registry: RegistrySnapshot = {
   pending: DEFAULT_PENDING.map((p) => ({ ...p })),
 };
 
-let activeUserId: string | null = SEED_ACTIVATED[0]?.user.id ?? null;
+let activeUserId: string | null = null;
 
 type GlobalsSync = (user: User, profile: StudentProfile) => void;
 let syncGlobals: GlobalsSync | null = null;
 
+type ActivatedStudentHook = (profile: StudentProfile) => void;
+let onStudentActivated: ActivatedStudentHook | null = null;
+
 export function registerStudentRegistrySync(fn: GlobalsSync) {
   syncGlobals = fn;
+}
+
+export function registerActivatedStudentFeeHook(fn: ActivatedStudentHook) {
+  onStudentActivated = fn;
 }
 
 function cloneProfile(profile: StudentProfile): StudentProfile {
@@ -124,7 +62,7 @@ function cloneStudents(students: RegisteredStudent[]): RegisteredStudent[] {
 }
 
 function normalizeToken(value: string) {
-  return value.trim().toUpperCase().replace(/\s+/g, "");
+  return normalizeActivationToken(value);
 }
 
 function normalizeEmail(value: string) {
@@ -189,6 +127,123 @@ export function getActiveStudentUserId() {
   return activeUserId;
 }
 
+export function buildActivationCredentialIndex(): ActivationCredentialIndex {
+  const index: ActivationCredentialIndex = {
+    tempRegistrationNumbers: new Set<string>(),
+    admissionLetterRefs: new Set<string>(),
+    studentNumbers: new Set<string>(),
+  };
+
+  for (const pending of registry.pending) {
+    index.tempRegistrationNumbers.add(normalizeToken(pending.tempRegistrationNumber));
+    index.admissionLetterRefs.add(normalizeToken(pending.admissionLetterRef));
+    index.studentNumbers.add(normalizeToken(pending.studentNumber));
+  }
+
+  for (const { profile } of registry.students) {
+    index.admissionLetterRefs.add(normalizeToken(profile.admissionLetterRef));
+    index.studentNumbers.add(normalizeToken(profile.studentNumber));
+    if (profile.tempRegistrationNumber) {
+      index.tempRegistrationNumbers.add(normalizeToken(profile.tempRegistrationNumber));
+    }
+  }
+
+  return index;
+}
+
+export function validateActivationRegistryIntegrity(): ActivationIntegrityIssue[] {
+  return validateActivationCredentialIndex(buildActivationCredentialIndex());
+}
+
+export type AdmitPortalStudentInput = {
+  fullName: string;
+  email: string;
+  phone: string;
+  programId: string;
+  studentNumber?: string;
+  tempRegistrationNumber?: string;
+  admissionLetterRef?: string;
+  year?: number;
+};
+
+function assertCredentialAvailable(
+  index: ActivationCredentialIndex,
+  tempRegistrationNumber: string,
+  admissionLetterRef: string,
+  studentNumber: string,
+) {
+  const tempKey = normalizeToken(tempRegistrationNumber);
+  const letterKey = normalizeToken(admissionLetterRef);
+  const studentKey = normalizeToken(studentNumber);
+
+  if (index.tempRegistrationNumbers.has(tempKey)) {
+    throw new Error(`Temporary registration number already in use: ${tempRegistrationNumber}`);
+  }
+  if (index.admissionLetterRefs.has(letterKey)) {
+    throw new Error(`Admission letter reference already in use: ${admissionLetterRef}`);
+  }
+  if (index.studentNumbers.has(studentKey)) {
+    throw new Error(`Student number already in use: ${studentNumber}`);
+  }
+}
+
+/** Issue unique portal activation credentials for a newly admitted student. */
+export function admitStudentForPortalActivation(
+  input: AdmitPortalStudentInput,
+  externalIndex?: ActivationCredentialIndex,
+): PendingActivation {
+  const email = normalizeEmail(input.email);
+  if (
+    registry.pending.some((p) => normalizeEmail(p.email) === email) ||
+    registry.students.some(
+      ({ profile, user }) =>
+        user.accountActivated && normalizeEmail(profile.email) === email,
+    )
+  ) {
+    throw new Error("A portal activation record already exists for this email address.");
+  }
+
+  const index = externalIndex ?? buildActivationCredentialIndex();
+
+  let tempRegistrationNumber = input.tempRegistrationNumber?.trim() ?? "";
+  let admissionLetterRef = input.admissionLetterRef?.trim() ?? "";
+  let studentNumber = input.studentNumber?.trim() ?? "";
+
+  if (tempRegistrationNumber || admissionLetterRef || studentNumber) {
+    if (!tempRegistrationNumber || !admissionLetterRef || !studentNumber) {
+      throw new Error(
+        "Provide all three identifiers (temporary registration, admission letter, student number) or none for auto-generation.",
+      );
+    }
+    if (!isValidTempRegistrationNumber(tempRegistrationNumber)) {
+      throw new Error("Temporary registration number must match TMP/MBSNM/YYYY/XXX.");
+    }
+    if (!isValidAdmissionLetterRef(admissionLetterRef)) {
+      throw new Error("Admission letter reference must match ADM-MBSNM-YYYY-XXXX.");
+    }
+    assertCredentialAvailable(index, tempRegistrationNumber, admissionLetterRef, studentNumber);
+  } else {
+    const generated = generateUniqueActivationCredentials(index, input.year);
+    tempRegistrationNumber = generated.tempRegistrationNumber;
+    admissionLetterRef = generated.admissionLetterRef;
+    studentNumber = generated.studentNumber;
+  }
+
+  const pending: PendingActivation = {
+    tempRegistrationNumber,
+    admissionLetterRef,
+    fullName: input.fullName.trim(),
+    email: input.email.trim(),
+    phone: input.phone.trim(),
+    programId: input.programId,
+    studentNumber,
+  };
+
+  registry.pending = [...registry.pending, pending];
+  persistRegistry();
+  return { ...pending };
+}
+
 export function listPendingActivations(): PendingActivation[] {
   return registry.pending.map((p) => ({ ...p }));
 }
@@ -201,14 +256,26 @@ export function findPendingActivation(
   tempRegistrationNumber: string,
   admissionLetterRef: string,
 ): PendingActivation | null {
+  if (!isValidTempRegistrationNumber(tempRegistrationNumber)) {
+    return null;
+  }
+  if (!isValidAdmissionLetterRef(admissionLetterRef)) {
+    return null;
+  }
+
   const temp = normalizeToken(tempRegistrationNumber);
   const letter = normalizeToken(admissionLetterRef);
-  const match = registry.pending.find(
+  const matches = registry.pending.filter(
     (p) =>
       normalizeToken(p.tempRegistrationNumber) === temp &&
       normalizeToken(p.admissionLetterRef) === letter,
   );
-  return match ? { ...match } : null;
+
+  if (matches.length !== 1) {
+    return null;
+  }
+
+  return { ...matches[0]! };
 }
 
 export function findActivatedStudent(identifier: string): RegisteredStudent | null {
@@ -308,6 +375,7 @@ export function registerActivatedStudent(
   persistRegistry();
   activeUserId = userId;
   syncActiveToGlobals();
+  onStudentActivated?.(cloneProfile(record.profile));
 
   return {
     user: { ...record.user },
@@ -329,5 +397,25 @@ export function verifyStoredPassword(password: string, passwordHash: string): bo
   return passwordHash === `mock-hash:${password}`;
 }
 
-/** @deprecated Use listPendingActivations — kept for mock-store compatibility */
-export const MOCK_PENDING_ACTIVATION = DEFAULT_PENDING[0];
+/** @deprecated Use listPendingActivations — kept for legacy imports */
+export const MOCK_PENDING_ACTIVATION = null;
+
+/** Test-only reset — do not use in production flows. */
+export function __resetStudentRegistryForTests(snapshot?: RegistrySnapshot) {
+  registry = snapshot
+    ? {
+        students: cloneStudents(snapshot.students),
+        pending: snapshot.pending.map((p) => ({ ...p })),
+      }
+    : {
+        students: cloneStudents(SEED_ACTIVATED),
+        pending: [],
+      };
+  activeUserId = registry.students[0]?.user.id ?? null;
+}
+
+const seedIntegrity = validateActivationRegistryIntegrity();
+if (seedIntegrity.length > 0 && typeof process !== "undefined") {
+  const summary = seedIntegrity.map((i) => i.message).join("; ");
+  console.warn(`[student-registry] activation seed integrity: ${summary}`);
+}

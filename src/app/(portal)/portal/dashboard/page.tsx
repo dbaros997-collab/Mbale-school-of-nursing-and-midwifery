@@ -26,7 +26,7 @@ export default function StudentDashboardPage() {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    void getDashboardSummary().then((summary) => {
+    void getDashboardSummary(profile?.id, profile).then((summary) => {
       if (!cancelled) {
         setData(summary);
         setLoading(false);
@@ -35,7 +35,7 @@ export default function StudentDashboardPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [profile]);
 
   const feeDue = (data?.feeBalance ?? 0) > 0;
 

@@ -63,3 +63,33 @@ export const STUDENT_ACCOUNT_STATUS_LABELS: Record<StudentAccountStatus, string>
 export function formatUgx(amount: number): string {
   return `UGX ${amount.toLocaleString("en-UG")}`;
 }
+
+/** Official school collection account shown on the student payment form */
+export const SCHOOL_FEE_BANK_DETAILS = {
+  bankName: "Stanbic Bank Uganda",
+  accountName: "Mbale School of Nursing & Midwifery",
+  accountNumber: "9030012345678",
+  branch: "Mbale Main Branch",
+  swift: "SBICUGKX",
+} as const;
+
+export const FINANCIAL_CLEARANCE_LABELS = {
+  cleared: "Financially cleared",
+  outstanding: "Outstanding balance",
+  pending_verification: "Pending bank verification",
+} as const;
+
+/** Semester fee payment deadline (ISO date) for overdue / due-soon alerts */
+export const CURRENT_SEMESTER_FEE_DUE_ISO = "2025-10-31";
+
+/** Days before due date to show a "due soon" warning on the student portal */
+export const FEE_DUE_SOON_DAYS = 14;
+
+/** Finance queue: flag submissions pending longer than this */
+export const STALE_BANK_VERIFICATION_DAYS = 2;
+
+/** Student portal: flag own pending verification older than this */
+export const STALE_STUDENT_VERIFICATION_DAYS = 3;
+
+/** Polling interval for fee ledger sync when realtime is unavailable (ms) */
+export const FEE_LEDGER_POLL_MS = 4_000;

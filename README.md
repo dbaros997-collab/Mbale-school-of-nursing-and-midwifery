@@ -49,6 +49,29 @@ Local dev: `http://localhost:5173/auth/microsoft/callback`
 
 `NEXT_PUBLIC_*` and `MICROSOFT_*` client/tenant IDs must match the same app registration.
 
+## Coolify production deploy
+
+Production uses a **pre-built** Docker image (GitHub Actions → GHCR). Coolify pulls the pinned root `Dockerfile` (`FROM ghcr.io/.../mbale-school:<sha>`) — no `next build` on the VPS.
+
+| Layer | Where to configure |
+|--------|-------------------|
+| **Build** (client bundle) | GitHub Actions **Variables**: `NEXT_PUBLIC_*` Azure + Supabase, site URL, redirect URI |
+| **Runtime** (secrets) | Coolify **Environment**: Microsoft secret, `SESSION_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, Flutterwave **Live** keys |
+
+- **Port:** `3000` · **Health check:** `GET /api/health` (JSON includes `microsoft`, `supabase`, `flutterwave` flags)
+- **Runtime paste template:** [`config/coolify.runtime.env.example`](config/coolify.runtime.env.example)
+- **Full variable reference:** [`.env.example`](.env.example) (Coolify section at bottom)
+
+### Coolify has no “Redeploy” button — use this instead
+
+| Goal | What to do in Coolify |
+|------|------------------------|
+| **Ship new code / Docker image** | Open the app → **Deploy** (play icon). Or push to `main` if Git auto-deploy is on. Wait for GitHub Actions **Publish Docker image** to finish first (~5 min), then deploy so GHCR has the new tag. |
+| **Apply env-only changes** (Flutterwave, `SUPABASE_SERVICE_ROLE_KEY`, `SESSION_SECRET`, etc.) | **Configuration → Environment Variables** → Save. Mark secrets **Runtime only** (disable **Build Variable**). Then **Restart** the application (not a full Git rebuild). |
+| **Trigger deploy from your PC** | On `main`: `npm run deploy:trigger` (empty commit → GitHub webhook → Coolify). |
+
+After deploy, confirm `GET https://mbaleschoolofnursing.ac.ug/api/health` shows `supabase.configured: true` and `flutterwave.configured: true` when those services are enabled.
+
 ## Demo credentials (Staff admin at `/admin`)
 
 - Email: `registry@mbsnm.org` · Password: `Staff@2026`

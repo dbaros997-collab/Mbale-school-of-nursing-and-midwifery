@@ -7,10 +7,7 @@ import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  loginStudent,
-  STUDENT_DEMO_CREDENTIALS,
-} from "@/services/portal/auth";
+import { loginStudent } from "@/services/portal/auth";
 import { loginStaff } from "@/services/portal/admin/auth";
 import {
   isStaffPortalLoginIdentifier,
@@ -169,12 +166,8 @@ export function StudentLoginGate() {
           </form>
 
           <p className="mt-4 rounded-lg bg-surface px-3 py-2 text-xs text-muted">
-            Password sign-in works for activated portal accounts.
-            <br />
-            <span className="mt-1 inline-block">
-              Example (continuing student): {STUDENT_DEMO_CREDENTIALS.studentNumber} or{" "}
-              {STUDENT_DEMO_CREDENTIALS.email} · password {STUDENT_DEMO_CREDENTIALS.password}
-            </span>
+            Password sign-in is available after you complete first-time activation with credentials
+            issued by the admissions registry.
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-3 text-center text-sm">

@@ -89,6 +89,13 @@ export function updateApplicationInterview(
   if (patch.status === "admitted") {
     row.reviewStatus = "approved";
     row.trackingStatus = "qualified";
+    void import("@/services/portal/student-admission-service").then(({ admitApplicantToStudentPortal }) =>
+      admitApplicantToStudentPortal(row).then((result) => {
+        if (!result.ok) {
+          console.warn("[admissions] portal activation credentials:", result.message);
+        }
+      }),
+    );
   }
 
   return row;

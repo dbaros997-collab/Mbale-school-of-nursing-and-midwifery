@@ -34,7 +34,9 @@ export function PaymentHistory({
 
   return (
     <DataCard title="Transaction history">
-      <p className="text-sm text-muted">Bank transfer receipts for this invoice.</p>
+      <p className="text-sm text-muted">
+        Completed payments and submissions awaiting finance verification.
+      </p>
 
       {payments.length === 0 ? (
         <p className="mt-5 text-sm text-muted">No payments recorded yet.</p>
@@ -68,14 +70,18 @@ export function PaymentHistory({
                 <td>
                   <StatusBadge
                     tone={
-                      p.status === "completed"
-                        ? "success"
-                        : p.status === "failed"
-                          ? "danger"
-                          : "warning"
+                      p.verificationStatus === "pending_review" || p.status === "pending"
+                        ? "warning"
+                        : p.status === "completed"
+                          ? "success"
+                          : p.status === "failed"
+                            ? "danger"
+                            : "warning"
                     }
                   >
-                    {p.status}
+                    {p.verificationStatus === "pending_review" || p.status === "pending"
+                      ? "Pending verification"
+                      : p.status}
                   </StatusBadge>
                 </td>
                 <td className="text-right">

@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { PORTAL_NAV } from "@/lib/portal/constants";
+import { usePortalFeeNavBadge } from "@/hooks/usePortalFeeNavBadge";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { BackToWebsite } from "@/components/layout/BackToWebsite";
 import { cn } from "@/lib/utils";
@@ -40,6 +41,7 @@ type PortalSidebarProps = {
 
 export function PortalSidebar({ open, onClose, onLogout }: PortalSidebarProps) {
   const pathname = usePathname();
+  const feeAlertCount = usePortalFeeNavBadge();
 
   return (
     <>
@@ -118,7 +120,17 @@ export function PortalSidebar({ open, onClose, onLogout }: PortalSidebarProps) {
                     aria-current={active ? "page" : undefined}
                   >
                     <Icon className="h-4 w-4 shrink-0" aria-hidden />
-                    {item.label}
+                    <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                      {item.label}
+                      {item.href === "/portal/fees" && feeAlertCount > 0 ? (
+                        <span
+                          className="shrink-0 rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold leading-none text-white"
+                          aria-label={`${feeAlertCount} fee alerts`}
+                        >
+                          {feeAlertCount > 9 ? "9+" : feeAlertCount}
+                        </span>
+                      ) : null}
+                    </span>
                   </Link>
                 </li>
               );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
@@ -8,7 +8,6 @@ import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   completeAccountActivation,
-  getDemoActivationHints,
   validatePassword,
   verifyStudentIdentity,
 } from "@/services/portal/auth";
@@ -33,8 +32,6 @@ const STEPS = [
 export function ActivationWizard() {
   const router = useRouter();
   const { applyActivatedSession } = useAuth();
-  const hints = useMemo(() => getDemoActivationHints(), []);
-
   const [step, setStep] = useState(1);
   const [draft, setDraft] = useState<WizardDraft>(emptyWizardDraft);
   const [verified, setVerified] = useState<PendingActivation | null>(null);
@@ -81,9 +78,15 @@ export function ActivationWizard() {
   async function handleCompleteProfile() {
     setBusy(true);
     setError(null);
+    if (!verified) {
+      setError("Start again from identity verification — your session expired.");
+      setBusy(false);
+      return;
+    }
     const result = await completeAccountActivation({
       password: draft.password,
       confirmPassword: draft.confirmPassword,
+      pending: verified,
       profile: {
         phone: draft.phone,
         address: draft.address,
@@ -185,7 +188,6 @@ export function ActivationWizard() {
           {step === 1 ? (
             <VerifyIdentityStep
               draft={draft}
-              hints={hints}
               busy={busy}
               onChange={patchDraft}
               onContinue={() => void handleVerify()}

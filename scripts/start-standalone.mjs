@@ -23,6 +23,26 @@ const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 loadRuntimeDotenv(rootDir);
 syncMicrosoftEnvAliases();
 publishRuntimeEnvSnapshot();
+warnProductionDatabaseEnv();
+
+function warnProductionDatabaseEnv() {
+  if (process.env.NODE_ENV !== "production") return;
+  const supabaseRest =
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (supabaseRest) return;
+  const direct =
+    process.env.DIRECT_DATABASE_URL?.trim() ||
+    process.env.SUPABASE_DB_DIRECT_URL?.trim();
+  const pooler =
+    process.env.DATABASE_URL?.trim() || process.env.SUPABASE_DB_POOLER_URL?.trim();
+  if (direct && !pooler) {
+    console.warn(
+      "[db] DIRECT_DATABASE_URL is set without DATABASE_URL / SUPABASE_DB_POOLER_URL. " +
+        "Use the Supavisor pooler for app traffic to avoid connection saturation.",
+    );
+  }
+}
 
 const serverEntry = [
   join(rootDir, "server.js"),

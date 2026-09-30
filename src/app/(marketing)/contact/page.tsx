@@ -11,6 +11,7 @@ import {
   Share2,
 } from "lucide-react";
 import { SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
+import { CampusMapPanel } from "@/components/marketing/CampusMapPanel";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { PageBanner } from "@/components/ui/PageBanner";
@@ -142,23 +143,7 @@ export default function ContactPage() {
               </a>
             </div>
 
-            <div className="mt-8 overflow-hidden rounded-3xl content-panel">
-              <div className="border-b border-border px-4 py-3">
-                <h3 className="font-bold text-primary">Campus map</h3>
-                <p className="text-xs text-muted">Map placeholder — embed Google Maps when coordinates are confirmed</p>
-              </div>
-              <div
-                className="relative flex aspect-[16/10] items-center justify-center bg-[linear-gradient(135deg,#e8f7fc_0%,#f8fafc_50%,#e8f8ee_100%)]"
-                role="img"
-                aria-label="Map placeholder for Mbale School of Nursing and Midwifery campus location"
-              >
-                <div className="text-center">
-                  <MapPin className="mx-auto h-10 w-10 text-primary" aria-hidden />
-                  <p className="mt-2 font-semibold text-primary">{SCHOOL.address}</p>
-                  <p className="mt-1 text-sm text-muted">Interactive map coming soon</p>
-                </div>
-              </div>
-            </div>
+            <CampusMapPanel id="campus-map" className="mt-8" />
           </div>
 
           <div>

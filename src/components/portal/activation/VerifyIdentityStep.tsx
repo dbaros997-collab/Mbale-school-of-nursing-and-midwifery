@@ -8,12 +8,10 @@ import {
   StepCard,
   activationInputClass,
 } from "@/components/portal/activation/form";
-import type { PendingActivation } from "@/lib/portal/schema";
 import type { WizardDraft } from "@/components/portal/activation/types";
 
 type Props = {
   draft: WizardDraft;
-  hints: PendingActivation[];
   busy: boolean;
   onChange: (patch: Partial<WizardDraft>) => void;
   onContinue: () => void;
@@ -21,7 +19,6 @@ type Props = {
 
 export function VerifyIdentityStep({
   draft,
-  hints,
   busy,
   onChange,
   onContinue,
@@ -35,22 +32,8 @@ export function VerifyIdentityStep({
       </p>
 
       <Callout className="mt-4 text-sm">
-        <p className="font-semibold text-primary">Demo credentials (any row below)</p>
-        <ul className="mt-2 space-y-2 text-xs sm:text-sm">
-          {hints.map((row) => (
-            <li key={row.tempRegistrationNumber} className="rounded-md bg-white/60 px-2 py-1.5">
-              <span className="font-semibold text-primary">{row.fullName}</span>
-              <br />
-              Temp reg: <span className="font-mono font-bold">{row.tempRegistrationNumber}</span>
-              <br />
-              Letter ref: <span className="font-mono font-bold">{row.admissionLetterRef}</span>
-              <br />
-              After activation, sign in with{" "}
-              <span className="font-mono font-bold">{row.studentNumber}</span> or{" "}
-              <span className="font-mono font-bold">{row.email}</span>
-            </li>
-          ))}
-        </ul>
+        Use the temporary registration number and admission letter reference from your official
+        offer pack. If you have not received credentials yet, contact the admissions registry.
       </Callout>
 
       <form
