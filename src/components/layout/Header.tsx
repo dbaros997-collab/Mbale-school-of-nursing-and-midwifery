@@ -406,28 +406,31 @@ function MegaFeaturedPanel({
   const imageAlt =
     "imageAlt" in featured && featured.imageAlt ? featured.imageAlt : "Campus highlight";
 
-  return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-md text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]",
-        image ? "min-h-[260px] lg:min-h-[280px]" : "bg-primary p-6",
-      )}
-    >
-      {image ? (
-        <>
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 320px"
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-primary from-25% via-primary/88 to-primary/55"
-            aria-hidden
-          />
-        </>
+  const copy = (
+    <>
+      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
+        {featured.eyebrow}
+      </p>
+      <h4 className="mt-3 text-lg font-bold leading-snug lg:text-xl">{featured.title}</h4>
+      {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
+        <div className="mt-5">
+          <HeaderPortalActions layout="stacked" showStaffAdmin={false} onNavigate={onNavigate} />
+        </div>
       ) : (
+        <Link
+          href={featured.href}
+          className="btn-pill mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-brand-green-dark focus-ring"
+          onClick={onNavigate}
+        >
+          {featured.cta}
+        </Link>
+      )}
+    </>
+  );
+
+  if (!image) {
+    return (
+      <div className="relative overflow-hidden rounded-lg bg-primary p-6 text-white shadow-[0_12px_32px_rgba(22,53,127,0.18)]">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.18]"
@@ -436,35 +439,26 @@ function MegaFeaturedPanel({
             backgroundSize: "28px 28px",
           }}
         />
-      )}
+        <div className="relative flex flex-col justify-center">{copy}</div>
+      </div>
+    );
+  }
 
-      <div
-        className={cn(
-          "relative flex flex-col justify-end",
-          image ? "min-h-[260px] p-6 lg:min-h-[280px]" : "",
-        )}
-      >
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
-          {featured.eyebrow}
-        </p>
-        <h4 className="mt-3 text-lg font-bold leading-snug drop-shadow-sm">{featured.title}</h4>
-        {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
-          <div className="mt-5">
-            <HeaderPortalActions
-              layout="stacked"
-              showStaffAdmin={false}
-              onNavigate={onNavigate}
-            />
-          </div>
-        ) : (
-          <Link
-            href={featured.href}
-            className="btn-pill mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-brand-green-dark focus-ring"
-            onClick={onNavigate}
-          >
-            {featured.cta}
-          </Link>
-        )}
+  return (
+    <div className="overflow-hidden rounded-lg border border-primary/15 bg-primary text-white shadow-[0_12px_32px_rgba(22,53,127,0.2)] lg:grid lg:min-h-[300px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="relative z-10 flex flex-col justify-center p-6 lg:p-7">{copy}</div>
+      <div className="relative min-h-[200px] border-t border-white/10 lg:min-h-full lg:border-l lg:border-t-0">
+        <Image
+          src={image}
+          alt={imageAlt}
+          fill
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 380px"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary via-primary/35 to-transparent lg:from-primary/95 lg:via-primary/20"
+          aria-hidden
+        />
       </div>
     </div>
   );
@@ -476,15 +470,15 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
   const columnCount = columns?.length ?? 0;
 
   return (
-    <div className="border-t-[3px] border-brand-green bg-panel text-foreground shadow-[0_18px_40px_rgba(22,53,127,0.12)]">
+    <div className="border-t-[3px] border-brand-green bg-gradient-to-b from-white to-panel text-foreground shadow-[0_18px_40px_rgba(22,53,127,0.12)]">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         <div
           className={cn(
-            "grid gap-8 lg:gap-10",
+            "grid gap-8 lg:items-stretch lg:gap-8 xl:gap-10",
             featured && columnCount >= 3
-              ? "lg:grid-cols-4"
+              ? "lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(280px,340px)]"
               : featured
-                ? "lg:grid-cols-3"
+                ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(280px,340px)]"
                 : "lg:grid-cols-3",
           )}
         >
@@ -492,11 +486,12 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
             <div
               key={col.title}
               className={cn(
+                "min-w-0",
                 colIndex < columnCount - 1 &&
-                  "lg:border-r lg:border-border/70 lg:pr-8 xl:pr-10",
+                  "lg:border-r lg:border-border/70 lg:pr-6 xl:pr-8",
               )}
             >
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
+              <p className="border-b-2 border-brand-green/35 pb-2 text-xs font-bold uppercase tracking-[0.14em] text-primary">
                 {col.title}
               </p>
               <ul className="mt-4 space-y-2.5">
