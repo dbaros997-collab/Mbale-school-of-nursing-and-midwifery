@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -71,11 +72,15 @@ function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
       columns: [
         {
           title: "Portals & apply",
-          links: quickLinks.slice(0, 5),
+          links: quickLinks.slice(0, 4),
+        },
+        {
+          title: "Admissions & study",
+          links: quickLinks.slice(4, 7),
         },
         {
           title: "Campus & web",
-          links: quickLinks.slice(5),
+          links: quickLinks.slice(7),
         },
       ],
     };
@@ -382,6 +387,89 @@ export function Header() {
   );
 }
 
+type MegaFeatured = NonNullable<
+  Extract<NavItem, { featured?: unknown }> extends infer T
+    ? T extends { featured?: infer F }
+      ? F
+      : never
+    : never
+>;
+
+function MegaFeaturedPanel({
+  featured,
+  onNavigate,
+}: {
+  featured: MegaFeatured;
+  onNavigate: () => void;
+}) {
+  const image = "image" in featured && featured.image ? featured.image : undefined;
+  const imageAlt =
+    "imageAlt" in featured && featured.imageAlt ? featured.imageAlt : "Campus highlight";
+
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-md text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]",
+        image ? "min-h-[260px] lg:min-h-[280px]" : "bg-primary p-6",
+      )}
+    >
+      {image ? (
+        <>
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 320px"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-primary from-25% via-primary/88 to-primary/55"
+            aria-hidden
+          />
+        </>
+      ) : (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 14px 14px, rgba(255,255,255,0.45) 0 1.4px, transparent 2px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+      )}
+
+      <div
+        className={cn(
+          "relative flex flex-col justify-end",
+          image ? "min-h-[260px] p-6 lg:min-h-[280px]" : "",
+        )}
+      >
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
+          {featured.eyebrow}
+        </p>
+        <h4 className="mt-3 text-lg font-bold leading-snug drop-shadow-sm">{featured.title}</h4>
+        {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
+          <div className="mt-5">
+            <HeaderPortalActions
+              layout="stacked"
+              showStaffAdmin={false}
+              onNavigate={onNavigate}
+            />
+          </div>
+        ) : (
+          <Link
+            href={featured.href}
+            className="btn-pill mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-brand-green-dark focus-ring"
+            onClick={onNavigate}
+          >
+            {featured.cta}
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => void }) {
   const columns = item.columns;
   const featured = "featured" in item ? item.featured : undefined;
@@ -400,8 +488,14 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
                 : "lg:grid-cols-3",
           )}
         >
-          {columns?.map((col) => (
-            <div key={col.title}>
+          {columns?.map((col, colIndex) => (
+            <div
+              key={col.title}
+              className={cn(
+                colIndex < columnCount - 1 &&
+                  "lg:border-r lg:border-border/70 lg:pr-8 xl:pr-10",
+              )}
+            >
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
                 {col.title}
               </p>
@@ -413,7 +507,7 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
                       className="group flex items-center gap-2.5 text-sm text-foreground transition hover:text-primary"
                       onNavigate={onNavigate}
                     >
-                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-green text-white">
+                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-green text-white shadow-sm">
                         <ChevronRight className="h-3 w-3" aria-hidden />
                       </span>
                       <span className="group-hover:underline">{link.label}</span>
@@ -425,37 +519,7 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
           ))}
 
           {featured ? (
-            <div className="relative overflow-hidden rounded-sm bg-primary p-6 text-white">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-[0.18]"
-                style={{
-                  backgroundImage: `
-                    radial-gradient(circle at 14px 14px, rgba(255,255,255,0.45) 0 1.4px, transparent 2px)
-                  `,
-                  backgroundSize: "28px 28px",
-                }}
-              />
-              <p className="relative text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
-                {featured.eyebrow}
-              </p>
-              <h4 className="relative mt-3 text-lg font-bold leading-snug">{featured.title}</h4>
-              {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
-                <HeaderPortalActions
-                  layout="stacked"
-                  showStaffAdmin={false}
-                  onNavigate={onNavigate}
-                />
-              ) : (
-                <Link
-                  href={featured.href}
-                  className="btn-pill relative mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white transition hover:bg-brand-green-dark focus-ring"
-                  onClick={onNavigate}
-                >
-                  {featured.cta}
-                </Link>
-              )}
-            </div>
+            <MegaFeaturedPanel featured={featured} onNavigate={onNavigate} />
           ) : null}
         </div>
       </div>

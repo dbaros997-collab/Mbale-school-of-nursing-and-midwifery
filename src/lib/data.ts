@@ -113,6 +113,8 @@ export const mainNav = [
       title: "Certificate and diploma programmes in nursing and midwifery.",
       href: "/admissions",
       cta: "Apply for admission",
+      image: "/images/hero/hero-clinical-infant-care.jpg",
+      imageAlt: "Midwifery students in clinical skills training",
     },
   },
   {
@@ -152,6 +154,8 @@ export const mainNav = [
       href: "/portal",
       cta: "Open portal",
       microsoftSignIn: true,
+      image: "/images/discovery/discovery-online.jpg",
+      imageAlt: "Students using the computer lab at MBSNM",
     },
   },
   {
@@ -189,6 +193,8 @@ export const mainNav = [
       title: "Nursing and midwifery training rooted in faith and service.",
       href: "/#about",
       cta: "Explore our story",
+      image: "/images/gallery/campus-aerial-wide.jpg",
+      imageAlt: "Aerial view of the MBSNM campus in Mbale",
     },
   },
   {
@@ -217,12 +223,22 @@ export const mainNav = [
       title: "Intakes, graduations, and campus announcements.",
       href: "/news",
       cta: "Read campus news",
+      image: "/images/campus-news/graduation-parade-mbale.jpg",
+      imageAlt: "Graduates celebrating in Mbale town",
     },
   },
   {
     label: "Quick Links",
     href: "#",
     quickLinksMenu: true,
+    featured: {
+      eyebrow: "Mbale campus",
+      title: "Jump to portals, programmes, maps, and official contacts.",
+      href: "/admissions#apply",
+      cta: "Apply online",
+      image: "/images/gallery/students-building-front.jpg",
+      imageAlt: "Nursing students in front of the MBSNM building",
+    },
   },
 ] as const;
 
