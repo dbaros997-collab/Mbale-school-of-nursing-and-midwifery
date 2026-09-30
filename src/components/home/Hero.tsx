@@ -43,10 +43,6 @@ const HERO_COPY_ACCENTS: Record<
     titlePhrase: "real health professionals",
     descriptionPhrases: ["UNMC", "NCHE"],
   },
-  "2": {
-    titlePhrase: "Real hospital",
-    descriptionPhrases: ["Mbale Referral Hospital"],
-  },
   "3": { titlePhrase: "on day one" },
   "4": { titlePhrase: "Learning by doing" },
 };

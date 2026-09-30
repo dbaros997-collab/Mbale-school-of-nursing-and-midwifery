@@ -297,18 +297,6 @@ export const heroSlides = [
     alt: "Midwifery students observing infant care practice on a training mannequin",
   },
   {
-    id: "2",
-    image: "/images/hero/hero-hospital-ward.jpg",
-    title: "Real hospital placements",
-    description:
-      "Clinical rotations at Mbale Referral Hospital and partner sites — you learn where care actually happens.",
-    cta: "Apply Now",
-    href: "/admissions",
-    secondaryCta: "View Programmes",
-    secondaryHref: "/academics",
-    alt: "Nursing students providing bedside care to a patient in a hospital ward",
-  },
-  {
     id: "3",
     image: "/images/hero/hero-instrument-training.jpg",
     title: "Skills you can use on day one",
