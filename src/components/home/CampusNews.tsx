@@ -1,95 +1,48 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Plus } from "lucide-react";
-import { newsHref, newsItems } from "@/lib/data";
+import { newsItems } from "@/lib/data";
+import { EventsSidebar } from "@/components/news/EventsSidebar";
+import { NewsStoryList } from "@/components/news/NewsStoryList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-/** Bust browser cache when a new build deploys. */
-const NEWS_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "news-v1";
-
-function newsImage(path: string) {
-  return `${path}?v=${NEWS_ASSET_VERSION}`;
+function sortedNews() {
+  return [...newsItems].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function CampusNews() {
-  const stories = newsItems.filter((n) => n.featured).slice(0, 2);
+  const stories = sortedNews().slice(0, 5);
 
   return (
-    <section id="campus-news" className="scroll-mt-24 section-gold py-12 sm:py-16">
+    <section id="campus-news" className="scroll-mt-24 bg-panel py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up">
-          <SectionHeading
-            eyebrow="Campus life"
-            title="What happens at campus"
-            description="Stories about people, training, opportunities across the MBSNM community"
-            align="center"
-          />
-        </ScrollReveal>
-
-        <div className="mt-10 grid gap-4 sm:gap-5 md:grid-cols-2">
-          {stories.map((item, i) => (
-            <ScrollReveal key={item.id} direction="right" delay={i * 0.12}>
-              <Link
-                href={newsHref(item.id)}
-                className="group relative block aspect-[16/11] min-h-[260px] overflow-hidden rounded-3xl focus-ring sm:min-h-[320px]"
-              >
-                <Image
-                  src={newsImage(item.image)}
-                  alt={item.title}
-                  fill
-                  unoptimized
-                  className="object-cover transition duration-700 group-hover:scale-[1.04]"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
-                />
-
-                <div className="absolute inset-x-0 bottom-0 z-[1] flex items-end justify-between gap-4 p-5 sm:p-7 lg:p-8">
-                  <div className="min-w-0 pr-2">
-                    <time
-                      dateTime={item.date}
-                      className="text-sm font-medium text-white/90"
-                    >
-                      {formatDate(item.date)}
-                    </time>
-                    <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-white sm:text-2xl lg:text-[1.65rem]">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <span
-                    aria-hidden
-                    className="mb-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center text-white transition group-hover:scale-110"
-                  >
-                    <Plus className="h-7 w-7 stroke-[1.5]" />
-                  </span>
-                </div>
-              </Link>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal direction="up" delay={0.15}>
-          <div className="mt-8 text-center">
-            <Link
-              href="/news"
-              className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
-            >
-              View more stories from MBSNM
-            </Link>
+          <div className="max-w-3xl">
+            <h2 className="font-display text-3xl font-bold text-primary sm:text-4xl">
+              Happening around Campus
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">
+              Stories about people, training, innovations, and opportunities across the{" "}
+              <span className="font-semibold text-foreground">MBSNM</span> community.
+            </p>
           </div>
         </ScrollReveal>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:gap-12">
+          <ScrollReveal direction="left">
+            <div>
+              <NewsStoryList items={stories} headingLevel="h3" />
+              <Link
+                href="/news"
+                className="mt-6 inline-block text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                More campus stories
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="right">
+            <EventsSidebar limit={4} />
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );
