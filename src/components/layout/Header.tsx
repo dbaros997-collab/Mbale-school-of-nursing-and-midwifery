@@ -2,15 +2,89 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { mainNav, SCHOOL } from "@/lib/data";
+import { headerApplyCta, mainNav, quickLinks, SCHOOL } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { HeaderPortalActions } from "@/components/layout/HeaderPortalActions";
+import { HeaderSiteSearch } from "@/components/layout/HeaderSiteSearch";
 
 type NavItem = (typeof mainNav)[number];
+
+type MegaNavLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+type MegaNavItem = NavItem & {
+  columns: readonly {
+    title: string;
+    links: readonly MegaNavLink[];
+  }[];
+};
+
+function MegaNavAnchor({
+  link,
+  className,
+  onNavigate,
+  children,
+}: {
+  link: MegaNavLink;
+  className: string;
+  onNavigate?: () => void;
+  children: ReactNode;
+}) {
+  const external = link.external ?? /^https?:\/\//i.test(link.href);
+  if (external) {
+    return (
+      <a
+        href={link.href}
+        className={className}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onNavigate}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={link.href} className={className} onClick={onNavigate}>
+      {children}
+    </Link>
+  );
+}
+
+function navHasDropdown(item: NavItem): boolean {
+  if ("quickLinksMenu" in item && item.quickLinksMenu) return true;
+  return "columns" in item && !!item.columns?.length;
+}
+
+function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
+  if (!item) return null;
+  if ("quickLinksMenu" in item && item.quickLinksMenu) {
+    return {
+      ...item,
+      columns: [
+        {
+          title: "Portals & apply",
+          links: quickLinks.slice(0, 5),
+        },
+        {
+          title: "Campus & web",
+          links: quickLinks.slice(5),
+        },
+      ],
+    };
+  }
+  if ("columns" in item && item.columns?.length) {
+    return item as MegaNavItem;
+  }
+  return null;
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -22,7 +96,8 @@ export function Header() {
   const [activeMega, setActiveMega] = useState<string | null>(null);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
 
-  const activeItem = mainNav.find((item) => item.label === activeMega) ?? null;
+  const activeRaw = mainNav.find((item) => item.label === activeMega) ?? null;
+  const activeItem = resolveMegaNavItem(activeRaw);
   const megaOpen = Boolean(activeItem);
   const showNavyHeader = !isHome || megaOpen;
   const glassHome = isHome && !megaOpen;
@@ -113,35 +188,29 @@ export function Header() {
             aria-label="main navigation"
           >
             {mainNav.map((item) => {
-              const hasMega = "columns" in item && !!item.columns;
+              const hasDropdown = navHasDropdown(item);
               const isActive = activeMega === item.label;
-              const emphasized = "emphasize" in item && item.emphasize;
+              const linkClass = cn(
+                "inline-flex items-center gap-1 px-2 py-4 text-[13px] font-bold text-white transition hover:text-brand-sky focus-ring md:px-2.5 md:text-sm lg:px-3 lg:text-[15px]",
+                isActive && "text-brand-sky",
+              );
 
               return (
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => hasMega && openMega(item.label)}
+                  onMouseEnter={() => hasDropdown && openMega(item.label)}
                 >
-                  <button
-                    type="button"
-                    className={cn(
-                      "inline-flex items-center gap-1 focus-ring",
-                      emphasized
-                        ? "btn-pill ml-2 rounded-full bg-brand-green px-3 py-2 text-sm font-bold text-white transition hover:bg-brand-green-dark md:ml-3 md:px-4 md:py-2.5"
-                        : "px-2 py-4 text-[13px] font-bold text-white transition hover:text-brand-sky md:px-2.5 md:text-sm lg:px-3.5 lg:text-[15px]",
-                      isActive && !emphasized && "text-brand-sky",
-                    )}
-                    aria-expanded={isActive}
-                    aria-haspopup={hasMega ? "true" : undefined}
-                    aria-controls={hasMega ? "mega-menu" : undefined}
-                    onClick={() => {
-                      if (!hasMega) return;
-                      openMega(item.label);
-                    }}
-                  >
-                    {item.label}
-                    {hasMega ? (
+                  {hasDropdown ? (
+                    <button
+                      type="button"
+                      className={linkClass}
+                      aria-expanded={isActive}
+                      aria-haspopup="true"
+                      aria-controls="mega-menu"
+                      onClick={() => openMega(item.label)}
+                    >
+                      {item.label}
                       <ChevronDown
                         className={cn(
                           "h-3.5 w-3.5 shrink-0 transition-transform duration-200",
@@ -149,8 +218,12 @@ export function Header() {
                         )}
                         aria-hidden
                       />
-                    ) : null}
-                  </button>
+                    </button>
+                  ) : (
+                    <Link href={item.href} className={linkClass}>
+                      {item.label}
+                    </Link>
+                  )}
 
                   {isActive ? (
                     <span
@@ -161,10 +234,17 @@ export function Header() {
                 </div>
               );
             })}
+
+            <Link
+              href={headerApplyCta.href}
+              className="ml-2 inline-flex shrink-0 items-center justify-center bg-brand-yellow px-3 py-2 text-[13px] font-bold text-primary-dark transition hover:bg-brand-yellow/90 focus-ring md:ml-3 md:px-4 md:text-sm"
+            >
+              {headerApplyCta.label}
+            </Link>
           </nav>
 
-          <div className="hidden md:flex">
-            <HeaderPortalActions glassHome={glassHome} showPortalLink={!isHome} />
+          <div className="hidden items-center md:flex">
+            <HeaderSiteSearch glassHome={glassHome} />
           </div>
 
           <button
@@ -217,12 +297,19 @@ export function Header() {
                   onNavigate={() => setOpen(false)}
                 />
               </div>
+              <Link
+                href={headerApplyCta.href}
+                className="mb-2 block rounded bg-brand-yellow px-3 py-2.5 text-center text-sm font-bold text-primary-dark"
+                onClick={() => setOpen(false)}
+              >
+                {headerApplyCta.label}
+              </Link>
               {mainNav.map((item) => {
-                const hasMega = "columns" in item && !!item.columns;
+                const hasDropdown = navHasDropdown(item);
                 const expanded = mobileSection === item.label;
-                const emphasized = "emphasize" in item && item.emphasize;
+                const megaItem = resolveMegaNavItem(item);
 
-                if (!hasMega) {
+                if (!hasDropdown) {
                   return (
                     <Link
                       key={item.label}
@@ -239,10 +326,7 @@ export function Header() {
                   <div key={item.label} className="rounded bg-white/5">
                     <button
                       type="button"
-                      className={cn(
-                        "flex w-full items-center justify-between rounded px-3 py-2.5 text-left text-sm font-semibold text-white",
-                        emphasized && "bg-brand-yellow text-primary",
-                      )}
+                      className="flex w-full items-center justify-between rounded px-3 py-2.5 text-left text-sm font-semibold text-white"
                       aria-expanded={expanded}
                       onClick={() =>
                         setMobileSection((current) => (current === item.label ? null : item.label))
@@ -254,9 +338,9 @@ export function Header() {
                         aria-hidden
                       />
                     </button>
-                    {expanded ? (
+                    {expanded && megaItem ? (
                       <div className="space-y-3 border-t border-white/10 px-3 py-3">
-                        {item.columns?.map((col) => (
+                        {megaItem.columns.map((col) => (
                           <div key={col.title}>
                             <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-accent-gold">
                               {col.title}
@@ -264,13 +348,13 @@ export function Header() {
                             <ul className="space-y-0.5">
                               {col.links.map((link) => (
                                 <li key={link.label}>
-                                  <Link
-                                    href={link.href}
+                                  <MegaNavAnchor
+                                    link={link}
                                     className="block rounded px-2 py-1.5 text-sm text-white/90 hover:bg-white/10"
-                                    onClick={() => setOpen(false)}
+                                    onNavigate={() => setOpen(false)}
                                   >
                                     {link.label}
-                                  </Link>
+                                  </MegaNavAnchor>
                                 </li>
                               ))}
                             </ul>
@@ -298,8 +382,8 @@ export function Header() {
   );
 }
 
-function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
-  const columns = "columns" in item ? item.columns : undefined;
+function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => void }) {
+  const columns = item.columns;
   const featured = "featured" in item ? item.featured : undefined;
   const columnCount = columns?.length ?? 0;
 
@@ -324,16 +408,16 @@ function MegaPanel({ item, onNavigate }: { item: NavItem; onNavigate: () => void
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
+                    <MegaNavAnchor
+                      link={link}
                       className="group flex items-center gap-2.5 text-sm text-foreground transition hover:text-primary"
-                      onClick={onNavigate}
+                      onNavigate={onNavigate}
                     >
                       <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-green text-white">
                         <ChevronRight className="h-3 w-3" aria-hidden />
                       </span>
                       <span className="group-hover:underline">{link.label}</span>
-                    </Link>
+                    </MegaNavAnchor>
                   </li>
                 ))}
               </ul>

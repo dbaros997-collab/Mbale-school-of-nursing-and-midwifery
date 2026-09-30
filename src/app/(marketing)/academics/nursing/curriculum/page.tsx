@@ -1,25 +1,26 @@
-import { BookOpen } from "lucide-react";
 import { nursingDepartment, SCHOOL } from "@/lib/data";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NursingSubNav } from "@/components/academics/NursingSubNav";
+import { NursingCurriculumExplorer } from "@/components/academics/NursingCurriculumExplorer";
 import { Button } from "@/components/ui/Button";
 import { marketingPageMetadata } from "@/lib/seo";
 
 export const metadata = marketingPageMetadata("/academics/nursing/curriculum", {
   title: "Nursing Curriculum",
-  description: "Core nursing subjects and course units taught across MBSNM nursing programmes.",
+  description:
+    "Year-by-year, semester-by-semester course units for each MBSNM nursing programme — certificate and diploma pathways.",
 });
 
 export default function NursingCurriculumPage() {
-  const { coreSubjects } = nursingDepartment;
+  const { accreditation } = nursingDepartment;
 
   return (
     <div>
       <PageBanner
         breadcrumb="Department of Nursing"
         title="Curriculum & Course Units"
-        subtitle={`Core subjects taught across nursing programmes at ${SCHOOL.shortName}.`}
+        subtitle={`Detailed course breakdowns for each nursing programme at ${SCHOOL.shortName}.`}
         image="/images/learning-pillars-clinical.jpg"
       />
 
@@ -32,32 +33,16 @@ export default function NursingCurriculumPage() {
       <section className="section-surface py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Course catalogue"
-            title="Core nursing subjects"
-            description="Students progress through a structured curriculum covering clinical sciences, specialty nursing areas, and professional development."
+            eyebrow="Programme catalogues"
+            title="Course units by programme"
+            description="Select a nursing course to view its full curriculum organised by academic year and semester. Each programme has its own sequence of theory, clinical, and professional units."
           />
 
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {coreSubjects.map((subject) => (
-              <li
-                key={subject}
-                className="flex items-start gap-3 rounded-2xl content-panel p-5"
-              >
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl accent-chip-sky">
-                  <BookOpen className="h-5 w-5" aria-hidden />
-                </span>
-                <span className="pt-2 text-sm font-semibold leading-snug text-primary">
-                  {subject}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <NursingCurriculumExplorer />
 
           <p className="mt-10 max-w-3xl text-sm leading-relaxed text-muted">
-            Course units are delivered through lectures, skills-lab sessions, and supervised
-            clinical practice. Semester examinations for all nursing programmes are conducted
-            through the Uganda Health Professions Assessment Board (UHPAB) under assessment
-            center number U120.
+            Units are delivered through lectures, skills-laboratory sessions, and supervised clinical
+            practice. {accreditation.examinations}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

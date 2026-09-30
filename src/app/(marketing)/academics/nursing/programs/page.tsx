@@ -118,7 +118,11 @@ export default function NursingProgramsPage() {
                       <Button href="/admissions" variant="green" size="sm">
                         Apply for this course
                       </Button>
-                      <Button href="/academics/nursing/curriculum" variant="ghost" size="sm">
+                      <Button
+                        href={`/academics/nursing/curriculum#${program.id}`}
+                        variant="ghost"
+                        size="sm"
+                      >
                         View curriculum
                       </Button>
                     </div>

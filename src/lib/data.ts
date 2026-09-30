@@ -44,47 +44,41 @@ export function schoolWhatsAppUrl(message?: string) {
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
+/** Default WhatsApp chat URL for nav and contact links. */
+export const SCHOOL_WHATSAPP_URL = schoolWhatsAppUrl(
+  `Hello ${SCHOOL.shortName}, I would like to enquire.`,
+);
+
+/** Primary header CTA (Makerere-style “Donate” placement). */
+export const headerApplyCta = {
+  label: "Apply Now",
+  href: "/admissions",
+} as const;
+
+export const quickLinks = [
+  { label: "Staff Admin", href: "/admin" },
+  { label: "Student Portal", href: "/portal/dashboard" },
+  { label: "Activate Account", href: "/portal/activate" },
+  { label: "Application Portal", href: "/admissions#apply" },
+  { label: "Track Application", href: "/admissions/track" },
+  { label: "Courses & Programmes", href: "/academics" },
+  { label: "Campus Map", href: "/#campus-map" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Official Website", href: SCHOOL.website, external: true },
+] as const;
+
+/**
+ * Makerere-style top navigation, with labels chosen for MBSNM (not copied literally):
+ * “Study at MBSNM” instead of “Study at Mak”; “Clinical & Placements” instead of “Research”.
+ */
 export const mainNav = [
   {
-    label: "About",
-    href: "/#about",
-    columns: [
-      {
-        title: "Know Us",
-        links: [
-          { label: "Our Story", href: "/#about" },
-          { label: "Mission & Vision", href: "/#vision-mission" },
-          { label: "Core Values", href: "/#vision-mission" },
-          { label: "Accreditation", href: "/academics/nursing/programs" },
-          { label: "Contact Address", href: "/contact" },
-        ],
-      },
-      {
-        title: "Governance",
-        links: [
-          { label: "Leadership", href: "/#about" },
-          { label: "Founded by GREM", href: "/#about" },
-          { label: "Campus Life @ MBSNM", href: "/#about" },
-        ],
-      },
-      {
-        title: "Campus",
-        links: [
-          { label: "Visit Campus", href: "/contact" },
-          { label: "Mbale City Campus", href: "/contact" },
-          { label: "Clinical Training Sites", href: "/academics/nursing/clinical-placements" },
-        ],
-      },
-    ],
-    featured: {
-      eyebrow: "Discover MBSNM",
-      title: "Nursing and midwifery training rooted in faith and service.",
-      href: "/#about",
-      cta: "Explore",
-    },
+    label: "Home",
+    href: "/",
   },
   {
-    label: "Programs",
+    label: "Study at MBSNM",
     href: "/academics",
     columns: [
       {
@@ -106,32 +100,188 @@ export const mainNav = [
         ],
       },
       {
-        title: "Catalogue",
+        title: "Admissions",
         links: [
           { label: "All Programmes", href: "/academics" },
-          { label: "How to Apply", href: "/admissions" },
+          { label: "How to Apply", href: "/admissions#apply" },
           { label: "Entry Requirements", href: "/admissions" },
+          { label: "Track Your Application", href: "/admissions/track" },
         ],
       },
     ],
     featured: {
-      eyebrow: "Admissions Open",
-      title: "Find the programme that fits you, then apply for the next intake.",
-      href: "/academics",
-      cta: "Explore",
+      eyebrow: "Admissions open",
+      title: "Certificate and diploma programmes in nursing and midwifery.",
+      href: "/admissions",
+      cta: "Apply for admission",
     },
+  },
+  {
+    label: "Students",
+    href: "/portal",
+    columns: [
+      {
+        title: "Portal",
+        links: [
+          { label: "Student Portal", href: "/portal/dashboard" },
+          { label: "Activate Your Account", href: "/portal/activate" },
+          { label: "Fees & Finance", href: "/portal/fees" },
+          { label: "Registration", href: "/portal/registration" },
+        ],
+      },
+      {
+        title: "Academic life",
+        links: [
+          { label: "LMS Hub", href: "/portal/lms" },
+          { label: "Timetable", href: "/portal/timetable" },
+          { label: "Notices", href: "/portal/notices" },
+          { label: "Documents", href: "/portal/documents" },
+          { label: "My Profile", href: "/portal/profile" },
+        ],
+      },
+      {
+        title: "Support",
+        links: [
+          { label: "Contact Registry", href: "/contact" },
+          { label: "Privacy Policy", href: "/privacy" },
+          { label: "Staff Admin", href: "/admin" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Student access",
+      title: "Sign in with Microsoft 365 or open the student portal.",
+      href: "/portal",
+      cta: "Open portal",
+      microsoftSignIn: true,
+    },
+  },
+  {
+    label: "Clinical & Placements",
+    href: "/academics/nursing/clinical-placements",
+    columns: [
+      {
+        title: "Practice settings",
+        links: [
+          { label: "Clinical Placements Overview", href: "/academics/nursing/clinical-placements" },
+          { label: "Regional Referral Hospitals", href: "/academics/nursing/clinical-placements" },
+          { label: "Health Centre Rotations", href: "/academics/nursing/clinical-placements" },
+        ],
+      },
+      {
+        title: "Skills & research",
+        links: [
+          { label: "Skills Laboratory", href: "/academics/nursing" },
+          { label: "Applied Nursing Research", href: "/academics/nursing/curriculum" },
+          { label: "UHPAB Examinations (Center U120)", href: "/academics/nursing/programs" },
+        ],
+      },
+      {
+        title: "Community",
+        links: [
+          { label: "Community Health Outreach", href: "/#about" },
+          { label: "Alumni Network", href: "/alumni" },
+          { label: "Careers at MBSNM", href: "/careers" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Real-world training",
+      title: "Hospital and community placements across Eastern Uganda.",
+      href: "/academics/nursing/clinical-placements",
+      cta: "View placement sites",
+    },
+  },
+  {
+    label: "About",
+    href: "/#about",
+    columns: [
+      {
+        title: "Know us",
+        links: [
+          { label: "Our Story", href: "/#about" },
+          { label: "Mission & Vision", href: "/#vision-mission" },
+          { label: "Core Values", href: "/#vision-mission" },
+          { label: "Accreditation", href: "/academics/nursing/programs" },
+        ],
+      },
+      {
+        title: "Governance",
+        links: [
+          { label: "Leadership", href: "/#about" },
+          { label: "Founded by GREM", href: "/#about" },
+          { label: "Campus Life", href: "/#gallery" },
+        ],
+      },
+      {
+        title: "Visit",
+        links: [
+          { label: "Contact & Directions", href: "/contact" },
+          { label: "Campus Map", href: "/#campus-map" },
+          { label: "School Gallery", href: "/#gallery" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Discover MBSNM",
+      title: "Nursing and midwifery training rooted in faith and service.",
+      href: "/#about",
+      cta: "Explore our story",
+    },
+  },
+  {
+    label: "News",
+    href: "/news",
+    columns: [
+      {
+        title: "Updates",
+        links: [
+          { label: "Campus News", href: "/news" },
+          { label: "Events Calendar", href: "/events" },
+          { label: "Careers & Vacancies", href: "/careers" },
+        ],
+      },
+      {
+        title: "Connect",
+        links: [
+          { label: "Contact Admissions", href: "/contact" },
+          { label: "WhatsApp Enquiries", href: SCHOOL_WHATSAPP_URL, external: true },
+          { label: "Campus Map & Directions", href: "/contact#campus-map" },
+        ],
+      },
+    ],
+    featured: {
+      eyebrow: "Stay informed",
+      title: "Intakes, graduations, and campus announcements.",
+      href: "/news",
+      cta: "Read campus news",
+    },
+  },
+  {
+    label: "Quick Links",
+    href: "#",
+    quickLinksMenu: true,
   },
 ] as const;
 
-export const quickLinks = [
-  { label: "Staff Admin", href: "/admin" },
-  { label: "Student Portal", href: "/portal/dashboard" },
-  { label: "Activate Account", href: "/portal/activate" },
-  { label: "Application Portal", href: "/admissions#apply" },
-  { label: "Track Application", href: "/admissions/track" },
-  { label: "Courses & Programs", href: "/academics" },
-  { label: "Contact Us", href: "/contact" },
-  { label: "Official Website", href: "https://mbaleschoolofnursing.ac.ug" },
+/** Pages surfaced in the header search dialog. */
+export const siteSearchEntries = [
+  { label: "Home", href: "/", keywords: "welcome mbsnm" },
+  { label: "All Programmes", href: "/academics", keywords: "study courses nursing midwifery" },
+  { label: "Nursing Programmes", href: "/academics/nursing/programs", keywords: "diploma certificate nursing" },
+  { label: "Nursing Curriculum", href: "/academics/nursing/curriculum", keywords: "course units syllabus" },
+  { label: "Clinical Placements", href: "/academics/nursing/clinical-placements", keywords: "hospital rotation" },
+  { label: "Admissions & Apply", href: "/admissions", keywords: "apply intake requirements" },
+  { label: "Track Application", href: "/admissions/track", keywords: "application status" },
+  { label: "Student Portal", href: "/portal/dashboard", keywords: "login fees lms" },
+  { label: "Activate Account", href: "/portal/activate", keywords: "new student password" },
+  { label: "Campus News", href: "/news", keywords: "announcements" },
+  { label: "Events", href: "/events", keywords: "calendar graduation" },
+  { label: "Contact & Map", href: "/contact", keywords: "address malere directions" },
+  { label: "Alumni", href: "/alumni", keywords: "graduates" },
+  { label: "Careers", href: "/careers", keywords: "jobs staff" },
+  { label: "Privacy Policy", href: "/privacy", keywords: "data protection" },
+  { label: "Staff Admin", href: "/admin", keywords: "finance registry" },
 ] as const;
 
 export const heroSlides = [
