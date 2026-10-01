@@ -64,6 +64,12 @@ function navHasDropdown(item: NavItem): boolean {
   return "columns" in item && !!item.columns?.length;
 }
 
+function navFeaturedImage(item: NavItem | null): string | undefined {
+  if (!item || !("featured" in item) || !item.featured) return undefined;
+  const featured = item.featured;
+  return "image" in featured && featured.image ? featured.image : undefined;
+}
+
 function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
   if (!item) return null;
   if ("quickLinksMenu" in item && item.quickLinksMenu) {
@@ -104,6 +110,7 @@ export function Header() {
   const activeRaw = mainNav.find((item) => item.label === activeMega) ?? null;
   const activeItem = resolveMegaNavItem(activeRaw);
   const megaOpen = Boolean(activeItem);
+  const megaBackdropImage = navFeaturedImage(activeRaw);
   const showNavyHeader = !isHome || megaOpen;
   const glassHome = isHome && !megaOpen;
 
@@ -162,13 +169,36 @@ export function Header() {
       ref={headerRef}
       onMouseLeave={scheduleClose}
       onMouseEnter={clearCloseTimer}
-      className="fixed inset-x-0 top-[var(--site-status-bar-height)] z-[60] transition-all duration-300"
+      className={cn(
+        "fixed inset-x-0 top-[var(--site-status-bar-height)] z-[60] transition-all duration-300",
+        megaOpen && "z-[62]",
+      )}
     >
+      {megaOpen && megaBackdropImage ? (
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden"
+          aria-hidden
+        >
+          <Image
+            src={megaBackdropImage}
+            alt=""
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="object-cover object-center opacity-[0.38] saturate-[0.85]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/84 to-primary/92" />
+        </div>
+      ) : null}
+
       <div
         className={cn(
           "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
           showNavyHeader
-            ? "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
+            ? megaOpen && megaBackdropImage
+              ? "border-b border-white/15 bg-primary/75 backdrop-blur-md shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+              : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
             : glassHome
               ? scrolled || open
                 ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
@@ -380,7 +410,7 @@ export function Header() {
                       <div className="space-y-3 border-t border-white/10 px-3 py-3">
                         {megaItem.columns.map((col) => (
                           <div key={col.title}>
-                            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-accent-gold">
+                            <p className="mb-1.5 font-display text-base font-semibold text-brand-yellow">
                               {col.title}
                             </p>
                             <ul className="space-y-0.5">
@@ -472,22 +502,22 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
     featured && "image" in featured && featured.image ? featured.image : undefined;
 
   return (
-    <div className="relative overflow-hidden border-t-[3px] border-brand-green bg-white text-foreground shadow-[0_20px_48px_rgba(22,53,127,0.14)]">
+    <div className="relative overflow-hidden border-t-[3px] border-brand-green bg-white/95 text-foreground shadow-[0_24px_56px_rgba(0,0,0,0.22)] backdrop-blur-sm">
       {watermark ? (
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <Image
             src={watermark}
             alt=""
             fill
-            quality={80}
+            quality={85}
             sizes="100vw"
-            className="object-cover object-center opacity-[0.14] saturate-[0.75] contrast-[1.05]"
+            className="object-cover object-center opacity-[0.28] saturate-[0.8]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/94 via-white/91 to-white/96" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/88 via-white/84 to-white/90" />
         </div>
       ) : null}
 
-      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+      <div className="relative mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11">
         <div
           className={cn(
             "grid gap-8 lg:gap-x-10 lg:gap-y-6",
