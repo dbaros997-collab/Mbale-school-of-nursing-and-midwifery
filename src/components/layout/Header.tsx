@@ -17,7 +17,7 @@ type NavItem = (typeof mainNav)[number];
 const megaMenuTextShadow =
   "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_14px_rgba(0,0,0,0.55)]";
 
-const MEGA_WALLPAPER_VERSION = "mega-v4-hq";
+const MEGA_WALLPAPER_VERSION = "mega-v5-courses-clear";
 const DEFAULT_MEGA_WALLPAPER = "/images/gallery/mega/about-campus.jpg";
 
 function megaMenuWallpaperUrl(path: string) {

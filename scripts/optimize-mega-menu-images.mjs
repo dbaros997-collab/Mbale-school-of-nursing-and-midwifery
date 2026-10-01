@@ -8,18 +8,33 @@ import sharp from "sharp";
 const outDir = path.join(process.cwd(), "public/images/gallery/mega");
 const BANNER = { width: 1920, height: 1080 };
 
-/** output filename → source relative to public/ */
+/** output filename → { src relative to public/, sharp cover position } */
 const WALLPAPERS = {
-  "about-campus.jpg": "images/footer-aerial-valley-hq.jpg",
-  "courses-students.jpg": "images/footer-campus-building.jpg",
-  "students-campus.jpg": "images/footer-campus-wide.jpg",
-  "news-graduation.jpg": "images/footer-section-bg.jpg",
-  "quicklinks-campus.jpg": "images/campus-wallpaper.jpg",
+  "about-campus.jpg": {
+    src: "images/footer-aerial-valley-hq.jpg",
+    position: "centre",
+  },
+  "courses-students.jpg": {
+    src: "images/footer-aerial-valley-hq.jpg",
+    position: "right",
+  },
+  "students-campus.jpg": {
+    src: "images/footer-campus-wide.jpg",
+    position: "centre",
+  },
+  "news-graduation.jpg": {
+    src: "images/footer-section-bg.jpg",
+    position: "centre",
+  },
+  "quicklinks-campus.jpg": {
+    src: "images/campus-wallpaper.jpg",
+    position: "centre",
+  },
 };
 
 fs.mkdirSync(outDir, { recursive: true });
 
-async function writeWallpaper(filename, publicRelative) {
+async function writeWallpaper(filename, { src: publicRelative, position }) {
   const input = path.join(process.cwd(), "public", publicRelative);
   if (!fs.existsSync(input)) {
     console.warn(`Skip missing: ${publicRelative}`);
@@ -38,7 +53,7 @@ async function writeWallpaper(filename, publicRelative) {
     .rotate()
     .resize(outW, targetH, {
       fit: "cover",
-      position: "centre",
+      position,
       kernel: sharp.kernel.lanczos3,
       withoutEnlargement: true,
     })
@@ -52,9 +67,11 @@ async function writeWallpaper(filename, publicRelative) {
 
   const outMeta = await sharp(outPath).metadata();
   const kb = (fs.statSync(outPath).size / 1024).toFixed(0);
-  console.log(`${filename} ← ${publicRelative} → ${outMeta.width}x${outMeta.height} (${kb} KB)`);
+  console.log(
+    `${filename} ← ${publicRelative} (${position}) → ${outMeta.width}x${outMeta.height} (${kb} KB)`,
+  );
 }
 
-for (const [name, src] of Object.entries(WALLPAPERS)) {
-  await writeWallpaper(name, src);
+for (const [name, config] of Object.entries(WALLPAPERS)) {
+  await writeWallpaper(name, config);
 }

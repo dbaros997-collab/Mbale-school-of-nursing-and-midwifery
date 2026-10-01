@@ -114,7 +114,7 @@ export const mainNav = [
       href: "/admissions",
       cta: "Apply for admission",
       image: "/images/gallery/mega/courses-students.jpg",
-      imageAlt: "Mbale School of Nursing and Midwifery campus buildings",
+      imageAlt: "High-resolution aerial view of Mbale School of Nursing and Midwifery campus",
     },
   },
   {
