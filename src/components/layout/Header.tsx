@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { headerApplyCta, mainNav, quickLinks, SCHOOL } from "@/lib/data";
+import { headerApplyCta, mainNav, quickLinks, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { HeaderPortalActions } from "@/components/layout/HeaderPortalActions";
@@ -162,7 +162,7 @@ export function Header() {
       ref={headerRef}
       onMouseLeave={scheduleClose}
       onMouseEnter={clearCloseTimer}
-      className="fixed inset-x-0 top-[var(--site-status-bar-height)] z-[60] transition-all duration-300"
+      className="fixed inset-x-0 top-[var(--site-top-bars-height)] z-[60] transition-all duration-300"
     >
       <div
         className={cn(
@@ -292,6 +292,39 @@ export function Header() {
             className="overflow-hidden border-t border-white/15 bg-primary/95 backdrop-blur-md sm:hidden"
           >
             <nav className="space-y-1 px-4 py-3" aria-label="Mobile">
+              <div className="mb-3 rounded-lg border border-white/15 bg-white/5 px-3 py-3">
+                <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
+                  Contact us
+                </p>
+                <ul className="space-y-1.5 text-sm text-white/95">
+                  <li>
+                    <a
+                      href={`tel:${SCHOOL.phone.replace(/\s/g, "")}`}
+                      className="block rounded px-2 py-1 hover:bg-white/10 focus-ring"
+                    >
+                      Call {SCHOOL.phone}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`)}
+                      className="block rounded px-2 py-1 text-[#25D366] hover:bg-white/10 focus-ring"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`mailto:${SCHOOL.email}`}
+                      className="block rounded px-2 py-1 hover:bg-white/10 focus-ring"
+                    >
+                      {SCHOOL.email}
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div className="mb-3 rounded-lg border border-white/15 bg-white/5 px-3 py-3">
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
                   Student &amp; staff access

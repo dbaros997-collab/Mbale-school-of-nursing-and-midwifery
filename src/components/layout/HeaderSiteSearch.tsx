@@ -56,7 +56,7 @@ export function HeaderSiteSearch({ glassHome = false }: HeaderSiteSearchProps) {
           role="dialog"
           aria-modal="true"
           aria-label="Search website"
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 pt-[calc(var(--site-status-bar-height)+var(--site-header-height)+1rem)] backdrop-blur-sm"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 pt-[calc(var(--site-top-bars-height)+var(--site-header-height)+1rem)] backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div

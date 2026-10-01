@@ -46,6 +46,56 @@ export default function ContactPage() {
         image="/images/front-offices.jpg"
       />
 
+      <section
+        className="border-b border-white/10 bg-primary-dark py-5 text-white sm:py-6"
+        aria-label="Quick contact"
+      >
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+          {[
+            { icon: MapPin, label: "Campus", value: SCHOOL.address },
+            {
+              icon: Phone,
+              label: "Helpline",
+              value: SCHOOL.phone,
+              href: `tel:${SCHOOL.phone.replace(/\s/g, "")}`,
+            },
+            {
+              icon: WhatsAppIcon,
+              label: "WhatsApp",
+              value: SCHOOL.whatsapp,
+              href: schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`),
+              external: true,
+            },
+            {
+              icon: Mail,
+              label: "Email",
+              value: SCHOOL.email,
+              href: `mailto:${SCHOOL.email}`,
+            },
+          ].map(({ icon: Icon, label, value, href, external }) => (
+            <div key={label} className="flex gap-3 rounded-xl border border-white/15 bg-white/5 p-4">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-yellow/20 text-brand-yellow">
+                <Icon className="h-5 w-5" aria-hidden />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-white/70">{label}</p>
+                {href ? (
+                  <a
+                    href={href}
+                    className="mt-0.5 block text-sm font-semibold leading-snug text-white hover:text-brand-yellow hover:underline"
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    {value}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 text-sm font-semibold leading-snug">{value}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="section-surface py-14">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
