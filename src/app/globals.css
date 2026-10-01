@@ -353,8 +353,13 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
-html.mega-nav-open .homepage-slider {
+html.mega-nav-open .hero-section__content {
   visibility: hidden;
+  pointer-events: none;
+}
+
+.mega-panel--over-hero {
+  background: transparent;
 }
 
 /* Grace High–style homepage hero — full-viewport sliding photos + centered copy */

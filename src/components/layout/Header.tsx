@@ -7,6 +7,7 @@ import { ChevronDown, ChevronRight, ExternalLink, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { headerApplyCta, mainNav, quickLinks, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { heroAsset } from "@/lib/hero-assets";
+import { dispatchMegaHeroSync } from "@/lib/mega-hero-sync";
 import { cn } from "@/lib/utils";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { HeaderPortalActions } from "@/components/layout/HeaderPortalActions";
@@ -141,7 +142,9 @@ export function Header() {
     null;
   const mobileWallpaper =
     navFeaturedImage(mobileNavRaw) ?? DEFAULT_MEGA_WALLPAPER;
-  const showNavyHeader = !isHome || megaOpen;
+  /** On the homepage, show the live hero slider through the menu — not a second upscaled image. */
+  const megaOverHomeHero = isHome && megaOpen;
+  const showNavyHeader = !isHome;
   const glassHome = isHome && !megaOpen;
   const navPhotoOpen = megaOpen || open;
 
@@ -193,6 +196,9 @@ export function Header() {
   function openMega(label: string) {
     clearCloseTimer();
     setActiveMega(label);
+    const raw = mainNav.find((item) => item.label === label) ?? null;
+    const image = navFeaturedImage(raw);
+    if (image) dispatchMegaHeroSync(image);
   }
 
   function scheduleClose() {
@@ -216,7 +222,7 @@ export function Header() {
           megaOpen && "border-b-[3px] border-brand-green shadow-[0_24px_56px_rgba(0,0,0,0.35)]",
         )}
       >
-        {megaOpen && megaBackdropImage ? (
+        {megaOpen && megaBackdropImage && !megaOverHomeHero ? (
           <div
             className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary"
             aria-hidden
@@ -232,18 +238,21 @@ export function Header() {
               ? megaOpen && megaBackdropImage
                 ? "border-b border-white/20 bg-transparent shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
                 : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
-            : glassHome
-              ? scrolled || open
-                ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
-                : "bg-gradient-to-b from-black/55 via-black/25 to-transparent"
-              : "header-navy-row header-bar-accent-navy",
-        )}
-      >
+              : megaOverHomeHero
+                ? "border-b border-white/15 bg-black/40 backdrop-blur-sm shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+                : glassHome
+                  ? scrolled || open
+                    ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
+                    : "bg-gradient-to-b from-black/55 via-black/25 to-transparent"
+                  : "header-navy-row header-bar-accent-navy",
+          )}
+        >
         <Link
           href="/"
           className={cn(
             "group relative z-10 flex shrink-0 items-center px-3 py-2 focus-ring sm:px-4 lg:pl-6 lg:pr-4",
-            glassHome && "drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]",
+            (glassHome || megaOverHomeHero) &&
+              "drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]",
           )}
           aria-label={SCHOOL.name}
         >
@@ -312,7 +321,7 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center md:flex">
-            <HeaderSiteSearch glassHome={glassHome} />
+            <HeaderSiteSearch glassHome={glassHome || megaOverHomeHero} />
           </div>
 
           <button
@@ -341,7 +350,11 @@ export function Header() {
               className="relative z-10 hidden w-full sm:block"
               onMouseEnter={clearCloseTimer}
             >
-              <MegaPanel item={activeItem} onNavigate={() => setActiveMega(null)} />
+              <MegaPanel
+                item={activeItem}
+                overHomeHero={megaOverHomeHero}
+                onNavigate={() => setActiveMega(null)}
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -538,13 +551,26 @@ function MegaFeaturedCallout({
   );
 }
 
-function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => void }) {
+function MegaPanel({
+  item,
+  overHomeHero = false,
+  onNavigate,
+}: {
+  item: MegaNavItem;
+  overHomeHero?: boolean;
+  onNavigate: () => void;
+}) {
   const columns = item.columns;
   const featured = "featured" in item ? item.featured : undefined;
   const columnCount = columns?.length ?? 0;
 
   return (
-    <div className="relative overflow-hidden text-white">
+    <div
+      className={cn(
+        "relative overflow-hidden text-white",
+        overHomeHero && "mega-panel--over-hero",
+      )}
+    >
       <div className="relative mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11">
         <div
           className={cn(

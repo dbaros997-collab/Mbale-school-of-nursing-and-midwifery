@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FlaskConical, GraduationCap, Mail, MapPin, Monitor, Phone } from "lucide-react";
 import { heroQuickBoxes, heroSlides, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { heroAsset } from "@/lib/hero-assets";
+import { MEGA_HERO_SYNC_EVENT } from "@/lib/mega-hero-sync";
 import { cn } from "@/lib/utils";
 
 const quickIconMap = {
@@ -88,6 +89,17 @@ export function Hero() {
     () => heroSlides.map((s) => heroAsset(s.image)),
     [],
   );
+
+  useEffect(() => {
+    const onMegaHeroSync = (event: Event) => {
+      const image = (event as CustomEvent<{ image?: string }>).detail?.image;
+      if (!image) return;
+      const nextIndex = heroSlides.findIndex((slide) => slide.image === image);
+      if (nextIndex >= 0) setIndex(nextIndex);
+    };
+    window.addEventListener(MEGA_HERO_SYNC_EVENT, onMegaHeroSync);
+    return () => window.removeEventListener(MEGA_HERO_SYNC_EVENT, onMegaHeroSync);
+  }, []);
 
   const copyBlock = animateCopy ? (
     <motion.div
