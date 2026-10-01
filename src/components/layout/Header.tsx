@@ -14,6 +14,10 @@ import { HeaderSiteSearch } from "@/components/layout/HeaderSiteSearch";
 
 type NavItem = (typeof mainNav)[number];
 
+/** Keeps white mega-menu type readable on bright photo backgrounds. */
+const megaMenuTextShadow =
+  "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_14px_rgba(0,0,0,0.55)]";
+
 type MegaNavLink = {
   label: string;
   href: string;
@@ -174,10 +178,10 @@ export function Header() {
         megaOpen && "z-[62]",
       )}
     >
-      <div className="relative">
+      <div className="relative isolate">
         {megaOpen && megaBackdropImage ? (
           <div
-            className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary"
             aria-hidden
           >
             <Image
@@ -185,17 +189,20 @@ export function Header() {
               alt=""
               fill
               priority
-              quality={90}
+              quality={95}
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-cover object-center brightness-[1.05] contrast-[1.08] saturate-[1.06]"
             />
-            <div className="absolute inset-0 bg-black/35" aria-hidden />
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/5 to-black/22"
+              aria-hidden
+            />
           </div>
         ) : null}
 
         <div
           className={cn(
-            "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
+            "relative z-10 flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
             showNavyHeader
               ? megaOpen && megaBackdropImage
                 ? "border-b border-white/20 bg-transparent shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
@@ -306,7 +313,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-50 hidden w-full sm:block"
+              className="relative z-10 hidden w-full sm:block"
               onMouseEnter={clearCloseTimer}
             >
               <MegaPanel item={activeItem} onNavigate={() => setActiveMega(null)} />
@@ -474,7 +481,12 @@ function MegaFeaturedCallout({
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
             {featured.eyebrow}
           </p>
-          <p className="mt-1 font-display text-lg font-semibold leading-snug text-white sm:text-xl">
+          <p
+            className={cn(
+              "mt-1 font-display text-lg font-semibold leading-snug text-white sm:text-xl",
+              megaMenuTextShadow,
+            )}
+          >
             {featured.title}
           </p>
         </div>
@@ -522,7 +534,12 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
                 colIndex < columnCount - 1 && "lg:border-r lg:border-white/25 lg:pr-8 xl:pr-10",
               )}
             >
-              <h3 className="font-display border-b border-white/30 pb-2 text-xl font-semibold text-white sm:text-[1.35rem]">
+              <h3
+                className={cn(
+                  "font-display border-b border-white/30 pb-2 text-xl font-semibold text-white sm:text-[1.35rem]",
+                  megaMenuTextShadow,
+                )}
+              >
                 {col.title}
               </h3>
               <ul className="mt-4 space-y-2">
@@ -532,7 +549,10 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
                     <li key={link.label}>
                       <MegaNavAnchor
                         link={link}
-                        className="group inline-flex items-center gap-1.5 text-[15px] leading-snug text-white/90 transition hover:text-brand-yellow"
+                        className={cn(
+                          "group inline-flex items-center gap-1.5 text-[15px] leading-snug text-white transition hover:text-brand-yellow",
+                          megaMenuTextShadow,
+                        )}
                         onNavigate={onNavigate}
                       >
                         <span className="group-hover:underline">{link.label}</span>

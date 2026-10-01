@@ -113,8 +113,8 @@ export const mainNav = [
       title: "Certificate and diploma programmes in nursing and midwifery.",
       href: "/admissions",
       cta: "Apply for admission",
-      image: "/images/gallery/clinical-demonstration.jpg",
-      imageAlt: "Clinical skills demonstration with nursing students at Mbale School of Nursing and Midwifery",
+      image: "/images/gallery/students-building-front.jpg",
+      imageAlt: "Nursing students in green uniforms posing in front of the Mbale School of Nursing and Midwifery building",
     },
   },
   {
@@ -154,8 +154,8 @@ export const mainNav = [
       href: "/portal",
       cta: "Open portal",
       microsoftSignIn: true,
-      image: "/images/gallery/classroom-training.jpg",
-      imageAlt: "Instructor leading a classroom training session with nursing students",
+      image: "/images/gallery/school-bus-group.jpg",
+      imageAlt: "Students lined up in front of the Mbale School of Nursing and Midwifery school bus",
     },
   },
   {
@@ -852,10 +852,10 @@ export const galleryItems = [
   },
   {
     id: "ward",
-    src: "/images/hero/hero-hospital-ward.jpg",
-    alt: "Hospital ward placement",
-    caption: "Hospital ward placements",
-    category: "Training",
+    src: "/images/gallery/staff-office-collaboration.jpg",
+    alt: "Two Mbale School of Nursing and Midwifery staff members reviewing documents together at a desk",
+    caption: "Teamwork in student services",
+    category: "Staff",
   },
   {
     id: "skills-lab",
@@ -866,10 +866,10 @@ export const galleryItems = [
   },
   {
     id: "students",
-    src: "/images/hero/raw/students-celebration.jpg",
-    alt: "Students celebrating on campus",
-    caption: "Student life at Mbale School of Nursing and Midwifery",
-    category: "Life",
+    src: "/images/gallery/campus-courtyard-aerial.jpg",
+    alt: "Aerial view of the Mbale School of Nursing and Midwifery campus courtyard",
+    caption: "Campus courtyard from above",
+    category: "Campus",
   },
 ] as const;
 
