@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronDown, ChevronRight, ExternalLink, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { headerApplyCta, mainNav, quickLinks, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -275,7 +275,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-50 hidden bg-panel sm:block"
+            className="absolute inset-x-0 top-full z-50 hidden sm:block"
             onMouseEnter={clearCloseTimer}
           >
             <MegaPanel item={activeItem} onNavigate={() => setActiveMega(null)} />
@@ -428,69 +428,37 @@ type MegaFeatured = NonNullable<
     : never
 >;
 
-function MegaFeaturedPanel({
+function MegaFeaturedCallout({
   featured,
   onNavigate,
 }: {
   featured: MegaFeatured;
   onNavigate: () => void;
 }) {
-  const image = "image" in featured && featured.image ? featured.image : undefined;
-  const imageAlt =
-    "imageAlt" in featured && featured.imageAlt ? featured.imageAlt : "Campus highlight";
-
-  const copy = (
-    <>
-      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
-        {featured.eyebrow}
-      </p>
-      <h4 className="mt-3 text-lg font-bold leading-snug lg:text-xl">{featured.title}</h4>
-      {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
-        <div className="mt-5">
-          <HeaderPortalActions layout="stacked" showStaffAdmin={false} onNavigate={onNavigate} />
-        </div>
-      ) : (
-        <Link
-          href={featured.href}
-          className="btn-pill mt-5 inline-flex min-w-[120px] items-center justify-center rounded-full bg-brand-green px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-brand-green-dark focus-ring"
-          onClick={onNavigate}
-        >
-          {featured.cta}
-        </Link>
-      )}
-    </>
-  );
-
-  if (!image) {
-    return (
-      <div className="relative overflow-hidden rounded-lg bg-primary p-6 text-white shadow-[0_12px_32px_rgba(22,53,127,0.18)]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.18]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 14px 14px, rgba(255,255,255,0.45) 0 1.4px, transparent 2px)`,
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <div className="relative flex flex-col justify-center">{copy}</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="overflow-hidden rounded-lg border border-border/80 bg-primary text-white shadow-[0_12px_32px_rgba(22,53,127,0.2)] lg:grid lg:min-h-[320px] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)]">
-      <div className="relative z-10 order-2 flex flex-col justify-center bg-primary p-6 lg:order-1 lg:p-7">
-        {copy}
-      </div>
-      <div className="relative order-1 min-h-[220px] bg-neutral-100 lg:order-2 lg:min-h-full">
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          quality={92}
-          className="object-cover object-center contrast-[1.03] saturate-[1.06]"
-          sizes="(max-width: 1024px) 100vw, 420px"
-        />
+    <div className="mt-8 border-t border-border/80 pt-6 lg:mt-10 lg:pt-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="min-w-0 max-w-2xl">
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
+            {featured.eyebrow}
+          </p>
+          <p className="mt-1 font-display text-lg font-semibold leading-snug text-primary sm:text-xl">
+            {featured.title}
+          </p>
+        </div>
+        {"microsoftSignIn" in featured && featured.microsoftSignIn ? (
+          <div className="shrink-0">
+            <HeaderPortalActions layout="stacked" showStaffAdmin={false} onNavigate={onNavigate} />
+          </div>
+        ) : (
+          <Link
+            href={featured.href}
+            className="btn-pill inline-flex shrink-0 items-center justify-center rounded-full bg-brand-yellow px-5 py-2.5 text-sm font-bold text-primary-dark shadow-sm transition hover:bg-brand-yellow/90 focus-ring"
+            onClick={onNavigate}
+          >
+            {featured.cta}
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -500,18 +468,34 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
   const columns = item.columns;
   const featured = "featured" in item ? item.featured : undefined;
   const columnCount = columns?.length ?? 0;
+  const watermark =
+    featured && "image" in featured && featured.image ? featured.image : undefined;
 
   return (
-    <div className="border-t-[3px] border-brand-green bg-gradient-to-b from-white to-panel text-foreground shadow-[0_18px_40px_rgba(22,53,127,0.12)]">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <div className="relative overflow-hidden border-t-[3px] border-brand-green bg-white text-foreground shadow-[0_20px_48px_rgba(22,53,127,0.14)]">
+      {watermark ? (
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <Image
+            src={watermark}
+            alt=""
+            fill
+            quality={80}
+            sizes="100vw"
+            className="object-cover object-center opacity-[0.14] saturate-[0.75] contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/94 via-white/91 to-white/96" />
+        </div>
+      ) : null}
+
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         <div
           className={cn(
-            "grid gap-8 lg:items-stretch lg:gap-8 xl:gap-10",
-            featured && columnCount >= 3
-              ? "lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(300px,420px)]"
-              : featured
-                ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,420px)]"
-                : "lg:grid-cols-3",
+            "grid gap-8 lg:gap-x-10 lg:gap-y-6",
+            columnCount >= 3
+              ? "lg:grid-cols-3"
+              : columnCount === 2
+                ? "lg:grid-cols-2"
+                : "lg:grid-cols-1",
           )}
         >
           {columns?.map((col, colIndex) => (
@@ -519,36 +503,39 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
               key={col.title}
               className={cn(
                 "min-w-0",
-                colIndex < columnCount - 1 &&
-                  "lg:border-r lg:border-border/70 lg:pr-6 xl:pr-8",
+                colIndex < columnCount - 1 && "lg:border-r lg:border-border/60 lg:pr-8 xl:pr-10",
               )}
             >
-              <p className="border-b-2 border-brand-green/35 pb-2 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+              <h3 className="font-display border-b border-primary/15 pb-2 text-xl font-semibold text-primary sm:text-[1.35rem]">
                 {col.title}
-              </p>
-              <ul className="mt-4 space-y-2.5">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <MegaNavAnchor
-                      link={link}
-                      className="group flex items-center gap-2.5 text-sm text-foreground transition hover:text-primary"
-                      onNavigate={onNavigate}
-                    >
-                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-green text-white shadow-sm">
-                        <ChevronRight className="h-3 w-3" aria-hidden />
-                      </span>
-                      <span className="group-hover:underline">{link.label}</span>
-                    </MegaNavAnchor>
-                  </li>
-                ))}
+              </h3>
+              <ul className="mt-4 space-y-2">
+                {col.links.map((link) => {
+                  const external = link.external ?? /^https?:\/\//i.test(link.href);
+                  return (
+                    <li key={link.label}>
+                      <MegaNavAnchor
+                        link={link}
+                        className="group inline-flex items-center gap-1.5 text-[15px] leading-snug text-foreground/90 transition hover:text-primary"
+                        onNavigate={onNavigate}
+                      >
+                        <span className="group-hover:underline">{link.label}</span>
+                        {external ? (
+                          <ExternalLink
+                            className="h-3.5 w-3.5 shrink-0 text-muted opacity-70"
+                            aria-hidden
+                          />
+                        ) : null}
+                      </MegaNavAnchor>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
-
-          {featured ? (
-            <MegaFeaturedPanel featured={featured} onNavigate={onNavigate} />
-          ) : null}
         </div>
+
+        {featured ? <MegaFeaturedCallout featured={featured} onNavigate={onNavigate} /> : null}
       </div>
     </div>
   );
