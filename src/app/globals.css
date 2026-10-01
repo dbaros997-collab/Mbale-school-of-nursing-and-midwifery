@@ -53,7 +53,7 @@
   --font-lora: "Lora", Georgia, serif;
 
   /* Fixed chrome — keep offsets in sync with SiteContactBar + SiteStatusBar + Header */
-  --site-contact-bar-height: 2.25rem;
+  --site-contact-bar-height: 2.75rem;
   --site-status-bar-height: 3.5rem;
   --site-top-bars-height: calc(var(--site-contact-bar-height) + var(--site-status-bar-height));
   --site-header-height: 6rem;
@@ -61,7 +61,7 @@
 
 @media (min-width: 640px) {
   :root {
-    --site-contact-bar-height: 2.5rem;
+    --site-contact-bar-height: 3.25rem;
     --site-status-bar-height: 4rem;
     --site-header-height: 6.75rem;
   }

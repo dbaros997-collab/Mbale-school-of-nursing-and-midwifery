@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { FlaskConical, GraduationCap, Monitor } from "lucide-react";
-import { heroQuickBoxes, heroSlides, SCHOOL } from "@/lib/data";
+import { FlaskConical, GraduationCap, Mail, MapPin, Monitor, Phone } from "lucide-react";
+import { heroQuickBoxes, heroSlides, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
+import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { cn } from "@/lib/utils";
 
@@ -217,6 +218,77 @@ function HeroCopy({
           {slide.secondaryCta}
         </Link>
       </div>
+      <HeroContactPanel />
     </>
+  );
+}
+
+function HeroContactPanel() {
+  const phoneHref = `tel:${SCHOOL.phone.replace(/\s/g, "")}`;
+  const whatsappHref = schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`);
+
+  const items = [
+    {
+      icon: Phone,
+      label: "Call",
+      value: SCHOOL.phone,
+      href: phoneHref,
+    },
+    {
+      icon: WhatsAppIcon,
+      label: "WhatsApp",
+      value: "Chat now",
+      href: whatsappHref,
+      external: true,
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      value: SCHOOL.email,
+      href: `mailto:${SCHOOL.email}`,
+    },
+  ] as const;
+
+  return (
+    <div
+      className="mx-auto mt-6 max-w-3xl rounded-2xl border border-white/25 bg-black/45 px-4 py-3 text-left backdrop-blur-md sm:mt-8 sm:px-5 sm:py-4"
+      aria-label="Contact Mbale School of Nursing and Midwifery"
+    >
+      <p className="text-center text-[11px] font-bold uppercase tracking-[0.14em] text-brand-yellow sm:text-xs">
+        Contact us — we are here to help
+      </p>
+      <p className="mt-1 flex items-start justify-center gap-1.5 text-center text-xs leading-snug text-white/90 sm:text-sm">
+        <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-yellow" aria-hidden />
+        <span>{SCHOOL.address}</span>
+      </p>
+      <ul className="mt-3 grid gap-2 sm:grid-cols-3 sm:gap-3">
+        {items.map(({ icon: Icon, label, value, href, ...rest }) => (
+          <li key={label}>
+            <a
+              href={href}
+              className="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 transition hover:border-brand-yellow/50 hover:bg-white/15 focus-ring"
+              {...("external" in rest && rest.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-yellow/20 text-brand-yellow">
+                <Icon className="h-4 w-4" aria-hidden />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10px] font-bold uppercase tracking-wider text-white/70">
+                  {label}
+                </span>
+                <span className="block truncate text-sm font-bold text-white">{value}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2 text-center text-xs text-white/80">
+        <Link href="/contact" className="font-bold text-brand-yellow underline-offset-2 hover:underline">
+          Full contact details &amp; directions
+        </Link>
+      </p>
+    </div>
   );
 }
