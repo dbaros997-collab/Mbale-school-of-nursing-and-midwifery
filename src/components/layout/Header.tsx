@@ -174,31 +174,32 @@ export function Header() {
         megaOpen && "z-[62]",
       )}
     >
-      {megaOpen && megaBackdropImage ? (
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden"
-          aria-hidden
-        >
-          <Image
-            src={megaBackdropImage}
-            alt=""
-            fill
-            priority
-            quality={90}
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-primary/45" aria-hidden />
-        </div>
-      ) : null}
+      <div className="relative">
+        {megaOpen && megaBackdropImage ? (
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+            aria-hidden
+          >
+            <Image
+              src={megaBackdropImage}
+              alt=""
+              fill
+              priority
+              quality={90}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-black/35" aria-hidden />
+          </div>
+        ) : null}
 
-      <div
-        className={cn(
-          "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
-          showNavyHeader
-            ? megaOpen && megaBackdropImage
-              ? "border-b border-white/20 bg-black/25 shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
-              : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
+        <div
+          className={cn(
+            "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
+            showNavyHeader
+              ? megaOpen && megaBackdropImage
+                ? "border-b border-white/20 bg-transparent shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+                : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
             : glassHome
               ? scrolled || open
                 ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
@@ -292,26 +293,27 @@ export function Header() {
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-      </div>
+        </div>
 
-      <AnimatePresence>
-        {activeItem ? (
-          <motion.div
-            key="mega-menu"
-            id="mega-menu"
-            role="region"
-            aria-label={`${activeItem.label} menu`}
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-50 hidden sm:block"
-            onMouseEnter={clearCloseTimer}
-          >
-            <MegaPanel item={activeItem} onNavigate={() => setActiveMega(null)} />
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+        <AnimatePresence>
+          {activeItem ? (
+            <motion.div
+              key="mega-menu"
+              id="mega-menu"
+              role="region"
+              aria-label={`${activeItem.label} menu`}
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-50 hidden w-full sm:block"
+              onMouseEnter={clearCloseTimer}
+            >
+              <MegaPanel item={activeItem} onNavigate={() => setActiveMega(null)} />
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+      </div>
 
       <AnimatePresence>
         {open ? (
