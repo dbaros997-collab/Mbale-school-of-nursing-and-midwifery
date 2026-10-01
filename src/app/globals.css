@@ -337,7 +337,8 @@ html:not(.js-ready) main [style*="opacity:0"] {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(1.1) contrast(1.12) saturate(1.1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .mega-menu-wallpaper-scrim {
@@ -346,9 +347,9 @@ html:not(.js-ready) main [style*="opacity:0"] {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.22) 0%,
-    rgba(0, 0, 0, 0.06) 45%,
-    rgba(0, 0, 0, 0.18) 100%
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.04) 50%,
+    rgba(0, 0, 0, 0.14) 100%
   );
 }
 

@@ -17,8 +17,8 @@ type NavItem = (typeof mainNav)[number];
 const megaMenuTextShadow =
   "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_14px_rgba(0,0,0,0.55)]";
 
-const MEGA_WALLPAPER_VERSION = "mega-v3-clear";
-const DEFAULT_MEGA_WALLPAPER = "/images/gallery/campus-aerial-wide.jpg";
+const MEGA_WALLPAPER_VERSION = "mega-v4-hq";
+const DEFAULT_MEGA_WALLPAPER = "/images/gallery/mega/about-campus.jpg";
 
 function megaMenuWallpaperUrl(path: string) {
   const sep = path.includes("?") ? "&" : "?";
@@ -30,7 +30,14 @@ function MegaMenuWallpaper({ src }: { src: string }) {
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={megaMenuWallpaperUrl(src)} alt="" className="mega-menu-wallpaper" decoding="async" />
+      <img
+        src={megaMenuWallpaperUrl(src)}
+        alt=""
+        className="mega-menu-wallpaper"
+        decoding="async"
+        fetchPriority="high"
+        sizes="100vw"
+      />
       <div className="mega-menu-wallpaper-scrim" aria-hidden />
     </>
   );
@@ -210,7 +217,12 @@ export function Header() {
         megaOpen && "z-[62]",
       )}
     >
-      <div className="relative isolate">
+      <div
+        className={cn(
+          "relative isolate",
+          megaOpen && "border-b-[3px] border-brand-green shadow-[0_24px_56px_rgba(0,0,0,0.35)]",
+        )}
+      >
         {megaOpen && megaBackdropImage ? (
           <div
             className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary"
@@ -329,9 +341,9 @@ export function Header() {
               id="mega-menu"
               role="region"
               aria-label={`${activeItem.label} menu`}
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10 hidden w-full sm:block"
               onMouseEnter={clearCloseTimer}
@@ -539,7 +551,7 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
   const columnCount = columns?.length ?? 0;
 
   return (
-    <div className="relative overflow-hidden border-t-[3px] border-brand-green text-white shadow-[0_24px_56px_rgba(0,0,0,0.35)]">
+    <div className="relative overflow-hidden text-white">
       <div className="relative mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11">
         <div
           className={cn(
