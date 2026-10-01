@@ -7,6 +7,7 @@ import { FlaskConical, GraduationCap, Mail, MapPin, Monitor, Phone } from "lucid
 import { heroQuickBoxes, heroSlides, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
 import { WhatsAppIcon } from "@/components/layout/WhatsAppIcon";
 import { ImageSlider } from "@/components/ui/ImageSlider";
+import { heroAsset } from "@/lib/hero-assets";
 import { cn } from "@/lib/utils";
 
 const quickIconMap = {
@@ -20,14 +21,6 @@ const quickIconStyles = [
   "accent-chip-sky",
   "accent-chip-gold",
 ] as const;
-
-/** Bust CDN/browser cache when a new build deploys. */
-const HERO_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "hero-v6-compact";
-
-function heroAsset(path: string) {
-  return `${path}?v=${HERO_ASSET_VERSION}`;
-}
 
 const HERO_TITLE_ACCENTS = [
   "hero-accent-green",

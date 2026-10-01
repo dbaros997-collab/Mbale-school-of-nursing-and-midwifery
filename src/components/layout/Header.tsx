@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronDown, ChevronRight, ExternalLink, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { headerApplyCta, mainNav, quickLinks, SCHOOL, schoolWhatsAppUrl } from "@/lib/data";
+import { heroAsset } from "@/lib/hero-assets";
 import { cn } from "@/lib/utils";
 import { SchoolLogo } from "@/components/layout/SchoolLogo";
 import { HeaderPortalActions } from "@/components/layout/HeaderPortalActions";
@@ -17,21 +18,15 @@ type NavItem = (typeof mainNav)[number];
 const megaMenuTextShadow =
   "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_14px_rgba(0,0,0,0.55)]";
 
-const MEGA_WALLPAPER_VERSION = "mega-v5-courses-clear";
-const DEFAULT_MEGA_WALLPAPER = "/images/gallery/mega/about-campus.jpg";
+const DEFAULT_MEGA_WALLPAPER = "/images/hero/hero-instrument-training.jpg";
 
-function megaMenuWallpaperUrl(path: string) {
-  const sep = path.includes("?") ? "&" : "?";
-  return `${path}${sep}v=${MEGA_WALLPAPER_VERSION}`;
-}
-
-/** Full-resolution campus photo — avoids Next image compression on large nav backdrops. */
+/** Same files & cache key as the homepage hero slider. */
 function MegaMenuWallpaper({ src }: { src: string }) {
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={megaMenuWallpaperUrl(src)}
+        src={heroAsset(src)}
         alt=""
         className="mega-menu-wallpaper"
         decoding="async"
@@ -96,9 +91,7 @@ function navHasDropdown(item: NavItem): boolean {
 function navFeaturedImage(item: NavItem | null): string | undefined {
   if (!item || !("featured" in item) || !item.featured) return undefined;
   const featured = item.featured;
-  const image = "image" in featured && featured.image ? featured.image : undefined;
-  if (!image || image.includes("/images/hero/")) return undefined;
-  return image;
+  return "image" in featured && featured.image ? featured.image : undefined;
 }
 
 function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
