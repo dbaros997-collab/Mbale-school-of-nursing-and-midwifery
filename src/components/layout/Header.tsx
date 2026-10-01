@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -17,6 +16,25 @@ type NavItem = (typeof mainNav)[number];
 /** Keeps white mega-menu type readable on bright photo backgrounds. */
 const megaMenuTextShadow =
   "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_14px_rgba(0,0,0,0.55)]";
+
+const MEGA_WALLPAPER_VERSION = "mega-v3-clear";
+const DEFAULT_MEGA_WALLPAPER = "/images/gallery/campus-aerial-wide.jpg";
+
+function megaMenuWallpaperUrl(path: string) {
+  const sep = path.includes("?") ? "&" : "?";
+  return `${path}${sep}v=${MEGA_WALLPAPER_VERSION}`;
+}
+
+/** Full-resolution campus photo — avoids Next image compression on large nav backdrops. */
+function MegaMenuWallpaper({ src }: { src: string }) {
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={megaMenuWallpaperUrl(src)} alt="" className="mega-menu-wallpaper" decoding="async" />
+      <div className="mega-menu-wallpaper-scrim" aria-hidden />
+    </>
+  );
+}
 
 type MegaNavLink = {
   label: string;
@@ -71,7 +89,9 @@ function navHasDropdown(item: NavItem): boolean {
 function navFeaturedImage(item: NavItem | null): string | undefined {
   if (!item || !("featured" in item) || !item.featured) return undefined;
   const featured = item.featured;
-  return "image" in featured && featured.image ? featured.image : undefined;
+  const image = "image" in featured && featured.image ? featured.image : undefined;
+  if (!image || image.includes("/images/hero/")) return undefined;
+  return image;
 }
 
 function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
@@ -115,8 +135,20 @@ export function Header() {
   const activeItem = resolveMegaNavItem(activeRaw);
   const megaOpen = Boolean(activeItem);
   const megaBackdropImage = navFeaturedImage(activeRaw);
+  const mobileNavRaw =
+    mainNav.find((item) => item.label === mobileSection) ??
+    mainNav.find((item) => navHasDropdown(item)) ??
+    null;
+  const mobileWallpaper =
+    navFeaturedImage(mobileNavRaw) ?? DEFAULT_MEGA_WALLPAPER;
   const showNavyHeader = !isHome || megaOpen;
   const glassHome = isHome && !megaOpen;
+  const navPhotoOpen = megaOpen || open;
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("mega-nav-open", navPhotoOpen);
+    return () => document.documentElement.classList.remove("mega-nav-open");
+  }, [navPhotoOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -184,19 +216,7 @@ export function Header() {
             className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-primary"
             aria-hidden
           >
-            <Image
-              src={megaBackdropImage}
-              alt=""
-              fill
-              priority
-              quality={95}
-              sizes="100vw"
-              className="object-cover object-center brightness-[1.05] contrast-[1.08] saturate-[1.06]"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/5 to-black/22"
-              aria-hidden
-            />
+            <MegaMenuWallpaper src={megaBackdropImage} />
           </div>
         ) : null}
 
@@ -328,9 +348,14 @@ export function Header() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-white/15 bg-primary/95 backdrop-blur-md sm:hidden"
+            className="relative overflow-hidden border-t border-white/15 sm:hidden"
           >
-            <nav className="space-y-1 px-4 py-3" aria-label="Mobile">
+            {open ? (
+              <div className="pointer-events-none absolute inset-0 bg-primary" aria-hidden>
+                <MegaMenuWallpaper src={mobileWallpaper} />
+              </div>
+            ) : null}
+            <nav className="relative z-10 space-y-1 px-4 py-3" aria-label="Mobile">
               <div className="mb-3 rounded-lg border border-white/15 bg-white/5 px-3 py-3">
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-brand-yellow">
                   Contact us
