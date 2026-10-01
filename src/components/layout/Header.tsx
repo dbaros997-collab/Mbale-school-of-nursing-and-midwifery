@@ -162,7 +162,7 @@ export function Header() {
       ref={headerRef}
       onMouseLeave={scheduleClose}
       onMouseEnter={clearCloseTimer}
-      className="fixed inset-x-0 top-[var(--site-top-bars-height)] z-[60] transition-all duration-300"
+      className="fixed inset-x-0 top-[var(--site-status-bar-height)] z-[60] transition-all duration-300"
     >
       <div
         className={cn(

@@ -52,16 +52,13 @@
   --font-work-sans: "Work Sans", Arial, sans-serif;
   --font-lora: "Lora", Georgia, serif;
 
-  /* Fixed chrome — keep offsets in sync with SiteContactBar + SiteStatusBar + Header */
-  --site-contact-bar-height: 2.75rem;
+  /* Fixed chrome — keep header offset in sync with SiteStatusBar + Header */
   --site-status-bar-height: 3.5rem;
-  --site-top-bars-height: calc(var(--site-contact-bar-height) + var(--site-status-bar-height));
   --site-header-height: 6rem;
 }
 
 @media (min-width: 640px) {
   :root {
-    --site-contact-bar-height: 3.25rem;
     --site-status-bar-height: 4rem;
     --site-header-height: 6.75rem;
   }
@@ -430,7 +427,7 @@ html:not(.js-ready) main [style*="opacity:0"] {
     justify-content: flex-start;
     min-height: auto;
     padding:
-      calc(var(--site-top-bars-height) + var(--site-header-height))
+      calc(var(--site-status-bar-height) + var(--site-header-height))
       0
       0;
     gap: 0;
@@ -919,17 +916,6 @@ html:not(.js-ready) main [style*="opacity:0"] {
     var(--brand-green) 50%,
     var(--brand-yellow) 100%
   );
-}
-
-/* Top contact strip (phone, email, WhatsApp) */
-.site-contact-bar--glass {
-  background: linear-gradient(
-    180deg,
-    rgba(14, 36, 86, 0.92) 0%,
-    rgba(14, 36, 86, 0.78) 100%
-  );
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 /* Site-wide scrolling status bar */

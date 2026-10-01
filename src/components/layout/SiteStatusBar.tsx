@@ -13,7 +13,7 @@ export function SiteStatusBar() {
   return (
     <div
       className={cn(
-        "site-status-bar fixed inset-x-0 top-[var(--site-contact-bar-height)] z-[70] flex h-[var(--site-status-bar-height)] items-stretch text-white",
+        "site-status-bar fixed inset-x-0 top-0 z-[70] flex h-[var(--site-status-bar-height)] items-stretch text-white",
         isHome
           ? "site-status-bar--glass border-b border-white/10"
           : "border-b border-white/10 bg-primary shadow-[0_2px_12px_rgba(22,53,127,0.25)]",

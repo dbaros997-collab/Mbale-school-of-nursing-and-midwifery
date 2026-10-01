@@ -1,5 +1,4 @@
 import { Header } from "@/components/layout/Header";
-import { SiteContactBar } from "@/components/layout/SiteContactBar";
 import { SiteStatusBar } from "@/components/layout/SiteStatusBar";
 import { MarketingFooter } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
@@ -14,10 +13,9 @@ export default function MarketingLayout({
 }) {
   return (
     <>
-      <SiteContactBar />
       <SiteStatusBar />
       <Header />
-      <div className="site-shell flex min-w-0 flex-1 flex-col overflow-x-hidden pt-[calc(var(--site-top-bars-height)+var(--site-header-height))] [&:has(#main-content>.homepage-slider:first-child)]:pt-0">
+      <div className="site-shell flex min-w-0 flex-1 flex-col overflow-x-hidden pt-[calc(var(--site-status-bar-height)+var(--site-header-height))] [&:has(#main-content>.homepage-slider:first-child)]:pt-0">
         <main id="main-content" className="min-w-0 flex-1 overflow-x-hidden">
           {children}
         </main>
