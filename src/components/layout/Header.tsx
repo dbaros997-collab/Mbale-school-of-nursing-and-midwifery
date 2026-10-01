@@ -184,11 +184,11 @@ export function Header() {
             alt=""
             fill
             priority
-            quality={85}
+            quality={90}
             sizes="100vw"
-            className="object-cover object-center opacity-[0.38] saturate-[0.85]"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/84 to-primary/92" />
+          <div className="absolute inset-0 bg-primary/45" aria-hidden />
         </div>
       ) : null}
 
@@ -197,7 +197,7 @@ export function Header() {
           "relative flex w-full min-h-[var(--site-header-height)] items-center transition-all duration-300",
           showNavyHeader
             ? megaOpen && megaBackdropImage
-              ? "border-b border-white/15 bg-primary/75 backdrop-blur-md shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+              ? "border-b border-white/20 bg-black/25 shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
               : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
             : glassHome
               ? scrolled || open
@@ -466,13 +466,13 @@ function MegaFeaturedCallout({
   onNavigate: () => void;
 }) {
   return (
-    <div className="mt-8 border-t border-border/80 pt-6 lg:mt-10 lg:pt-8">
+    <div className="mt-8 border-t border-white/25 pt-6 lg:mt-10 lg:pt-8">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="min-w-0 max-w-2xl">
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-yellow">
             {featured.eyebrow}
           </p>
-          <p className="mt-1 font-display text-lg font-semibold leading-snug text-primary sm:text-xl">
+          <p className="mt-1 font-display text-lg font-semibold leading-snug text-white sm:text-xl">
             {featured.title}
           </p>
         </div>
@@ -498,25 +498,9 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
   const columns = item.columns;
   const featured = "featured" in item ? item.featured : undefined;
   const columnCount = columns?.length ?? 0;
-  const watermark =
-    featured && "image" in featured && featured.image ? featured.image : undefined;
 
   return (
-    <div className="relative overflow-hidden border-t-[3px] border-brand-green bg-white/95 text-foreground shadow-[0_24px_56px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-      {watermark ? (
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <Image
-            src={watermark}
-            alt=""
-            fill
-            quality={85}
-            sizes="100vw"
-            className="object-cover object-center opacity-[0.28] saturate-[0.8]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/88 via-white/84 to-white/90" />
-        </div>
-      ) : null}
-
+    <div className="relative overflow-hidden border-t-[3px] border-brand-green text-white shadow-[0_24px_56px_rgba(0,0,0,0.35)]">
       <div className="relative mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8 lg:py-11">
         <div
           className={cn(
@@ -533,10 +517,10 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
               key={col.title}
               className={cn(
                 "min-w-0",
-                colIndex < columnCount - 1 && "lg:border-r lg:border-border/60 lg:pr-8 xl:pr-10",
+                colIndex < columnCount - 1 && "lg:border-r lg:border-white/25 lg:pr-8 xl:pr-10",
               )}
             >
-              <h3 className="font-display border-b border-primary/15 pb-2 text-xl font-semibold text-primary sm:text-[1.35rem]">
+              <h3 className="font-display border-b border-white/30 pb-2 text-xl font-semibold text-white sm:text-[1.35rem]">
                 {col.title}
               </h3>
               <ul className="mt-4 space-y-2">
@@ -546,13 +530,13 @@ function MegaPanel({ item, onNavigate }: { item: MegaNavItem; onNavigate: () => 
                     <li key={link.label}>
                       <MegaNavAnchor
                         link={link}
-                        className="group inline-flex items-center gap-1.5 text-[15px] leading-snug text-foreground/90 transition hover:text-primary"
+                        className="group inline-flex items-center gap-1.5 text-[15px] leading-snug text-white/90 transition hover:text-brand-yellow"
                         onNavigate={onNavigate}
                       >
                         <span className="group-hover:underline">{link.label}</span>
                         {external ? (
                           <ExternalLink
-                            className="h-3.5 w-3.5 shrink-0 text-muted opacity-70"
+                            className="h-3.5 w-3.5 shrink-0 text-white/70 opacity-90"
                             aria-hidden
                           />
                         ) : null}
