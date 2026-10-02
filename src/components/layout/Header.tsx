@@ -154,6 +154,11 @@ export function Header() {
   }, [navPhotoOpen]);
 
   useEffect(() => {
+    document.documentElement.classList.toggle("home-mega-over-hero", megaOverHomeHero);
+    return () => document.documentElement.classList.remove("home-mega-over-hero");
+  }, [megaOverHomeHero]);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -219,7 +224,9 @@ export function Header() {
       <div
         className={cn(
           "relative isolate",
-          megaOpen && "border-b-[3px] border-brand-green shadow-[0_24px_56px_rgba(0,0,0,0.35)]",
+          megaOpen &&
+            "border-b-[3px] border-brand-green shadow-[0_24px_56px_rgba(0,0,0,0.35)]",
+          megaOverHomeHero && "header-mega-over-hero",
         )}
       >
         {megaOpen && megaBackdropImage && !megaOverHomeHero ? (
@@ -239,7 +246,7 @@ export function Header() {
                 ? "border-b border-white/20 bg-transparent shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
                 : "header-navy-row header-bar-accent-navy shadow-[0_8px_28px_rgba(22,53,127,0.28)]"
               : megaOverHomeHero
-                ? "border-b border-white/15 bg-black/40 backdrop-blur-sm shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+                ? "border-b border-white/15 bg-black/25 shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
                 : glassHome
                   ? scrolled || open
                     ? "border-b border-white/15 bg-black/45 backdrop-blur-sm"
@@ -366,7 +373,7 @@ export function Header() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="relative overflow-hidden border-t border-white/15 sm:hidden"
+            className="mobile-nav-drawer relative overflow-x-hidden overflow-y-auto overscroll-contain border-t border-white/15 sm:hidden"
           >
             {open ? (
               <div className="pointer-events-none absolute inset-0 bg-primary" aria-hidden>

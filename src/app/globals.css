@@ -347,19 +347,47 @@ html:not(.js-ready) main [style*="opacity:0"] {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.18) 0%,
-    rgba(0, 0, 0, 0.04) 50%,
-    rgba(0, 0, 0, 0.14) 100%
+    rgba(14, 36, 86, 0.55) 0%,
+    rgba(14, 36, 86, 0.35) 50%,
+    rgba(14, 36, 86, 0.5) 100%
   );
 }
 
-html.mega-nav-open .hero-section__content {
-  visibility: hidden;
+/* Mobile hamburger menu — scroll panel content, not the page behind (e.g. homepage hero) */
+@media (max-width: 639px) {
+  html.mega-nav-open,
+  html.mega-nav-open body {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .mobile-nav-drawer {
+    max-height: calc(
+      100dvh - var(--site-status-bar-height) - var(--site-header-height)
+    );
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Homepage: mega menu over live hero — copy stays visible, must not steal clicks */
+html.home-mega-over-hero .hero-section__content,
+html.home-mega-over-hero .hero-section__content * {
   pointer-events: none;
 }
 
 .mega-panel--over-hero {
   background: transparent;
+  box-shadow: none;
+  pointer-events: auto;
+}
+
+html.home-mega-over-hero #mega-menu {
+  pointer-events: auto;
+}
+
+html.home-mega-over-hero .header-mega-over-hero {
+  background: transparent;
+  box-shadow: none;
 }
 
 /* Grace High–style homepage hero — full-viewport sliding photos + centered copy */
