@@ -139,7 +139,7 @@ export function Hero() {
         <div className="hero-section__content">{copyBlock}</div>
       </div>
 
-      <div className="relative z-10 -mt-6 px-4 md:-mt-16 md:px-6 lg:px-8">
+      <div className="hero-quick-panel relative z-10 -mt-6 px-4 md:-mt-16 md:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid overflow-hidden rounded-2xl content-panel sm:grid-cols-2 lg:grid-cols-3">
             {heroQuickBoxes.map((box, i) => {

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { eventHref, events } from "@/lib/data";
+import { eventHref } from "@/lib/data";
+import { getSiteEvents } from "@/lib/site-content/queries";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -40,8 +41,9 @@ function DateBadge({
   );
 }
 
-export function UpcomingEvents() {
-  const [lead, ...rest] = events;
+export async function UpcomingEvents() {
+  const siteEvents = await getSiteEvents();
+  const [lead, ...rest] = siteEvents;
 
   return (
     <section id="events" className="scroll-mt-24 section-sky py-12 sm:py-16">

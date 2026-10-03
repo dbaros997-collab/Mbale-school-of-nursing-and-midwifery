@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { spotlightArticles } from "@/lib/data";
+import type { SpotlightArticle } from "@/lib/site-content/types";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-export function SpotlightGrid() {
-  const stories = spotlightArticles.slice(0, 2);
+type SpotlightGridProps = {
+  articles: SpotlightArticle[];
+};
+
+export function SpotlightGrid({ articles }: SpotlightGridProps) {
+  const stories = articles.slice(0, 2);
 
   return (
     <section id="spotlight" className="scroll-mt-24 section-green py-12 sm:py-16">

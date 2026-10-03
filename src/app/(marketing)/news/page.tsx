@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { newsItems } from "@/lib/data";
 import { marketingPageMetadata } from "@/lib/seo";
+import { getSiteNewsItems } from "@/lib/site-content/queries";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { EventsSidebar } from "@/components/news/EventsSidebar";
 import { NewsLeadFeature } from "@/components/news/NewsLeadFeature";
@@ -13,17 +13,13 @@ export const metadata = marketingPageMetadata("/news", {
     "Happening around campus — stories, announcements, and updates from Mbale School of Nursing and Midwifery.",
 });
 
-function sortedNews() {
-  return [...newsItems].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
 type NewsIndexPageProps = {
   searchParams: Promise<{ category?: string }>;
 };
 
 export default async function NewsIndexPage({ searchParams }: NewsIndexPageProps) {
   const { category } = await searchParams;
-  const sorted = sortedNews();
+  const sorted = await getSiteNewsItems();
   const filtered = category
     ? sorted.filter((item) => item.category.toLowerCase() === category.toLowerCase())
     : sorted;

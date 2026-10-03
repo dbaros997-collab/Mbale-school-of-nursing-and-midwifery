@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getNewsById, newsHref, newsItems, SCHOOL } from "@/lib/data";
+import { newsHref, SCHOOL } from "@/lib/data";
+import { getSiteNewsById, getSiteNewsItems } from "@/lib/site-content/queries";
 import { formatDisplayDate } from "@/lib/format-display-date";
 import { marketingPageMetadata } from "@/lib/seo";
 import { Button } from "@/components/ui/Button";
@@ -10,13 +11,14 @@ type PageProps = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const newsItems = await getSiteNewsItems();
   return newsItems.map((item) => ({ id: item.id }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
-  const item = getNewsById(id);
+  const item = await getSiteNewsById(id);
   if (!item) {
     return marketingPageMetadata(`/news/${id}`, {
       title: "Story not found",
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function NewsStoryPage({ params }: PageProps) {
   const { id } = await params;
-  const item = getNewsById(id);
+  const item = await getSiteNewsById(id);
   if (!item) notFound();
 
   return (

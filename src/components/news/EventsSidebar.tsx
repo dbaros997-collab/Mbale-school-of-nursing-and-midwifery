@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { eventHref, events } from "@/lib/data";
+import { eventHref } from "@/lib/data";
+import { getSiteEvents } from "@/lib/site-content/queries";
 import { cn } from "@/lib/utils";
 
 function eventDayParts(iso: string) {
@@ -17,15 +18,13 @@ type EventsSidebarProps = {
   showFooterLink?: boolean;
 };
 
-export function EventsSidebar({
+export async function EventsSidebar({
   limit = 4,
   title = "Upcoming Events & Activities",
   className,
   showFooterLink = true,
 }: EventsSidebarProps) {
-  const upcoming = [...events]
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, limit);
+  const upcoming = (await getSiteEvents()).slice(0, limit);
 
   return (
     <aside className={cn("rounded-2xl border border-border bg-panel p-5 sm:p-6", className)}>

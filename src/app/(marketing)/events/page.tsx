@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { eventHref, events } from "@/lib/data";
+import { eventHref } from "@/lib/data";
+import { getSiteEvents } from "@/lib/site-content/queries";
 import { formatDisplayDate } from "@/lib/format-display-date";
 import { marketingPageMetadata } from "@/lib/seo";
 import { PageBanner } from "@/components/ui/PageBanner";
@@ -12,10 +13,8 @@ export const metadata = marketingPageMetadata("/events", {
     "Upcoming orientations, open days, admissions sessions, and community events at Mbale School of Nursing and Midwifery.",
 });
 
-export default function EventsIndexPage() {
-  const sorted = [...events].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-  );
+export default async function EventsIndexPage() {
+  const sorted = await getSiteEvents();
 
   return (
     <div>

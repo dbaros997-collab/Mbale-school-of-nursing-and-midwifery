@@ -48,6 +48,9 @@ export default function AdminOverviewPage() {
           description={`${adminProfile?.title ?? "Administrator"} · System analytics and control panel`}
           actions={
             <>
+              <Button href="/admin/website" variant="ghost" size="sm">
+                Website content
+              </Button>
               <Button href="/admin/analytics" variant="ghost" size="sm">
                 Analytics
               </Button>

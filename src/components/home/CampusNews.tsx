@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { newsItems } from "@/lib/data";
 import { EventsSidebar } from "@/components/news/EventsSidebar";
 import { NewsStoryList } from "@/components/news/NewsStoryList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { getSiteNewsItems } from "@/lib/site-content/queries";
 
-function sortedNews() {
-  return [...newsItems].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
-export function CampusNews() {
-  const stories = sortedNews().slice(0, 5);
+export async function CampusNews() {
+  const stories = (await getSiteNewsItems()).slice(0, 5);
 
   return (
     <section id="campus-news" className="scroll-mt-24 bg-panel py-12 sm:py-16">

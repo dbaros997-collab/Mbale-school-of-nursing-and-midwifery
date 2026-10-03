@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Megaphone } from "lucide-react";
-import { newsHref, newsItems, openIntakesLabel, SCHOOL } from "@/lib/data";
+import { newsHref, openIntakesLabel, SCHOOL } from "@/lib/data";
+import type { SiteNewsItem } from "@/lib/site-content/types";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 function formatDate(iso: string) {
@@ -14,7 +15,11 @@ function formatDate(iso: string) {
   });
 }
 
-export function NewsAnnouncements() {
+type NewsAnnouncementsProps = {
+  items: SiteNewsItem[];
+};
+
+export function NewsAnnouncements({ items }: NewsAnnouncementsProps) {
   return (
     <section className="brand-panel py-16 text-white sm:py-20" aria-labelledby="news-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -44,7 +49,7 @@ export function NewsAnnouncements() {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
-          {newsItems.map((item, index) => (
+          {items.map((item, index) => (
             <motion.article
               key={item.id}
               initial={{ opacity: 0, y: 16 }}

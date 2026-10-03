@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { statusBarUpdates } from "@/lib/data";
+import type { StatusBarUpdate } from "@/lib/site-content/types";
 import { cn } from "@/lib/utils";
 
-export function SiteStatusBar() {
+type SiteStatusBarProps = {
+  items: StatusBarUpdate[];
+};
+
+export function SiteStatusBar({ items }: SiteStatusBarProps) {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const track = [...statusBarUpdates, ...statusBarUpdates];
+  const track = [...items, ...items];
 
   return (
     <div

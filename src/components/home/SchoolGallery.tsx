@@ -3,11 +3,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { galleryItems } from "@/lib/data";
+import type { GalleryItem } from "@/lib/site-content/types";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-
-type GalleryItem = (typeof galleryItems)[number];
 
 /** Match homepage hero slide typography (HeroCopy). */
 const heroTitleClass =
@@ -15,18 +13,22 @@ const heroTitleClass =
 const heroLeadClass =
   "text-[0.9375rem] leading-[1.65] sm:text-[1.0625rem] sm:leading-[1.7] lg:text-lg lg:leading-[1.75]";
 
-export function SchoolGallery() {
+type SchoolGalleryProps = {
+  items: GalleryItem[];
+};
+
+export function SchoolGallery({ items }: SchoolGalleryProps) {
   const [active, setActive] = useState<GalleryItem | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const slideImages = useMemo(() => galleryItems.map((item) => item.src), []);
+  const slideImages = useMemo(() => items.map((item) => item.src), [items]);
   /** Portrait staff photos — show the full image instead of cropping to 16:9. */
   const fullPhotoSlides = useMemo(
     () =>
       new Set([
-        galleryItems.find((item) => item.id === "staff-deputy-principal-buyo-iron")?.src ?? "",
+        items.find((item) => item.id === "staff-deputy-principal-buyo-iron")?.src ?? "",
       ]),
-    [],
+    [items],
   );
 
   const openLightbox = useCallback((item: GalleryItem) => {
@@ -85,7 +87,7 @@ export function SchoolGallery() {
               altPrefix="Gallery photo"
               objectFitFor={fullPhotoSlides}
               renderOverlay={(index) => {
-                const item = galleryItems[index];
+                const item = items[index];
                 if (!item) return null;
 
                 return (

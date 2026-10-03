@@ -353,7 +353,7 @@ html:not(.js-ready) main [style*="opacity:0"] {
   );
 }
 
-/* Mobile hamburger menu — scroll panel content, not the page behind (e.g. homepage hero) */
+/* Nav open — keep page from scrolling under mega menu / mobile drawer */
 @media (max-width: 639px) {
   html.mega-nav-open,
   html.mega-nav-open body {
@@ -369,15 +369,41 @@ html:not(.js-ready) main [style*="opacity:0"] {
   }
 }
 
-/* Homepage: mega menu over live hero — copy stays visible, must not steal clicks */
-html.home-mega-over-hero .hero-section__content,
-html.home-mega-over-hero .hero-section__content * {
+@media (min-width: 640px) {
+  html.mega-nav-open,
+  html.mega-nav-open body {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+}
+
+/* Homepage: mega menu over live hero — hide hero copy/tubs so nav columns stay readable */
+html.home-mega-over-hero .hero-section__content {
+  visibility: hidden;
+  opacity: 0;
   pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+html.home-mega-over-hero .hero-quick-panel {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .mega-panel--over-hero {
-  background: transparent;
-  box-shadow: none;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 36, 86, 0.94) 0%,
+    rgba(14, 36, 86, 0.9) 55%,
+    rgba(14, 36, 86, 0.96) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   pointer-events: auto;
 }
 

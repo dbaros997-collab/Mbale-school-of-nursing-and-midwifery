@@ -10,6 +10,7 @@ import {
   LogOut,
   Users,
   Wallet,
+  Globe,
   X,
 } from "lucide-react";
 import { ADMIN_NAV } from "@/lib/portal/constants";
@@ -24,6 +25,7 @@ const iconMap = {
   CalendarDays,
   Users,
   Wallet,
+  Globe,
 } as const;
 
 type AdminSidebarProps = {

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CalendarDays, MapPin } from "lucide-react";
-import { eventHref, events, getEventById } from "@/lib/data";
+import { eventHref } from "@/lib/data";
+import { getSiteEventById, getSiteEvents } from "@/lib/site-content/queries";
 import { formatDisplayDate } from "@/lib/format-display-date";
 import { marketingPageMetadata } from "@/lib/seo";
 import { Button } from "@/components/ui/Button";
@@ -11,13 +12,14 @@ type PageProps = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const events = await getSiteEvents();
   return events.map((item) => ({ id: item.id }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
-  const item = getEventById(id);
+  const item = await getSiteEventById(id);
   if (!item) {
     return marketingPageMetadata(`/events/${id}`, { title: "Event not found" });
   }
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function EventDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const event = getEventById(id);
+  const event = await getSiteEventById(id);
   if (!event) notFound();
 
   const isAdmissionsRelated =

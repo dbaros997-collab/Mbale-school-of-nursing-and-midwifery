@@ -47,6 +47,7 @@ export const PORTAL_NAV = [
 
 export const ADMIN_NAV = [
   { href: "/admin", label: "Overview", icon: "LayoutDashboard", ready: true },
+  { href: "/admin/website", label: "Website content", icon: "Globe", ready: true },
   { href: "/admin/analytics", label: "Analytics", icon: "BarChart3", ready: true },
   { href: "/admin/applications", label: "Applications", icon: "ClipboardList", ready: true },
   { href: "/admin/students", label: "Students", icon: "Users", ready: true },

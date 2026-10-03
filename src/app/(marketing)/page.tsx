@@ -11,6 +11,7 @@ import { CampusMapSection } from "@/components/home/CampusMapSection";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { marketingPageMetadata } from "@/lib/seo";
+import { getSiteContent } from "@/lib/site-content/queries";
 
 export const metadata = marketingPageMetadata("/", {
   title: "Welcome",
@@ -18,7 +19,9 @@ export const metadata = marketingPageMetadata("/", {
     "Mbale School of Nursing and Midwifery — nursing and midwifery training in Eastern Uganda. Accredited programmes, clinical placements, and student portal.",
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { galleryItems, spotlightArticles } = await getSiteContent();
+
   return (
     <>
       <Hero />
@@ -30,8 +33,8 @@ export default function HomePage() {
       </ScrollReveal>
       <AboutBand />
       <CampusNews />
-      <SchoolGallery />
-      <SpotlightGrid />
+      <SchoolGallery items={galleryItems} />
+      <SpotlightGrid articles={spotlightArticles} />
       <VisionMission />
       <ScrollReveal direction="up">
         <CampusMapSection />
