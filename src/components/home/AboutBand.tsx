@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /** Bust browser cache when a new build deploys. */
 const ABOUT_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-campus-v2";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-campus-v3";
 
 export function AboutBand() {
   return (
@@ -40,22 +40,39 @@ export function AboutBand() {
             })}
           </ul>
         </div>
-        <figure className="relative">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
-            <Image
-              src={`${SCHOOL.aboutCampusPhoto}?v=${ABOUT_ASSET_VERSION}`}
-              alt={`Nursing and midwifery students and staff in front of the ${SCHOOL.shortName} campus building in Malere, Mbale`}
-              fill
-              unoptimized
-              priority
-              className="object-cover object-[center_35%]"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-          <figcaption className="mt-3 text-center text-sm text-white/80">
-            Our Malere campus — the school&apos;s home behind Forest Road, Mbale.
-          </figcaption>
-        </figure>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+          <figure className="relative">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+              <Image
+                src={`${SCHOOL.aboutCampusOriginPhoto}?v=${ABOUT_ASSET_VERSION}`}
+                alt={`${SCHOOL.shortName} campus building and front offices in Malere, Mbale`}
+                fill
+                unoptimized
+                priority
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 50vw, 480px"
+              />
+            </div>
+            <figcaption className="mt-3 text-center text-sm text-white/80">
+              {SCHOOL.aboutCampusOriginCaption}
+            </figcaption>
+          </figure>
+          <figure className="relative">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+              <Image
+                src={`${SCHOOL.aboutCampusPhoto}?v=${ABOUT_ASSET_VERSION}`}
+                alt={`Nursing and midwifery students and staff in front of the ${SCHOOL.shortName} campus building in Malere, Mbale`}
+                fill
+                unoptimized
+                className="object-cover object-[center_35%]"
+                sizes="(max-width: 1024px) 50vw, 480px"
+              />
+            </div>
+            <figcaption className="mt-3 text-center text-sm text-white/80">
+              {SCHOOL.aboutCampusPhotoCaption}
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   );

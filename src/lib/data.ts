@@ -26,8 +26,13 @@ export const SCHOOL = {
     "Christians from GREM started Mbale School of Nursing and Midwifery when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
   /** Malere campus — where the school is rooted and how the main block looks today. */
   aboutCampusLocation:
-    "Our training home has been in Malere, Mbale — behind Forest Road — since GREM established the school to serve Eastern Uganda. The main campus block in the photograph is where students and staff gather every day: classrooms, offices, and the front steps where each cohort celebrates milestones together.",
+    "Our training home has been in Malere, Mbale — behind Forest Road — since GREM established the school to serve Eastern Uganda. The campus block and front offices shown here are where teaching began to take shape — classrooms, skills spaces, and student services looking out onto the courtyard. Today, students and staff still meet on these same grounds, pictured in the group photo beside it.",
+  aboutCampusOriginPhoto: "/images/front-offices.jpg",
+  aboutCampusOriginCaption:
+    "The Malere campus building and front offices — how the school’s home looked as programmes grew.",
   aboutCampusPhoto: "/images/gallery/students-building-front.jpg",
+  aboutCampusPhotoCaption:
+    "Nursing and midwifery students and staff at the front of campus today.",
 } as const;
 
 /** Embedded Google Maps iframe URL (campus pin). */
