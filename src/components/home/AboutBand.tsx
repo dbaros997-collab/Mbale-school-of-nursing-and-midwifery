@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /** Bust browser cache when a new build deploys. */
 const ABOUT_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-v1";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-campus-v2";
 
 export function AboutBand() {
   return (
@@ -14,6 +14,9 @@ export function AboutBand() {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emphasis-gold">About Mbale School of Nursing and Midwifery</p>
           <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Our story</h2>
           <p className="mt-4 leading-body text-white/90">{SCHOOL.aboutStory}</p>
+          <h3 className="mt-6 text-lg font-bold text-white">Where we are — and how our campus looks</h3>
+          <p className="mt-2 leading-body text-white/90">{SCHOOL.aboutCampusLocation}</p>
+          <p className="mt-2 text-sm text-brand-sky">{SCHOOL.address}</p>
           <blockquote className="pull-quote mt-4 border-l-2 border-brand-yellow pl-4 text-lg font-semibold text-white">
             &ldquo;{SCHOOL.motto}&rdquo;
           </blockquote>
@@ -37,17 +40,22 @@ export function AboutBand() {
             })}
           </ul>
         </div>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
-          <Image
-            src={`/images/about/leadership-team.jpg?v=${ABOUT_ASSET_VERSION}`}
-            alt="Mbale School of Nursing and Midwifery leadership and nursing faculty team"
-            fill
-            unoptimized
-            priority
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-        </div>
+        <figure className="relative">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+            <Image
+              src={`${SCHOOL.aboutCampusPhoto}?v=${ABOUT_ASSET_VERSION}`}
+              alt={`Nursing and midwifery students and staff in front of the ${SCHOOL.shortName} campus building in Malere, Mbale`}
+              fill
+              unoptimized
+              priority
+              className="object-cover object-[center_35%]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+          <figcaption className="mt-3 text-center text-sm text-white/80">
+            Our Malere campus — the school&apos;s home behind Forest Road, Mbale.
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

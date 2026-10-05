@@ -24,6 +24,10 @@ export const SCHOOL = {
     "Registered with the Ministry of Education and Sports. Accredited by UNMC and NCHE.",
   aboutStory:
     "Christians from GREM started Mbale School of Nursing and Midwifery when they saw how much Eastern Uganda needed community health care. We train nurses and midwives to serve the poor, the young, and the elderly — In God We Love and Serve.",
+  /** Malere campus — where the school is rooted and how the main block looks today. */
+  aboutCampusLocation:
+    "Our training home has been in Malere, Mbale — behind Forest Road — since GREM established the school to serve Eastern Uganda. The main campus block in the photograph is where students and staff gather every day: classrooms, offices, and the front steps where each cohort celebrates milestones together.",
+  aboutCampusPhoto: "/images/gallery/students-building-front.jpg",
 } as const;
 
 /** Embedded Google Maps iframe URL (campus pin). */
