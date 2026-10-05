@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /** Bust browser cache when a new build deploys. */
 const ABOUT_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-campus-v3";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "about-marare-v4";
 
 export function AboutBand() {
   return (
@@ -45,11 +45,11 @@ export function AboutBand() {
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
               <Image
                 src={`${SCHOOL.aboutCampusOriginPhoto}?v=${ABOUT_ASSET_VERSION}`}
-                alt={`${SCHOOL.shortName} campus building and front offices in Malere, Mbale`}
+                alt={`${SCHOOL.shortName} celebrates the 2nd graduation at Marare campus, 28 April 2023`}
                 fill
                 unoptimized
                 priority
-                className="object-cover object-center"
+                className="object-cover object-[center_40%]"
                 sizes="(max-width: 1024px) 50vw, 480px"
               />
             </div>
