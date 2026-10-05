@@ -6,15 +6,14 @@ import { SCHOOL } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const LEARNING_PILLARS_IMAGE = {
-  jpg: "/images/learning-pillars-clinical.jpg",
-  webp: "/images/learning-pillars-clinical.webp",
-  width: 960,
-  height: 1280,
+  jpg: "/images/gallery/students-building-front.jpg",
+  width: 1600,
+  height: 1200,
 } as const;
 
 /** Bust browser cache when a new build deploys. */
 const PILLARS_ASSET_VERSION =
-  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "pillars-clinical-v1";
+  process.env.NEXT_PUBLIC_LOGO_VERSION?.trim() || "pillars-campus-v2";
 
 function pillarsAsset(path: string) {
   return `${path}?v=${PILLARS_ASSET_VERSION}`;
@@ -127,19 +126,16 @@ export function LearningPillars() {
           className="relative"
         >
           <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-primary-dark/5 sm:aspect-[4/5] lg:aspect-[3/4]">
-            <picture>
-              <source srcSet={pillarsAsset(LEARNING_PILLARS_IMAGE.webp)} type="image/webp" />
-              <img
-                src={pillarsAsset(LEARNING_PILLARS_IMAGE.jpg)}
-                alt="Midwifery students observing infant care practice on a training mannequin"
-                width={LEARNING_PILLARS_IMAGE.width}
-                height={LEARNING_PILLARS_IMAGE.height}
-                decoding="async"
-                loading="lazy"
-                draggable={false}
-                className="h-full w-full object-cover object-[center_42%]"
-              />
-            </picture>
+            <img
+              src={pillarsAsset(LEARNING_PILLARS_IMAGE.jpg)}
+              alt={`Nursing and midwifery students and staff gathered in front of the ${SCHOOL.shortName} campus building in Mbale`}
+              width={LEARNING_PILLARS_IMAGE.width}
+              height={LEARNING_PILLARS_IMAGE.height}
+              decoding="async"
+              loading="lazy"
+              draggable={false}
+              className="h-full w-full object-cover object-[center_35%]"
+            />
           </div>
           <div className="mt-4 flex justify-center lg:mt-5">
             <a
