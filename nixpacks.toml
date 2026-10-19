@@ -1,0 +1,17 @@
+# Coolify Nixpacks / Railpack — Next.js standalone on a small VPS (2 GB RAM).
+# Prefer repo Dockerfile (GHCR pull) when possible; use this when building on the VPS.
+# Node version: .nvmrc / .node-version / package.json engines (>=22).
+
+[variables]
+NEXT_TELEMETRY_DISABLED = "1"
+CI = "true"
+NODE_OPTIONS = "--max-old-space-size=1024"
+
+[phases.install]
+cmds = ["npm ci --no-audit --no-fund"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"
