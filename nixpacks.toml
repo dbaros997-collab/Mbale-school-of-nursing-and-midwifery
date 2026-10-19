@@ -5,6 +5,10 @@
 [variables]
 NEXT_TELEMETRY_DISABLED = "1"
 CI = "true"
+NODE_ENV = "production"
+PORT = "3000"
+HOSTNAME = "0.0.0.0"
+HOST = "0.0.0.0"
 # Leave headroom for Docker + sharp/webpack on a 2 GB VPS (heap cap ~896 MiB).
 NODE_OPTIONS = "--max-old-space-size=896"
 MBSNM_SKIP_ICON_REGEN = "1"

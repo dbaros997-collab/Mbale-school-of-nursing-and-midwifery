@@ -1,11 +1,13 @@
 /**
  * Start the Next.js standalone server on all network interfaces.
  *
- * Docker and Coolify inject HOSTNAME=<container-id> at runtime. Next.js
- * standalone reads process.env.HOSTNAME for the bind address, so without
- * this override the server listens on loopback and reverse-proxy / mobile
- * requests time out.
+ * Docker/Coolify inject HOSTNAME=<container-id> at runtime. Next.js standalone
+ * uses process.env.HOSTNAME as the bind address — must be 0.0.0.0 behind a proxy.
+ *
+ * Docker images copy standalone to /app (server.js at repo root). Nixpacks/Railpack
+ * keep output under .next/standalone — we spawn server.js from that directory.
  */
+import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,16 +15,21 @@ import { createRequire } from "node:module";
 import { loadRuntimeDotenv } from "./load-runtime-dotenv.mjs";
 import { publishRuntimeEnvSnapshot, syncMicrosoftEnvAliases } from "./microsoft-env-sync.mjs";
 
-process.env.HOSTNAME = "0.0.0.0";
-
-if (!process.env.PORT?.trim()) {
-  process.env.PORT = "3000";
+function forceNetworkBind() {
+  process.env.HOSTNAME = "0.0.0.0";
+  process.env.HOST = "0.0.0.0";
+  if (!process.env.PORT?.trim()) {
+    process.env.PORT = "3000";
+  }
 }
+
+forceNetworkBind();
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 loadRuntimeDotenv(rootDir);
 syncMicrosoftEnvAliases();
 publishRuntimeEnvSnapshot();
+forceNetworkBind();
 warnProductionDatabaseEnv();
 
 function warnProductionDatabaseEnv() {
@@ -44,19 +51,41 @@ function warnProductionDatabaseEnv() {
   }
 }
 
-const serverEntry = [
-  join(rootDir, "server.js"),
-  join(rootDir, ".next", "standalone", "server.js"),
-].find(existsSync);
+const dockerServer = join(rootDir, "server.js");
+const standaloneDir = join(rootDir, ".next", "standalone");
+const standaloneServer = join(standaloneDir, "server.js");
 
-if (!serverEntry) {
-  console.error("Standalone server not found. Run `npm run build` first.");
-  process.exit(1);
+function logBindTarget(layout) {
+  console.log(
+    `[start-standalone] ${layout} → http://${process.env.HOSTNAME}:${process.env.PORT} (PORT=${process.env.PORT})`,
+  );
 }
 
-try {
-  createRequire(import.meta.url)(serverEntry);
-} catch (error) {
-  console.error("[start-standalone] Failed to start Next.js server:", error);
+if (existsSync(dockerServer)) {
+  logBindTarget("Docker / GHCR layout");
+  try {
+    createRequire(import.meta.url)(dockerServer);
+  } catch (error) {
+    console.error("[start-standalone] Failed to start Next.js server:", error);
+    process.exit(1);
+  }
+} else if (existsSync(standaloneServer)) {
+  logBindTarget("Railpack standalone layout");
+  const child = spawn(process.execPath, ["server.js"], {
+    cwd: standaloneDir,
+    env: process.env,
+    stdio: "inherit",
+  });
+  child.on("exit", (code, signal) => {
+    if (signal) {
+      console.error(`[start-standalone] Server stopped (${signal})`);
+      process.exit(1);
+    }
+    process.exit(code ?? 1);
+  });
+} else {
+  console.error(
+    "Standalone server not found. Run `npm run build` first (expected server.js or .next/standalone/server.js).",
+  );
   process.exit(1);
 }
