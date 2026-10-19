@@ -21,6 +21,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     // Keep static generation sequential on small Coolify VPS builds.
     cpus: 1,

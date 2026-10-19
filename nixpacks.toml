@@ -5,13 +5,16 @@
 [variables]
 NEXT_TELEMETRY_DISABLED = "1"
 CI = "true"
-NODE_OPTIONS = "--max-old-space-size=1024"
+# Leave headroom for Docker + sharp/webpack on a 2 GB VPS (heap cap ~896 MiB).
+NODE_OPTIONS = "--max-old-space-size=896"
+MBSNM_SKIP_ICON_REGEN = "1"
 
 [phases.install]
 cmds = ["npm ci --no-audit --no-fund"]
 
 [phases.build]
 cmds = ["npm run build"]
+cacheDirectories = [".next/cache", "node_modules/.cache"]
 
 [start]
 cmd = "npm start"

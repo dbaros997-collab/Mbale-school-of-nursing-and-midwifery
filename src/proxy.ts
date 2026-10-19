@@ -16,7 +16,7 @@ function redirectToOfficial(request: NextRequest): NextResponse {
   return NextResponse.redirect(officialSiteUrl(path), PERMANENT_REDIRECT);
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const host = normalizeRequestHost(request.headers.get("host"));
   if (!host) {
     return NextResponse.next();
