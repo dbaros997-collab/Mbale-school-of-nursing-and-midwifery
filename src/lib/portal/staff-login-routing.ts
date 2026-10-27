@@ -1,3 +1,4 @@
+import { isStaffSharedMailbox } from "@/lib/school-emails";
 import { isOfficialStudentEmail } from "@/lib/site-url";
 
 const STAFF_EMAIL_SUFFIXES = ["@mbsnm.org", "@staff.mbsnm.org"] as const;
@@ -6,6 +7,7 @@ const STAFF_EMAIL_SUFFIXES = ["@mbsnm.org", "@staff.mbsnm.org"] as const;
 export function isStaffPortalLoginIdentifier(identifier: string): boolean {
   const normalized = identifier.trim().toLowerCase();
   if (!normalized.includes("@")) return false;
+  if (isStaffSharedMailbox(normalized)) return true;
   if (isOfficialStudentEmail(normalized)) return false;
   return STAFF_EMAIL_SUFFIXES.some((suffix) => normalized.endsWith(suffix));
 }

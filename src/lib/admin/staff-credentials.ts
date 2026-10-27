@@ -4,10 +4,11 @@ import {
   MOCK_ADMIN_USER,
 } from "@/lib/portal/mock-store";
 import type { AdminProfile, Session, User } from "@/lib/portal/schema";
+import { schoolEmail } from "@/lib/school-emails";
 
 /** Demo staff credentials — registry officers only (replace with Entra / DB when ready). */
 export const STAFF_DEMO_CREDENTIALS = {
-  email: "registry@mbsnm.org",
+  email: schoolEmail.registry,
   password: "Staff@2026",
 } as const;
 

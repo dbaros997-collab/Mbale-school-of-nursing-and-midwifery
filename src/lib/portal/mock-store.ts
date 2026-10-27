@@ -1156,7 +1156,7 @@ export const MOCK_ANNOUNCEMENTS: Announcement[] = [
 
 export const MOCK_ADMIN_USER: User = {
   id: "user-admin",
-  email: "registry@mbsnm.org",
+  email: "registry@mbaleschoolofnursing.ac.ug",
   passwordHash: "mock-admin-hash",
   role: "admin",
   createdAt: "2023-01-10T08:00:00.000Z",
@@ -1177,7 +1177,7 @@ export const MOCK_ADMIN_PROFILE: AdminProfile = {
   userId: "user-admin",
   fullName: "Namukasa Rebecca",
   title: "Academic Registrar",
-  email: "registry@mbsnm.org",
+  email: "registry@mbaleschoolofnursing.ac.ug",
   phone: "+256 454 123 400",
 };
 

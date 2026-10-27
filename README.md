@@ -74,8 +74,10 @@ After deploy, confirm `GET https://mbaleschoolofnursing.ac.ug/api/health` shows 
 
 ## Demo credentials (Staff admin at `/admin`)
 
-- Email: `registry@mbsnm.org` · Password: `Staff@2026`
+- Email: `registry@mbaleschoolofnursing.ac.ug` · Password: `Staff@2026`
 - Legacy (still accepted): `admin@mbsnm.org` · `admin123`
+
+Public mailboxes on the official domain (create in Microsoft 365): `info@`, `admissions@`, `registry@`, and `admin@` — see `src/lib/school-emails.ts`.
 
 Staff Admin: [https://mbaleschoolofnursing.ac.ug/admin](https://mbaleschoolofnursing.ac.ug/admin)
 

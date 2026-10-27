@@ -1,4 +1,5 @@
 import { mockDelay } from "@/lib/mock-delay";
+import { schoolEmail } from "@/lib/school-emails";
 import type {
   ApplicationNotificationLog,
   ApplicationRecord,
@@ -109,7 +110,7 @@ function buildNotificationContent(record: ApplicationRecord): {
       "Criteria notes:",
       ...record.qualificationReasons.map((r) => `• ${r}`),
       "",
-      "If you believe this is an error, contact admissions@mbsnm.org or call our office.",
+      `If you believe this is an error, contact ${schoolEmail.admissions} or call our office.`,
       "",
       "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ].join("\n");
@@ -132,7 +133,7 @@ function buildNotificationContent(record: ApplicationRecord): {
       "Criteria notes:",
       ...record.qualificationReasons.map((r) => `• ${r}`),
       "",
-      "If you believe this is an error, contact admissions@mbsnm.org or call our office.",
+      `If you believe this is an error, contact ${schoolEmail.admissions} or call our office.`,
       "",
       "In God We Love and Serve — Mbale School of Nursing and Midwifery Admissions",
     ].join("\n");

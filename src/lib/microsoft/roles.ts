@@ -1,5 +1,6 @@
 import type { JWTPayload } from "jose";
 import { getAllowedStudentEmailDomains } from "./config";
+import { isStaffSharedMailbox } from "@/lib/school-emails";
 import type { MicrosoftInstitutionalRole } from "./types";
 
 function emailMatchesAllowedStudentDomain(email: string): boolean {
@@ -22,6 +23,7 @@ export function resolveInstitutionalRole(payload: JWTPayload): MicrosoftInstitut
 
   const email = String(payload.preferred_username ?? payload.email ?? payload.upn ?? "").toLowerCase();
 
+  if (email && isStaffSharedMailbox(email)) return "staff";
   if (email && emailMatchesAllowedStudentDomain(email)) return "student";
   if (email.endsWith("@mbsnm.org") || email.endsWith("@staff.mbsnm.org")) return "staff";
 

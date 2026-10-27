@@ -131,7 +131,8 @@ export function getMicrosoftServerConfig() {
   const studentSecurityGroupIds = parseCsvEnv(readRuntimeEnv("MICROSOFT_STUDENT_SECURITY_GROUP_IDS"));
   const blockedSecurityGroupIds = parseCsvEnv(readRuntimeEnv("MICROSOFT_BLOCKED_SECURITY_GROUP_IDS"));
   const blockedEmailDomains = parseCsvEnv(
-    readRuntimeEnv("MICROSOFT_BLOCKED_EMAIL_DOMAINS") ?? "staff.mbsnm.org,mbsnm.org",
+    readRuntimeEnv("MICROSOFT_BLOCKED_EMAIL_DOMAINS") ??
+      `staff.${OFFICIAL_EMAIL_DOMAIN},mbsnm.org`,
   );
 
   return {

@@ -1,3 +1,5 @@
+import { schoolEmail } from "@/lib/school-emails";
+
 export const SCHOOL = {
   name: "Mbale School of Nursing and Midwifery",
   shortName: "Mbale School of Nursing and Midwifery",
@@ -8,8 +10,10 @@ export const SCHOOL = {
   /** Primary WhatsApp / click-to-chat line */
   whatsapp: "+256 779 400 773",
   phoneAlt: "+256 787 167 575",
-  email: "info@mbsnm.org",
-  admissionsEmail: "admissions@mbsnm.org",
+  email: schoolEmail.info,
+  admissionsEmail: schoolEmail.admissions,
+  registryEmail: schoolEmail.registry,
+  adminEmail: schoolEmail.admin,
   address: "Malere, behind the Forest Road, Mbale — Uganda",
   /** Google Maps search query for the campus pin (name + official address). */
   mapLocationQuery:
@@ -983,7 +987,7 @@ export const faqs = [
   {
     question: "How much is tuition?",
     answer:
-      "Fees depend on your programme (certificate or diploma, direct or extension). Email admissions@mbsnm.org and we will send you the current fee list.",
+      `Fees depend on your programme (certificate or diploma, direct or extension). Email ${schoolEmail.admissions} and we will send you the current fee list.`,
   },
   {
     question: "Is accommodation available?",
@@ -1046,7 +1050,7 @@ export const statusBarUpdates = [
   },
   {
     id: "contact",
-    text: "Questions? admissions@mbsnm.org · +256 779 400 773",
+    text: `Questions? ${schoolEmail.admissions} · +256 779 400 773`,
     href: "/contact",
   },
 ] as const;
