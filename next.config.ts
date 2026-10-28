@@ -43,6 +43,10 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_LOGO_VERSION: process.env.NEXT_PUBLIC_LOGO_VERSION,
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_SCHOOL_EMAIL_INFO:
+      process.env.NEXT_PUBLIC_SCHOOL_EMAIL_INFO ?? "info@mbaleschoolofnursing.ac.ug",
+    NEXT_PUBLIC_SCHOOL_EMAIL_ADMISSIONS:
+      process.env.NEXT_PUBLIC_SCHOOL_EMAIL_ADMISSIONS ?? "admissions@mbaleschoolofnursing.ac.ug",
   },
   allowedDevOrigins: [
     "*.trycloudflare.com",

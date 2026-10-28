@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { marketingPageMetadata } from "@/lib/seo";
 import { getSiteContent } from "@/lib/site-content/queries";
+import { schoolEmail } from "@/lib/school-emails";
 
 export const metadata = marketingPageMetadata("/", {
   title: "Welcome",
@@ -24,7 +25,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero />
+      <Hero contactEmail={schoolEmail.info} />
       <ScrollReveal direction="up">
         <Discovery />
       </ScrollReveal>

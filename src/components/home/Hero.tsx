@@ -79,7 +79,12 @@ function highlightPhrases(
   );
 }
 
-export function Hero() {
+type HeroProps = {
+  /** General enquiries — passed from the server so contact info stays current after deploys. */
+  contactEmail?: string;
+};
+
+export function Hero({ contactEmail }: HeroProps = {}) {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
   const slide = heroSlides[index];
@@ -223,12 +228,13 @@ function HeroCopy({
           {slide.secondaryCta}
         </Link>
       </div>
-      <HeroContactPanel />
+      <HeroContactPanel contactEmail={contactEmail} />
     </>
   );
 }
 
-function HeroContactPanel() {
+function HeroContactPanel({ contactEmail }: { contactEmail?: string }) {
+  const email = contactEmail ?? SCHOOL.email;
   const phoneHref = `tel:${SCHOOL.phone.replace(/\s/g, "")}`;
   const whatsappHref = schoolWhatsAppUrl(`Hello ${SCHOOL.shortName}, I would like to enquire.`);
 
@@ -249,8 +255,8 @@ function HeroContactPanel() {
     {
       icon: Mail,
       label: "Email",
-      value: SCHOOL.email,
-      href: `mailto:${SCHOOL.email}`,
+      value: email,
+      href: `mailto:${email}`,
     },
   ] as const;
 
