@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { createDefaultSiteContent } from "@/lib/site-content/defaults";
+import { migrateLegacySchoolEmailsInText } from "@/lib/school-emails";
 import type { SiteContent, SiteContentSection } from "@/lib/site-content/types";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
@@ -9,9 +10,13 @@ const CONTENT_FILE = path.join(CONTENT_DIR, "site-content.json");
 function normalizeContent(raw: SiteContent): SiteContent {
   const defaults = createDefaultSiteContent();
   return {
-    statusBarUpdates: raw.statusBarUpdates?.length
+    statusBarUpdates: (raw.statusBarUpdates?.length
       ? raw.statusBarUpdates
-      : defaults.statusBarUpdates,
+      : defaults.statusBarUpdates
+    ).map((item) => ({
+      ...item,
+      text: migrateLegacySchoolEmailsInText(item.text),
+    })),
     newsItems: raw.newsItems?.length ? raw.newsItems : defaults.newsItems,
     events: raw.events?.length ? raw.events : defaults.events,
     galleryItems: raw.galleryItems?.length ? raw.galleryItems : defaults.galleryItems,
