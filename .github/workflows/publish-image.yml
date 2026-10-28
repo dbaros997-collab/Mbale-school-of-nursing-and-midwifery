@@ -93,7 +93,7 @@ jobs:
           cat > Dockerfile <<EOF
           # Auto-pinned to the GHCR image built by GitHub Actions for this commit.
           # GitHub Actions updates this line after every successful "Publish Docker image" run.
-          FROM ghcr.io/${{ github.repository_owner }}/mbale-school:${{ github.sha }}
+          FROM ghcr.io/${{ github.repository_owner }}/mbale-school:${{ steps.tags.outputs.short_sha }}
           EOF
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
