@@ -103,15 +103,15 @@ function resolveMegaNavItem(item: NavItem | null): MegaNavItem | null {
       columns: [
         {
           title: "Portals & apply",
-          links: quickLinks.slice(0, 4),
+          links: quickLinks.slice(0, 3),
         },
         {
           title: "Admissions & study",
-          links: quickLinks.slice(4, 7),
+          links: quickLinks.slice(3, 6),
         },
         {
           title: "Campus & web",
-          links: quickLinks.slice(7),
+          links: quickLinks.slice(6),
         },
       ],
     };
