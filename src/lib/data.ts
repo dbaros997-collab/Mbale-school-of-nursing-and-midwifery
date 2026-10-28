@@ -69,7 +69,6 @@ export const headerApplyCta = {
 } as const;
 
 export const quickLinks = [
-  { label: "Staff Admin", href: "/admin" },
   { label: "Student Portal", href: "/portal/dashboard" },
   { label: "Activate Account", href: "/portal/activate" },
   { label: "Application Portal", href: "/admissions#apply" },
